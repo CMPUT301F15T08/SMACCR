@@ -1,0 +1,124 @@
+package com.example.michael.myapplication;
+
+import android.test.ActivityInstrumentationTestCase2;
+
+import junit.framework.TestCase;
+
+public class US0309And10Test extends ActivityInstrumentationTestCase2 {
+
+    public US0309And10Test() {
+        super(com.example.michael.myapplication.MainActivity.class);
+    }
+
+    // Test US03.01.01 and US03.02.01
+    public void testSearchInventory() throws Exception {
+        User user = new User(“Userman”);	//creates user
+        User friend = new User(“Friendman”); 	//creates friend x?
+        User friend2 = new User(“Friendman2”);
+        user.sendFriendReq(friend);	//Creates FRIENDSHIP!!! between user and friends
+        friend.acceptFriendReq(friendreq);
+        user.sendFriendReq(friend2);
+        friend2.acceptFriendReq(friendreq);
+
+        Item item = new Item(“Starbucks”,20);
+        Item item2 = new Item(“Starbucks”,25);
+
+        friend.addItem(item);		//adds to item to friends inventory x?(public or private)
+        friend2.addItem(item2);
+
+        Item item3 = user.browseAll().get(0);//calls generic browse method stores the 1st return  value in item3 Item item4 =user.browseAll().get(1); //calls generic browse method stores the 2nd return  value in item4
+        assertTrue(item2==item);	//checks that all public items are returned
+        Item item4 = new Item(“Starbucks”,20);		//adds items to user
+        User.addItem(item3);
+        assertTrue(Friend.browseall().get(0)==item3);	//calls generic browse method for friend
+    }
+
+    // Test US03.01.02 and US03.02.01
+    public void testSearchCategory() throws Exception {
+        User user = new User(“Userman”);	//creates user
+        User friend = new User(“Friendman”); 	//creates friend x?
+        user.sendFriendReq(friend);	//Creates FRIENDSHIP!!! between user and friends
+        friend.acceptFriendReq(friendreq);
+        Item item = new Item(“Starbucks”,20);
+        friend.addItem(item);		//adds to item to friends inventory (public and private)
+        Item item2 = user.browse().get(0);//calls generic browse method stores the 1st return  value in item2
+        assertTrue(item2 == item);	//checks that all public items are returned
+        item2 = user.browse(Category.CoffeeShop).get(0); 	//category of item browse
+        assertTrue(Category.CoffeeShop == item2.getCategory());	//checks item returned
+        item2 = user.browse(Category.Grocery).get(0); 	//not category of item browse
+        assertTrue(null== item2);	//checks item not returned
+    }
+
+    // Test US03.01.03 and US03.02.01
+    public void testSearchQuery() throws Exception {
+        User user = new User(“Userman”);	//creates user
+        User friend = new User(“Friendman”); 	//creates friend x?
+        User.sendFriendReq(friend);	//Creates FRIENDSHIP!!! between user and friends
+        friend.acceptFriendReq(friendreq);
+        Item item = new Item(“Starbucks”,20);
+        friend.addItem(item);		//adds to item to friends inventory (public or private)
+        assertTrue(user.browse(“Starbucks”).get(0) == item); 	//search for item check return
+        assertTrue(user.browse(“Starbucks”).get(0)==null); 	//search for not item check null return
+    }
+
+    // Test US09.01.01
+    public void testMakeInventory() throws Exception {
+        User user = new User(“userman”);
+        system.setConnect(Boolean.False);
+        Action addItem = new Item(“Starbucks”, 20);
+        user.addTestItem(addItem);
+        assertTrue(user.peekQueue == addItem);
+    }
+
+    // Test US09.02.01
+    public void testMakeTrades() throws Exception {
+        User user = new User(“userman”); 			//creates user
+        User friend = new User(“Friendman”);			// creates friend
+        user.friendReq(getUserByName(“Friendman”));		// FRIENDSHIP!!
+        friend.acceptFriendReq(this);
+        system.setConnect(Boolean.False);			// sets offline mode
+        Item item =  new Item(“Starbucks”, 20);
+        Action addItem = user.addTestItem(item));		// creates action
+        assertTrue(user.peekActQueue()==addItem);		// checks queue for action
+        system.setConnect(Boolean.TRUE);			// Sets online mode
+        assertTrue(user.peekActQueue()==null);		// checks effects are correct checks queue for empty
+        friend.browse();					// friend browse user
+        system.setConnect(Boolean.False);			// set offline
+        Action propTrade = friend.proposeTrade(item);		// user proposes trade
+        assertTrue(friend.peekActQueue()==propTrade);	 // checks queue for action
+        system.setConnect(Boolean.TRUE);			// sets online
+        assertTrue(friend.peekActQueue()==null); 		// checks queue for empty
+        assertTrue(user.peekNotiQueue()==getNoti(proptrade)); // checks friend for notification of proposal
+        user.acceptTrade(tradeID);
+        user.browse();						//User browse friend
+        system.setConnect(Boolean.False); 			// set offline
+        Action propTrade2 = user.proposeTrade(item); 		// user proposes trade
+        assertTrue(user.peekActQueue()==propTrade2); 	// checks queue for action
+        friend.deleteItem(item); 				// friend removes/edits item
+        system.setConnect(Boolean.TRUE); 			// set online
+        assertTrue(friend.peekNotiQueue()==null); 		// checks friend for no notification
+        assertFalse(user.peekNotiQueue()==null) 	// checks user for notification of failure and review
+    }
+
+    // Test US09.03.01
+    public void testBrowseFriend() throws Exception {
+        User user = new User(“Userman”);	//creates user
+        User friend = new User(“Friendman”); 	//creates friend x?
+        User.sendFriendReq(friend);	//Creates FRIENDSHIP!!! between user and friends
+        friend.acceptFriendReq(friendreq);
+        Item item = new Item(“Starbucks”,20);
+        friend.addItem(item);		//adds to item to friends inventory (public or private)
+        assertTrue(user.browseAll().get(0)==item);
+        system.setConnect(“False”);
+    }
+
+    //Test US10.01.01 and US10.02.01
+    public void testEditProfile() throws Exception {
+        User user = new User(“userman”);
+        user.togPicDownload();
+        assertTrue(user.getPicDownload() == Boolean.FALSE);
+        user.togPicDownload();
+        assertTrue(user.getPicDownload() == Boolean.TRUE);
+    }
+}
+
