@@ -98,7 +98,7 @@ public class InventoryTest extends ActivityInstrumentationTestCase2 {
             @Override
             public int compare(GCard card1, GCard card2)
             {
-                return  card1.getValue().compareTo(card2.getValue());
+                return  card1.getName().compareTo(card2.getName());
             }
         });
         assertTrue((gcards.get(0) == gcard2) && (gcards.get(1) == gcard1));
