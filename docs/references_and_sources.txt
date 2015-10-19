@@ -1,0 +1,8 @@
+# Adding icons to the top menu
+http://developer.android.com/guide/topics/ui/menus.html
+
+# Search icon source
+https://www.iconfinder.com/icons/722651/explore_find_magnifier_search_icon#size=128
+
+# User icon source
+https://www.iconfinder.com/icons/722644/account_people_profile_user_icon#size=128
