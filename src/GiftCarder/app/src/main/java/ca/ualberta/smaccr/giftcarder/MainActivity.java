@@ -1,5 +1,7 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
@@ -8,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -39,6 +42,30 @@ public class MainActivity extends ActionBarActivity {
                 Intent intent = new Intent(MainActivity.this, ItemActivity.class);
                 intent.putExtra("GiftCard", myinventory.getMyinventory().get(position));
                 startActivity(intent);
+            }
+        });
+
+
+        //Long click to delete listener
+        inventorylistID.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder deletedialog = new AlertDialog.Builder(MainActivity.this);
+                deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();}}).setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+                    }
+                });
+                deletedialog.create().show();
+                return true;
             }
         });
 
