@@ -4,15 +4,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="search">Search</string>
-    <string name="newTradeNotiNum">0</string>
-    <string name="newFriendNotiNum">0</string>
-
+    <string name="newNotiNum">0</string>
+    <string name="title_activity_noti_full2">NotiFull2Activity</string>
+<<<<<<< HEAD
     <string name="title_activity_item">item</string>
 
 
     <!-- ITEM DROP DOWN MENU STUFF -->
     <string-array name="Category">
-        <item>All</item>
         <item>Food-Beverage</item>
         <item>Clothing</item>
         <item>Home-garden</item>
@@ -35,6 +34,7 @@
     <!-- ITEM DROP DOWN MENU STUFF DONE -->
 
 
+=======
     <string name="title_activity_register">RegisterActivity</string>
     <string name="enter_username">Enter username</string>
     <string name="enter_city">Enter city</string>
@@ -43,7 +43,5 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="sign_up">Sign Up</string>
-    <string name="title_activity_browse">BrowseActivity</string>
-
-    <string name="browseGo">Go</string>
+>>>>>>> 06f96bc20818e3de4f12e9e845dcaba7476a3da8
 </resources>

@@ -1,42 +1,37 @@
 package ca.ualberta.smaccr.giftcarder;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-/**
- * Created by mrijlaar on 10/21/15.
- */
-public class NotiFullActivity extends Activity{
+public class BrowseActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_noti_full);
+        setContentView(R.layout.activity_browse);
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_browse, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem ItemActivity) {
-        // Handle action bar ItemActivity clicks here. The action bar will
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = ItemActivity.getItemId();
+        int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
-        return super.onOptionsItemSelected(ItemActivity);
-    }*/
-
+        return super.onOptionsItemSelected(item);
+    }
 }

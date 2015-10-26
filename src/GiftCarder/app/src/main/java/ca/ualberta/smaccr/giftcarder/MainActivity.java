@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.EditText;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 Richard's branch! Don't touch my branch >:O
  */
 public class MainActivity extends ActionBarActivity {
+    public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
 
     Inventory myinventory = new Inventory();
 
@@ -27,23 +29,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
-
-        inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), Integer.toString(position),Toast.LENGTH_SHORT).show();
-
-                //Switch to item activity and send selected giftcard data
-                Intent intent = new Intent(MainActivity.this, ItemActivity.class);
-                intent.putExtra("GiftCard", myinventory.getMyinventory().get(position));
-                startActivity(intent);
-            }
-        });
-
-
-
 
     }
 
@@ -70,34 +55,12 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void notiButtonClick(MenuItem v){
-        Intent intent = new Intent(this, NotiFullActivity.class);
+
+    public void registerNewUser(View view){
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
-    //OnClick to add GiftCard
-    public void AddNewGiftCard(View menu){
-        //Add new giftcard
-        GiftCard gc = new GiftCard();
-        myinventory.addGiftCard(gc);
 
-        //display size
-        //Toast.makeText(getApplicationContext(), Integer.toString(myinventory.getSize()),Toast.LENGTH_SHORT).show();
-
-        //Get ArrayList of Strings to display in Adapter ListView
-        ArrayList<GiftCard> tempArray = myinventory.getMyinventory();
-        //Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
-
-        ArrayList<String> GiftCardNames = new ArrayList<String>();
-        for (int index = 0; index <tempArray.size(); index++){
-            GiftCardNames.add(0, tempArray.get(index).getMerchant());
-        }
-
-        //Display list of names of giftcards
-        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
-        ArrayAdapter<String> displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
-        inventorylistID.setAdapter(displayAdapter);
-
-    }
 
 }

@@ -2,15 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ca.ualberta.smaccr.giftcarder.MainActivity">
+
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/search"
-        android:icon="@drawable/search"
-        android:title="@string/search"
-        app:showAsAction="ifRoom" />
-    <item android:id="@+id/noti"
-        android:icon="@drawable/speech_bubble"
-        android:title="@string/newNotiNum"
-        app:showAsAction="withText|ifRoom"
-        android:onClick="notiButtonClick"/>
+
+    <item android:id="@+id/tradeNoti"
+        android:icon="@drawable/envelope"
+        android:title="@string/newTradeNotiNum"
+        app:showAsAction="withText|ifRoom" />
+
+    <item android:id="@+id/friendNoti"
+        android:icon="@drawable/user_icon"
+        android:title="@string/newFriendNotiNum"
+        app:showAsAction="withText|ifRoom" />
 </menu>
