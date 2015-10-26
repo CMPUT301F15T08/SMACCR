@@ -1,26 +1,31 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-/**
- * Created by mrijlaar on 10/21/15.
- */
-public class NotiFullActivity extends Activity{
+public class InventoryActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_noti_full);
+        setContentView(R.layout.activity_inventory);
+
+        // http://www.vogella.com/tutorials/AndroidListView/article.html
+        ListView listView = (ListView) findViewById(R.id.inventoryListView);
+        View header = getLayoutInflater().inflate(R.layout.inventory_header, null);
+        listView.addHeaderView(header);
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_inventory, menu);
         return true;
     }
 
@@ -37,6 +42,5 @@ public class NotiFullActivity extends Activity{
         }
 
         return super.onOptionsItemSelected(item);
-    }*/
-
+    }
 }

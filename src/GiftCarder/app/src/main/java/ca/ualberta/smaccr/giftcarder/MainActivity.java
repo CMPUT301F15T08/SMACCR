@@ -1,17 +1,24 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
+
+    public GiftCard testcard = new GiftCard();
+    public Inventory testinv = new Inventory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        testcard.setCard("Starbucks", 20, 1, 5, 1, true, "tasty");
     }
 
     @Override
@@ -36,8 +43,8 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void notiButtonClick(MenuItem v){
-        Intent intent = new Intent(this, NotiFullActivity.class);
+    public void invClick(View view) {
+        Intent intent = new Intent(this, InventoryActivity.class);
         startActivity(intent);
     }
 }

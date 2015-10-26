@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NotiFullActivity"
-            android:label="@string/app_name" >
+            android:name=".InventoryActivity"
+            android:label="@string/title_activity_inventory" >
         </activity>
     </application>
 
