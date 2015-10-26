@@ -11,6 +11,7 @@
 
 package ca.ualberta.smaccr.giftcarder;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,39 +42,14 @@ public class RegisterActivity extends ActionBarActivity {
     public void registerUser() {
         UserRegistrationController urc = new UserRegistrationController();
 
-        if (validateFields())
-            urc.addUser(username, city, phone, email);
+        if (urc.validateFields(etUsername, etCity, etPhone, etEmail)) {
+            urc.addUser(etUsername, etCity, etPhone, etEmail);
+            Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
+            //Intent intent = new Intent(this, Inventory.class);
+            //startActivity(intent);
+        }
         else
             Toast.makeText(RegisterActivity.this, "Form contains error", Toast.LENGTH_LONG).show();
     }
 
-    public boolean validateFields() {
-        boolean valid = true;
-
-        if (!Validation.hasText(etUsername)) {
-            valid = false;
-        }
-
-        if (!Validation.hasText(etCity)) {
-            valid = false;
-        }
-
-        if (!Validation.hasText(etPhone)) {
-            valid = false;
-        }
-
-        if (!Validation.hasText(etEmailAddress)) {
-            valid = false;
-        }
-
-        if (!Validation.isPhoneNumber(etPhone)) {
-            valid = false;
-        }
-
-        if (!Validation.isEmailAddress(etEmail)) {
-            valid = false;
-        }
-
-        return valid;
-    }
 }
