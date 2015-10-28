@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 public class InventoryActivity extends Activity {
 
-    Inventory myinventory = new Inventory();
+    Inventory inv = new Inventory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class InventoryActivity extends Activity {
 
                 // Switch to item activity and send selected giftcard data
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
-                intent.putExtra("GiftCard", myinventory.getInv().get(position));
+                intent.putExtra("GiftCard", inv.getInvList().get(position));
                 startActivity(intent);
             }
         });
@@ -43,6 +44,8 @@ public class InventoryActivity extends Activity {
         inventorylistID.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final AdapterView<?> par = parent;
+                final int pos = position;
 
                 Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
 
@@ -50,10 +53,13 @@ public class InventoryActivity extends Activity {
                 deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();}}).setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        dialog.dismiss();
+                    }
+                }).setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        // http://stackoverflow.com/questions/7073577/how-to-get-object-from-listview-in-setonitemclicklistener-in-android
+                        // inv.deleteGiftCard((GiftCard)par.getAdapter().getItem(pos));
                         dialog.dismiss();
                     }
                 });
@@ -96,13 +102,13 @@ public class InventoryActivity extends Activity {
     public void AddNewGiftCard(View menu){
         // Add new giftcard
         GiftCard gc = new GiftCard();
-        myinventory.addGiftCard(gc);
+        inv.addGiftCard(gc);
 
         // display size
         // Toast.makeText(getApplicationContext(), Integer.toString(inv.getSize()),Toast.LENGTH_SHORT).show();
 
         // Get ArrayList of Strings to display in Adapter ListView
-        ArrayList<GiftCard> tempArray = myinventory.getInv();
+        ArrayList<GiftCard> tempArray = inv.getInvList();
         // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
 
         ArrayList<String> GiftCardNames = new ArrayList<String>();
@@ -117,7 +123,7 @@ public class InventoryActivity extends Activity {
 
         // Switch to item activity and send selected giftcard data
         Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
-        intent.putExtra("GiftCard", myinventory.getInv().get(0));
+        intent.putExtra("GiftCard", inv.getInvList().get(0));
         startActivity(intent);
 
     }
