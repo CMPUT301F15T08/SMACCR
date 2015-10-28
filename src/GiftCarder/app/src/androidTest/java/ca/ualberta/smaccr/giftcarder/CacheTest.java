@@ -58,6 +58,18 @@ public class CacheTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testSetItems() throws Exception {
+        LinkedList<GiftCard> linkedList = new LinkedList<GiftCard>();
+        Cache c1 = new Cache();
+
+        GiftCard giftCard1 = new GiftCard();
+        giftCard1.setMerchant("Bestbuy");
+        giftCard1.setQuantity(1);
+        giftCard1.setQuality(3);
+        giftCard1.setCategory(1);
+        giftCard1.setComments("scratched but usable");
+        giftCard1.setShared(Boolean.TRUE);
+
+        linkedList.add(giftCard1);
 
     }
 

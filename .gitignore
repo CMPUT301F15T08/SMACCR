@@ -30,3 +30,8 @@ proguard/
 *.jar
 *.war
 *.ear
+
+# CUSTOM #
+*.svg
+/.idea
+src/GiftCarder/app/src/main/res/layout/list_gc.xml

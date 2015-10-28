@@ -61,6 +61,9 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-
+    public void fIXMElogin(View view){                          //FIXME                                        //FIXME
+        Intent intent = new Intent(this, BrowseActivity.class);
+        startActivity(intent);
+    }
 
 }
