@@ -1,63 +1,73 @@
 package ca.ualberta.smaccr.giftcarder;
 
-/**
- * Created by Spencer on 10/25/2015.
- */
-public class GiftCard {
-    private String merchant;
-    private double value;
-    private int quantity;
-    private int quality;
-    private int category;
-    private Boolean shared;
-    private String comment;
+import java.io.Serializable;
 
-    public GiftCard() {
-        this.merchant = "";
-        this.value = 0;
-        this.quantity = 0;
-        this.quality = 0;
-        this.category = 0;
-        this.shared = false;
-        this.comment = "";
+/**
+ * Created by Richard on 2015-10-24.
+ */
+public class GiftCard implements Serializable {
+    //This includes value as string
+    private String merchant = "New GiftCard";
+
+    private int quantity;
+
+    //0 = poor, 1 = okay, 2= good, 3 = excellent
+    private int quality;
+
+    // 0 = Food-Beverage, ..., 10 = other
+    private int category;
+    private String comments;
+
+    // 1 = shared, 0 = not shared
+    private Boolean shared;
+
+
+    //Getters and Setters
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 
     public String getMerchant() {
         return merchant;
     }
 
-    public double getValue() {
-        return value;
-    }
-
-    public int getQuantity() {
-        return quantity;
+    public void setMerchant(String merchant) {
+        this.merchant = merchant;
     }
 
     public int getQuality() {
         return quality;
     }
 
-    public int getCategory() {
-        return category;
+    public void setQuality(int quality) {
+        this.quality = quality;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public Boolean getShared() {
         return shared;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setCard(String merchant, double value, int quantity,
-                        int quality, int category, Boolean shared, String comment) {
-        this.merchant = merchant;
-        this.value = value;
-        this.quantity = quantity;
-        this.quality = quality;
-        this.category = category;
+    public void setShared(Boolean shared) {
         this.shared = shared;
-        this.comment = comment;
     }
 }

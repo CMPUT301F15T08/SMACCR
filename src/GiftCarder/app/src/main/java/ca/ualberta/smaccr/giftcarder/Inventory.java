@@ -1,26 +1,32 @@
 package ca.ualberta.smaccr.giftcarder;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 /**
- * Created by Spencer on 10/25/2015.
+ * Created by Richard on 2015-10-24.
  */
-
-// An inventory class for storing all the Giftcards of a user
 public class Inventory {
-    Collection<GiftCard> contents;
+    ArrayList<GiftCard> myinventory = new ArrayList<GiftCard>();
 
-    public Inventory getInventory() {
-        return this;
+    public void addGiftCard(GiftCard gc){
+        myinventory.add(gc);
     }
 
-    public void addGiftCard(GiftCard gc) {
-        contents.add(gc);
+    public void deleteGiftCard(GiftCard gc){
+        myinventory.remove(gc);
     }
 
-    public void remGiftCard(GiftCard gc) {
-        if (contents.contains(gc)) {
-            contents.remove(gc);
-        }
+    public int getSize(){
+        return myinventory.size();
+    }
+
+
+    //Getters and setters
+    public ArrayList<GiftCard> getMyinventory() {
+        return myinventory;
+    }
+
+    public void setMyinventory(ArrayList<GiftCard> myinventory) {
+        this.myinventory = myinventory;
     }
 }

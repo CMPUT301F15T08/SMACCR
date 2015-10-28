@@ -20,6 +20,10 @@
             android:name=".InventoryActivity"
             android:label="@string/title_activity_inventory" >
         </activity>
+        <activity
+            android:name=".ItemActivity"
+            android:label="@string/title_activity_item" >
+        </activity>
     </application>
 
 </manifest>
