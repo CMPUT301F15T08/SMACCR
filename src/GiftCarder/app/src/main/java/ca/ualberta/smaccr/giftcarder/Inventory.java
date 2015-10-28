@@ -6,27 +6,27 @@ import java.util.ArrayList;
  * Created by Richard on 2015-10-24.
  */
 public class Inventory {
-    ArrayList<GiftCard> myinventory = new ArrayList<GiftCard>();
+    ArrayList<GiftCard> inv = new ArrayList<GiftCard>();
 
     public void addGiftCard(GiftCard gc){
-        myinventory.add(gc);
+        inv.add(gc);
     }
 
     public void deleteGiftCard(GiftCard gc){
-        myinventory.remove(gc);
+        inv.remove(gc);
     }
 
     public int getSize(){
-        return myinventory.size();
+        return inv.size();
     }
 
 
-    //Getters and setters
-    public ArrayList<GiftCard> getMyinventory() {
-        return myinventory;
+    // Getters and setters
+    public ArrayList<GiftCard> getInv() {
+        return inv;
     }
 
-    public void setMyinventory(ArrayList<GiftCard> myinventory) {
-        this.myinventory = myinventory;
+    public void setInv(ArrayList<GiftCard> inv) {
+        this.inv = inv;
     }
 }

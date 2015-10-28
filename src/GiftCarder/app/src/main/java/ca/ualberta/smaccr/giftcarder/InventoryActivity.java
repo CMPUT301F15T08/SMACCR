@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +33,7 @@ public class InventoryActivity extends Activity {
 
                 // Switch to item activity and send selected giftcard data
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
-                intent.putExtra("GiftCard", myinventory.getMyinventory().get(position));
+                intent.putExtra("GiftCard", myinventory.getInv().get(position));
                 startActivity(intent);
             }
         });
@@ -100,10 +99,10 @@ public class InventoryActivity extends Activity {
         myinventory.addGiftCard(gc);
 
         // display size
-        // Toast.makeText(getApplicationContext(), Integer.toString(myinventory.getSize()),Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getApplicationContext(), Integer.toString(inv.getSize()),Toast.LENGTH_SHORT).show();
 
         // Get ArrayList of Strings to display in Adapter ListView
-        ArrayList<GiftCard> tempArray = myinventory.getMyinventory();
+        ArrayList<GiftCard> tempArray = myinventory.getInv();
         // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
 
         ArrayList<String> GiftCardNames = new ArrayList<String>();
@@ -118,7 +117,7 @@ public class InventoryActivity extends Activity {
 
         // Switch to item activity and send selected giftcard data
         Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
-        intent.putExtra("GiftCard", myinventory.getMyinventory().get(0));
+        intent.putExtra("GiftCard", myinventory.getInv().get(0));
         startActivity(intent);
 
     }
