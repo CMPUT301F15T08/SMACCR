@@ -11,6 +11,5 @@
     <item android:id="@+id/noti"
         android:icon="@drawable/speech_bubble"
         android:title="@string/newNotiNum"
-        app:showAsAction="withText|ifRoom"
-        android:onClick="notiButtonClick"/>
+        app:showAsAction="withText|ifRoom"/>
 </menu>

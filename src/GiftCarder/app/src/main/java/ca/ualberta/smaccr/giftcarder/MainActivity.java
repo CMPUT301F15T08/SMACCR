@@ -1,5 +1,6 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,61 +20,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /*
-Richard's branch! Don't touch my branch >:O
+Richard and Spencer's branch for Items and Inventory
  */
-public class MainActivity extends ActionBarActivity {
-
-    Inventory myinventory = new Inventory();
-
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
-
-        inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), Integer.toString(position),Toast.LENGTH_SHORT).show();
-
-                //Switch to item activity and send selected giftcard data
-                Intent intent = new Intent(MainActivity.this, ItemActivity.class);
-                intent.putExtra("GiftCard", myinventory.getMyinventory().get(position));
-                startActivity(intent);
-            }
-        });
-
-
-        //Long click to delete listener
-        inventorylistID.setOnItemLongClickListener(new OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
-
-                AlertDialog.Builder deletedialog = new AlertDialog.Builder(MainActivity.this);
-                deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();}}).setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.dismiss();
-                    }
-                });
-                deletedialog.create().show();
-                return true;
-            }
-        });
-
-
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar ItemActivity clicks here. The action bar will
+        // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
@@ -97,34 +52,9 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void invClick(View view) {
+    public void invClick(View view_) {
         Intent intent = new Intent(this, InventoryActivity.class);
         startActivity(intent);
-    }
-
-    //OnClick to add GiftCard
-    public void AddNewGiftCard(View menu){
-        //Add new giftcard
-        GiftCard gc = new GiftCard();
-        myinventory.addGiftCard(gc);
-
-        //display size
-        //Toast.makeText(getApplicationContext(), Integer.toString(myinventory.getSize()),Toast.LENGTH_SHORT).show();
-
-        //Get ArrayList of Strings to display in Adapter ListView
-        ArrayList<GiftCard> tempArray = myinventory.getMyinventory();
-        //Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
-
-        ArrayList<String> GiftCardNames = new ArrayList<String>();
-        for (int index = 0; index <tempArray.size(); index++){
-            GiftCardNames.add(0, tempArray.get(index).getMerchant());
-        }
-
-        //Display list of names of giftcards
-        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
-        ArrayAdapter<String> displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
-        inventorylistID.setAdapter(displayAdapter);
-
     }
 
 }

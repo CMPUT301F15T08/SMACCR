@@ -7,6 +7,8 @@
     <string name="newNotiNum">0</string>
     <string name="title_activity_noti_full2">NotiFull2Activity</string>
     <string name="title_activity_item">item</string>
+    <string name="title_activity_inventory">inventory</string>
+    <string name="icon_description">Icon</string>
 
 
     <!-- ITEM DROP DOWN MENU STUFF -->
@@ -30,6 +32,7 @@
         <item>Okay</item>
         <item>Poor</item>
     </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
     <!-- ITEM DROP DOWN MENU STUFF DONE -->
 
 
