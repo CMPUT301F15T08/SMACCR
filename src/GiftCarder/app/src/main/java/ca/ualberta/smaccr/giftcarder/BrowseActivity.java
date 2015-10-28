@@ -1,9 +1,11 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class BrowseActivity extends ActionBarActivity {
 
@@ -33,5 +35,15 @@ public class BrowseActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean loadFromCache(){                   //FIXME
+
+        return false;
+    };
+
+    public void clickItem(View v){
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
     }
 }

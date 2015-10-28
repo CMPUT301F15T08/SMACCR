@@ -2,6 +2,8 @@ package ca.ualberta.smaccr.giftcarder;
 
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -9,26 +11,48 @@ import java.util.LinkedList;
  */
 public class Cache {
 
-    private LinkedList<Item> items;
+    private LinkedList<GiftCard> items;
+    private Date lastUpdated;
 
-    public void Cache(){
+    public Cache(){
         items = new LinkedList();
+        lastUpdated = new Date();
     }
 
-    public void Cache(Collection<Item> col){
-        this.items = new LinkedList<Item>(col);
+    public Cache(Collection<GiftCard> col){
+        this.items = new LinkedList<GiftCard>(col);
+        lastUpdated = new Date();
     }
 
-    public LinkedList<Item> getItems() {
+    public LinkedList<GiftCard> getItems() {
         return items;
     }
 
-    public void setItems(LinkedList<Item> items) {
-        this.items = items;
+    public void setItems(LinkedList<GiftCard> giftCards) {
+        this.items = giftCards;
     }
 
-    public void add(Item item){
-        this.items.addFirst(item);
+    public void add(GiftCard giftCard){
+        this.items.addFirst(giftCard);
     }
 
+    public void add(Collection<GiftCard> col){
+        Iterator<GiftCard> iterator = col.iterator();
+        GiftCard gc;
+        while (iterator.hasNext()){
+            gc = iterator.next();
+            if(!items.contains(gc)){
+                items.add(gc);
+            }
+        }
+        updateDate();
+    }
+
+    private void updateDate(){
+        this.lastUpdated = new Date();
+    }
+
+    public int size(){
+        return items.size();
+    }
 }
