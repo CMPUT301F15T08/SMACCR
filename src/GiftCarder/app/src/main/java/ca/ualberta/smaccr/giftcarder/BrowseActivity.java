@@ -1,6 +1,8 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -49,6 +51,34 @@ public class BrowseActivity extends Activity {
                 // Switch to item activity and send selected giftcard data
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        // Long click to delete listener
+        browseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                final AdapterView<?> par = parent;
+                final int pos = position;
+
+                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder tradeDialog = new AlertDialog.Builder(BrowseActivity.this);
+                tradeDialog.setMessage("Do you want to trade for this item?").setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // http://stackoverflow.com/questions/7073577/how-to-get-object-from-listview-in-setonitemclicklistener-in-android
+                        // inv.deleteGiftCard((GiftCard)par.getAdapter().getItem(pos));
+                        dialog.dismiss();
+                    }
+                });
+                tradeDialog.create().show();
+                return true;
             }
         });
     }
