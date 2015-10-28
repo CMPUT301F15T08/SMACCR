@@ -74,10 +74,42 @@ public class CacheTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testAdd() throws Exception {
+        GiftCard giftCard1 = new GiftCard();
+        Cache cache = new Cache();
+        int t1 = cache.size();
+        cache.add(giftCard1);
+
+        assertTrue("t1 == 0",t1==0);
+        assertTrue("0 - "+cache.size()+ " = 1", t1 - cache.size()==-1);
 
     }
 
     public void testAdd1() throws Exception {
 
+        GiftCard giftCard1 = new GiftCard();
+        Cache cache = new Cache();
+        LinkedList<GiftCard> linkedList = new LinkedList<GiftCard>();
+
+        int t1 = cache.size();
+        cache.add(giftCard1);
+        int t2 = cache.size();
+
+        for(int i =0; i<5; i++){
+            linkedList.add(new GiftCard());
+            linkedList.getLast().setMerchant("Merchant "+i);
+        }
+
+        cache.add(linkedList);
+        int t3 = cache.size();
+        linkedList.clear();
+
+        for(int i =5; i<12; i++){
+            linkedList.add(new GiftCard());
+            linkedList.getLast().setMerchant("Merchant "+i);
+        }
+
+        cache.add(linkedList);
+
+        assertTrue(t3 - cache.size()==linkedList.size()*-1);
     }
 }

@@ -45,7 +45,6 @@ public class BrowseActivity extends Activity {
         browseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 // Switch to item activity and send selected giftcard data
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
