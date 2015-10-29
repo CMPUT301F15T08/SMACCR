@@ -6,18 +6,26 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class ItemActivity extends Activity {
+
+    Inventory inv;
+    int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
+        
+        //receive inventory and position of gift card to modify
+        position = (int)getIntent().getIntExtra("position", 0);
+        inv = (Inventory)getIntent().getSerializableExtra("inventory");
+        EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
+        itemName.setText(inv.getInvList().get(position).getMerchant());
 
-        GiftCard gc = (GiftCard)getIntent().getSerializableExtra("GiftCard");
 
-        Toast.makeText(getApplicationContext(), gc.getMerchant(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -40,4 +48,18 @@ public class ItemActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        //http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
+        //send it back to inventory
+        EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
+        inv.getInvList().get(position).setMerchant(itemName.getText().toString());
+
+        Intent intent = new Intent();
+        intent.putExtra("ModifiedInventory", inv);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
 }

@@ -50,7 +50,8 @@
                 android:layout_height="wrap_content"
                 android:background="#fdfff8"
                 android:hint="Enter name ex) $50 subway card"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:id="@+id/ID_item_Name" />
 
             <TextView
                 android:layout_width="match_parent"
