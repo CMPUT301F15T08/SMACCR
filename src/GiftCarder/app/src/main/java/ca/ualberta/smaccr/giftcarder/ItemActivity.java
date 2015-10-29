@@ -18,7 +18,7 @@ public class ItemActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
-        
+
         //receive inventory and position of gift card to modify
         position = (int)getIntent().getIntExtra("position", 0);
         inv = (Inventory)getIntent().getSerializableExtra("inventory");
