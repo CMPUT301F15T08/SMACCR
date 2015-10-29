@@ -42,14 +42,14 @@ public class GiftCardTest extends ActivityInstrumentationTestCase2 {
 
     /*
     Category is represented as a integer
-     0=Food-Beverage
-     1=Clothing
-     2=Home-garden
-     3=Electronics
-     4=Department Store(eg. Walmart)
-     5=Services
-     6=Entertainment
-     7=Online Retailers(eg. Amazon)
+     1=Food-Beverage
+     2=Clothing
+     3=Home-garden
+     4=Electronics
+     5=Department Store(eg. Walmart)
+     6=Services
+     7=Entertainment
+     8=Online Retailers(eg. Amazon)
      9=Health-beauty
      10=Other
      */

@@ -6,13 +6,17 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class ItemActivity extends Activity {
 
     Inventory inv;
     int position;
+
+    ItemController ic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +26,17 @@ public class ItemActivity extends Activity {
         //receive inventory and position of gift card to modify
         position = (int)getIntent().getIntExtra("position", 0);
         inv = (Inventory)getIntent().getSerializableExtra("inventory");
+
+        //Get references to UI
         EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
-        itemName.setText(inv.getInvList().get(position).getMerchant());
+        EditText quantity = (EditText)findViewById(R.id.ID_quantity);
+        Spinner qualitySpinner = (Spinner) findViewById(R.id.ID_qualitySpin);
+        Spinner categorySpinner = (Spinner) findViewById(R.id.ID_categorySpin);
+        EditText comments = (EditText)findViewById(R.id.ID_comments);
+        CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
+
+        ic.displayGiftCardInfo(inv, position, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+
 
 
     }
@@ -51,11 +64,19 @@ public class ItemActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+
+        //Get references to UI
+        EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
+        EditText quantity = (EditText)findViewById(R.id.ID_quantity);
+        Spinner qualitySpinner = (Spinner) findViewById(R.id.ID_qualitySpin);
+        Spinner categorySpinner = (Spinner) findViewById(R.id.ID_categorySpin);
+        EditText comments = (EditText)findViewById(R.id.ID_comments);
+        CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
+        //item controller to set the data into inventory
+        inv = ic.setGiftCardInfo(inv,position, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+
         //http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
         //send it back to inventory
-        EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
-        inv.getInvList().get(position).setMerchant(itemName.getText().toString());
-
         Intent intent = new Intent();
         intent.putExtra("ModifiedInventory", inv);
         setResult(RESULT_OK, intent);

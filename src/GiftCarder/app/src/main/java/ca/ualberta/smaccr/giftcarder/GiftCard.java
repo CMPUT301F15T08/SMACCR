@@ -10,9 +10,9 @@ public class GiftCard implements Serializable {
     //This includes value as string
     private String merchant = "New GiftCard";
     private int quantity = 0;
-    //0 = poor, 1 = okay, 2= good, 3 = excellent
+    //3 = poor, 2 = okay, 1= good, 0 = excellent
     private int quality;
-    // 0 = Food-Beverage, ..., 10 = other
+    // 0 = Food-Beverage, ..., 9 = other
     private int category;
     private String comments = "No comments";
     // 1 = shared, 0 = not shared

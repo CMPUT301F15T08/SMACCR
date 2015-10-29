@@ -72,7 +72,7 @@
             <Spinner
                 android:layout_width="255dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/categorySpin"
+                android:id="@+id/ID_categorySpin"
                 android:entries="@array/Category"></Spinner>
 
 
@@ -90,7 +90,8 @@
                 android:layout_height="wrap_content"
                 android:background="#fdfff8"
                 android:hint="Enter ex)2"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:id="@+id/ID_quantity"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,7 +111,7 @@
             <Spinner
                 android:layout_width="255dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/qualitySpin"
+                android:id="@+id/ID_qualitySpin"
                 android:entries="@array/Quality"></Spinner>
 
             <TextView
@@ -127,7 +128,8 @@
                 android:layout_height="wrap_content"
                 android:background="#fdfff8"
                 android:hint= " Enter here! ex)My giftcard is cool :D"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:id ="@+id/ID_comments"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -140,7 +142,8 @@
 
             <CheckBox
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:id="@+id/ID_checkbox"/>
 
 
         </LinearLayout>
