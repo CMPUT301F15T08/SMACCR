@@ -15,14 +15,18 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.EditText;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /*
-Richard and Spencer's branch for Items and Inventory
+MichaelsBrowse merged with Richard and Spencer's branch for Items and Inventory
  */
+
 public class MainActivity extends Activity {
+    public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +56,19 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void invClick(View view_) {
         Intent intent = new Intent(this, InventoryActivity.class);
+        startActivity(intent);
+    }
+
+    public void registerNewUser(View view){
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    public void fIXMElogin(View view){                          //FIXME                                        //FIXME
+        Intent intent = new Intent(this, BrowseActivity.class);
         startActivity(intent);
     }
 

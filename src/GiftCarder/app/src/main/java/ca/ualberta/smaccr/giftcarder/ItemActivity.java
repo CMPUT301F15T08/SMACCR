@@ -17,7 +17,7 @@ public class ItemActivity extends Activity {
 
         GiftCard gc = (GiftCard)getIntent().getSerializableExtra("GiftCard");
 
-        Toast.makeText(getApplicationContext(), gc.getMerchant(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), gc.getMerchant(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
