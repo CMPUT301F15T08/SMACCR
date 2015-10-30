@@ -1,16 +1,30 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.content.Context;
+import android.content.Intent;
+import android.provider.MediaStore;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.io.File;
 
 /**
  * Created by Richard on 2015-10-29.
  * //GiftCard(String merchant, int quantity, int quality, int category, String comments, Boolean shared)
  */
 public class ItemController {
+
+    private File imageFile;
+
+    public void takeAPicture(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, 1);
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+
+
+    }
 
     //Place the gift card's information into the view
     public void displayGiftCardInfo(Inventory inv, int position, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox){

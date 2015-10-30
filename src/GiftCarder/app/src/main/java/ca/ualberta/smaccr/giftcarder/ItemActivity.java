@@ -2,14 +2,24 @@ package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class ItemActivity extends Activity {
 
@@ -85,5 +95,34 @@ public class ItemActivity extends Activity {
         setResult(RESULT_OK, intent);
         finish();
     }
+
+    //https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
+    public void takeGiftCardPic(View menu){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //intent.putExtra(MediaStore.EXTRA_OUTPUT, 1);
+        //intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
+        //setResult(RESULT_OK, intent);
+        if (intent.resolveActivity(getPackageManager())!= null){
+            startActivityForResult(intent, 2);
+        }
+
+    }
+    //https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
+    //Get picture data and put it in photo of giftcard
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {
+            if (resultCode == RESULT_OK){
+                Bundle bundle = new Bundle();
+                bundle = data.getExtras();
+                Bitmap BMP;
+                BMP = (Bitmap)bundle.get("data");
+                ImageView giftcardpic = (ImageView)findViewById(R.id.ID_pictureOfGiftCard);
+                giftcardpic.setImageBitmap(BMP);
+
+            }
+        }
+    }
+
 
 }
