@@ -12,22 +12,16 @@ import android.widget.Toast;
  */
 public class ItemController {
 
+    //Place the gift card's information into the view
     public void displayGiftCardInfo(Inventory inv, int position, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox){
         GiftCard tempcard = inv.getInvList().get(position);
 
-        //Do not set any gift card info if the giftcard is new
-        /*
-        if (tempcard.getMerchant() == "New GiftCard"){
-            return;
-        }
-        */
-        //set gift card data to view
         itemName.setText(tempcard.getMerchant());
         quantity.setText(String.valueOf(tempcard.getQuantity()));
 
-        //SOme weird bug when using spinner it set index out of range sometimes
-        //qualitySpinner.setSelection(tempcard.getQuality());
-        //categorySpinner.setSelection(tempcard.getCategory());
+        categorySpinner.setSelection(tempcard.getCategory(), false);
+        qualitySpinner.setSelection(tempcard.getQuality(), false);
+
         comments.setText(tempcard.getComments());
         checkbox.setChecked(tempcard.getShared());
     }
@@ -48,8 +42,8 @@ public class ItemController {
         tempcard.setShared(checkbox.isChecked());
 
         //SOme weird bug when using spinner it set index out of range sometimes
-        //tempcard.setQuality(qualitySpinner.getSelectedItemPosition());
-        //tempcard.setCategory(categorySpinner.getSelectedItemPosition());
+        tempcard.setQuality(qualitySpinner.getSelectedItemPosition());
+        tempcard.setCategory(categorySpinner.getSelectedItemPosition());
 
 
         inv.getInvList().set(position, tempcard);

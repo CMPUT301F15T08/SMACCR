@@ -8,13 +8,13 @@ import java.io.Serializable;
 public class GiftCard implements Serializable {
 
     //This includes value as string
-    private String merchant = "New GiftCard";
+    private String merchant = "";
     private int quantity = 0;
     //3 = poor, 2 = okay, 1= good, 0 = excellent
     private int quality = 0;
     // 0 = Food-Beverage, ..., 9 = other
     private int category = 0;
-    private String comments = "No comments";
+    private String comments = "";
     // 1 = shared, 0 = not shared
     private Boolean shared = Boolean.FALSE;
 
@@ -60,7 +60,7 @@ public class GiftCard implements Serializable {
     }
 
     public void setQuality(int quality) {
-        this.quality = category;
+        this.quality = quality;
 
     }
 

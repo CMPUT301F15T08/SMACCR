@@ -70,10 +70,11 @@
                 android:textSize="20dp" />
 
             <Spinner
-                android:layout_width="255dp"
+                android:layout_width="204dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/ID_categorySpin"
-                android:entries="@array/Category"></Spinner>
+                android:entries="@array/Category"
+                android:spinnerMode="dialog"></Spinner>
 
 
             <TextView
@@ -109,10 +110,11 @@
                 android:textSize="20dp" />
 
             <Spinner
-                android:layout_width="255dp"
+                android:layout_width="191dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/ID_qualitySpin"
-                android:entries="@array/Quality"></Spinner>
+                android:entries="@array/Quality"
+                android:spinnerMode="dialog"></Spinner>
 
             <TextView
                 android:layout_width="match_parent"
