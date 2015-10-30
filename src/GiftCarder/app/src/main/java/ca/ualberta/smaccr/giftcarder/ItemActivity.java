@@ -16,7 +16,7 @@ public class ItemActivity extends Activity {
     Inventory inv;
     int position;
 
-    ItemController ic;
+    ItemController ic = new ItemController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,8 @@ public class ItemActivity extends Activity {
         EditText comments = (EditText)findViewById(R.id.ID_comments);
         CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
 
-        itemName.setText(inv.getInvList().get(position).getMerchant());
-        //ic.displayGiftCardInfo(inv, position, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+        //itemName.setText(inv.getInvList().get(position).getMerchant());
+        ic.displayGiftCardInfo(inv, position, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
 
 
 
@@ -74,9 +74,9 @@ public class ItemActivity extends Activity {
         EditText comments = (EditText)findViewById(R.id.ID_comments);
         CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
         //item controller to set the data into inventory
-        //inv = ic.setGiftCardInfo(inv,position, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+        inv = ic.setGiftCardInfo(inv,position, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
 
-        inv.getInvList().get(position).setMerchant(itemName.getText().toString());
+        //inv.getInvList().get(position).setMerchant(itemName.getText().toString());
 
         //http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
         //send it back to inventory

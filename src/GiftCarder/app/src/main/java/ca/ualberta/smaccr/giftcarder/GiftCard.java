@@ -36,13 +36,7 @@ public class GiftCard implements Serializable {
     }
 
     public void setCategory(int category) {
-        if ((category <= 10) && (category >= 0)){
-            this.category = category;
-        }
-        //set to -1 if invalid
-        else {
-            this.category = -1;
-        }
+        this.category = category;
     }
 
     public String getComments() {
@@ -66,13 +60,8 @@ public class GiftCard implements Serializable {
     }
 
     public void setQuality(int quality) {
-        if ((quality <= 3) && (quality >= 0)){
-            this.quality = category;
-        }
-        //set to -1 if invalid
-        else {
-            this.quality = -1;
-        }
+        this.quality = category;
+
     }
 
     public int getQuantity() {

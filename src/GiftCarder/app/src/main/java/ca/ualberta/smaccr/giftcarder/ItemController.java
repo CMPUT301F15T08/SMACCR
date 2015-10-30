@@ -1,8 +1,10 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.content.Context;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 /**
  * Created by Richard on 2015-10-29.
@@ -14,14 +16,18 @@ public class ItemController {
         GiftCard tempcard = inv.getInvList().get(position);
 
         //Do not set any gift card info if the giftcard is new
+        /*
         if (tempcard.getMerchant() == "New GiftCard"){
             return;
         }
+        */
         //set gift card data to view
         itemName.setText(tempcard.getMerchant());
-        quantity.setText(tempcard.getQuantity());
-        qualitySpinner.setSelection(tempcard.getQuality());
-        categorySpinner.setSelection(tempcard.getCategory());
+        quantity.setText(String.valueOf(tempcard.getQuantity()));
+
+        //SOme weird bug when using spinner it set index out of range sometimes
+        //qualitySpinner.setSelection(tempcard.getQuality());
+        //categorySpinner.setSelection(tempcard.getCategory());
         comments.setText(tempcard.getComments());
         checkbox.setChecked(tempcard.getShared());
     }
@@ -31,13 +37,26 @@ public class ItemController {
         GiftCard tempcard = inv.getInvList().get(position);
 
         tempcard.setMerchant(itemName.getText().toString());
-        tempcard.setQuantity(Integer.parseInt(quantity.getText().toString()));
+
+        //If invalid input ie not a integer, input zero
+        try {
+            tempcard.setQuantity(Integer.parseInt(quantity.getText().toString()));
+        }catch (NumberFormatException e){
+            tempcard.setQuantity(0);
+        }
         tempcard.setComments(comments.getText().toString());
         tempcard.setShared(checkbox.isChecked());
-        tempcard.setQuality(qualitySpinner.getSelectedItemPosition());
-        tempcard.setCategory(categorySpinner.getSelectedItemPosition());
+
+        //SOme weird bug when using spinner it set index out of range sometimes
+        //tempcard.setQuality(qualitySpinner.getSelectedItemPosition());
+        //tempcard.setCategory(categorySpinner.getSelectedItemPosition());
+
 
         inv.getInvList().set(position, tempcard);
         return inv;
     }
+
+
+
+
 }
