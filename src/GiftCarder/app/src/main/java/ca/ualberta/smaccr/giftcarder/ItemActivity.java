@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -122,6 +123,20 @@ public class ItemActivity extends Activity {
 
             }
         }
+    }
+
+    public void setViewStatus(View menu){
+        EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
+        EditText quantity = (EditText)findViewById(R.id.ID_quantity);
+        Spinner qualitySpinner = (Spinner) findViewById(R.id.ID_qualitySpin);
+        Spinner categorySpinner = (Spinner) findViewById(R.id.ID_categorySpin);
+        EditText comments = (EditText)findViewById(R.id.ID_comments);
+        CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
+        Button viewstatus = (Button)findViewById(R.id.ID_viewStatus);
+        Button offerbutton = (Button)findViewById(R.id.ID_MakeOfferButton);
+
+        ic.setViewMode(itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox, viewstatus, offerbutton);
+
     }
 
 
