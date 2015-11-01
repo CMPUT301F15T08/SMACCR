@@ -6,21 +6,48 @@ import java.io.Serializable;
  * Created by Richard on 2015-10-24.
  */
 public class GiftCard implements Serializable {
-    //This includes value as string
-    private String merchant = "New GiftCard";
 
-    private int quantity;
+    //the monetary value of the giftcard
+    private double value;
 
-    //0 = poor, 1 = okay, 2= good, 3 = excellent
-    private int quality;
-
-    // 0 = Food-Beverage, ..., 10 = other
-    private int category;
-    private String comments;
-
+    //Merchant includes only the name of the card
+    private String merchant = "";
+    private int quantity = 0;
+    //3 = poor, 2 = okay, 1= good, 0 = excellent
+    private int quality = 0;
+    // 0 = Food-Beverage, ..., 9 = other
+    private int category = 0;
+    private String comments = "";
     // 1 = shared, 0 = not shared
-    private Boolean shared;
+    private Boolean shared = Boolean.FALSE;
 
+    public GiftCard() {
+    }
+
+    public GiftCard(String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
+        this.merchant = merchant;
+        this.quantity = quantity;
+        this.quality = quality;
+        this.category = category;
+        this.comments = comments;
+        this.shared = shared;
+    }
+
+    //Check valid category and quality
+
+    public boolean checkCategory(){
+        if ((this.getCategory() >= 0) && (this.getCategory() < 11)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkQuality(int index){
+        if ((this.getQuality() >= 0) && (this.getQuality() < 4)) {
+            return true;
+        }
+        return false;
+    }
 
     //Getters and Setters
     public int getCategory() {
@@ -53,6 +80,7 @@ public class GiftCard implements Serializable {
 
     public void setQuality(int quality) {
         this.quality = quality;
+
     }
 
     public int getQuantity() {
@@ -69,5 +97,13 @@ public class GiftCard implements Serializable {
 
     public void setShared(Boolean shared) {
         this.shared = shared;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 }

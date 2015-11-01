@@ -25,6 +25,7 @@ public class InventoryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
+
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
 
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -32,10 +33,13 @@ public class InventoryActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
 
-                // Switch to item activity and send selected giftcard data
+                // Switch to item activity and send inventory and position of giftcard to change
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
-                intent.putExtra("GiftCard", inv.getInvList().get(position));
-                startActivity(intent);
+                //intent.putExtra("GiftCard", inv.getInvList().get(position));
+                intent.putExtra("position", position);
+                intent.putExtra("inventory", inv);
+                //startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -104,9 +108,6 @@ public class InventoryActivity extends Activity {
         GiftCard gc = new GiftCard();
         inv.addGiftCard(gc);
 
-        // display size
-        // Toast.makeText(getApplicationContext(), Integer.toString(inv.getSize()),Toast.LENGTH_SHORT).show();
-
         // Get ArrayList of Strings to display in Adapter ListView
         ArrayList<GiftCard> tempArray = inv.getInvList();
         // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
@@ -116,16 +117,41 @@ public class InventoryActivity extends Activity {
             GiftCardNames.add(0, tempArray.get(index).getMerchant());
         }
 
-        // Display list of names of giftcards
-        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
-        ArrayAdapter<String> displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
-        inventorylistID.setAdapter(displayAdapter);
-
-        // Switch to item activity and send selected giftcard data
+        //Switch to item activity and send selected giftcard data
         Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
-        intent.putExtra("GiftCard", inv.getInvList().get(0));
-        startActivity(intent);
+        intent.putExtra("position", 0);
+        intent.putExtra("inventory", inv);
+        startActivityForResult(intent, 1);
 
     }
 
-}
+    /*
+    Retrieved oct 28 2015
+    http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
+     */
+
+    //Grab modified inventory back from giftcard, and reset the array adapter
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
+                // Get ArrayList of Strings to display in Adapter ListView
+                ArrayList<GiftCard> tempArray = inv.getInvList();
+                // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
+
+                ArrayList<String> GiftCardNames = new ArrayList<String>();
+                for (int index = 0; index <tempArray.size(); index++){
+                    GiftCardNames.add("$"+tempArray.get(index).getValue() +" " + tempArray.get(index).getMerchant());
+                }
+
+                // Display list of names of giftcards
+                ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+                ArrayAdapter<String> displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
+                inventorylistID.setAdapter(displayAdapter);
+
+            }
+        }
+    }
+
+    }

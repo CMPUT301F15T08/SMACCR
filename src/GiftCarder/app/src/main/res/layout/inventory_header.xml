@@ -5,7 +5,7 @@
     <ImageView
         android:layout_width="143dp"
         android:layout_height="143dp"
-        android:id="@+id/imageView"
+        android:id="@+id/ID_pictureOfGiftCard"
         android:src="@drawable/user_icon"
         android:layout_margin="10dp"
         android:contentDescription="@string/icon_description" />
@@ -20,7 +20,7 @@
         android:textSize="20sp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignBottom="@+id/ID_pictureOfGiftCard"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/imageView" />
+        android:layout_toEndOf="@+id/ID_pictureOfGiftCard" />
 </RelativeLayout>

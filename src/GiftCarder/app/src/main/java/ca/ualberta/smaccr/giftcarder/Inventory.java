@@ -1,16 +1,17 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Richard on 2015-10-24.
  * Refactored and maintained by Spencer from 2015-10-28
  */
-public class Inventory {
+public class Inventory implements Serializable {
     ArrayList<GiftCard> inv = new ArrayList<GiftCard>();
 
     public void addGiftCard(GiftCard gc){
-        inv.add(gc);
+        inv.add(0, gc);
     }
 
     public void deleteGiftCard(GiftCard gc){
@@ -26,8 +27,6 @@ public class Inventory {
     public ArrayList<GiftCard> getInvList() {
         return inv;
     }
-
-    public Inventory getInv() { return this; }
 
     public void setInv(ArrayList<GiftCard> inv) {
         this.inv = inv;
