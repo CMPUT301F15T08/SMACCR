@@ -52,28 +52,65 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Item Name"
+                android:text="Gift Card&apos;s Monetary Value in dollars"
                 android:background="#938f90"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                android:gravity="left"/>
+                android:gravity="left"
+                />
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="330dp"
+                    android:layout_height="wrap_content"
+                    android:background="#fdfff8"
+                    android:hint="Enter dollar, cent ex) 5.99"
+                    android:textSize="20dp"
+                    android:id="@+id/ID_item_value"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/editText" />
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:background="#fdfff8"
+                    android:hint="$"
+                    android:textSize="20dp"
+                    android:textColor="#2bff00"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/editText" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gift Card&apos;s Name"
+                android:background="#938f90"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:gravity="left"
+                />
 
             <EditText
                 android:layout_width="367dp"
                 android:layout_height="wrap_content"
                 android:background="#fdfff8"
-                android:hint="Enter name ex) $50 subway card"
+                android:hint="Enter name ex)subway card"
                 android:textSize="20dp"
                 android:id="@+id/ID_item_Name" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Category"
+                android:text="Gift Card&apos;s Category"
                 android:background="#938f90"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                android:gravity="left"/>
+                android:gravity="left"
+                 />
 
             <TextView
                 android:layout_width="367dp"
@@ -95,11 +132,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Quantity"
+                android:text="Quantity of Gift Cards"
                 android:background="#938f90"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                android:gravity="left"/>
+                android:gravity="left"
+                />
 
             <EditText
                 android:layout_width="367dp"
@@ -111,11 +149,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Quality"
+                android:text="Gift Card Quality"
                 android:background="#938f90"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                android:gravity="left"/>
+                android:gravity="left"
+                />
 
             <TextView
                 android:layout_width="367dp"
@@ -136,7 +175,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Comments"
+                android:text="Optional Comments"
                 android:background="#938f90"
                 android:textColor="#000000"
                 android:textSize="20dp"
@@ -146,14 +185,14 @@
                 android:layout_width="367dp"
                 android:layout_height="wrap_content"
                 android:background="#fdfff8"
-                android:hint= " Enter here! ex)My giftcard is cool :D"
+                android:hint= "Ex)My giftcard is cool :D"
                 android:textSize="20dp"
                 android:id ="@+id/ID_comments"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Make Public"
+                android:text="Make Public (allow others to see this gift card)"
                 android:background="#938f90"
                 android:textColor="#000000"
                 android:textSize="20dp"
@@ -164,6 +203,18 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ID_checkbox"
                 android:checked="false" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="SAVE Gift Card INFO"
+                android:id="@+id/ID_savegiftcard"
+                android:layout_gravity="right"
+                android:background="#ffb700"
+                android:textSize="20dp"
+                android:layout_alignParentTop="true"
+                android:onClick="saveGiftCardInfo"
+                android:visibility="visible"/>
 
 
         </LinearLayout>

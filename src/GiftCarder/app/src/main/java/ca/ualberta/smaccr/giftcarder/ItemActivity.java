@@ -39,6 +39,7 @@ public class ItemActivity extends Activity {
         inv = (Inventory)getIntent().getSerializableExtra("inventory");
 
         //Get references to UI
+        EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
         EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
         EditText quantity = (EditText)findViewById(R.id.ID_quantity);
         Spinner qualitySpinner = (Spinner) findViewById(R.id.ID_qualitySpin);
@@ -47,7 +48,9 @@ public class ItemActivity extends Activity {
         CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
 
         //itemName.setText(inv.getInvList().get(position).getMerchant());
-        ic.displayGiftCardInfo(inv, position, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+        ic.displayGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+
+        Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbuton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
 
 
 
@@ -74,10 +77,9 @@ public class ItemActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-
+    public void saveGiftCardInfo(View menu){
         //Get references to UI
+        EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
         EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
         EditText quantity = (EditText)findViewById(R.id.ID_quantity);
         Spinner qualitySpinner = (Spinner) findViewById(R.id.ID_qualitySpin);
@@ -85,19 +87,26 @@ public class ItemActivity extends Activity {
         EditText comments = (EditText)findViewById(R.id.ID_comments);
         CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
         //item controller to set the data into inventory
-        inv = ic.setGiftCardInfo(inv,position, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+        inv = ic.setGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
 
-        //inv.getInvList().get(position).setMerchant(itemName.getText().toString());
 
         //http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
-        //send it back to inventory
+        //send the modified inventory back to inventory activity
         Intent intent = new Intent();
         intent.putExtra("ModifiedInventory", inv);
         setResult(RESULT_OK, intent);
         finish();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        //Back button disabled for now as if owner clicks back button, empty giftcard is created and pop up once saved giftcard is created
+    }
+
+
     //https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
+    //barebones right now
     public void takeGiftCardPic(View menu){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //intent.putExtra(MediaStore.EXTRA_OUTPUT, 1);
@@ -126,6 +135,9 @@ public class ItemActivity extends Activity {
     }
 
     public void setViewStatus(View menu){
+
+        //UI references
+        EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
         EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
         EditText quantity = (EditText)findViewById(R.id.ID_quantity);
         Spinner qualitySpinner = (Spinner) findViewById(R.id.ID_qualitySpin);
@@ -134,8 +146,10 @@ public class ItemActivity extends Activity {
         CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
         Button viewstatus = (Button)findViewById(R.id.ID_viewStatus);
         Button offerbutton = (Button)findViewById(R.id.ID_MakeOfferButton);
+        Button savebutton = (Button)findViewById(R.id.ID_savegiftcard);
 
-        ic.setViewMode(itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox, viewstatus, offerbutton);
+        //Changing the viewing mode, example user view mode can edit, borrower can only see
+        ic.setViewMode(itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox, viewstatus, offerbutton, savebutton);
 
     }
 

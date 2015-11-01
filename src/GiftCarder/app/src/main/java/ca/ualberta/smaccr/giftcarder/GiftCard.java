@@ -7,7 +7,10 @@ import java.io.Serializable;
  */
 public class GiftCard implements Serializable {
 
-    //This includes value as string
+    //the monetary value of the giftcard
+    private double value;
+
+    //Merchant includes only the name of the card
     private String merchant = "";
     private int quantity = 0;
     //3 = poor, 2 = okay, 1= good, 0 = excellent
@@ -94,5 +97,13 @@ public class GiftCard implements Serializable {
 
     public void setShared(Boolean shared) {
         this.shared = shared;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 }

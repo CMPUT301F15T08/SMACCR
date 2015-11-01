@@ -142,7 +142,7 @@ public class InventoryActivity extends Activity {
 
                 ArrayList<String> GiftCardNames = new ArrayList<String>();
                 for (int index = 0; index <tempArray.size(); index++){
-                    GiftCardNames.add(tempArray.get(index).getMerchant());
+                    GiftCardNames.add("$"+tempArray.get(index).getValue() +" " + tempArray.get(index).getMerchant());
                 }
 
                 // Display list of names of giftcards

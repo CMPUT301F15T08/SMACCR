@@ -33,28 +33,50 @@ public class ItemController {
     }
 
     //Place the gift card's information into the view
-    public void displayGiftCardInfo(Inventory inv, int position, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
+    public void displayGiftCardInfo(Inventory inv, int position, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
         GiftCard tempcard = inv.getInvList().get(position);
 
+        //Show hint if value is equal to 0
+        itemValue.setText(String.valueOf(tempcard.getValue()));
+        if (tempcard.getValue() == 0.00){
+            //blank string will show hint in edittext widget
+            itemValue.setText("");
+        }
+        else {itemValue.setText(String.valueOf(tempcard.getValue()));}
+
         itemName.setText(tempcard.getMerchant());
+
         quantity.setText(String.valueOf(tempcard.getQuantity()));
+        //Show hint if value is equal to 0
+        if (tempcard.getQuantity() == 0){
+            //blank string will show hint in edittext widget
+            quantity.setText("");
+        }
+        else {quantity.setText(String.valueOf(tempcard.getQuantity()));}
+
 
         categorySpinner.setSelection(tempcard.getCategory(), false);
         qualitySpinner.setSelection(tempcard.getQuality(), false);
-
         comments.setText(tempcard.getComments());
         checkbox.setChecked(tempcard.getShared());
     }
 
     //Set inventory with modifed gift card item
-    public Inventory setGiftCardInfo(Inventory inv, int position, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
+    public Inventory setGiftCardInfo(Inventory inv, int position, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
         GiftCard tempcard = inv.getInvList().get(position);
+
+        //If invalid dollar, cent amount then set to zero for now!
+        try {
+            tempcard.setValue(Double.parseDouble(itemValue.getText().toString().replaceAll("\\s+", "")));
+        } catch (NumberFormatException e) {
+            tempcard.setValue(0);
+        }
 
         tempcard.setMerchant(itemName.getText().toString());
 
-        //If invalid input ie not a integer, input zero
+        //If invalid input ie not a integer, input zero for now!
         try {
-            tempcard.setQuantity(Integer.parseInt(quantity.getText().toString()));
+            tempcard.setQuantity(Integer.parseInt(quantity.getText().toString().replaceAll("\\s+", "")));
         } catch (NumberFormatException e) {
             tempcard.setQuantity(0);
         }
@@ -70,8 +92,9 @@ public class ItemController {
         return inv;
     }
 
-    public void setViewMode(EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox, Button viewStatus, Button offerButton) {
+    public void setViewMode(EditText itemValue ,EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox, Button viewStatus, Button offerButton, Button savebutton) {
 
+        itemValue.setEnabled(viewMode);
         itemName.setEnabled(viewMode);
         qualitySpinner.setEnabled(viewMode);
         categorySpinner.setEnabled(viewMode);
@@ -82,13 +105,19 @@ public class ItemController {
         if (viewMode){viewMode = false;
         viewStatus.setText("View as Public");
             offerButton.setVisibility(View.GONE);
+            savebutton.setVisibility(View.VISIBLE);
             itemName.setTextColor(Color.BLACK);
+            itemValue.setTextColor(Color.BLACK);
+            quantity.setTextColor(Color.BLACK);
         }
         else {
             viewMode = true;
             viewStatus.setText("View as Owner");
             offerButton.setVisibility(View.VISIBLE);
+            savebutton.setVisibility(View.GONE);
             itemName.setTextColor(Color.RED);
+            itemValue.setTextColor(Color.RED);
+            quantity.setTextColor(Color.RED);
         }
     }
 
