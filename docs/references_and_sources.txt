@@ -6,3 +6,9 @@ https://www.iconfinder.com/icons/722651/explore_find_magnifier_search_icon#size=
 
 # User icon source
 https://www.iconfinder.com/icons/722644/account_people_profile_user_icon#size=128
+
+# Add icon source
+https://www.iconfinder.com/icons/370092/add_create_new_plus_icon#size=512
+
+# Creative Commons (Attribution 3.0 Unported)
+W3 Creative Lab, http://creativecommons.org/licenses/by/3.0/legalcode

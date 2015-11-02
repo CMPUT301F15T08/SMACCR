@@ -6,35 +6,21 @@
     <string name="search">Search</string>
     <string name="newNotiNum">0</string>
     <string name="title_activity_noti_full2">NotiFull2Activity</string>
-    <string name="title_activity_item">item</string>
-    <string name="title_activity_inventory">inventory</string>
-    <string name="icon_description">Icon</string>
-
-
-    <!-- ITEM DROP DOWN MENU STUFF -->
-    <string-array name="Category">
-        <item>Food-Beverage</item>
-        <item>Clothing</item>
-        <item>Home-garden</item>
-        <item>Electronics</item>
-        <item>Department Store(eg. Walmart)</item>
-        <item>Services</item>
-        <item>Entertainment</item>
-        <item>Online Retailers(eg. Amazon)</item>
-        <item>Health-beauty</item>
-        <item>Other</item>
-    </string-array>
-
-    <string-array name="Quality">
-        <item>Excellent</item>
-        <item>Good</item>
-        <item>Okay</item>
-        <item>Poor</item>
-    </string-array>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="addcard">Add New GiftCard</string>
-    <string name="usericon">UserIcon</string>
-    <!-- ITEM DROP DOWN MENU STUFF DONE -->
-
-
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_city">Enter city</string>
+    <string name="enter_phone">Enter phone</string>
+    <string name="enter_email">Enter email</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_phone_digits_only">Enter phone (digits only)</string>
+    <string name="enter_phone_format">Enter phone: ###-###-####</string>
+    <string name="title_activity_user_profile">UserProfile</string>
+    <string name="username">Username</string>
+    <string name="city">City</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
 </resources>
