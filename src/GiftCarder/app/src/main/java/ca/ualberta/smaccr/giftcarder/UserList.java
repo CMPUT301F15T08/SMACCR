@@ -14,8 +14,34 @@ public class UserList {
         userList.add(user);
     }
 
-    public boolean isEmpty(){
+    public User getUser(String userName) {
+
+        for (User user : userList ) {
+            if (user.getUsername() == userName) {
+                return user;
+            }
+        }
+
+        return null;
+    }
+
+    // gets username of User at given index
+    public String getUsername(int index) {
+        return userList.get(index).getUsername();
+    }
+
+    public boolean isEmpty() {
         return userList.isEmpty();
+    }
+
+    public int getSize() {
+        return userList.size();
+    }
+
+    public void clearList() {
+        if (!userList.isEmpty()) {
+            userList.clear();
+        }
     }
 
 }

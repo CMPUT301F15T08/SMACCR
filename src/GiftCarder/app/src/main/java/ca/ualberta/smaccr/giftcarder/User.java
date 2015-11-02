@@ -1,9 +1,11 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import java.io.Serializable;
+
 /**
  * Created by Carin on 10/25/2015.
  */
-public class User {
+public class User implements Serializable {
     private String username;
     private String city;
     private String phone;
