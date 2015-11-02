@@ -24,8 +24,29 @@ import java.util.ArrayList;
 
 public class ItemActivity extends Activity {
 
-    Inventory inv;
+    //For UI testing
+    private ItemActivity activity = this;
+    private EditText itemName;
+    private EditText itemValue;
+    private EditText quantity;
+    private Spinner qualitySpinner;
+    private Spinner categorySpinner;
+    private EditText comments;
+    private CheckBox checkbox;
+
+    public Inventory inv;
     int position;
+
+    //getters for UI testing
+    public EditText getItemName() {return itemName;}
+    public EditText getItemValue() {return itemValue;}
+    public EditText getQuantity() {return quantity;}
+    public Spinner getQualitySpinner() {return qualitySpinner;}
+    public Spinner getCategorySpinner() {return categorySpinner;}
+    public EditText getComments() {return comments;}
+    public CheckBox getCheckbox() {return checkbox;}
+    public Inventory getInv() {return inv;}
+    public int getPosition() {return position;}
 
     ItemController ic = new ItemController();
 
