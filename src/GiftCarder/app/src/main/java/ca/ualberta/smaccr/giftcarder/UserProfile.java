@@ -25,7 +25,7 @@ public class UserProfile extends ActionBarActivity {
 
         User user = (User) getIntent().getExtras().getSerializable("user");
 
-        tvUsername.setText(user.getUsername());
+        tvUsername.setText("user.getUsername()");
         tvCity.setText("user.getCity()");
         tvPhone.setText("user.getPhone()");
         tvEmail.setText("user.getEmail()");
