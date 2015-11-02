@@ -32,6 +32,8 @@
         <item>Poor</item>
     </string-array>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="addcard">Add New GiftCard</string>
+    <string name="usericon">UserIcon</string>
     <!-- ITEM DROP DOWN MENU STUFF DONE -->
 
 

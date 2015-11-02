@@ -43,7 +43,7 @@ public class InventoryActivity extends Activity {
 
         tabSpec = tabHost.newTabSpec("Friends");
         tabSpec.setContent(R.id.tabFriends);
-        // Text on second tab:
+        // Text on third tab:
         tabSpec.setIndicator("Friends");
         tabHost.addTab(tabSpec);
 

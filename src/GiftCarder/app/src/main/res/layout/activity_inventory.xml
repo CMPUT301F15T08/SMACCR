@@ -36,8 +36,6 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true"
                         android:id="@+id/gridLayout">
 
 
@@ -45,20 +43,17 @@
                             android:layout_width="143dp"
                             android:layout_height="143dp"
                             android:id="@+id/ID_pictureOfGiftCard"
-                            android:layout_row="0"
-                            android:layout_column="0"
                             android:src="@drawable/user_icon"
                             android:layout_alignParentTop="true"
-                            android:layout_alignParentStart="true" />
+                            android:layout_alignParentStart="true"
+                            android:contentDescription="@string/usericon" />
 
 
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Add New GiftCard"
+                            android:text="@string/addcard"
                             android:id="@+id/button2"
-                            android:layout_row="1"
-                            android:layout_column="0"
                             android:onClick="AddNewGiftCard"
                             android:layout_gravity="center_vertical"
                             android:layout_above="@+id/inventoryListViewID"
@@ -69,9 +64,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/inventoryListViewID"
-                            android:layout_row="2"
-                            android:layout_column="0"
-                            android:layout_columnSpan="2"
                             android:layout_below="@+id/ID_pictureOfGiftCard"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentBottom="true" />
