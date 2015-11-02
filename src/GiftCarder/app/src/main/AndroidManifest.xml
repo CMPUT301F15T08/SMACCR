@@ -20,6 +20,10 @@
             android:name=".NotiFullActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".TradeRequestActivity"
+            android:label="@string/title_activity_trade_request" >
+        </activity>
     </application>
 
 </manifest>
