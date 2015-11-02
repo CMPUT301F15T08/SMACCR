@@ -14,8 +14,8 @@ public class Inventory implements Serializable {
         inv.add(0, gc);
     }
 
-    public void deleteGiftCard(GiftCard gc){
-        inv.remove(gc);
+    public void deleteGiftCard(int gcIndex){
+        inv.remove(gcIndex);
     }
 
     public int getSize(){

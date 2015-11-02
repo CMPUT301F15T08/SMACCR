@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class InventoryActivity extends Activity {
 
     Inventory inv = new Inventory();
+    ArrayAdapter<String> displayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,6 @@ public class InventoryActivity extends Activity {
         inventorylistID.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final AdapterView<?> par = parent;
                 final int pos = position;
 
                 Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
@@ -85,7 +85,9 @@ public class InventoryActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // http://stackoverflow.com/questions/7073577/how-to-get-object-from-listview-in-setonitemclicklistener-in-android
-                        // inv.deleteGiftCard((GiftCard)par.getAdapter().getItem(pos));
+                        inv.deleteGiftCard(pos);
+                        updateInvList(inv);
+
                         dialog.dismiss();
                     }
                 });
@@ -117,11 +119,6 @@ public class InventoryActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void invClick(View view) {
-        Intent intent = new Intent(this, InventoryActivity.class);
-        startActivity(intent);
     }
 
     // OnClick to add GiftCard
@@ -158,22 +155,25 @@ public class InventoryActivity extends Activity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
-                // Get ArrayList of Strings to display in Adapter ListView
-                ArrayList<GiftCard> tempArray = inv.getInvList();
-                // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
-
-                ArrayList<String> GiftCardNames = new ArrayList<String>();
-                for (int index = 0; index <tempArray.size(); index++){
-                    GiftCardNames.add("$"+tempArray.get(index).getValue() +" " + tempArray.get(index).getMerchant());
-                }
-
-                // Display list of names of giftcards
-                ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
-                ArrayAdapter<String> displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
-                inventorylistID.setAdapter(displayAdapter);
-
+                updateInvList(inv);
             }
         }
     }
 
+    void updateInvList(Inventory inv) {
+        // Get ArrayList of Strings to display in Adapter ListView
+        ArrayList<GiftCard> tempArray = inv.getInvList();
+        // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
+
+        ArrayList<String> GiftCardNames = new ArrayList<String>();
+        for (int index = 0; index <tempArray.size(); index++){
+            GiftCardNames.add("$ "+tempArray.get(index).getValue() + " " + tempArray.get(index).getMerchant());
+        }
+
+        // Display list of names of giftcards
+        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+        displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
+        inventorylistID.setAdapter(displayAdapter);
     }
+
+}
