@@ -6,4 +6,6 @@
     <string name="search">Search</string>
     <string name="newNotiNum">0</string>
     <string name="title_activity_noti_full2">NotiFull2Activity</string>
+    <string name="title_activity_friend_list">FriendListActivity</string>
+    <string name="title_activity_settings_view">SettingsView</string>
 </resources>
