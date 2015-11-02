@@ -52,10 +52,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Gift Card&apos;s Monetary Value in dollars"
+                android:text="value"
                 android:background="#938f90"
                 android:textColor="#000000"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:gravity="left"
                 />
 
@@ -67,8 +67,8 @@
                     android:layout_width="330dp"
                     android:layout_height="wrap_content"
                     android:background="#fdfff8"
-                    android:hint="Enter dollar, cent ex) 5.99"
-                    android:textSize="20dp"
+                    android:hint="Input Giftcard value"
+                    android:textSize="20sp"
                     android:id="@+id/ID_item_value"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/editText" />
@@ -87,10 +87,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Gift Card&apos;s Name"
+                android:text="Name"
                 android:background="#938f90"
                 android:textColor="#000000"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:gravity="left"
                 />
 
@@ -98,8 +98,8 @@
                 android:layout_width="367dp"
                 android:layout_height="wrap_content"
                 android:background="#fdfff8"
-                android:hint="Enter name ex)subway card"
-                android:textSize="20dp"
+                android:hint="Merchant"
+                android:textSize="20sp"
                 android:id="@+id/ID_item_Name" />
 
             <TextView

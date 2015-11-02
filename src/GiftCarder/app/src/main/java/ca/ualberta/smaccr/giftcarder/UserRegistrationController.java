@@ -42,6 +42,7 @@ public class UserRegistrationController {
         String phone = convertToString(etPhone);
         String email = convertToString(etEmail);
 
+
         user.addUsername(username);
         user.addCity(city);
         user.addPhone(phone);

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class InventoryActivity extends Activity {
 
-    Inventory inv = new Inventory();
+    Inventory inv;
     ArrayAdapter<String> displayAdapter;
 
     @Override
@@ -50,6 +50,16 @@ public class InventoryActivity extends Activity {
 
 
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+
+        Intent intent = getIntent();
+        String username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
+        UserRegistrationController urc = new UserRegistrationController();
+        User user = urc.getUser(username);
+
+        Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+
+        inv = user.getInv();
+        // updateInvList(inv);
 
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

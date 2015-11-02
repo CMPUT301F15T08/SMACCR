@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -48,8 +47,8 @@ public class RegisterActivity extends ActionBarActivity {
             urc.addUser(etUsername, etCity, etPhone, etEmail);
             //Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
 
-            /* temporarily start UserProfile activity -> should start Inventory */
-            Intent intent = new Intent(this, UserProfile.class);
+            /* temporarily start UserProfileActivity activity -> should start Inventory */
+            Intent intent = new Intent(this, UserProfileActivity.class);
             String username = etUsername.getText().toString();
             intent.putExtra(EXTRA_USERNAME, username);
             startActivity(intent);

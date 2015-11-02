@@ -14,6 +14,7 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UserProfile extends ActionBarActivity {
+public class UserProfileActivity extends Activity {
 
     EditText etUsername;
     EditText etCity;

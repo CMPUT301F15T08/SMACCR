@@ -1,5 +1,6 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,7 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
 
     @Override
@@ -38,12 +39,12 @@ public class MainActivity extends ActionBarActivity {
 
         if (Validation.hasText(etUsername)) {
             if (urc.checkForUser(username)) {
-            /* temporarily start UserProfile activity -> should start Inventory */
-                Intent intent = new Intent(this, UserProfile.class);
+            /* temporarily start UserProfileActivity activity -> should start Inventory */
+                Intent intent = new Intent(this, InventoryActivity.class);
                 intent.putExtra(EXTRA_USERNAME, username);
                 startActivity(intent);
 
-            }else {
+            } else {
                 Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
 
             }

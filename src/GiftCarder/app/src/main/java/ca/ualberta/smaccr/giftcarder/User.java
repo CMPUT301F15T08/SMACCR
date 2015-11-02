@@ -10,6 +10,11 @@ public class User {
     private String city;
     private String phone;
     private String email;
+    private Inventory inv;
+
+    public void User() {
+        this.inv = new Inventory();
+    }
 
     public void addUsername(String username) {
         this.username = username;
@@ -43,4 +48,7 @@ public class User {
         return email;
     }
 
+    public Inventory getInv() {
+        return this.inv;
+    }
 }

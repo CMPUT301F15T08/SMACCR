@@ -21,8 +21,16 @@
             android:label="Register" >
         </activity>
         <activity
-            android:name=".UserProfile"
+            android:name=".UserProfileActivity"
             android:label="User Profile" >
+        </activity>
+        <activity
+        android:name=".InventoryActivity"
+        android:label="Inventory" >
+        </activity>
+        <activity
+            android:name=".ItemActivity"
+            android:label="Item" >
         </activity>
     </application>
 
