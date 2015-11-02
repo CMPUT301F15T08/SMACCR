@@ -67,7 +67,7 @@ public class Validation {
 
     // return true if username is unique
     public static boolean uniqueUsername(EditText editText, UserList userList) {
-        String userName = editText.getText().toString().trim();
+        String username = editText.getText().toString().trim();
         editText.setError(null);
 
         if (!hasText(editText)) {
@@ -79,7 +79,7 @@ public class Validation {
         }
 
         for (int i = 0; i < userList.getSize(); i+=1) {
-            if (userList.getUsername(i).equals(userName)) {
+            if (userList.getUsername(i).equals(username)) {
                 editText.setError(USERNAME_MSG);
                 return false;
             }

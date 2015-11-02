@@ -4,39 +4,63 @@
  * Android Developers, http://developer.android.com/training/basics/firstapp/starting-activity.html,
  * retrieved 11/02/2015
  *
+ * MSI, http://stackoverflow.com/questions/4127725/how-can-i-remove-a-button-or-make-it-
+ * invisible-in-android, retrieved 11/02/15
+ *
+ * Sean Android, http://stackoverflow.com/questions/4297763/disabling-of-edittext-in-android,
+ * retrieved 11/02/15
  */
 
 package ca.ualberta.smaccr.giftcarder;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class UserProfile extends ActionBarActivity {
+
+    EditText etUsername;
+    EditText etCity;
+    EditText etPhone;
+    EditText etEmail;
+    String username;
+    UserRegistrationController urc = new UserRegistrationController();
+    private MenuItem item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        TextView tvUsername = (TextView) findViewById(R.id.usernameTextView);
-        TextView tvCity = (TextView) findViewById(R.id.cityTextView);
-        TextView tvPhone = (TextView) findViewById(R.id.phoneTextView);
-        TextView tvEmail = (TextView) findViewById(R.id.emailTextView);
+        etUsername = (EditText) findViewById(R.id.usernameTextView);
+        etCity = (EditText) findViewById(R.id.cityTextView);
+        etPhone = (EditText) findViewById(R.id.phoneTextView);
+        etEmail = (EditText) findViewById(R.id.emailTextView);
 
         Intent intent = getIntent();
-        String username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
+        username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
 
-        UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
 
-        tvUsername.setText(username);
-        tvCity.setText(user.getCity());
-        tvPhone.setText(user.getPhone());
-        tvEmail.setText(user.getEmail());
+        // Set text fields
+        etUsername.setText(username);
+        etCity.setText(user.getCity());
+        etPhone.setText(user.getPhone());
+        etEmail.setText(user.getEmail());
+
+        // Disable editing
+        etUsername.setFocusable(false);
+        etCity.setFocusable(false);
+        etPhone.setFocusable(false);
+        etEmail.setFocusable(false);
     }
 
     @Override
@@ -48,6 +72,7 @@ public class UserProfile extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -55,9 +80,53 @@ public class UserProfile extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.edit_profile) {
+            // Make menu (edit option) invisible
+            this.item = item;
+            this.item.setVisible(false);
+
+            User user = urc.getUser(username);
+
+            Button saveButton = (Button)findViewById(R.id.saveButton);
+            saveButton.setVisibility(View.VISIBLE);
+
+            etUsername = (EditText) findViewById(R.id.usernameTextView);
+            etCity = (EditText) findViewById(R.id.cityTextView);
+            etPhone = (EditText) findViewById(R.id.phoneTextView);
+            etEmail = (EditText) findViewById(R.id.emailTextView);
+
+            // Make editable
+            etCity.setFocusableInTouchMode(true);
+            etPhone.setFocusableInTouchMode(true);
+            etEmail.setFocusableInTouchMode(true);
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onSaveButtonClick(View view){
+        etCity = (EditText) findViewById(R.id.cityTextView);
+        etPhone = (EditText) findViewById(R.id.phoneTextView);
+        etEmail = (EditText) findViewById(R.id.emailTextView);
+
+        if (urc.validateEditedFields(etCity, etPhone, etEmail)) {
+
+            urc.editUser(username, etCity, etPhone, etEmail);
+
+            etCity.setFocusable(false);
+            etPhone.setFocusable(false);
+            etEmail.setFocusable(false);
+
+            // Make menu (edit option) visible
+            this.item.setVisible(true);
+
+            Button saveButton = (Button)findViewById(R.id.saveButton);
+            saveButton.setVisibility(View.INVISIBLE);
+
+            Toast.makeText(this, "Changes saved", Toast.LENGTH_SHORT).show();
+        }
+        else
+            Toast.makeText(this, "Form contains error", Toast.LENGTH_LONG).show();
     }
 }

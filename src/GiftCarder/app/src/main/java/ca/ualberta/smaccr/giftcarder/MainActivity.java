@@ -31,14 +31,22 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void logInUser(View view) {
-        Toast.makeText(this, "Log In", Toast.LENGTH_SHORT).show();
+        EditText etUsername = (EditText) findViewById(R.id.enterUsername);
+        String username = etUsername.getText().toString().trim();
 
-        /*Intent intent = new Intent(this, Inventory.class);
-        EditText editText = (EditText) findViewById(R.id.enterUsername);
-        String username = editText.getText().toString();
-        intent.putExtra(EXTRA_USERNAME, username);
+        UserRegistrationController urc = new UserRegistrationController();
 
-        startActivity(intent);
-        */
+        if (Validation.hasText(etUsername)) {
+            if (urc.checkForUser(username)) {
+            /* temporarily start UserProfile activity -> should start Inventory */
+                Intent intent = new Intent(this, UserProfile.class);
+                intent.putExtra(EXTRA_USERNAME, username);
+                startActivity(intent);
+
+            }else {
+                Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
+
+            }
+        }
     }
 }

@@ -16,6 +16,22 @@ public class UserRegistrationController {
         return userList;
     }
 
+    // checks to see if user is registered in system
+    public boolean checkForUser(String username) {
+        if (getUserList().isEmpty()) {
+            return false;
+        }
+
+
+        for (int i = 0; i < userList.getSize(); i+=1) {
+            if (userList.getUsername(i).equals(username)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // adds user to UserList
     public void addUser(EditText etUsername, EditText etCity, EditText etPhone,
                         EditText etEmail) {
@@ -32,6 +48,19 @@ public class UserRegistrationController {
         user.addEmail(email);
 
         getUserList().addUser(user);
+    }
+
+    // edits user in UserList
+    public void editUser(String username, EditText etCity, EditText etPhone, EditText etEmail) {
+        User user = getUser(username);
+
+        String city = convertToString(etCity);
+        String phone = convertToString(etPhone);
+        String email = convertToString(etEmail);
+
+        user.addCity(city);
+        user.addPhone(phone);
+        user.addEmail(email);
     }
 
     // gets user with given username
@@ -66,6 +95,34 @@ public class UserRegistrationController {
         }
 
         if (!Validation.uniqueUsername(etUsername, getUserList())) {
+            valid = false;
+        }
+
+        if (!Validation.isPhoneNumber(etPhone)) {
+            valid = false;
+        }
+
+        if (!Validation.isEmailAddress(etEmail)) {
+            valid = false;
+        }
+
+        return valid;
+
+    }
+
+    // validates edited text fields (make sure that content exists and it is the correct format
+    public boolean validateEditedFields(EditText etCity, EditText etPhone, EditText etEmail) {
+        boolean valid = true;
+
+        if (!Validation.hasText(etCity)) {
+            valid = false;
+        }
+
+        if (!Validation.hasText(etPhone)) {
+            valid = false;
+        }
+
+        if (!Validation.hasText(etEmail)) {
             valid = false;
         }
 
