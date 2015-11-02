@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class RegisterActivity extends ActionBarActivity {
+    public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +43,15 @@ public class RegisterActivity extends ActionBarActivity {
         EditText etEmail = (EditText) findViewById(R.id.registerEmail);
 
         UserRegistrationController urc = new UserRegistrationController();
-        Bundle bundle = new Bundle();
 
         if (urc.validateFields(etUsername, etCity, etPhone, etEmail)) {
             urc.addUser(etUsername, etCity, etPhone, etEmail);
-            Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
 
+            /* temporarily start UserProfile activity -> should start Inventory */
             Intent intent = new Intent(this, UserProfile.class);
-            bundle.putSerializable("user", urc.getUser(etUsername));
-            intent.putExtras(bundle);
+            String username = etUsername.getText().toString();
+            intent.putExtra(EXTRA_USERNAME, username);
             startActivity(intent);
         }
         else

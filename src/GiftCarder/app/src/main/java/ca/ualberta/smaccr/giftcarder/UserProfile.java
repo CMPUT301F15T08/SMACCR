@@ -1,5 +1,9 @@
 /* Hussain Akhtar Wahid 'Ghouri',
  * http://stackoverflow.com/questions/19452269/android-set-text-to-textview, retrieved 11/02/15
+ *
+ * Android Developers, http://developer.android.com/training/basics/firstapp/starting-activity.html,
+ * retrieved 11/02/2015
+ *
  */
 
 package ca.ualberta.smaccr.giftcarder;
@@ -23,12 +27,16 @@ public class UserProfile extends ActionBarActivity {
         TextView tvPhone = (TextView) findViewById(R.id.phoneTextView);
         TextView tvEmail = (TextView) findViewById(R.id.emailTextView);
 
-        User user = (User) getIntent().getExtras().getSerializable("user");
+        Intent intent = getIntent();
+        String username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
 
-        tvUsername.setText("user.getUsername()");
-        tvCity.setText("user.getCity()");
-        tvPhone.setText("user.getPhone()");
-        tvEmail.setText("user.getEmail()");
+        UserRegistrationController urc = new UserRegistrationController();
+        User user = urc.getUser(username);
+
+        tvUsername.setText(username);
+        tvCity.setText(user.getCity());
+        tvPhone.setText(user.getPhone());
+        tvEmail.setText(user.getEmail());
     }
 
     @Override
@@ -46,7 +54,7 @@ public class UserProfile extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.edit_profile) {
             return true;
         }
 

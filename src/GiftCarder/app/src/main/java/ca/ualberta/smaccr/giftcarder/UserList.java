@@ -14,10 +14,10 @@ public class UserList {
         userList.add(user);
     }
 
-    public User getUser(String userName) {
+    public User getUser(String username) {
 
         for (User user : userList ) {
-            if (user.getUsername() == userName) {
+            if (user.getUsername().equals(username)) {
                 return user;
             }
         }

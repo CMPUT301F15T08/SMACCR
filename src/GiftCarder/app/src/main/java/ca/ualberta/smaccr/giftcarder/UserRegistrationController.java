@@ -35,9 +35,7 @@ public class UserRegistrationController {
     }
 
     // gets user with given username
-    public User getUser(EditText editText) {
-        String username = convertToString(editText);
-
+    public User getUser(String username) {
         return getUserList().getUser(username);
     }
     
