@@ -33,7 +33,7 @@ public class UserRegistrationController {
 
         getUserList().addUser(user);
     }
-    
+
     // converts EditText to String
     public String convertToString(EditText editText) {
         return editText.getText().toString().trim();
