@@ -16,4 +16,9 @@
     <string name="sign_up">Sign Up</string>
     <string name="enter_phone_digits_only">Enter phone (digits only)</string>
     <string name="enter_phone_format">Enter phone: ###-###-####</string>
+    <string name="title_activity_user_profile">UserProfile</string>
+    <string name="username">Username</string>
+    <string name="city">City</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
 </resources>

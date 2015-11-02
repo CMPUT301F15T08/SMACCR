@@ -1,8 +1,9 @@
 /* References:
  *
  * Email regular expression:
- * Lokesh Gupta, http://howtodoinjava.com/2014/11/11/java-regex-validate-email-address/, retrieved
- * 26/10/15
+ * Adam Duvander,
+ * http://www.webmonkey.com/2008/08/four_regular_expressions_to_check_email_addresses/,
+ * retrieved 11/02/15
  *
  * Phone regular expression:
  * Steven Smith, http://regexlib.com/Search.aspx?k=phone+number, retrieved 26/10/15
@@ -25,11 +26,12 @@ public class Validation {
 
     // Regular Expression
     private static final String PHONE_REGEX = "^[2-9]\\d{2}-\\d{3}-\\d{4}$";
-    private static final String EMAIL_REGEX = " ^(.+)@(.+)$";
+    private static final String EMAIL_REGEX = ".+\\@.+\\..+"; // only checks for xxxx@yyyy.zzz
 
     // Error Messages
     private static final String REQUIRED_MSG = "Field cannot be left blank";
-    private static final String PHONE_MSG = "###-###-####";
+    private static final String USERNAME_MSG = "Username already taken";
+    private static final String PHONE_MSG = "###-###-#### (hyphens required)";
     private static final String EMAIL_MSG = "Invalid email";
 
     // phone number validation
@@ -60,6 +62,28 @@ public class Validation {
             return false;
         };
 
+        return true;
+    }
+
+    // return true if username is unique
+    public static boolean uniqueUsername(EditText editText, UserList userList) {
+        String userName = editText.getText().toString().trim();
+        editText.setError(null);
+
+        if (!hasText(editText)) {
+            return false;
+        }
+
+        if (userList.isEmpty()) {
+            return true;
+        }
+
+        for (int i = 0; i < userList.getSize(); i+=1) {
+            if (userList.getUsername(i).equals(userName)) {
+                editText.setError(USERNAME_MSG);
+                return false;
+            }
+        }
         return true;
     }
 

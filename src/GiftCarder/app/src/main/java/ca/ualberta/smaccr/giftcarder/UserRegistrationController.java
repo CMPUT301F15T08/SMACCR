@@ -34,6 +34,13 @@ public class UserRegistrationController {
         getUserList().addUser(user);
     }
 
+    // gets user with given username
+    public User getUser(EditText editText) {
+        String username = convertToString(editText);
+
+        return getUserList().getUser(username);
+    }
+    
     // converts EditText to String
     public String convertToString(EditText editText) {
         return editText.getText().toString().trim();
@@ -57,6 +64,10 @@ public class UserRegistrationController {
         }
 
         if (!Validation.hasText(etEmail)) {
+            valid = false;
+        }
+
+        if (!Validation.uniqueUsername(etUsername, getUserList())) {
             valid = false;
         }
 
