@@ -38,7 +38,7 @@ public class ItemController {
 
         //Show hint if value is equal to 0
         itemValue.setText(String.valueOf(tempcard.getValue()));
-        if (tempcard.getValue() == 0.00){
+        if ((tempcard.getValue() == 0.00) || (tempcard.getValue() < 0)){
             //blank string will show hint in edittext widget
             itemValue.setText("");
         }
@@ -48,7 +48,7 @@ public class ItemController {
 
         quantity.setText(String.valueOf(tempcard.getQuantity()));
         //Show hint if value is equal to 0
-        if (tempcard.getQuantity() == 0){
+        if ((tempcard.getQuantity() == 0 || (tempcard.getQuantity() < 0))){
             //blank string will show hint in edittext widget
             quantity.setText("");
         }
