@@ -12,6 +12,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,6 +25,27 @@ public class InventoryActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
+
+        // Manage the tabs between inventory, friends, and trades pages.
+        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost.setup();
+        TabHost.TabSpec tabSpec = tabHost.newTabSpec("Inventory");
+        tabSpec.setContent(R.id.tabInventory);
+        // Text on first tab:
+        tabSpec.setIndicator("Inventory");
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("Trades");
+        tabSpec.setContent(R.id.tabTrades);
+        // Text on second tab:
+        tabSpec.setIndicator("Trades");
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("Friends");
+        tabSpec.setContent(R.id.tabFriends);
+        // Text on second tab:
+        tabSpec.setIndicator("Friends");
+        tabHost.addTab(tabSpec);
 
 
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
@@ -126,11 +148,11 @@ public class InventoryActivity extends Activity {
     }
 
     /*
-    Retrieved oct 28 2015
+    Retrieved Oct 28 2015
     http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
      */
 
-    //Grab modified inventory back from giftcard, and reset the array adapter
+    // Grab modified inventory back from giftcard, and reset the array adapter
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
