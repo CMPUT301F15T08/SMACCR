@@ -48,7 +48,8 @@ public class ItemActivity extends Activity {
         CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
 
         //itemName.setText(inv.getInvList().get(position).getMerchant());
-        ic.displayGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+        GiftCard tempcard = inv.getInvList().get(position);
+        ic.displayGiftCardInfo(tempcard, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
 
         Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbuton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
 
@@ -56,6 +57,8 @@ public class ItemActivity extends Activity {
 
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

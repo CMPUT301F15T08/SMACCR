@@ -32,9 +32,36 @@ public class ItemController {
 
     }
 
-    //Place the gift card's information into the view
+    //Place the gift card's information into the view           Why is this in the controller
     public void displayGiftCardInfo(Inventory inv, int position, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
         GiftCard tempcard = inv.getInvList().get(position);
+
+        //Show hint if value is equal to 0
+        itemValue.setText(String.valueOf(tempcard.getValue()));
+        if (tempcard.getValue() == 0.00){
+            //blank string will show hint in edittext widget
+            itemValue.setText("");
+        }
+        else {itemValue.setText(String.valueOf(tempcard.getValue()));}
+
+        itemName.setText(tempcard.getMerchant());
+
+        quantity.setText(String.valueOf(tempcard.getQuantity()));
+        //Show hint if value is equal to 0
+        if (tempcard.getQuantity() == 0){
+            //blank string will show hint in edittext widget
+            quantity.setText("");
+        }
+        else {quantity.setText(String.valueOf(tempcard.getQuantity()));}
+
+
+        categorySpinner.setSelection(tempcard.getCategory(), false);
+        qualitySpinner.setSelection(tempcard.getQuality(), false);
+        comments.setText(tempcard.getComments());
+        checkbox.setChecked(tempcard.getShared());
+    }
+    //Place the gift card's information into the view           Why is this in the controller
+    public void displayGiftCardInfo(GiftCard tempcard, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
 
         //Show hint if value is equal to 0
         itemValue.setText(String.valueOf(tempcard.getValue()));

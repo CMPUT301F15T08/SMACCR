@@ -33,6 +33,7 @@ public class BrowseActivity extends Activity {
 
 
         GiftCard giftCard1 = new GiftCard();
+        giftCard1.setValue(50.00);
         giftCard1.setMerchant("Bestbuy");
         giftCard1.setQuantity(1);
         giftCard1.setQuality(3);
