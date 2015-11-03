@@ -8,13 +8,22 @@
     android:gravity="center"
     tools:context=".MainActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="GiftCarder"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:textSize="66dp" />
+
     <ImageView
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:scaleType="fitCenter"
         android:id="@+id/appLogo"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/add"
+        android:src="@drawable/logo"
         android:layout_marginBottom="30dp"/>
 
     <EditText

@@ -83,7 +83,6 @@
                     android:id="@+id/tabFriends"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-<<<<<<< HEAD:src/GiftCarder/app/src/main/res/layout/activity_inventory.xml
                     android:orientation="vertical">
                     <ListView
                         android:layout_width="wrap_content"
@@ -95,10 +94,8 @@
                         android:layout_alignParentStart="true" />
 
                 </LinearLayout>
-=======
-                    android:orientation="vertical"></LinearLayout>
 
->>>>>>> 377d70de58be938fbab4969fc1a5696286795df1:src/GiftCarder/app/src/main/res/layout/activity_all.xml
+
             </FrameLayout>
         </LinearLayout>
     </TabHost>
