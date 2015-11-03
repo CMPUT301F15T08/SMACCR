@@ -50,13 +50,6 @@ public class InventoryActivity extends ActionBarActivity {
         tabSpec.setIndicator("Friends");
         tabHost.addTab(tabSpec);
 
-        tabSpec = tabHost.newTabSpec("Browse");
-        tabSpec.setContent(R.id.tabBrowse);
-        // Text on fourth tab:
-        tabSpec.setIndicator("Browse");
-        tabHost.addTab(tabSpec);
-
-
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
 
         Intent intent = getIntent();

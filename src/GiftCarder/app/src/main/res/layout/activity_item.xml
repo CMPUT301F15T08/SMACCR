@@ -24,7 +24,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
                     android:src="@drawable/card_icon"
-                    android:onClick="takeGiftCardPic" />
+                    android:onClick="takeGiftCardPic"
+                    android:padding="10dp" />
                 <Button
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
