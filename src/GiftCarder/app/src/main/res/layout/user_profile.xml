@@ -20,7 +20,7 @@
             <ImageView
                 android:layout_width="224dp"
                 android:layout_height="224dp"
-                android:id="@+id/imageView"
+                android:id="@+id/ID_pictureOfGiftCard"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true" />
             <Button
@@ -30,7 +30,7 @@
                 android:id="@+id/button"
                 android:layout_gravity="right"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/imageView"
+                android:layout_toEndOf="@+id/ID_pictureOfGiftCard"
                 android:background="#ff9600"
                 android:textSize="20dp"/>
         </RelativeLayout>
