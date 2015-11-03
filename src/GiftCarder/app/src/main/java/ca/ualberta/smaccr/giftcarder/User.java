@@ -12,7 +12,7 @@ public class User {
     private String email;
     private Inventory inv;
 
-    public void User() {
+    public User() {
         this.inv = new Inventory();
     }
 
