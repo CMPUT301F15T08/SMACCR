@@ -114,6 +114,8 @@ public class InventoryActivity extends ActionBarActivity {
             }
         });
 
+        updateInvList(inv);
+
     }
 
 
