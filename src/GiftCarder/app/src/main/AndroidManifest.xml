@@ -25,12 +25,20 @@
             android:label="User Profile" >
         </activity>
         <activity
-        android:name=".InventoryActivity"
-        android:label="Inventory" >
+            android:name=".InventoryActivity"
+            android:label="Inventory" >
         </activity>
         <activity
             android:name=".ItemActivity"
             android:label="Item" >
+        </activity>
+        <activity
+            android:name=".FriendsActivity"
+            android:label="@string/title_activity_friends" >
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 

@@ -51,5 +51,7 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="addcard">Add New GiftCard</string>
     <string name="usericon">UserIcon</string>
+    <string name="title_activity_friends">FriendsActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
     <!-- ITEM DROP DOWN MENU STUFF DONE -->
 </resources>
