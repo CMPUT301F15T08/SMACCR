@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class InventoryActivity extends ActionBarActivity {
@@ -180,7 +181,9 @@ public class InventoryActivity extends ActionBarActivity {
 
         ArrayList<String> GiftCardNames = new ArrayList<String>();
         for (int index = 0; index <tempArray.size(); index++){
-            GiftCardNames.add("$ "+tempArray.get(index).getValue() + " " + tempArray.get(index).getMerchant());
+
+            DecimalFormat df = new DecimalFormat("#.00");
+            GiftCardNames.add("$ "+df.format(tempArray.get(index).getValue()) + " " + tempArray.get(index).getMerchant());
         }
 
         // Display list of names of giftcards
