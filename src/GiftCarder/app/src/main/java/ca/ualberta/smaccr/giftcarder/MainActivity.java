@@ -1,24 +1,15 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.EditText;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 
 /*
 MichaelsBrowse merged with Richard and Spencer's branch for Items and Inventory
@@ -57,19 +48,28 @@ public class MainActivity extends Activity {
     }
 
 
-    public void invClick(View view_) {
-        Intent intent = new Intent(this, InventoryActivity.class);
-        startActivity(intent);
-    }
-
     public void registerNewUser(View view){
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
-    public void fIXMElogin(View view){                          //FIXME                                        //FIXME
-        Intent intent = new Intent(this, BrowseActivity.class);
-        startActivity(intent);
-    }
+    public void logInUser(View view) {
+        EditText etUsername = (EditText) findViewById(R.id.enterUsername);
+        String username = etUsername.getText().toString().trim();
 
+        UserRegistrationController urc = new UserRegistrationController();
+
+        if (Validation.hasText(etUsername)) {
+            if (urc.checkForUser(username)) {
+            /* temporarily start UserProfileActivity activity -> should start Inventory */
+                Intent intent = new Intent(this, InventoryActivity.class);
+                intent.putExtra(EXTRA_USERNAME, username);
+                startActivity(intent);
+
+            } else {
+                Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
 }

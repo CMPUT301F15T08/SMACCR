@@ -10,12 +10,17 @@ import java.util.ArrayList;
 public class Inventory implements Serializable {
     ArrayList<GiftCard> inv = new ArrayList<GiftCard>();
 
+    public Inventory() {
+        GiftCard gc = new GiftCard();
+        this.inv.add(gc);
+    }
+
     public void addGiftCard(GiftCard gc){
         inv.add(0, gc);
     }
 
-    public void deleteGiftCard(GiftCard gc){
-        inv.remove(gc);
+    public void deleteGiftCard(int gcIndex){
+        inv.remove(gcIndex);
     }
 
     public int getSize(){

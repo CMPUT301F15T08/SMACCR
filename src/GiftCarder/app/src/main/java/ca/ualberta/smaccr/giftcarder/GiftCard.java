@@ -19,12 +19,13 @@ public class GiftCard implements Serializable {
     private int category = 0;
     private String comments = "";
     // 1 = shared, 0 = not shared
-    private Boolean shared = Boolean.FALSE;
+    private Boolean shared = Boolean.TRUE;
 
     public GiftCard() {
     }
 
-    public GiftCard(String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
+    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
+        this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
         this.quality = quality;

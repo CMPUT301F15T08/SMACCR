@@ -12,21 +12,54 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class InventoryActivity extends Activity {
 
-    Inventory inv = new Inventory();
+    Inventory inv;
+    ArrayAdapter<String> displayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
+        // Manage the tabs between inventory, friends, and trades pages.
+        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost.setup();
+        TabHost.TabSpec tabSpec = tabHost.newTabSpec("Inventory");
+        tabSpec.setContent(R.id.tabInventory);
+        // Text on first tab:
+        tabSpec.setIndicator("Inventory");
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("Trades");
+        tabSpec.setContent(R.id.tabTrades);
+        // Text on second tab:
+        tabSpec.setIndicator("Trades");
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("Friends");
+        tabSpec.setContent(R.id.tabFriends);
+        // Text on third tab:
+        tabSpec.setIndicator("Friends");
+        tabHost.addTab(tabSpec);
+
 
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+
+        Intent intent = getIntent();
+        String username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
+        UserRegistrationController urc = new UserRegistrationController();
+        User user = urc.getUser(username);
+
+        Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+
+        inv = user.getInv();
+        // updateInvList(inv);
 
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -48,7 +81,6 @@ public class InventoryActivity extends Activity {
         inventorylistID.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                final AdapterView<?> par = parent;
                 final int pos = position;
 
                 Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
@@ -63,7 +95,9 @@ public class InventoryActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // http://stackoverflow.com/questions/7073577/how-to-get-object-from-listview-in-setonitemclicklistener-in-android
-                        // inv.deleteGiftCard((GiftCard)par.getAdapter().getItem(pos));
+                        inv.deleteGiftCard(pos);
+                        updateInvList(inv);
+
                         dialog.dismiss();
                     }
                 });
@@ -97,11 +131,6 @@ public class InventoryActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void invClick(View view) {
-        Intent intent = new Intent(this, InventoryActivity.class);
-        startActivity(intent);
-    }
-
     // OnClick to add GiftCard
     public void AddNewGiftCard(View menu){
         // Add new giftcard
@@ -126,32 +155,35 @@ public class InventoryActivity extends Activity {
     }
 
     /*
-    Retrieved oct 28 2015
+    Retrieved Oct 28 2015
     http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
      */
 
-    //Grab modified inventory back from giftcard, and reset the array adapter
+    // Grab modified inventory back from giftcard, and reset the array adapter
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
-                // Get ArrayList of Strings to display in Adapter ListView
-                ArrayList<GiftCard> tempArray = inv.getInvList();
-                // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
-
-                ArrayList<String> GiftCardNames = new ArrayList<String>();
-                for (int index = 0; index <tempArray.size(); index++){
-                    GiftCardNames.add("$"+tempArray.get(index).getValue() +" " + tempArray.get(index).getMerchant());
-                }
-
-                // Display list of names of giftcards
-                ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
-                ArrayAdapter<String> displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
-                inventorylistID.setAdapter(displayAdapter);
-
+                updateInvList(inv);
             }
         }
     }
 
+    void updateInvList(Inventory inv) {
+        // Get ArrayList of Strings to display in Adapter ListView
+        ArrayList<GiftCard> tempArray = inv.getInvList();
+        // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
+
+        ArrayList<String> GiftCardNames = new ArrayList<String>();
+        for (int index = 0; index <tempArray.size(); index++){
+            GiftCardNames.add("$ "+tempArray.get(index).getValue() + " " + tempArray.get(index).getMerchant());
+        }
+
+        // Display list of names of giftcards
+        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+        displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
+        inventorylistID.setAdapter(displayAdapter);
     }
+
+}

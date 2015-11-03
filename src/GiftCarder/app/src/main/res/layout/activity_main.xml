@@ -9,28 +9,15 @@
     tools:context=".MainActivity">
 
 
-<!-- Kill all from here -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Inventory"
-            android:id="@+id/button3"
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:scaleType="fitCenter"
+        android:id="@+id/appLogo"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/add"
+        android:layout_marginBottom="30dp"/>
 
-            android:onClick="invClick" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Browse"
-            android:id="@+id/button4"
-            android:onClick="fIXMElogin"
-            android:layout_gravity="center_horizontal" />
-    </LinearLayout>
-<!-- to here-->
     <EditText
         android:id="@+id/enterUsername"
         android:hint="@string/enter_username"
@@ -53,7 +40,8 @@
             android:background="#8dd35f"
             android:layout_weight="1"
             android:layout_marginEnd="5dp"
-            android:clickable="true"/>
+            android:clickable="true"
+            android:onClick="logInUser" />
 
         <Button
             android:layout_width="wrap_content"
