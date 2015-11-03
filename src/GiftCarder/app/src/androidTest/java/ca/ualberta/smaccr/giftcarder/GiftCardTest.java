@@ -33,7 +33,7 @@ public class GiftCardTest extends ActivityInstrumentationTestCase2 {
     int position;
 
     public GiftCardTest() {
-        super(ca.ualberta.smaccr.giftcarder.MainActivity.class);
+        super(ca.ualberta.smaccr.giftcarder.ItemActivity.class);
     }
 
     //GiftCard(String merchant, int quantity, int quality, int category, String comments, Boolean shared)

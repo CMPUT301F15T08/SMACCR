@@ -106,6 +106,8 @@ public class InventoryActivity extends Activity {
             }
         });
 
+        updateInvList(inv);
+
     }
 
 
