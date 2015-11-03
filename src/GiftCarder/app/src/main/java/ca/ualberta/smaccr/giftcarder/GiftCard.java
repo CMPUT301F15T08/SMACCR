@@ -21,6 +21,8 @@ public class GiftCard implements Serializable {
     // 1 = shared, 0 = not shared
     private Boolean shared = Boolean.TRUE;
 
+
+
     public GiftCard() {
     }
 

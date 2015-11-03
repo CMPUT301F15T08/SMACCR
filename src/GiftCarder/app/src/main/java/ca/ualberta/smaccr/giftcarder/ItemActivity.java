@@ -71,7 +71,7 @@ public class ItemActivity extends Activity {
         //itemName.setText(inv.getInvList().get(position).getMerchant());
         ic.displayGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
 
-        Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbuton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbuton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
 
 
 
@@ -122,7 +122,17 @@ public class ItemActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        //Back button disabled for now as if owner clicks back button, empty giftcard is created and pop up once saved giftcard is created
+        EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
+        EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
+        if ((itemName.getText().toString().equals("")) || itemValue.getText().toString().equals("")){
+            inv.getInvList().remove(position);
+        }
+
+        //inv.getInvList().remove(position);
+        Intent intent = new Intent();
+        intent.putExtra("ModifiedInventory", inv);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
 

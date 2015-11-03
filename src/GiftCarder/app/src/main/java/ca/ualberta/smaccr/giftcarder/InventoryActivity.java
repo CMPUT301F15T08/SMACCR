@@ -5,27 +5,30 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class InventoryActivity extends Activity {
+public class InventoryActivity extends ActionBarActivity {
 
+    public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
+    String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inventory);
+        setContentView(R.layout.activity_all);
 
         // Manage the tabs between inventory, friends, and trades pages.
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
@@ -48,11 +51,10 @@ public class InventoryActivity extends Activity {
         tabSpec.setIndicator("Friends");
         tabHost.addTab(tabSpec);
 
-
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
 
         Intent intent = getIntent();
-        String username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
+        username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
         UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
 
@@ -106,13 +108,15 @@ public class InventoryActivity extends Activity {
             }
         });
 
+        updateInvList(inv);
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_inventory, menu);
         return true;
     }
 
@@ -177,13 +181,26 @@ public class InventoryActivity extends Activity {
 
         ArrayList<String> GiftCardNames = new ArrayList<String>();
         for (int index = 0; index <tempArray.size(); index++){
-            GiftCardNames.add("$ "+tempArray.get(index).getValue() + " " + tempArray.get(index).getMerchant());
+
+            DecimalFormat df = new DecimalFormat("#.00");
+            GiftCardNames.add("$ "+df.format(tempArray.get(index).getValue()) + " " + tempArray.get(index).getMerchant());
         }
 
         // Display list of names of giftcards
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
         displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
         inventorylistID.setAdapter(displayAdapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Back button disabled for now as if owner clicks back button, empty giftcard is created and pop up once saved giftcard is created
+    }
+
+    public void getUserProfile(View view) {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        intent.putExtra(EXTRA_USERNAME, username);
+        startActivity(intent);
     }
 
 }
