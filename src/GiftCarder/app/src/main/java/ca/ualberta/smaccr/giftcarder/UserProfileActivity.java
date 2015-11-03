@@ -26,7 +26,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UserProfileActivity extends Activity {
+public class UserProfileActivity extends ActionBarActivity {
 
     EditText etUsername;
     EditText etCity;
