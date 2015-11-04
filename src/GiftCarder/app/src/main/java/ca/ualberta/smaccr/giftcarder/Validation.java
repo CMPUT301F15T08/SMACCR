@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Carin on 10/26/2015.
+ * Edited by Spencer on 11/4/2014.
  */
 public class Validation {
 
