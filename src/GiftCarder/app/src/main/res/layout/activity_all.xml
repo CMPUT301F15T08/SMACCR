@@ -79,7 +79,8 @@
                             android:layout_gravity="center_vertical"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentEnd="true"
-                            android:nestedScrollingEnabled="true" />
+                            android:nestedScrollingEnabled="true"
+                            android:onClick="inventoryDetailsButton" />
 
                     </RelativeLayout>
                 </LinearLayout>

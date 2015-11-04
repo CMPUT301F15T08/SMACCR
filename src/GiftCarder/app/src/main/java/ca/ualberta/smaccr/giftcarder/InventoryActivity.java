@@ -202,4 +202,10 @@ public class InventoryActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void inventoryDetailsButton(View view) {
+        Intent intent = new Intent(this, InvDetailsActivity.class);
+        intent.putExtra(EXTRA_USERNAME, username);
+        startActivity(intent);
+    }
+
 }
