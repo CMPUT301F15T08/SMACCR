@@ -25,14 +25,16 @@ import java.util.regex.Pattern;
 public class Validation {
 
     // Regular Expression
-    // private static final String PHONE_REGEX = "^[2-9]\\d{2}-\\d{3}-\\d{4}$";
+    // Following code from
+    // http://stackoverflow.com/questions/16699007/regular-expression-to-match-standard-10-digit-phone-number
     private static final String PHONE_REGEX = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$";
+    // private static final String PHONE_REGEX = "^[2-9]\\d{2}-\\d{3}-\\d{4}$";
     private static final String EMAIL_REGEX = ".+\\@.+\\..+"; // only checks for xxxx@yyyy.zzz
 
     // Error Messages
     private static final String REQUIRED_MSG = "Field cannot be left blank";
     private static final String USERNAME_MSG = "Username already taken";
-    private static final String PHONE_MSG = "###-###-#### (hyphens required)";
+    private static final String PHONE_MSG = "Invalid phone number";
     private static final String EMAIL_MSG = "Invalid email";
 
     // phone number validation
