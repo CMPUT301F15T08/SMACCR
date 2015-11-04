@@ -92,7 +92,6 @@ public class ItemActivity extends Activity {
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbuton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
 
 
-
     }
 
     @Override
