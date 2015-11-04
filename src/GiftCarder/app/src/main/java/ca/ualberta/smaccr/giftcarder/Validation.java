@@ -25,7 +25,8 @@ import java.util.regex.Pattern;
 public class Validation {
 
     // Regular Expression
-    private static final String PHONE_REGEX = "^[2-9]\\d{2}-\\d{3}-\\d{4}$";
+    // private static final String PHONE_REGEX = "^[2-9]\\d{2}-\\d{3}-\\d{4}$";
+    private static final String PHONE_REGEX = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$";
     private static final String EMAIL_REGEX = ".+\\@.+\\..+"; // only checks for xxxx@yyyy.zzz
 
     // Error Messages

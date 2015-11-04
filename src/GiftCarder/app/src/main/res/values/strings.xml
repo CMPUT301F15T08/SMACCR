@@ -53,5 +53,8 @@
     <string name="usericon">UserIcon</string>
     <string name="title_activity_friends">FriendsActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="invdetails">Inventory Details</string>
+    <string name="title_activity_inv_details">InvDetailsActivity</string>
+    <string name="userinventory">User Inventory</string>
     <!-- ITEM DROP DOWN MENU STUFF DONE -->
 </resources>
