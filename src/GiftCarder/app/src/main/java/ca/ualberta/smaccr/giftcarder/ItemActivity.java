@@ -38,13 +38,13 @@ public class ItemActivity extends Activity {
     int position;
 
     //getters for UI testing
-    public EditText getItemName() {return itemName;}
-    public EditText getItemValue() {return itemValue;}
-    public EditText getQuantity() {return quantity;}
-    public Spinner getQualitySpinner() {return qualitySpinner;}
-    public Spinner getCategorySpinner() {return categorySpinner;}
-    public EditText getComments() {return comments;}
-    public CheckBox getCheckbox() {return checkbox;}
+    public EditText getItemName() {return (EditText) findViewById(R.id.ID_item_value);}
+    public EditText getItemValue() {return (EditText)findViewById(R.id.ID_item_Name);}
+    public EditText getQuantity() {return (EditText)findViewById(R.id.ID_quantity);}
+    public Spinner getQualitySpinner() {return (Spinner) findViewById(R.id.ID_qualitySpin);}
+    public Spinner getCategorySpinner() {return (Spinner) findViewById(R.id.ID_categorySpin);}
+    public EditText getComments() {return (EditText)findViewById(R.id.ID_comments);}
+    public CheckBox getCheckbox() {return (CheckBox)findViewById(R.id.ID_checkbox);}
     public Inventory getInv() {return inv;}
     public int getPosition() {return position;}
 
@@ -69,7 +69,11 @@ public class ItemActivity extends Activity {
         CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
 
         //itemName.setText(inv.getInvList().get(position).getMerchant());
-        ic.displayGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+
+        if (inv != null){
+            ic.displayGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+        }
+
 
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbuton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
 

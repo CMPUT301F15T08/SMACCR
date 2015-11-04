@@ -156,8 +156,11 @@ public class GiftCardTest extends ActivityInstrumentationTestCase2 {
         categorySpinner = activity.getCategorySpinner();
         comments = activity.getComments();
         checkbox = activity.getCheckbox();
-        inv = activity.getInv();
-        position = activity.getPosition();
+
+        //Item activity expects to get an inventory, and initialized position of added giftcard
+        inv = new Inventory();
+        inv.addGiftCard(new GiftCard());
+        position = 0;
 
         activity.runOnUiThread(new Runnable() {
             @Override
