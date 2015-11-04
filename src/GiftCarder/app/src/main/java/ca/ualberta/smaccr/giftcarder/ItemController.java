@@ -24,6 +24,10 @@ public class ItemController {
     //false = owner's view, true = public view
     private boolean viewMode = false;
 
+    public void setViewModeValue(boolean viewMode) {
+        this.viewMode = viewMode;
+    }
+
     public void takeAPicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, 1);
@@ -60,6 +64,36 @@ public class ItemController {
         comments.setText(tempcard.getComments());
         checkbox.setChecked(tempcard.getShared());
     }
+
+    //Place the gift card's information into the view, with given giftcard
+    public void displayGiftCardInfo(GiftCard gc, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
+        GiftCard tempcard = gc;
+
+        //Show hint if value is equal to 0
+        itemValue.setText(String.valueOf(tempcard.getValue()));
+        if ((tempcard.getValue() == 0.00) || (tempcard.getValue() < 0)){
+            //blank string will show hint in edittext widget
+            itemValue.setText("");
+        }
+        else {itemValue.setText(String.valueOf(tempcard.getValue()));}
+
+        itemName.setText(tempcard.getMerchant());
+
+        quantity.setText(String.valueOf(tempcard.getQuantity()));
+        //Show hint if value is equal to 0
+        if ((tempcard.getQuantity() == 0 || (tempcard.getQuantity() < 0))){
+            //blank string will show hint in edittext widget
+            quantity.setText("");
+        }
+        else {quantity.setText(String.valueOf(tempcard.getQuantity()));}
+
+
+        categorySpinner.setSelection(tempcard.getCategory(), false);
+        qualitySpinner.setSelection(tempcard.getQuality(), false);
+        comments.setText(tempcard.getComments());
+        checkbox.setChecked(tempcard.getShared());
+    }
+
 
     //Set inventory with modifed gift card item
     public Inventory setGiftCardInfo(Inventory inv, int position, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {

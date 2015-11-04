@@ -36,6 +36,7 @@ public class ItemActivity extends Activity {
 
     public Inventory inv;
     int position;
+    GiftCard gc;
 
     //getters for UI testing
     public EditText getItemName() {return (EditText) findViewById(R.id.ID_item_value);}
@@ -58,6 +59,7 @@ public class ItemActivity extends Activity {
         //receive inventory and position of gift card to modify
         position = (int)getIntent().getIntExtra("position", 0);
         inv = (Inventory)getIntent().getSerializableExtra("inventory");
+        gc = (GiftCard)getIntent().getSerializableExtra("gc");
 
         //Get references to UI
         EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
@@ -67,12 +69,24 @@ public class ItemActivity extends Activity {
         Spinner categorySpinner = (Spinner) findViewById(R.id.ID_categorySpin);
         EditText comments = (EditText)findViewById(R.id.ID_comments);
         CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
+        Button viewstatus = (Button)findViewById(R.id.ID_viewStatus);
+        Button offerbutton = (Button)findViewById(R.id.ID_MakeOfferButton);
+        Button savebutton = (Button)findViewById(R.id.ID_savegiftcard);
 
         //itemName.setText(inv.getInvList().get(position).getMerchant());
 
         if (inv != null){
             ic.displayGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
         }
+
+        if (gc != null){
+            ic.displayGiftCardInfo(gc, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+            ic.setViewModeValue(true);
+            ic.setViewMode(itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox, viewstatus, offerbutton, savebutton);
+            viewstatus.setVisibility(View.GONE);
+        }
+
+
 
 
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbuton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
@@ -111,6 +125,7 @@ public class ItemActivity extends Activity {
         Spinner categorySpinner = (Spinner) findViewById(R.id.ID_categorySpin);
         EditText comments = (EditText)findViewById(R.id.ID_comments);
         CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
+
         //item controller to set the data into inventory
         inv = ic.setGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
 
