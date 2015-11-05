@@ -10,14 +10,14 @@
 
 
 
-    <EditText
+    <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="GiftCarder"
+        android:text="@string/GiftCarder"
         android:id="@+id/textView"
-        android:layout_gravity="center_horizontal"
-        android:textSize="66dp" />
+        android:gravity="center"
+        android:textSize="50dp" />
 
     <ImageView
         android:layout_width="250dp"
@@ -25,8 +25,7 @@
         android:scaleType="fitCenter"
         android:id="@+id/appLogo"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/logo"
-        android:layout_marginBottom="30dp"/>
+        android:src="@drawable/logo" />
 
     <EditText
         android:id="@+id/enterUsername"
@@ -42,6 +41,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="20dp">
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
