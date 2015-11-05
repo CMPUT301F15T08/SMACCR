@@ -75,7 +75,7 @@
                     android:hint="Input Giftcard value"
                     android:textSize="20sp"
                     android:id="@+id/ID_item_value"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:layout_alignParentTop="true"
                     android:inputType="number"
                     android:layout_toEndOf="@+id/editText" />
@@ -108,7 +108,7 @@
                 android:hint="Merchant"
                 android:textSize="20sp"
                 android:id="@+id/ID_item_Name"
-                android:lines="1"/>
+                android:singleLine="true"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -154,7 +154,8 @@
                 android:hint="Enter ex)2"
                 android:textSize="20dp"
                 android:id="@+id/ID_quantity"
-                android:lines="1"/>
+                android:inputType="number"
+                android:singleLine="true"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
