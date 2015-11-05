@@ -9,6 +9,8 @@ import java.util.ArrayList;
  */
 public class Inventory implements Serializable {
     ArrayList<GiftCard> inv = new ArrayList<GiftCard>();
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/testing/movie/";
+    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/testing/movie/_search";
 
     public Inventory() {}
 
