@@ -57,7 +57,7 @@ public class InventoryActivity extends ActionBarActivity {
         UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
 
-        Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
 
         inv = user.getInv();
         // updateInvList(inv);
@@ -193,7 +193,7 @@ public class InventoryActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        //Back button disabled for now as if owner clicks back button, empty giftcard is created and pop up once saved giftcard is created
+        //Back button disabled
     }
 
     public void getUserProfile(View view) {

@@ -27,6 +27,12 @@ public class MainActivity extends Activity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        //Back button disabled
+    }
+
+
     public void registerNewUser(View view){
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
@@ -40,7 +46,6 @@ public class MainActivity extends Activity {
 
         if (Validation.hasText(etUsername)) {
             if (urc.checkForUser(username)) {
-            /* temporarily start UserProfileActivity activity -> should start Inventory */
                 Intent intent = new Intent(this, InventoryActivity.class);
                 intent.putExtra(EXTRA_USERNAME, username);
                 startActivity(intent);
