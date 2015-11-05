@@ -9,8 +9,8 @@ import java.util.ArrayList;
  */
 public class Inventory implements Serializable {
     ArrayList<GiftCard> inv = new ArrayList<GiftCard>();
-    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/testing/movie/";
-    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/testing/movie/_search";
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t08/giftcard/";
+    private static final String SEARCH_URL   = "http://cmput301.softwareprocess.es:8080/cmput301f15t08/giftcard/_search";
 
     public Inventory() {}
 
@@ -26,7 +26,6 @@ public class Inventory implements Serializable {
         return inv.size();
     }
 
-
     // Getters and setters
     public ArrayList<GiftCard> getInvList() {
         return inv;
@@ -34,5 +33,13 @@ public class Inventory implements Serializable {
 
     public void setInv(ArrayList<GiftCard> inv) {
         this.inv = inv;
+    }
+
+    public String getResourceUrl() {
+        return RESOURCE_URL;
+    }
+
+    public String getSearchUrl() {
+        return SEARCH_URL;
     }
 }

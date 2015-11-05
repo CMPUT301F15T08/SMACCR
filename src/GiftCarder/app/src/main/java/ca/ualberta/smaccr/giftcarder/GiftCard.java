@@ -7,13 +7,15 @@ import java.io.Serializable;
  */
 public class GiftCard implements Serializable {
 
-    //the monetary value of the giftcard
+    public int id;
+
+    // the monetary value of the giftcard
     private double value;
 
-    //Merchant includes only the name of the card
+    // Merchant includes only the name of the card
     private String merchant = "";
     private int quantity = 0;
-    //3 = poor, 2 = okay, 1= good, 0 = excellent
+    // 3 = poor, 2 = okay, 1= good, 0 = excellent
     private int quality = 0;
     // 0 = Food-Beverage, ..., 9 = other
     private int category = 0;
@@ -108,5 +110,13 @@ public class GiftCard implements Serializable {
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

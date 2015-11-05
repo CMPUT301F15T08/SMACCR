@@ -30,13 +30,13 @@ public class InventoryController {
     /**
      * Adds a new GiftCard
      */
-    public void addMovie(GiftCard gc) {
+    public void addGiftCard(GiftCard gc) {
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            HttpPost addRequest = new HttpPost(inv.getResourceUrl() + movie.getId());
+            HttpPost addRequest = new HttpPost(inv.getResourceUrl() + gc.getId());
 
-            StringEntity stringEntity = new StringEntity(gson.toJson(movie));
+            StringEntity stringEntity = new StringEntity(gson.toJson(gc));
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
 
@@ -50,13 +50,13 @@ public class InventoryController {
     }
 
     /**
-     * Deletes the movie with the specified id
+     * Deletes the giftcard with the specified id
      */
-    public void deleteMovie(int movieId) {
+    public void deleteGiftCard(int gcId) {
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            HttpDelete deleteRequest = new HttpDelete(movies.getResourceUrl() + movieId);
+            HttpDelete deleteRequest = new HttpDelete(inv.getResourceUrl() + gcId);
             deleteRequest.setHeader("Accept", "application/json");
 
             HttpResponse response = httpClient.execute(deleteRequest);
