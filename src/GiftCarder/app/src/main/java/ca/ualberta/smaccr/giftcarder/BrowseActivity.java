@@ -118,16 +118,11 @@ public class BrowseActivity extends Activity {
     }
 
     @Override
-    protected void onStart() {
-        // TODO Auto-generated method stub
-        super.onStart();
-
-
-        // display size
-        // Toast.makeText(getApplicationContext(), Integer.toString(myinventory.getSize()),Toast.LENGTH_SHORT).show();
+    protected void onResume(){
+        super.onResume();
 
         // Get ArrayList of Strings to display in Adapter ListView
-        LinkedList<GiftCard> tempArray = myCache.getItems();
+        LinkedList<GiftCard> tempArray = loadFromCache();
         // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
 
         ArrayList<String> GiftCardNames = new ArrayList<String>();
@@ -137,10 +132,16 @@ public class BrowseActivity extends Activity {
 
         // Display list of names of giftcards
         ArrayAdapter<String> displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);//FixME format display to more than string
-                    //new ArrayAdapter<GiftCard>(this, R.layout.list_gc, (List<GiftCard>)myCache.getItems());
+        //new ArrayAdapter<GiftCard>(this, R.layout.list_gc, (List<GiftCard>)myCache.getItems());
 
-                    //displayAdapter.getView()// turn GC into item with image and value
+        //displayAdapter.getView()// turn GC into item with image and value
         inventorylistID.setAdapter(displayAdapter);
+    }
+
+    @Override
+    protected void onStart() {
+        // TODO Auto-generated method stub
+        super.onStart();
     }
 
     @Override
@@ -152,17 +153,28 @@ public class BrowseActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(this, SettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean loadFromCache(){                   //FIXME
+    /**FIXME to allow one friend's inventory
+     *loadFromCache
+     * load screen full of
+     *
+     * @return LinkedList<GiftCard>
+     */
+    public LinkedList<GiftCard> loadFromCache(){                   //FIXME
 
-        return false;
+        return myCache.getItems();
     };
 
+    /**
+     * clickItem
+     * view the details of the item
+     * @param v
+     */
     public void clickItem(View v){
         Intent intent = new Intent(this, ItemActivity.class);
         startActivity(intent);

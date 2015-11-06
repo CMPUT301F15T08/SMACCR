@@ -23,8 +23,8 @@
     <string name="edit">Edit</string>
     <string name="save">Save</string>
 
-    <string name="newTradeNotiNum">0</string>
-    <string name="newFriendNotiNum">0</string>
+    <string name="newTradeNotiNum">Trades</string>
+    <string name="newFriendNotiNum">Friends</string>
 
     <string name="title_activity_item">item</string>
     <string name="title_activity_inventory">inventory</string>
