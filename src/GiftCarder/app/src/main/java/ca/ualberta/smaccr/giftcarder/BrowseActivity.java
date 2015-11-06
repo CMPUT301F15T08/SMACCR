@@ -58,11 +58,13 @@ public class BrowseActivity extends Activity {
         this.catSpinner = catSpinner;
     }
 
-    @Override
+    @Override//FIXME get rid of the need for putextra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
 
+        final GiftCard giftCard1 = new GiftCard(12.34,"Test",1,1,6,"scratched but usable", Boolean.TRUE);
+        myCache.add(giftCard1);
 
         searchBar = (EditText) findViewById(R.id.searchEditText);
         goButton = (Button) findViewById(R.id.browseGo);
@@ -77,6 +79,7 @@ public class BrowseActivity extends Activity {
 
                 // Switch to item activity and send selected giftcard data
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
+                intent.putExtra("gc", giftCard1);
                 startActivity(intent);
             }
         });
@@ -87,8 +90,6 @@ public class BrowseActivity extends Activity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final AdapterView<?> par = parent;
                 final int pos = position;
-
-                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder tradeDialog = new AlertDialog.Builder(BrowseActivity.this);
                 tradeDialog.setMessage("Do you want to trade for this item?").setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -142,6 +143,8 @@ public class BrowseActivity extends Activity {
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
+
+        Toast.makeText(getApplicationContext(), "LongClick to propose trade",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -174,9 +177,10 @@ public class BrowseActivity extends Activity {
      * clickItem
      * view the details of the item
      * @param v
-     */
+     *//*
     public void clickItem(View v){
         Intent intent = new Intent(this, ItemActivity.class);
+        intent.p
         startActivity(intent);
-    }
+    }*/
 }

@@ -77,13 +77,12 @@ public class ItemActivity extends Activity {
         Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
 
         if (inv != null){
-            ic.setViewModeValue(false);
             ic.displayGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
         }
 
         if (gc != null){
             ic.displayGiftCardInfo(gc, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
-            ic.setViewModeValue(true);
+            ic.setViewModeValue(false);
             ic.setViewMode(itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox, viewstatus, offerbutton, savebutton);
             viewstatus.setVisibility(View.GONE);
         }
