@@ -20,16 +20,13 @@ public class User {
         this.friends = new UserList();
     }
 
-<<<<<<< HEAD
 
-    public void addUsername(String username) {
-=======
     /**
      * Sets username
      * @param  username String
      */
     public void setUsername(String username) {
->>>>>>> 59fd0edff90e7c2fbadfb6f93116c0b354a18b1f
+
         this.username = username;
     }
 
