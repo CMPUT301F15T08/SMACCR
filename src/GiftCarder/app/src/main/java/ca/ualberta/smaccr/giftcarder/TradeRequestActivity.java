@@ -6,7 +6,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class TradeRequestActivity extends ActionBarActivity {
-
+    /**
+     +     * onCreate
+     +     * Responses to a trade offer
+     +     * @param savedInstanceState
+     +     * return
+     +     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

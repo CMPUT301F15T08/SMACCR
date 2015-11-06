@@ -7,6 +7,12 @@ import android.view.MenuItem;
 
 public class ProposeCounterTradeActivity extends ActionBarActivity {
 
+    /**
+     +     * onCreate
+     +     * Allows the user to propose a counter trade offer initialized with the items of the previous trade.
+     +     * @param savedInstanceState
+     +     * return
+     +     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

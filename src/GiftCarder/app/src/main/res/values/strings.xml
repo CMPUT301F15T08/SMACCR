@@ -10,4 +10,5 @@
     <string name="title_activity_accept_trade">AcceptTradeActivity</string>
     <string name="title_activity_propose_counter_trade">ProposeCounterTradeActivity</string>
     <string name="title_activity_current_trades">CurrentTradesActivity</string>
+    <string name="title_activity_create_trade_offer">CreateTradeOfferActivity</string>
 </resources>

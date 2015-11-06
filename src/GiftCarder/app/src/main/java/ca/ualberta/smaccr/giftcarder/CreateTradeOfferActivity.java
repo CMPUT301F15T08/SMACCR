@@ -5,23 +5,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class AcceptTradeActivity extends ActionBarActivity {
+public class CreateTradeOfferActivity extends ActionBarActivity {
     /**
      +     * onCreate
-     +     * Allows user accepting trade to provide meeting arrangements and send an email to both parties.
+     +     * Creates a new Trade request
      +     * @param savedInstanceState
      +     * return
      +     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accept_trade);
+        setContentView(R.layout.activity_create_trade_offer);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_accept_trade, menu);
+        getMenuInflater().inflate(R.menu.menu_create_trade_offer, menu);
         return true;
     }
 

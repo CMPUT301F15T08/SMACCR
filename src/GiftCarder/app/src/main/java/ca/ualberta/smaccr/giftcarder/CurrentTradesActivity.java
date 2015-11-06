@@ -7,6 +7,12 @@ import android.view.MenuItem;
 
 public class CurrentTradesActivity extends ActionBarActivity {
 
+    /**
+     +     * onCreate
+     +     * Shows the list of current and past trades. List item still needs to be designed.
+     +     * @param savedInstanceState
+     +     * return
+     +     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
