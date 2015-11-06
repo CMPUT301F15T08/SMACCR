@@ -24,6 +24,18 @@
             android:name=".TradeRequestActivity"
             android:label="@string/title_activity_trade_request" >
         </activity>
+        <activity
+            android:name=".AcceptTradeActivity"
+            android:label="@string/title_activity_accept_trade" >
+        </activity>
+        <activity
+            android:name=".ProposeCounterTradeActivity"
+            android:label="@string/title_activity_propose_counter_trade" >
+        </activity>
+        <activity
+            android:name=".CurrentTradesActivity"
+            android:label="@string/title_activity_current_trades" >
+        </activity>
     </application>
 
 </manifest>
