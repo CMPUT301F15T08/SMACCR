@@ -44,4 +44,9 @@ public class UserList {
         }
     }
 
+    public List<User> getFriends(){
+        return this.userList;
+
+    }
+
 }
