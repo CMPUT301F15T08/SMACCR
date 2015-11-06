@@ -14,10 +14,17 @@ import android.widget.EditText;
 public class MainActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
 
+    User user = new User();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        user.addUsername("t");
+        user.addCity("Edmo");
+        user.addPhone("012-345-6789");
+        user.addEmail("t@g.c");
+        UserRegistrationController.getUserList().addUser(user);
     }
 
     @Override

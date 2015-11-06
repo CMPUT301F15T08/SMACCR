@@ -208,4 +208,8 @@ public class InventoryActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void browseClick(MenuItem v) {
+        Intent intent = new Intent(this, BrowseActivity.class);
+        startActivity(intent);
+    }
 }

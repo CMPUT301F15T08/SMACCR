@@ -11,7 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,7 +27,38 @@ public class BrowseActivity extends Activity {
 
     Cache myCache = new Cache();
 
+    private BrowseActivity activity = this;
+    private EditText searchBar;
+    private Button goButton;
+    private Spinner catSpinner;
 
+    public Cache getMyCache() {
+        return myCache;
+    }
+
+    public Button getGoButton() {
+        return goButton;
+    }
+
+    public BrowseActivity getActivity() {
+        return activity;
+    }
+
+    public EditText getSearchBar() {
+        return searchBar;
+    }
+
+    public void setSearchBar(EditText searchBar) {
+        this.searchBar = searchBar;
+    }
+
+    public Spinner getCatSpinner() {
+        return catSpinner;
+    }
+
+    public void setCatSpinner(Spinner catSpinner) {
+        this.catSpinner = catSpinner;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +74,10 @@ public class BrowseActivity extends Activity {
         giftCard1.setComments("scratched but usable");
         giftCard1.setShared(Boolean.TRUE);
         myCache.add(giftCard1);
+
+        searchBar = (EditText) findViewById(R.id.searchEditText);
+        goButton = (Button) findViewById(R.id.browseGo);
+        catSpinner = (Spinner) findViewById(R.id.browseCatSpinner);
 
 
         ListView browseListView = (ListView) findViewById(R.id.browseListView);
