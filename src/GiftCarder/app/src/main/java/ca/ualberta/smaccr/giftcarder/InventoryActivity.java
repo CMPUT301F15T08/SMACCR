@@ -65,7 +65,7 @@ public class InventoryActivity extends ActionBarActivity {
         UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
 
-        // Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Long click to delete giftcard", Toast.LENGTH_LONG).show();
 
         inv = user.getInv();
         updateInvList(inv);
