@@ -1,10 +1,6 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.Collection;
