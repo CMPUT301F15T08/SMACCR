@@ -15,7 +15,7 @@ import java.io.File;
 
 /**
  * Created by Richard on 2015-10-29.
- * //GiftCard(String merchant, int quantity, int quality, int category, String comments, Boolean shared)
+ * // GiftCard(String merchant, int quantity, int quality, int category, String comments, Boolean shared)
  */
 public class ItemController {
 
@@ -28,6 +28,13 @@ public class ItemController {
         this.viewMode = viewMode;
     }
 
+    /**
+
+     takeAPicture
+     picture function
+
+     void */
+
     public void takeAPicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, 1);
@@ -36,14 +43,14 @@ public class ItemController {
 
     }
 
-    //Place the gift card's information into the view
+    // Place the gift card's information into the view
     public void displayGiftCardInfo(Inventory inv, int position, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
         GiftCard tempcard = inv.getInvList().get(position);
 
-        //Show hint if value is equal to 0
+        // Show hint if value is equal to 0
         itemValue.setText(String.valueOf(tempcard.getValue()));
         if ((tempcard.getValue() == 0.00) || (tempcard.getValue() < 0)){
-            //blank string will show hint in edittext widget
+            // blank string will show hint in edittext widget
             itemValue.setText("");
         }
         else {itemValue.setText(String.valueOf(tempcard.getValue()));}
@@ -51,9 +58,9 @@ public class ItemController {
         itemName.setText(tempcard.getMerchant());
 
         quantity.setText(String.valueOf(tempcard.getQuantity()));
-        //Show hint if value is equal to 0
+        // Show hint if value is equal to 0
         if ((tempcard.getQuantity() == 0 || (tempcard.getQuantity() < 0))){
-            //blank string will show hint in edittext widget
+            // blank string will show hint in edittext widget
             quantity.setText("");
         }
         else {quantity.setText(String.valueOf(tempcard.getQuantity()));}
@@ -65,14 +72,23 @@ public class ItemController {
         checkbox.setChecked(tempcard.getShared());
     }
 
-    //Place the gift card's information into the view, with given giftcard
+
+    /**
+
+     displayGiftCardInfo
+     display the giftcard
+     GiftCard gc, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox
+     void */
+
+
+    // Place the gift card's information into the view, with given giftcard
     public void displayGiftCardInfo(GiftCard gc, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
         GiftCard tempcard = gc;
 
-        //Show hint if value is equal to 0
+        // Show hint if value is equal to 0
         itemValue.setText(String.valueOf(tempcard.getValue()));
         if ((tempcard.getValue() == 0.00) || (tempcard.getValue() < 0)){
-            //blank string will show hint in edittext widget
+            // blank string will show hint in edittext widget
             itemValue.setText("");
         }
         else {itemValue.setText(String.valueOf(tempcard.getValue()));}
@@ -80,9 +96,9 @@ public class ItemController {
         itemName.setText(tempcard.getMerchant());
 
         quantity.setText(String.valueOf(tempcard.getQuantity()));
-        //Show hint if value is equal to 0
+        // Show hint if value is equal to 0
         if ((tempcard.getQuantity() == 0 || (tempcard.getQuantity() < 0))){
-            //blank string will show hint in edittext widget
+            // blank string will show hint in edittext widget
             quantity.setText("");
         }
         else {quantity.setText(String.valueOf(tempcard.getQuantity()));}
@@ -94,12 +110,20 @@ public class ItemController {
         checkbox.setChecked(tempcard.getShared());
     }
 
+    /**
 
-    //Set inventory with modifed gift card item
+     setGiftCardInfo
+     set the inventory set giftcard info
+     Inventory inv, int position, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox
+     modified inventory */
+
+
+
+    // Set inventory with modifed gift card item
     public Inventory setGiftCardInfo(Inventory inv, int position, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
         GiftCard tempcard = inv.getInvList().get(position);
 
-        //If invalid dollar, cent amount then set to zero for now!
+        // If invalid dollar, cent amount then set to zero for now!
         try {
             tempcard.setValue(Double.parseDouble(itemValue.getText().toString().replaceAll("\\s+", "")));
         } catch (NumberFormatException e) {
@@ -108,7 +132,7 @@ public class ItemController {
 
         tempcard.setMerchant(itemName.getText().toString());
 
-        //If invalid input ie not a integer, input zero for now!
+        // If invalid input ie not a integer, input zero for now!
         try {
             tempcard.setQuantity(Integer.parseInt(quantity.getText().toString().replaceAll("\\s+", "")));
         } catch (NumberFormatException e) {
@@ -117,7 +141,7 @@ public class ItemController {
         tempcard.setComments(comments.getText().toString());
         tempcard.setShared(checkbox.isChecked());
 
-        //SOme weird bug when using spinner it set index out of range sometimes
+        // Some weird bug when using spinner; it set index out of range sometimes
         tempcard.setQuality(qualitySpinner.getSelectedItemPosition());
         tempcard.setCategory(categorySpinner.getSelectedItemPosition());
 
@@ -125,6 +149,14 @@ public class ItemController {
         inv.getInvList().set(position, tempcard);
         return inv;
     }
+
+    /**
+
+     setViewMode
+     To change the viewing mode
+     EditText itemValue ,EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox, Button viewStatus, Button offerButton, Button savebutton
+     void */
+
 
     public void setViewMode(EditText itemValue ,EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox, Button viewStatus, Button offerButton, Button savebutton) {
 

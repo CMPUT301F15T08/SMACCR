@@ -24,6 +24,14 @@ public class InventoryActivity extends ActionBarActivity {
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
 
+
+    /**
+     * onCreate
+     * Create the inventory activity - initialize tabs and inventory list view with logged-in
+     * user's inventory
+     * @param savedInstanceState
+     * return
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +65,10 @@ public class InventoryActivity extends ActionBarActivity {
         UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
 
-        Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
 
         inv = user.getInv();
-        // updateInvList(inv);
+        updateInvList(inv);
 
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -134,7 +142,12 @@ public class InventoryActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // OnClick to add GiftCard
+    /**
+     * AddNewGiftCard
+     * create a new giftcard and place in inventory, then switch to ItemActivity to edit that giftcard
+     * @param menu
+     * return
+     */
     public void AddNewGiftCard(View menu){
         // Add new giftcard
         GiftCard gc = new GiftCard();
@@ -149,7 +162,7 @@ public class InventoryActivity extends ActionBarActivity {
             GiftCardNames.add(0, tempArray.get(index).getMerchant());
         }
 
-        //Switch to item activity and send selected giftcard data
+        // Switch to item activity and send selected giftcard data
         Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
         intent.putExtra("position", 0);
         intent.putExtra("inventory", inv);
@@ -162,7 +175,12 @@ public class InventoryActivity extends ActionBarActivity {
     http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
      */
 
-    // Grab modified inventory back from giftcard, and reset the array adapter
+    /**
+     * onActivityResult
+     * Grab modified inventory back from giftcard, and reset the array adapter
+     * @param requestCode, resultCode, data
+     * return
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
@@ -173,7 +191,13 @@ public class InventoryActivity extends ActionBarActivity {
         }
     }
 
-    void updateInvList(Inventory inv) {
+    /**
+     * updateInvList
+     * update the display of the inventory listview
+     * @param inv
+     * return
+     */
+    public void updateInvList(Inventory inv) {
         // Get ArrayList of Strings to display in Adapter ListView
         ArrayList<GiftCard> tempArray = inv.getInvList();
         // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
@@ -193,7 +217,7 @@ public class InventoryActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        //Back button disabled for now as if owner clicks back button, empty giftcard is created and pop up once saved giftcard is created
+        // Back button disabled
     }
 
     public void getUserProfile(View view) {

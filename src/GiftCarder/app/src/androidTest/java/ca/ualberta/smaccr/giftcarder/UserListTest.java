@@ -41,4 +41,26 @@ public class UserListTest extends android.test.ActivityInstrumentationTestCase2 
 
         assertTrue(userList.getSize() == 2);
     }
+
+    public void testGetUser() throws Exception {
+        UserList userList = new UserList();
+        User userOne = new User();
+        User userTwo = new User();
+        User userThree;
+
+        userOne.addUsername("Link");
+        userOne.addCity("Skyloft");
+        userOne.addPhone("555-555-5555");
+        userOne.addEmail("hero@hyrule.com");
+        userList.addUser(userOne);
+
+        userTwo.addUsername("ColetteBrunel");
+        userTwo.addCity("Iselia");
+        userTwo.addPhone("555-555-5556");
+        userTwo.addEmail("chosen@sylvarant.com");
+        userList.addUser(userTwo);
+
+        userThree = userList.getUser("Link");
+        assertTrue(userThree.getCity().equals("Skyloft"));
+    }
 }

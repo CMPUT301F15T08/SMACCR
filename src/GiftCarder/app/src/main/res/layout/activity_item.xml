@@ -3,6 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
     >
     <ScrollView
@@ -71,8 +75,9 @@
                     android:hint="Input Giftcard value"
                     android:textSize="20sp"
                     android:id="@+id/ID_item_value"
-                    android:lines="1"
+                    android:singleLine="true"
                     android:layout_alignParentTop="true"
+                    android:inputType="number"
                     android:layout_toEndOf="@+id/editText" />
                 <TextView
                     android:layout_width="24dp"
@@ -103,7 +108,7 @@
                 android:hint="Merchant"
                 android:textSize="20sp"
                 android:id="@+id/ID_item_Name"
-                android:lines="1"/>
+                android:singleLine="true"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -149,7 +154,8 @@
                 android:hint="Enter ex)2"
                 android:textSize="20dp"
                 android:id="@+id/ID_quantity"
-                android:lines="1"/>
+                android:inputType="number"
+                android:singleLine="true"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

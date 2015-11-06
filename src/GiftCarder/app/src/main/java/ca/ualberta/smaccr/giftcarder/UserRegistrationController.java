@@ -16,7 +16,12 @@ public class UserRegistrationController {
         return userList;
     }
 
-    // checks to see if user is registered in system
+    /**
+     * Checks to see if user is registered in the system
+     *
+     * @param       username String
+     * @return      boolean
+     */
     public boolean checkForUser(String username) {
         if (getUserList().isEmpty()) {
             return false;
@@ -32,7 +37,14 @@ public class UserRegistrationController {
         return false;
     }
 
-    // adds user to UserList
+    /**
+     * Adds user to UserList
+     *
+     * @param       etUsername EditText field for entering username
+     * @param       etCity EditText field for entering city
+     * @param       etPhone EditText field for entering phone
+     * @param       etEmail EditText field for entering email
+     */
     public void addUser(EditText etUsername, EditText etCity, EditText etPhone,
                         EditText etEmail) {
         User user = new User();
@@ -51,7 +63,14 @@ public class UserRegistrationController {
         getUserList().addUser(user);
     }
 
-    // edits user in UserList
+    /**
+     * Edits user in UserList
+     *
+     * @param       username String
+     * @param       etCity EditText field for entering city
+     * @param       etPhone EditText field for entering phone
+     * @param       etEmail EditText field for entering email
+     */
     public void editUser(String username, EditText etCity, EditText etPhone, EditText etEmail) {
         User user = getUser(username);
 
@@ -64,18 +83,36 @@ public class UserRegistrationController {
         user.addEmail(email);
     }
 
-    // gets user with given username
+    /**
+     * Returns user with given username
+     *
+     * @param       username String
+     * @return      User
+     */
     public User getUser(String username) {
         return getUserList().getUser(username);
     }
-    
-    // converts EditText to String
+
+    /**
+     * Converts EditText to String
+     *
+     * @param       editText EditText field
+     * @return      String
+     */
     public String convertToString(EditText editText) {
         return editText.getText().toString().trim();
     }
 
-    // validates text fields (make sure that content exists and it is the correct format
-    public boolean validateFields(EditText etUsername, EditText etCity, EditText etPhone,
+    /**
+     * Validates text fields (make sure that content exists and it is the correct format)
+     *
+     * @param       etUsername EditText field for entering username
+     * @param       etCity EditText field for entering city
+     * @param       etPhone EditText field for entering phone
+     * @param       etEmail EditText field for entering email
+     * @return      boolean
+     */
+        public boolean validateFields(EditText etUsername, EditText etCity, EditText etPhone,
                                   EditText etEmail) {
         boolean valid = true;
 
@@ -111,7 +148,14 @@ public class UserRegistrationController {
 
     }
 
-    // validates edited text fields (make sure that content exists and it is the correct format
+    /**
+     * Validates edited text fields (make sure that content exists and it is the correct format
+     *
+     * @param       etCity EditText field for entering city
+     * @param       etPhone EditText field for entering phone
+     * @param       etEmail EditText field for entering email
+     * @return      boolean
+     */
     public boolean validateEditedFields(EditText etCity, EditText etPhone, EditText etEmail) {
         boolean valid = true;
 

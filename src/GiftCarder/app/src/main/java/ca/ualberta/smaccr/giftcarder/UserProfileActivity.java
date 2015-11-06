@@ -28,12 +28,11 @@ import android.widget.Toast;
 
 public class UserProfileActivity extends ActionBarActivity {
 
-    EditText etUsername;
-    EditText etCity;
-    EditText etPhone;
-    EditText etEmail;
-    String username;
-    UserRegistrationController urc = new UserRegistrationController();
+    private EditText etCity;
+    private EditText etPhone;
+    private EditText etEmail;
+    private String username;
+    private UserRegistrationController urc = new UserRegistrationController();
     private MenuItem item;
 
     @Override
@@ -41,7 +40,7 @@ public class UserProfileActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        etUsername = (EditText) findViewById(R.id.usernameTextView);
+        EditText etUsername = (EditText) findViewById(R.id.usernameTextView);
         etCity = (EditText) findViewById(R.id.cityTextView);
         etPhone = (EditText) findViewById(R.id.phoneTextView);
         etEmail = (EditText) findViewById(R.id.emailTextView);
@@ -90,11 +89,6 @@ public class UserProfileActivity extends ActionBarActivity {
             Button saveButton = (Button)findViewById(R.id.saveButton);
             saveButton.setVisibility(View.VISIBLE);
 
-            etUsername = (EditText) findViewById(R.id.usernameTextView);
-            etCity = (EditText) findViewById(R.id.cityTextView);
-            etPhone = (EditText) findViewById(R.id.phoneTextView);
-            etEmail = (EditText) findViewById(R.id.emailTextView);
-
             // Make editable
             etCity.setFocusableInTouchMode(true);
             etPhone.setFocusableInTouchMode(true);
@@ -103,13 +97,16 @@ public class UserProfileActivity extends ActionBarActivity {
             return true;
         }
 
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
     public void onSaveButtonClick(View view){
-        etCity = (EditText) findViewById(R.id.cityTextView);
-        etPhone = (EditText) findViewById(R.id.phoneTextView);
-        etEmail = (EditText) findViewById(R.id.emailTextView);
 
         if (urc.validateEditedFields(etCity, etPhone, etEmail)) {
 

@@ -23,6 +23,12 @@ import android.widget.Toast;
 public class RegisterActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
 
+    //getters for UI testing
+    public EditText getEtUsername() {return (EditText) findViewById(R.id.registerUsername);}
+    public EditText getEtCity() {return (EditText) findViewById(R.id.registerCity);}
+    public EditText getEtPhone() {return (EditText) findViewById(R.id.registerPhone);}
+    public EditText getEtEmail() {return (EditText) findViewById(R.id.registerEmail);}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +54,6 @@ public class RegisterActivity extends Activity {
             urc.addUser(etUsername, etCity, etPhone, etEmail);
             //Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
 
-            /* temporarily start UserProfileActivity activity -> should start Inventory */
             Intent intent = new Intent(this, InventoryActivity.class);
             String username = etUsername.getText().toString();
             intent.putExtra(EXTRA_USERNAME, username);

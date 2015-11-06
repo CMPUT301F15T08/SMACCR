@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class ItemActivity extends Activity {
 
-    //For UI testing
+    // For UI testing
     private ItemActivity activity = this;
     private EditText itemName;
     private EditText itemValue;
@@ -38,7 +38,7 @@ public class ItemActivity extends Activity {
     int position;
     GiftCard gc;
 
-    //getters for UI testing
+    // getters for UI testing
     public EditText getItemName() {return (EditText) findViewById(R.id.ID_item_value);}
     public EditText getItemValue() {return (EditText)findViewById(R.id.ID_item_Name);}
     public EditText getQuantity() {return (EditText)findViewById(R.id.ID_quantity);}
@@ -56,12 +56,12 @@ public class ItemActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
-        //receive inventory and position of gift card to modify
+        // receive inventory and position of gift card to modify
         position = (int)getIntent().getIntExtra("position", 0);
         inv = (Inventory)getIntent().getSerializableExtra("inventory");
         gc = (GiftCard)getIntent().getSerializableExtra("gc");
 
-        //Get references to UI
+        // Get references to UI
         EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
         EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
         EditText quantity = (EditText)findViewById(R.id.ID_quantity);
@@ -73,7 +73,7 @@ public class ItemActivity extends Activity {
         Button offerbutton = (Button)findViewById(R.id.ID_MakeOfferButton);
         Button savebutton = (Button)findViewById(R.id.ID_savegiftcard);
 
-        //itemName.setText(inv.getInvList().get(position).getMerchant());
+        // itemName.setText(inv.getInvList().get(position).getMerchant());
 
         if (inv != null){
             ic.setViewModeValue(false);
@@ -109,7 +109,7 @@ public class ItemActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -117,7 +117,7 @@ public class ItemActivity extends Activity {
     }
 
     public void saveGiftCardInfo(View menu){
-        //Get references to UI
+        // Get references to UI
         EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
         EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
         EditText quantity = (EditText)findViewById(R.id.ID_quantity);
@@ -126,12 +126,12 @@ public class ItemActivity extends Activity {
         EditText comments = (EditText)findViewById(R.id.ID_comments);
         CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
 
-        //item controller to set the data into inventory
+        // item controller to set the data into inventory
         inv = ic.setGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
 
 
-        //http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
-        //send the modified inventory back to inventory activity
+        // http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
+        // send the modified inventory back to inventory activity
         Intent intent = new Intent();
         intent.putExtra("ModifiedInventory", inv);
         setResult(RESULT_OK, intent);
@@ -147,7 +147,7 @@ public class ItemActivity extends Activity {
             inv.getInvList().remove(position);
         }
 
-        //inv.getInvList().remove(position);
+        // inv.getInvList().remove(position);
         Intent intent = new Intent();
         intent.putExtra("ModifiedInventory", inv);
         setResult(RESULT_OK, intent);
@@ -155,8 +155,8 @@ public class ItemActivity extends Activity {
     }
 
 
-    //https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
-    //barebones right now
+    // https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
+    // barebones right now
     public void takeGiftCardPic(View menu){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //intent.putExtra(MediaStore.EXTRA_OUTPUT, 1);
@@ -167,8 +167,8 @@ public class ItemActivity extends Activity {
         }
 
     }
-    //https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
-    //Get picture data and put it in photo of giftcard
+    // https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
+    // Get picture data and put it in photo of giftcard
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2) {
@@ -198,7 +198,7 @@ public class ItemActivity extends Activity {
         Button offerbutton = (Button)findViewById(R.id.ID_MakeOfferButton);
         Button savebutton = (Button)findViewById(R.id.ID_savegiftcard);
 
-        //Changing the viewing mode, example user view mode can edit, borrower can only see
+        // Changing the viewing mode, example user view mode can edit, borrower can only see
         ic.setViewMode(itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox, viewstatus, offerbutton, savebutton);
 
     }
