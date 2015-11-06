@@ -136,8 +136,9 @@ public class ItemController {
         comments.setEnabled(viewMode);
         checkbox.setEnabled(viewMode);
 
-        if (viewMode){viewMode = false;
-        viewStatus.setText("View as Public");
+        if (viewMode){
+            viewMode = false;
+            viewStatus.setText("View as Public");
             offerButton.setVisibility(View.GONE);
             savebutton.setVisibility(View.VISIBLE);
             itemName.setTextColor(Color.BLACK);

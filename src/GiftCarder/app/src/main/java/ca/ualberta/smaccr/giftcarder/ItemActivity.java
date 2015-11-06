@@ -76,6 +76,7 @@ public class ItemActivity extends Activity {
         //itemName.setText(inv.getInvList().get(position).getMerchant());
 
         if (inv != null){
+            ic.setViewModeValue(false);
             ic.displayGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
         }
 

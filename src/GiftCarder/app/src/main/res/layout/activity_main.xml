@@ -10,12 +10,12 @@
 
 
 
-    <EditText
+    <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="GiftCarder"
-        android:id="@+id/textView"
+        android:id="@+id/banner"
         android:layout_gravity="center_horizontal"
         android:textSize="66dp" />
 

@@ -27,35 +27,33 @@ public class BrowseActivity extends Activity {
 
     Cache myCache = new Cache();
 
+    private ListView inventorylistID;
     private BrowseActivity activity = this;
     private EditText searchBar;
     private Button goButton;
     private Spinner catSpinner;
 
+    public ListView getInventorylistID() {
+        return inventorylistID;
+    }
     public Cache getMyCache() {
         return myCache;
     }
-
     public Button getGoButton() {
         return goButton;
     }
-
     public BrowseActivity getActivity() {
         return activity;
     }
-
     public EditText getSearchBar() {
         return searchBar;
     }
-
     public void setSearchBar(EditText searchBar) {
         this.searchBar = searchBar;
     }
-
     public Spinner getCatSpinner() {
         return catSpinner;
     }
-
     public void setCatSpinner(Spinner catSpinner) {
         this.catSpinner = catSpinner;
     }
@@ -66,19 +64,10 @@ public class BrowseActivity extends Activity {
         setContentView(R.layout.activity_browse);
 
 
-        GiftCard giftCard1 = new GiftCard();
-        giftCard1.setMerchant("Bestbuy");
-        giftCard1.setQuantity(1);
-        giftCard1.setQuality(3);
-        giftCard1.setCategory(1);
-        giftCard1.setComments("scratched but usable");
-        giftCard1.setShared(Boolean.TRUE);
-        myCache.add(giftCard1);
-
         searchBar = (EditText) findViewById(R.id.searchEditText);
         goButton = (Button) findViewById(R.id.browseGo);
         catSpinner = (Spinner) findViewById(R.id.browseCatSpinner);
-
+        inventorylistID = (ListView) findViewById(R.id.browseListView);
 
         ListView browseListView = (ListView) findViewById(R.id.browseListView);
 
@@ -147,7 +136,6 @@ public class BrowseActivity extends Activity {
         }
 
         // Display list of names of giftcards
-        ListView inventorylistID = (ListView) findViewById(R.id.browseListView);
         ArrayAdapter<String> displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);//FixME format display to more than string
                     //new ArrayAdapter<GiftCard>(this, R.layout.list_gc, (List<GiftCard>)myCache.getItems());
 

@@ -49,6 +49,5 @@
             android:label="@string/title_activity_browse" >
         </activity>
     </application>
-    <instrumentation android:targetPackage="ca.ualberta.smaccr.giftcarder"
-        android:name="android.test.InstrumentationTestRunner" />
+
 </manifest>
