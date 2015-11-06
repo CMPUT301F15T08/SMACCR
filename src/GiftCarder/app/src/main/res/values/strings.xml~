@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">GiftCarder</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="search">Search</string>
+    <string name="newNotiNum">0</string>
+    <string name="title_activity_noti_full2">NotiFull2Activity</string>
+<<<<<<< HEAD
+    <string name="title_activity_item">item</string>
+
+
+    <!-- ITEM DROP DOWN MENU STUFF -->
+    <string-array name="Category">
+        <item>Food-Beverage</item>
+        <item>Clothing</item>
+        <item>Home-garden</item>
+        <item>Electronics</item>
+        <item>Department Store(eg. Walmart)</item>
+        <item>Services</item>
+        <item>Entertainment</item>
+        <item>Online Retailers(eg. Amazon)</item>
+        <item>Health-beauty</item>
+        <item>Movie threater</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="Quality">
+        <item>Excellent</item>
+        <item>Good</item>
+        <item>Okay</item>
+        <item>Poor</item>
+    </string-array>
+    <!-- ITEM DROP DOWN MENU STUFF DONE -->
+
+
+=======
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_city">Enter city</string>
+    <string name="enter_phone">Enter phone</string>
+    <string name="enter_email">Enter email</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="sign_up">Sign Up</string>
+>>>>>>> 06f96bc20818e3de4f12e9e845dcaba7476a3da8
+</resources>

@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="ca.ualberta.smaccr.giftcarder.RegisterActivity">
+
+    <EditText
+        android:id="@+id/registerUsername"
+        android:hint="@string/enter_username"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#938f90"
+        android:padding="12dp"
+        android:singleLine="true" />
+
+    <EditText
+        android:id="@+id/registerCity"
+        android:hint="@string/enter_city"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#938f90"
+        android:padding="12dp"
+        android:singleLine="true"
+        android:inputType="textCapWords"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:id="@+id/registerPhone"
+        android:hint="@string/enter_phone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#938f90"
+        android:padding="12dp"
+        android:singleLine="true"
+        android:inputType="phone"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:id="@+id/registerEmail"
+        android:hint="@string/enter_email"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#938f90"
+        android:padding="12dp"
+        android:singleLine="true"
+        android:inputType="textEmailAddress"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up"
+        android:id="@+id/signUpButton"
+        android:background="#8dd35f"
+        android:onClick="signUpUser"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>
