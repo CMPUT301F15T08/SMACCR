@@ -42,6 +42,14 @@ public class RegisterActivity extends Activity {
         return true;
     }
 
+    /**
+     * Called when user presses Sign Up button.
+     * <p>
+     * Checks to see if user-entered fields match required format.  Checks to make sure username
+     * is not already taken.  If not, it creates a new user account and opens the user's inventory.
+     *
+     * @param  view  view that is clicked
+     */
     public void signUpUser(View view) {
         EditText etUsername = (EditText) findViewById(R.id.registerUsername);
         EditText etCity = (EditText) findViewById(R.id.registerCity);

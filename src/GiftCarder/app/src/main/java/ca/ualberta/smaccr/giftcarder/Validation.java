@@ -48,7 +48,13 @@ public class Validation {
         return isValid(editText, EMAIL_REGEX, EMAIL_MSG);
     }
 
-    // return true if the input field is valid, based on the parameter passed
+    /**
+     * Returns true if the input field is valid, based on the parameter passed
+     * @param editText input field
+     * @param regex String regular expression
+     * @param errMsg String error message to display
+     * @return boolean
+     */
     public static boolean isValid(EditText editText, String regex, String errMsg) {
 
         String text = editText.getText().toString().trim();
@@ -69,7 +75,12 @@ public class Validation {
         return true;
     }
 
-    // return true if username is unique
+    /**
+     * Returns true if username is unique
+     * @param editText input field with username
+     * @param userList user list to search through
+     * @return boolean
+     */
     public static boolean uniqueUsername(EditText editText, UserList userList) {
         String username = editText.getText().toString().trim();
         editText.setError(null);
@@ -91,8 +102,12 @@ public class Validation {
         return true;
     }
 
-    // checks if input field has text
-    // returns true if it contains text, otherwise false
+    /**
+     * Checks if input field has text.  Returns true if it contains text, otherwise false.
+     * @param editText input field to check
+     * @return boolean
+     */
+    //
     public static boolean hasText(EditText editText) {
         String text = editText.getText().toString().trim();
 

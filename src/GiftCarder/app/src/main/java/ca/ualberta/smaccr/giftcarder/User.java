@@ -11,47 +11,95 @@ public class User {
     private Inventory inv;
     private UserList friends;
 
+    /**
+     * Constructor: on creation of User, creates new inventory
+     */
+
     public User() {
         this.inv = new Inventory();
         this.friends = new UserList();
     }
 
+<<<<<<< HEAD
 
     public void addUsername(String username) {
+=======
+    /**
+     * Sets username
+     * @param  username String
+     */
+    public void setUsername(String username) {
+>>>>>>> 59fd0edff90e7c2fbadfb6f93116c0b354a18b1f
         this.username = username;
     }
 
-    public void addCity(String city) {
+    /**
+     * Sets city
+     * @param  city String
+     */
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public void addPhone(String phone) {
+    /**
+     * Sets phone
+     * @param  phone String
+     */
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public void addEmail(String email) {
+    /**
+     * Sets email
+     * @param  email String
+     */
+    public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Gets username
+     * @return String
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Gets city
+     * @return String
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     * Gets phone
+     * @return String
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * Gets email
+     * @return String
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Gets inventory
+     * @return String
+     */
     public Inventory getInv() {
         return this.inv;
     }
 
+    /**
+     * Sets inventory
+     * @param inventory Inventory of user's items
+     */
     public void setInv(Inventory inventory) {this.inv = inventory;}
 }
