@@ -22,12 +22,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        user.addUsername("t");
-        user.addCity("Edmo");
-        user.addPhone("012-345-6789");
-        user.addEmail("t@g.c");
+        /*
+        user.setUsername("t");
+        user.setCity("Edmo");
+        user.setPhone("012-345-6789");
+        user.setEmail("t@g.c");
         UserRegistrationController.getUserList().addUser(user);
+        */
     }
 
     @Override
