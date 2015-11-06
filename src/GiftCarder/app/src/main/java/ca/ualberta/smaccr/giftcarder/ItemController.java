@@ -28,6 +28,13 @@ public class ItemController {
         this.viewMode = viewMode;
     }
 
+    /**
+
+     takeAPicture
+     picture function
+
+     void */
+
     public void takeAPicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, 1);
@@ -65,6 +72,15 @@ public class ItemController {
         checkbox.setChecked(tempcard.getShared());
     }
 
+
+    /**
+
+     displayGiftCardInfo
+     display the giftcard
+     GiftCard gc, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox
+     void */
+
+
     // Place the gift card's information into the view, with given giftcard
     public void displayGiftCardInfo(GiftCard gc, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
         GiftCard tempcard = gc;
@@ -93,6 +109,14 @@ public class ItemController {
         comments.setText(tempcard.getComments());
         checkbox.setChecked(tempcard.getShared());
     }
+
+    /**
+
+     setGiftCardInfo
+     set the inventory set giftcard info
+     Inventory inv, int position, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox
+     modified inventory */
+
 
 
     // Set inventory with modifed gift card item
@@ -125,6 +149,14 @@ public class ItemController {
         inv.getInvList().set(position, tempcard);
         return inv;
     }
+
+    /**
+
+     setViewMode
+     To change the viewing mode
+     EditText itemValue ,EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox, Button viewStatus, Button offerButton, Button savebutton
+     void */
+
 
     public void setViewMode(EditText itemValue ,EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox, Button viewStatus, Button offerButton, Button savebutton) {
 
