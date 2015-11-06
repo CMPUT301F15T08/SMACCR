@@ -24,6 +24,14 @@ public class InventoryActivity extends ActionBarActivity {
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
 
+
+    /**
+     * onCreate
+     * Create the inventory activity - initialize tabs and inventory list view with logged-in
+     * user's inventory
+     * @param savedInstanceState
+     * return
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +142,12 @@ public class InventoryActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // OnClick to add GiftCard
+    /**
+     * AddNewGiftCard
+     * create a new giftcard and place in inventory, then switch to ItemActivity to edit that giftcard
+     * @param menu
+     * return
+     */
     public void AddNewGiftCard(View menu){
         // Add new giftcard
         GiftCard gc = new GiftCard();
@@ -162,7 +175,12 @@ public class InventoryActivity extends ActionBarActivity {
     http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
      */
 
-    // Grab modified inventory back from giftcard, and reset the array adapter
+    /**
+     * onActivityResult
+     * Grab modified inventory back from giftcard, and reset the array adapter
+     * @param requestCode, resultCode, data
+     * return
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
@@ -173,6 +191,12 @@ public class InventoryActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * updateInvList
+     * update the display of the inventory listview
+     * @param inv
+     * return
+     */
     public void updateInvList(Inventory inv) {
         // Get ArrayList of Strings to display in Adapter ListView
         ArrayList<GiftCard> tempArray = inv.getInvList();
