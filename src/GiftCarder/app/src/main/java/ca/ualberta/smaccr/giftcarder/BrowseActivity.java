@@ -11,7 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,23 +27,49 @@ public class BrowseActivity extends Activity {
 
     Cache myCache = new Cache();
 
+    private ListView inventorylistID;
+    private BrowseActivity activity = this;
+    private EditText searchBar;
+    private Button goButton;
+    private Spinner catSpinner;
 
+    public ListView getInventorylistID() {
+        return inventorylistID;
+    }
+    public Cache getMyCache() {
+        return myCache;
+    }
+    public Button getGoButton() {
+        return goButton;
+    }
+    public BrowseActivity getActivity() {
+        return activity;
+    }
+    public EditText getSearchBar() {
+        return searchBar;
+    }
+    public void setSearchBar(EditText searchBar) {
+        this.searchBar = searchBar;
+    }
+    public Spinner getCatSpinner() {
+        return catSpinner;
+    }
+    public void setCatSpinner(Spinner catSpinner) {
+        this.catSpinner = catSpinner;
+    }
 
-    @Override
+    @Override//FIXME get rid of the need for putextra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
 
-
-        GiftCard giftCard1 = new GiftCard();
-        giftCard1.setMerchant("Bestbuy");
-        giftCard1.setQuantity(1);
-        giftCard1.setQuality(3);
-        giftCard1.setCategory(1);
-        giftCard1.setComments("scratched but usable");
-        giftCard1.setShared(Boolean.TRUE);
+        final GiftCard giftCard1 = new GiftCard(12.34,"Test",1,1,6,"scratched but usable", Boolean.TRUE);
         myCache.add(giftCard1);
 
+        searchBar = (EditText) findViewById(R.id.searchEditText);
+        goButton = (Button) findViewById(R.id.browseGo);
+        catSpinner = (Spinner) findViewById(R.id.browseCatSpinner);
+        inventorylistID = (ListView) findViewById(R.id.browseListView);
 
         ListView browseListView = (ListView) findViewById(R.id.browseListView);
 
@@ -50,6 +79,7 @@ public class BrowseActivity extends Activity {
 
                 // Switch to item activity and send selected giftcard data
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
+                intent.putExtra("gc", giftCard1);
                 startActivity(intent);
             }
         });
@@ -60,8 +90,6 @@ public class BrowseActivity extends Activity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final AdapterView<?> par = parent;
                 final int pos = position;
-
-                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder tradeDialog = new AlertDialog.Builder(BrowseActivity.this);
                 tradeDialog.setMessage("Do you want to trade for this item?").setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -91,16 +119,11 @@ public class BrowseActivity extends Activity {
     }
 
     @Override
-    protected void onStart() {
-        // TODO Auto-generated method stub
-        super.onStart();
-
-
-        // display size
-        // Toast.makeText(getApplicationContext(), Integer.toString(myinventory.getSize()),Toast.LENGTH_SHORT).show();
+    protected void onResume(){
+        super.onResume();
 
         // Get ArrayList of Strings to display in Adapter ListView
-        LinkedList<GiftCard> tempArray = myCache.getItems();
+        LinkedList<GiftCard> tempArray = loadFromCache();
         // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
 
         ArrayList<String> GiftCardNames = new ArrayList<String>();
@@ -109,12 +132,19 @@ public class BrowseActivity extends Activity {
         }
 
         // Display list of names of giftcards
-        ListView inventorylistID = (ListView) findViewById(R.id.browseListView);
         ArrayAdapter<String> displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);//FixME format display to more than string
-                    //new ArrayAdapter<GiftCard>(this, R.layout.list_gc, (List<GiftCard>)myCache.getItems());
+        //new ArrayAdapter<GiftCard>(this, R.layout.list_gc, (List<GiftCard>)myCache.getItems());
 
-                    //displayAdapter.getView()// turn GC into item with image and value
+        //displayAdapter.getView()// turn GC into item with image and value
         inventorylistID.setAdapter(displayAdapter);
+    }
+
+    @Override
+    protected void onStart() {
+        // TODO Auto-generated method stub
+        super.onStart();
+
+        Toast.makeText(getApplicationContext(), "LongClick to propose trade",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -126,19 +156,31 @@ public class BrowseActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(this, SettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean loadFromCache(){                   //FIXME
+    /**FIXME to allow one friend's inventory
+     *loadFromCache
+     * load screen full of
+     *
+     * @return LinkedList<GiftCard>
+     */
+    public LinkedList<GiftCard> loadFromCache(){                   //FIXME
 
-        return false;
+        return myCache.getItems();
     };
 
+    /**
+     * clickItem
+     * view the details of the item
+     * @param v
+     *//*
     public void clickItem(View v){
         Intent intent = new Intent(this, ItemActivity.class);
+        intent.p
         startActivity(intent);
-    }
+    }*/
 }

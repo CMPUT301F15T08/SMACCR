@@ -143,6 +143,7 @@ public class GiftCardTest extends ActivityInstrumentationTestCase2 {
         Activity activity = getActivity();
     }
 
+    //Giftcard activity test for editing it
     public void testEditGiftCard() throws Exception {
         ItemActivity activity = (ItemActivity)getActivity();
 

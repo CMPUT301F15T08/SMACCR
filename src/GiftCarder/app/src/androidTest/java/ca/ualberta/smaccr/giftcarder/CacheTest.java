@@ -79,8 +79,8 @@ public class CacheTest extends ActivityInstrumentationTestCase2 {
         int t1 = cache.size();
         cache.add(giftCard1);
 
-        assertTrue("t1 == 0",t1==0);
-        assertTrue("0 - "+cache.size()+ " = 1", t1 - cache.size()==-1);
+        assertTrue("t1 == 0", t1 == 0);
+        assertTrue("0 - " + cache.size() + " = 1", t1 - cache.size() == -1);
 
     }
 
@@ -112,4 +112,5 @@ public class CacheTest extends ActivityInstrumentationTestCase2 {
 
         assertTrue(t3 - cache.size()==linkedList.size()*-1);
     }
+
 }

@@ -7,13 +7,4 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 
-    <item android:id="@+id/tradeNoti"
-        android:icon="@drawable/envelope"
-        android:title="@string/newTradeNotiNum"
-        app:showAsAction="withText|ifRoom" />
-
-    <item android:id="@+id/friendNoti"
-        android:icon="@drawable/user_icon"
-        android:title="@string/newFriendNotiNum"
-        app:showAsAction="withText|ifRoom" />
 </menu>
