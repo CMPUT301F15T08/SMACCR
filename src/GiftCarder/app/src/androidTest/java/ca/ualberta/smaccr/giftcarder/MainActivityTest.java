@@ -72,12 +72,13 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
 
         // Creates user
         User user = new User();
-        user.addUsername("Link");
-        user.addCity("Skyloft");
-        user.addPhone("555-555-5555");
-        user.addEmail("hero@hyrule.com");
+        user.setUsername("Link");
+        user.setCity("Skyloft");
+        user.setPhone("555-555-5555");
+        user.setEmail("hero@hyrule.com");
 
         UserRegistrationController urc = new UserRegistrationController();
+        urc.clearUsers();
         urc.getUserList().addUser(user);
 
         activity.runOnUiThread(new Runnable() {
@@ -100,7 +101,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        // Validate that ReceiverActivity is started
+        // Validate that ReceiverActivity has started
         InventoryActivity receiverActivity = (InventoryActivity)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", receiverActivity);
@@ -113,6 +114,47 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().removeMonitor(receiverActivityMonitor);
 
         receiverActivity.finish();
+
+    }
+
+    /**
+     * Tests that entering the username of an unregistered user does not start the InventoryActivity
+     */
+    public void testLoginUnregisteredUser() {
+        MainActivity activity = (MainActivity) getActivity();
+        final Button loginButton = (Button) activity.findViewById(R.id.loginButton);
+        etUsername = activity.getEtUsername();
+
+        UserRegistrationController urc = new UserRegistrationController();
+        urc.clearUsers();
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                etUsername.setText("Link");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Set up an ActivityMonitor
+        Instrumentation.ActivityMonitor receiverActivityMonitor =
+                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                        null, false);
+
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                loginButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        // Validate that ReceiverActivity did not start
+        InventoryActivity receiverActivity = (InventoryActivity)
+                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+        assertNull("ReceiverActivity is not null", receiverActivity);
+
+        // Remove the ActivityMonitor
+        getInstrumentation().removeMonitor(receiverActivityMonitor);
 
     }
 

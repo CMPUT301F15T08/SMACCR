@@ -35,6 +35,12 @@ public class UserProfileActivity extends ActionBarActivity {
     private UserRegistrationController urc = new UserRegistrationController();
     private MenuItem item;
 
+    //getters for UI testing
+    public EditText getEtUsername() {return (EditText) findViewById(R.id.usernameTextView);}
+    public EditText getEtCity() {return (EditText) findViewById(R.id.cityTextView);}
+    public EditText getEtPhone() {return (EditText) findViewById(R.id.phoneTextView);}
+    public EditText getEtEmail() {return (EditText) findViewById(R.id.emailTextView);}
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,16 +57,18 @@ public class UserProfileActivity extends ActionBarActivity {
         User user = urc.getUser(username);
 
         // Set text fields
-        etUsername.setText(username);
-        etCity.setText(user.getCity());
-        etPhone.setText(user.getPhone());
-        etEmail.setText(user.getEmail());
+        if (!(user == null)) {
+            etUsername.setText(username);
+            etCity.setText(user.getCity());
+            etPhone.setText(user.getPhone());
+            etEmail.setText(user.getEmail());
 
-        // Disable editing
-        etUsername.setFocusable(false);
-        etCity.setFocusable(false);
-        etPhone.setFocusable(false);
-        etEmail.setFocusable(false);
+            // Disable editing
+            etUsername.setFocusable(false);
+            etCity.setFocusable(false);
+            etPhone.setFocusable(false);
+            etEmail.setFocusable(false);
+        }
     }
 
     @Override
@@ -122,7 +130,7 @@ public class UserProfileActivity extends ActionBarActivity {
             Button saveButton = (Button)findViewById(R.id.saveButton);
             saveButton.setVisibility(View.INVISIBLE);
 
-            Toast.makeText(this, "Changes saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
         }
         else
             Toast.makeText(this, "Form contains error", Toast.LENGTH_LONG).show();

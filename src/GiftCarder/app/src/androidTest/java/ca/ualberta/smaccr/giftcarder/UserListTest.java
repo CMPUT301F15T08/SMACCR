@@ -13,10 +13,10 @@ public class UserListTest extends android.test.ActivityInstrumentationTestCase2 
         UserList userList = new UserList();
         User user = new User();
 
-        user.addUsername("Link");
-        user.addCity("Skyloft");
-        user.addPhone("555-555-5555");
-        user.addEmail("hero@hyrule.com");
+        user.setUsername("Link");
+        user.setCity("Skyloft");
+        user.setPhone("555-555-5555");
+        user.setEmail("hero@hyrule.com");
 
         userList.addUser(user);
         assertFalse(userList.isEmpty());
@@ -27,16 +27,16 @@ public class UserListTest extends android.test.ActivityInstrumentationTestCase2 
         User userOne = new User();
         User userTwo = new User();
 
-        userOne.addUsername("Link");
-        userOne.addCity("Skyloft");
-        userOne.addPhone("555-555-5555");
-        userOne.addEmail("hero@hyrule.com");
+        userOne.setUsername("Link");
+        userOne.setCity("Skyloft");
+        userOne.setPhone("555-555-5555");
+        userOne.setEmail("hero@hyrule.com");
         userList.addUser(userOne);
 
-        userTwo.addUsername("ColetteBrunel");
-        userTwo.addCity("Iselia");
-        userTwo.addPhone("555-555-5556");
-        userTwo.addEmail("chosen@sylvarant.com");
+        userTwo.setUsername("ColetteBrunel");
+        userTwo.setCity("Iselia");
+        userTwo.setPhone("555-555-5556");
+        userTwo.setEmail("chosen@sylvarant.com");
         userList.addUser(userTwo);
 
         assertTrue(userList.getSize() == 2);
@@ -48,16 +48,16 @@ public class UserListTest extends android.test.ActivityInstrumentationTestCase2 
         User userTwo = new User();
         User userThree;
 
-        userOne.addUsername("Link");
-        userOne.addCity("Skyloft");
-        userOne.addPhone("555-555-5555");
-        userOne.addEmail("hero@hyrule.com");
+        userOne.setUsername("Link");
+        userOne.setCity("Skyloft");
+        userOne.setPhone("555-555-5555");
+        userOne.setEmail("hero@hyrule.com");
         userList.addUser(userOne);
 
-        userTwo.addUsername("ColetteBrunel");
-        userTwo.addCity("Iselia");
-        userTwo.addPhone("555-555-5556");
-        userTwo.addEmail("chosen@sylvarant.com");
+        userTwo.setUsername("ColetteBrunel");
+        userTwo.setCity("Iselia");
+        userTwo.setPhone("555-555-5556");
+        userTwo.setEmail("chosen@sylvarant.com");
         userList.addUser(userTwo);
 
         userThree = userList.getUser("Link");

@@ -55,10 +55,10 @@ public class UserRegistrationController {
         String email = convertToString(etEmail);
 
 
-        user.addUsername(username);
-        user.addCity(city);
-        user.addPhone(phone);
-        user.addEmail(email);
+        user.setUsername(username);
+        user.setCity(city);
+        user.setPhone(phone);
+        user.setEmail(email);
 
         getUserList().addUser(user);
     }
@@ -78,9 +78,9 @@ public class UserRegistrationController {
         String phone = convertToString(etPhone);
         String email = convertToString(etEmail);
 
-        user.addCity(city);
-        user.addPhone(phone);
-        user.addEmail(email);
+        user.setCity(city);
+        user.setPhone(phone);
+        user.setEmail(email);
     }
 
     /**
@@ -101,6 +101,13 @@ public class UserRegistrationController {
      */
     public String convertToString(EditText editText) {
         return editText.getText().toString().trim();
+    }
+
+    /**
+     * Clears user list (for testing)
+     */
+    public void clearUsers() {
+        getUserList().clearList();
     }
 
     /**
