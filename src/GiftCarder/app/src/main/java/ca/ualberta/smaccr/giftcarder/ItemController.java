@@ -28,12 +28,6 @@ public class ItemController {
         this.viewMode = viewMode;
     }
 
-    /**
-
-     takeAPicture
-     picture function
-
-     void */
 
     public void takeAPicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -44,6 +38,20 @@ public class ItemController {
     }
 
     // Place the gift card's information into the view
+
+    /**
+     * displayGiftCardInfo
+     *display giftcard when given inventory and position of the giftcard.
+     * @param inv
+     * @param position
+     * @param itemValue
+     * @param itemName
+     * @param quantity
+     * @param qualitySpinner
+     * @param categorySpinner
+     * @param comments
+     * @param checkbox
+     */
     public void displayGiftCardInfo(Inventory inv, int position, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
         GiftCard tempcard = inv.getInvList().get(position);
 
@@ -82,6 +90,19 @@ public class ItemController {
 
 
     // Place the gift card's information into the view, with given giftcard
+
+    /**
+     * displayGiftCardInfo
+     * display the giftcard data in the view, with given giftcard
+     * @param gc
+     * @param itemValue
+     * @param itemName
+     * @param quantity
+     * @param qualitySpinner
+     * @param categorySpinner
+     * @param comments
+     * @param checkbox
+     */
     public void displayGiftCardInfo(GiftCard gc, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
         GiftCard tempcard = gc;
 
@@ -120,6 +141,20 @@ public class ItemController {
 
 
     // Set inventory with modifed gift card item
+
+    /**setGiftCardInfo
+     * To set the modified gift card into inventory
+     * @param inv
+     * @param position
+     * @param itemValue
+     * @param itemName
+     * @param quantity
+     * @param qualitySpinner
+     * @param categorySpinner
+     * @param comments
+     * @param checkbox
+     * @return inv
+     */
     public Inventory setGiftCardInfo(Inventory inv, int position, EditText itemValue, EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox) {
         GiftCard tempcard = inv.getInvList().get(position);
 
@@ -151,12 +186,19 @@ public class ItemController {
     }
 
     /**
-
-     setViewMode
-     To change the viewing mode
-     EditText itemValue ,EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox, Button viewStatus, Button offerButton, Button savebutton
-     void */
-
+     * setViewMode
+     * To set the view of current giftcard item
+     * @param itemValue
+     * @param itemName
+     * @param quantity
+     * @param qualitySpinner
+     * @param categorySpinner
+     * @param comments
+     * @param checkbox
+     * @param viewStatus
+     * @param offerButton
+     * @param savebutton
+     */
 
     public void setViewMode(EditText itemValue ,EditText itemName, EditText quantity, Spinner qualitySpinner, Spinner categorySpinner, EditText comments, CheckBox checkbox, Button viewStatus, Button offerButton, Button savebutton) {
 

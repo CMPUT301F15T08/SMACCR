@@ -74,6 +74,7 @@ public class ItemActivity extends Activity {
         Button savebutton = (Button)findViewById(R.id.ID_savegiftcard);
 
         // itemName.setText(inv.getInvList().get(position).getMerchant());
+        Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
 
         if (inv != null){
             ic.setViewModeValue(false);
@@ -116,6 +117,10 @@ public class ItemActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**saveGiftCardInfo
+     * saves the giftcard to inventory
+     * @param menu
+     */
     public void saveGiftCardInfo(View menu){
         // Get references to UI
         EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
@@ -157,6 +162,12 @@ public class ItemActivity extends Activity {
 
     // https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
     // barebones right now
+
+    /**
+     * takeGiftCardPic
+     * takes a giftcard pic when you click on the profile picture
+     * @param menu
+     */
     public void takeGiftCardPic(View menu){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //intent.putExtra(MediaStore.EXTRA_OUTPUT, 1);
@@ -169,6 +180,13 @@ public class ItemActivity extends Activity {
     }
     // https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
     // Get picture data and put it in photo of giftcard
+
+    /**onActivityResult
+     *Saves the picture data into the image parameter
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2) {
@@ -184,6 +202,10 @@ public class ItemActivity extends Activity {
         }
     }
 
+    /**setViewStatus
+     * Changes the view status when clicked "view as public or owner"
+     * @param menu
+     */
     public void setViewStatus(View menu){
 
         //UI references
