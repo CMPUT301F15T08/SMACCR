@@ -8,26 +8,26 @@ import java.util.ArrayList;
  * Refactored and maintained by Spencer from 2015-10-28
  */
 public class Inventory implements Serializable {
-    ArrayList<GiftCard> inv = new ArrayList<GiftCard>();
+    private ArrayList<GiftCard> inv;
 
-    public Inventory() {}
+    public Inventory() {this.inv = new ArrayList<GiftCard>(); }
 
     public void addGiftCard(GiftCard gc){
-        inv.add(0, gc);
+        this.inv.add(0, gc);
     }
 
     public void deleteGiftCard(int gcIndex){
-        inv.remove(gcIndex);
+        this.inv.remove(gcIndex);
     }
 
     public int getSize(){
-        return inv.size();
+        return this.inv.size();
     }
 
 
     // Getters and setters
     public ArrayList<GiftCard> getInvList() {
-        return inv;
+        return this.inv;
     }
 
     public void setInv(ArrayList<GiftCard> inv) {

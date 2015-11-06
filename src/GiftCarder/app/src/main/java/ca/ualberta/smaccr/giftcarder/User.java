@@ -51,4 +51,6 @@ public class User {
     public Inventory getInv() {
         return this.inv;
     }
+
+    public void setInv(Inventory inventory) {this.inv = inventory;}
 }

@@ -57,10 +57,10 @@ public class InventoryActivity extends ActionBarActivity {
         UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
 
-        //Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getApplicationContext(), user.getUsername(), Toast.LENGTH_SHORT).show();
 
         inv = user.getInv();
-        // updateInvList(inv);
+        updateInvList(inv);
 
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -149,7 +149,7 @@ public class InventoryActivity extends ActionBarActivity {
             GiftCardNames.add(0, tempArray.get(index).getMerchant());
         }
 
-        //Switch to item activity and send selected giftcard data
+        // Switch to item activity and send selected giftcard data
         Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
         intent.putExtra("position", 0);
         intent.putExtra("inventory", inv);
@@ -173,7 +173,7 @@ public class InventoryActivity extends ActionBarActivity {
         }
     }
 
-    void updateInvList(Inventory inv) {
+    public void updateInvList(Inventory inv) {
         // Get ArrayList of Strings to display in Adapter ListView
         ArrayList<GiftCard> tempArray = inv.getInvList();
         // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
@@ -193,7 +193,7 @@ public class InventoryActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        //Back button disabled
+        // Back button disabled
     }
 
     public void getUserProfile(View view) {
