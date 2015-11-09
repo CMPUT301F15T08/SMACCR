@@ -37,6 +37,28 @@ public class UserRegistrationController {
         return false;
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    //Added by Richard, to get position of user in userlist
+    public int returnUserPosition(String username) {
+
+        for (int i = 0; i < getUserList().getSize(); i+=1) {
+            if (getUserList().getUsername(i).equals(username)) {
+                return i;
+            }
+        }
+
+        //No user, so return invalid index
+        return -1;
+    }
+
+    //Added by Richard to modify the user in userlist
+    public void editUserInventory(String username, Inventory inv){
+
+        //Getting the userlist
+        getUserList().getFriends().get(returnUserPosition(username)).setInv(inv);
+    }
+    ///////////////////////////////////////////////////////////////////////////////
+
     /**
      * Adds user to UserList
      *
@@ -62,6 +84,7 @@ public class UserRegistrationController {
 
         getUserList().addUser(user);
     }
+
 
     /**
      * Edits user in UserList

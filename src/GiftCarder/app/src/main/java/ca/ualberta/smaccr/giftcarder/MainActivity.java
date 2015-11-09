@@ -13,6 +13,8 @@ import android.widget.EditText;
 
 public class MainActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
+    Inventory inv;
+    String username;
 
     //getter for UI testing
     public EditText getEtUsername() {return (EditText) findViewById(R.id.enterUsername);}
@@ -22,13 +24,35 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*
+
+
+        //update the user's modified inventory
+        inv = (Inventory)getIntent().getSerializableExtra("inventorySettings1");
+        username = (String)getIntent().getStringExtra("userSettings1");
+
+        if (user != null){
+            //Toast.makeText(getApplicationContext(), username, Toast.LENGTH_LONG).show();
+
+        }
+        if (inv != null){
+            Toast.makeText(getApplicationContext(), inv.getInvList().get(0).getMerchant(), Toast.LENGTH_LONG).show();
+        }
+
+        if (username != null && inv != null){
+            Toast.makeText(getApplicationContext(), inv.getInvList().get(0).getMerchant(), Toast.LENGTH_LONG).show();
+            UserRegistrationController uc= new UserRegistrationController();
+            uc.editUserInventory(username,inv);
+
+        }
+
+
+
         user.setUsername("t");
         user.setCity("Edmo");
         user.setPhone("012-345-6789");
         user.setEmail("t@g.c");
         UserRegistrationController.getUserList().addUser(user);
-        */
+
     }
 
     @Override
@@ -79,4 +103,5 @@ public class MainActivity extends Activity {
             }
         }
     }
+
 }

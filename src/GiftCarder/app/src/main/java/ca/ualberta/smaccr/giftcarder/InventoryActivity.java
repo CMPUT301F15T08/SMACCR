@@ -136,7 +136,12 @@ public class InventoryActivity extends ActionBarActivity {
 
         // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+
+            //Pass the inventory to settings, so settings activity will send it back to main to update the inventory in singleton
+            Intent intent1 = new Intent(InventoryActivity.this, SettingsActivity.class);
+            intent1.putExtra("inventorySettings", inv);
+            intent1.putExtra("userSettings", username);
+            startActivity(intent1);
         }
 
         return super.onOptionsItemSelected(item);
