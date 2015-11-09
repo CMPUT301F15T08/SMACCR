@@ -4,10 +4,8 @@
 
 package ca.ualberta.smaccr.giftcarder;
 
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.TouchUtils;
 import android.widget.Button;
 import android.widget.EditText;
 

@@ -1,7 +1,5 @@
 package ca.ualberta.smaccr.giftcarder;
 
-import java.io.Serializable;
-
 /**
  * Created by Carin on 10/25/2015.
  */
@@ -11,6 +9,7 @@ public class User {
     private String phone;
     private String email;
     private Inventory inv;
+    private UserList friends;
 
     /**
      * Constructor: on creation of User, creates new inventory
@@ -18,13 +17,16 @@ public class User {
 
     public User() {
         this.inv = new Inventory();
+        this.friends = new UserList();
     }
+
 
     /**
      * Sets username
      * @param  username String
      */
     public void setUsername(String username) {
+
         this.username = username;
     }
 
