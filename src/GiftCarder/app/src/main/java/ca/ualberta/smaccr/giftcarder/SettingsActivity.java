@@ -20,14 +20,6 @@ public class SettingsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_settings);
         Button logOutButton = (Button) findViewById(R.id.logOutButton);
 
-        inv = (Inventory)getIntent().getSerializableExtra("inventorySettings");
-        username = (String)getIntent().getStringExtra("userSettings");
-        Toast.makeText(getApplicationContext(), inv.getInvList().get(0).getMerchant(), Toast.LENGTH_LONG).show();
-        Toast.makeText(getApplicationContext(), "Hi", Toast.LENGTH_LONG).show();
-
-
-        //tToast.makeText(getApplicationContext(), username, Toast.LENGTH_LONG).show();
-
 
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,9 +29,7 @@ public class SettingsActivity extends ActionBarActivity {
                 //user DArkO
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("inventorySettings1", inv);
-                intent.putExtra("userSettings1", username);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });

@@ -139,8 +139,6 @@ public class InventoryActivity extends ActionBarActivity {
 
             //Pass the inventory to settings, so settings activity will send it back to main to update the inventory in singleton
             Intent intent1 = new Intent(InventoryActivity.this, SettingsActivity.class);
-            intent1.putExtra("inventorySettings", inv);
-            intent1.putExtra("userSettings", username);
             startActivity(intent1);
         }
 
@@ -218,6 +216,10 @@ public class InventoryActivity extends ActionBarActivity {
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
         displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
         inventorylistID.setAdapter(displayAdapter);
+
+        //Updates the user's inventory in userList in UserRegisteration controller
+        UserRegistrationController uc= new UserRegistrationController();
+        uc.editUserInventory(username, inv);
     }
 
     @Override
