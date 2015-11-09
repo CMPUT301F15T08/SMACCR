@@ -34,6 +34,8 @@ public class InvDetailsActivity extends ActionBarActivity {
         detailsTitle.setText(invDetailsTitle);
         TextView detailsValue = (TextView) findViewById(R.id.totalValueTextView);
         detailsValue.setText(invDetailsValue);
+        TextView detailsNumberOfCards = (TextView) findViewById(R.id.ID_numberOfCards);
+        detailsNumberOfCards.setText(String.valueOf(user.getInv().getSize()));
     }
 
     @Override

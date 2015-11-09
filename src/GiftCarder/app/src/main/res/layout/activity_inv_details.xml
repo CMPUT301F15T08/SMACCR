@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="0"
-                android:id="@+id/textView4"
+                android:id="@+id/ID_numberOfCards"
                 android:layout_column="1"
                 android:gravity="right"
                 android:background="#CCCCCC"
