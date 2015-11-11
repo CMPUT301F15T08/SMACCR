@@ -2,6 +2,9 @@ package ca.ualberta.smaccr.giftcarder;
 
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Carin on 10/26/2015.
  */
@@ -14,6 +17,11 @@ public class UserRegistrationController {
             userList = new UserList();
         }
         return userList;
+    }
+
+    //set the singleton, used when loading cache, or whatever
+    static public void setSingletonUserList(ArrayList<User> ul){
+        getUserList().setUserList(ul);
     }
 
     /**
@@ -37,8 +45,11 @@ public class UserRegistrationController {
         return false;
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    //Added by Richard, to get position of user in userlist
+    /**
+     * return the position of the user in userlist
+     * @param username
+     * @return
+     */
     public int returnUserPosition(String username) {
 
         for (int i = 0; i < getUserList().getSize(); i+=1) {
@@ -51,13 +62,16 @@ public class UserRegistrationController {
         return -1;
     }
 
-    //Added by Richard to modify the user in userlist
+    /**Edits the user inventory in userList
+     *
+     * @param username
+     * @param inv
+     */
     public void editUserInventory(String username, Inventory inv){
 
         //Getting the userlist
         getUserList().getFriends().get(returnUserPosition(username)).setInv(inv);
     }
-    ///////////////////////////////////////////////////////////////////////////////
 
     /**
      * Adds user to UserList

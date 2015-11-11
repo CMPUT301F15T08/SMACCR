@@ -14,6 +14,12 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -24,6 +30,11 @@ public class InventoryActivity extends ActionBarActivity {
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
 
+
+    private static final String FILENAME = "giftcard_userlist.sav";
+
+    //Arraylist to load/save to internal storage
+    private ArrayList<User> records = new ArrayList<User>();
 
     /**
      * onCreate
@@ -242,5 +253,40 @@ public class InventoryActivity extends ActionBarActivity {
     public void browseClick(MenuItem v) {
         Intent intent = new Intent(this, BrowseActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        UserRegistrationController uc = new UserRegistrationController();
+        //save the data in onPause
+        //get the userList class in UserRegistrationController, then get the arraylist in userList...
+        records = uc.getUserList().ArrayListgetUserList();
+        Toast.makeText(getApplicationContext(), uc.getUserList().ArrayListgetUserList().get(0).getInv().getInvList().get(0).getMerchant(), Toast.LENGTH_LONG).show();
+        //save in cache
+        saveInFile();
+    }
+
+          /*
+    Using gson/json for file storage.
+
+    loadFromFile(), saveInFile() is from "Joshua Charles Campbell" (joshua2ua) monday lab, retrieved 2015-09-21
+     */
+
+    public void saveInFile() {
+        try {
+            FileOutputStream fos = openFileOutput(FILENAME,
+                    0);
+            OutputStreamWriter writer = new OutputStreamWriter(fos);
+            Gson gson = new Gson();
+            gson.toJson(records, writer);
+            writer.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

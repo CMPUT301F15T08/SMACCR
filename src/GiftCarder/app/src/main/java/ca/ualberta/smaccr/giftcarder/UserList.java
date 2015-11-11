@@ -24,9 +24,20 @@ import java.util.List;
  * Created by Carin on 10/26/2015.
  */
 public class UserList {
-    protected List<User> userList = new ArrayList<User>();
+    protected ArrayList<User> userList = new ArrayList<User>();
+
+    //Get userList
+    public ArrayList<User> ArrayListgetUserList() {
+        return userList;
+    }
+
+    //I had to create set for changing the singleton
+    public void setUserList(ArrayList<User> ul) {
+        this.userList = ul;
+    }
 
     /**
+
      * Adds new user
      * @param user new user
      */
@@ -82,7 +93,7 @@ public class UserList {
         }
     }
 
-    public List<User> getFriends(){
+    public ArrayList<User> getFriends(){
         return this.userList;
 
     }
