@@ -9,16 +9,16 @@
     <item android:id="@+id/browse"
         android:icon="@drawable/search"
         android:title="@string/title_activity_browse"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:onClick="browseClick"/>
 
     <item android:id="@+id/tradeNoti"
         android:icon="@drawable/envelope"
         android:title="@string/newTradeNotiNum"
-        app:showAsAction="withText|ifRoom" />
+        app:showAsAction="always" />
 
     <item android:id="@+id/friendNoti"
         android:icon="@drawable/user_icon"
         android:title="@string/newFriendNotiNum"
-        app:showAsAction="withText|ifRoom" />
+        app:showAsAction="always" />
 </menu>
