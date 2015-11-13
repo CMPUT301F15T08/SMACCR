@@ -89,7 +89,14 @@
                     android:id="@+id/tabTrades"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/tradesListView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" >
+                    </ListView>
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/tabFriends"
@@ -104,6 +111,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true" />
+
 
                 </LinearLayout>
 
