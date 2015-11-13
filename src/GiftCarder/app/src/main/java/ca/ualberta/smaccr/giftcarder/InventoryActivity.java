@@ -59,6 +59,19 @@ public class InventoryActivity extends ActionBarActivity {
         tabHost.addTab(tabSpec);
 
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+        ListView tradesListView = (ListView) findViewById(R.id.tradesListView);
+        tradesListView.setAdapter(new TradesTabAdapter(this));
+        tradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(InventoryActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                //Create a new intent and pass in the position of the trade
+                // The position should match the index in the database
+                // This way the trade offer can be retrieved
+                Intent intent = new Intent(InventoryActivity.this, TradeRequestActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);

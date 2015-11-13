@@ -64,10 +64,6 @@
             android:label="@string/title_activity_propose_counter_trade" >
         </activity>
         <activity
-            android:name=".CurrentTradesActivity"
-            android:label="@string/title_activity_current_trades" >
-        </activity>
-        <activity
             android:name=".CreateTradeOfferActivity"
             android:label="@string/title_activity_create_trade_offer" >
         </activity>
