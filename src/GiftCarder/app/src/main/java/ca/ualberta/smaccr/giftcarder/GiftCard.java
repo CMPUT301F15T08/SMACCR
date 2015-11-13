@@ -36,8 +36,7 @@ public class GiftCard implements Serializable {
         this.shared = shared;
     }
 
-    // Check valid category and quality
-
+    // Check valid category and qualit
     public boolean checkCategory(){
         if ((this.getCategory() >= 0) && (this.getCategory() < 11)) {
             return true;

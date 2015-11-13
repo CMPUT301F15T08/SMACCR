@@ -22,12 +22,12 @@ import android.widget.Spinner;
  */
 public class GiftCardTest extends ActivityInstrumentationTestCase2 {
 
-    private EditText itemName;
-    private EditText itemValue;
-    private EditText quantity;
+    private EditText etItemName;
+    private EditText etItemValue;
+    private EditText etQuantity;
     private Spinner qualitySpinner;
     private Spinner categorySpinner;
-    private EditText comments;
+    private EditText etComments;
     private CheckBox checkbox;
     public Inventory inv;
     int position;
@@ -150,12 +150,12 @@ public class GiftCardTest extends ActivityInstrumentationTestCase2 {
         final String teststring = "Subway";
         final int testnumber = 1;
 
-        itemName = activity.getItemName();
-        itemValue = activity.getItemValue();
-        quantity = activity.getQuantity();
+        etItemName = activity.getEtItemName();
+        etItemValue = activity.getEtItemValue();
+        etQuantity = activity.getEtQuantity();
         qualitySpinner = activity.getQualitySpinner();
         categorySpinner = activity.getCategorySpinner();
-        comments = activity.getComments();
+        etComments = activity.getEtComments();
         checkbox = activity.getCheckbox();
 
         //Item activity expects to get an inventory, and initialized position of added giftcard
@@ -166,12 +166,12 @@ public class GiftCardTest extends ActivityInstrumentationTestCase2 {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                itemName.setText(teststring);
-                itemValue.setText(String.valueOf(testnumber));
-                quantity.setText(String.valueOf(testnumber));
+                etItemName.setText(teststring);
+                etItemValue.setText(String.valueOf(testnumber));
+                etQuantity.setText(String.valueOf(testnumber));
                 qualitySpinner.setSelection(testnumber, false);
                 categorySpinner.setSelection(testnumber, false);
-                comments.setText(teststring);
+                etComments.setText(teststring);
                 checkbox.setSelected(true);
             }
         });
@@ -180,7 +180,7 @@ public class GiftCardTest extends ActivityInstrumentationTestCase2 {
 
         ItemController ic = new ItemController();
 
-        inv = ic.setGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+        inv = ic.setGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner, etComments, checkbox);
 
         assertTrue(teststring.equals(inv.getInvList().get(position).getMerchant()));
 

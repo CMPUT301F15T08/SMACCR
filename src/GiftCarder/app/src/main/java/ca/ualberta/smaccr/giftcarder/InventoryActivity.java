@@ -65,7 +65,7 @@ public class InventoryActivity extends ActionBarActivity {
         UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
 
-        Toast.makeText(getApplicationContext(), "Long click to delete giftcard", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Long click to delete gift card", Toast.LENGTH_LONG).show();
 
         inv = user.getInv();
         updateInvList(inv);
@@ -73,13 +73,14 @@ public class InventoryActivity extends ActionBarActivity {
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
 
-                // Switch to item activity and send inventory and position of giftcard to change
+                // Switch to item activity and send inventory and position of gift card to change
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
                 //intent.putExtra("GiftCard", inv.getInvList().get(position));
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
+                intent.putExtra("state", 1); // view item
                 //startActivity(intent);
                 startActivityForResult(intent, 1);
             }
@@ -166,10 +167,11 @@ public class InventoryActivity extends ActionBarActivity {
             GiftCardNames.add(0, tempArray.get(index).getMerchant());
         }
 
-        // Switch to item activity and send selected giftcard data
+        // Switch to item activity and send selected gift card data
         Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
         intent.putExtra("position", 0);
         intent.putExtra("inventory", inv);
+        intent.putExtra("state", 0); // add item
         startActivityForResult(intent, 1);
 
     }

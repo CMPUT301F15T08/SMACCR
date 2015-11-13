@@ -24,32 +24,39 @@ import java.util.ArrayList;
 
 public class ItemActivity extends Activity {
 
-    // For UI testing
-    private ItemActivity activity = this;
-    private EditText itemName;
-    private EditText itemValue;
-    private EditText quantity;
+    public Inventory inv;
+    private int position;
+    private GiftCard gc;
+    private EditText etItemValue;
+    private EditText etItemName;
+    private EditText etQuantity;
     private Spinner qualitySpinner;
     private Spinner categorySpinner;
-    private EditText comments;
+    private EditText etComments;
     private CheckBox checkbox;
-
-    public Inventory inv;
-    int position;
-    GiftCard gc;
+    private Button viewStatusButton;
+    private Button offerButton;
+    private Button saveButton;
 
     // getters for UI testing
-    public EditText getItemName() {return (EditText) findViewById(R.id.ID_item_value);}
-    public EditText getItemValue() {return (EditText)findViewById(R.id.ID_item_Name);}
-    public EditText getQuantity() {return (EditText)findViewById(R.id.ID_quantity);}
+    public EditText getEtItemName() {return (EditText) findViewById(R.id.ID_item_value);}
+    public EditText getEtItemValue() {return (EditText)findViewById(R.id.ID_item_Name);}
+    public EditText getEtQuantity() {return (EditText)findViewById(R.id.ID_quantity);}
     public Spinner getQualitySpinner() {return (Spinner) findViewById(R.id.ID_qualitySpin);}
     public Spinner getCategorySpinner() {return (Spinner) findViewById(R.id.ID_categorySpin);}
-    public EditText getComments() {return (EditText)findViewById(R.id.ID_comments);}
+    public EditText getEtComments() {return (EditText)findViewById(R.id.ID_comments);}
     public CheckBox getCheckbox() {return (CheckBox)findViewById(R.id.ID_checkbox);}
     public Inventory getInv() {return inv;}
     public int getPosition() {return position;}
 
     ItemController ic = new ItemController();
+
+    /* Item States:
+     * 0 = add/edit item
+     * 1 = view item (owner)
+     * 2 = view item (friend)
+     */
+    private int itemState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,39 +67,38 @@ public class ItemActivity extends Activity {
         position = (int)getIntent().getIntExtra("position", 0);
         inv = (Inventory)getIntent().getSerializableExtra("inventory");
         gc = (GiftCard)getIntent().getSerializableExtra("gc");
+        itemState = (int)getIntent().getIntExtra("state", 0);
 
         // Get references to UI
-        EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
-        EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
-        EditText quantity = (EditText)findViewById(R.id.ID_quantity);
-        Spinner qualitySpinner = (Spinner) findViewById(R.id.ID_qualitySpin);
-        Spinner categorySpinner = (Spinner) findViewById(R.id.ID_categorySpin);
-        EditText comments = (EditText)findViewById(R.id.ID_comments);
-        CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
-        Button viewstatus = (Button)findViewById(R.id.ID_viewStatus);
-        Button offerbutton = (Button)findViewById(R.id.ID_MakeOfferButton);
-        Button savebutton = (Button)findViewById(R.id.ID_savegiftcard);
+        etItemValue = (EditText) findViewById(R.id.ID_item_value);
+        etItemName = (EditText)findViewById(R.id.ID_item_Name);
+        etQuantity = (EditText)findViewById(R.id.ID_quantity);
+        qualitySpinner = (Spinner) findViewById(R.id.ID_qualitySpin);
+        categorySpinner = (Spinner) findViewById(R.id.ID_categorySpin);
+        etComments = (EditText)findViewById(R.id.ID_comments);
+        checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
+        viewStatusButton = (Button)findViewById(R.id.ID_viewStatus);
+        offerButton = (Button)findViewById(R.id.ID_MakeOfferButton);
+        saveButton = (Button)findViewById(R.id.ID_savegiftcard);
 
         // itemName.setText(inv.getInvList().get(position).getMerchant());
-        Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
 
         if (inv != null){
-            ic.displayGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+            ic.displayGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity,
+                    qualitySpinner, categorySpinner, etComments, checkbox);
         }
 
         if (gc != null){
-            ic.displayGiftCardInfo(gc, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
+            ic.displayGiftCardInfo(gc, etItemValue, etItemName, etQuantity, qualitySpinner,
+                    categorySpinner, etComments, checkbox);
             ic.setViewModeValue(false);
-            ic.setViewMode(itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox, viewstatus, offerbutton, savebutton);
-            viewstatus.setVisibility(View.GONE);
+            ic.setViewMode(etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner,
+                    etComments, checkbox, viewStatusButton, offerButton, saveButton);
+            viewStatusButton.setVisibility(View.GONE);
         }
 
-
-
-
-        // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbuton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
-
-
+        // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbutton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -118,21 +124,12 @@ public class ItemActivity extends Activity {
 
     /**saveGiftCardInfo
      * saves the giftcard to inventory
-     * @param menu
+     * @param menu View
      */
     public void saveGiftCardInfo(View menu){
-        // Get references to UI
-        EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
-        EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
-        EditText quantity = (EditText)findViewById(R.id.ID_quantity);
-        Spinner qualitySpinner = (Spinner) findViewById(R.id.ID_qualitySpin);
-        Spinner categorySpinner = (Spinner) findViewById(R.id.ID_categorySpin);
-        EditText comments = (EditText)findViewById(R.id.ID_comments);
-        CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
-
         // item controller to set the data into inventory
-        inv = ic.setGiftCardInfo(inv, position, itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox);
-
+        inv = ic.setGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity, qualitySpinner,
+                categorySpinner, etComments, checkbox);
 
         // http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
         // send the modified inventory back to inventory activity
@@ -182,9 +179,9 @@ public class ItemActivity extends Activity {
 
     /**onActivityResult
      *Saves the picture data into the image parameter
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * @param requestCode int
+     * @param resultCode int
+     * @param data Intent
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -203,25 +200,13 @@ public class ItemActivity extends Activity {
 
     /**setViewStatus
      * Changes the view status when clicked "view as public or owner"
-     * @param menu
+     * @param menu View
      */
     public void setViewStatus(View menu){
 
-        //UI references
-        EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
-        EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
-        EditText quantity = (EditText)findViewById(R.id.ID_quantity);
-        Spinner qualitySpinner = (Spinner) findViewById(R.id.ID_qualitySpin);
-        Spinner categorySpinner = (Spinner) findViewById(R.id.ID_categorySpin);
-        EditText comments = (EditText)findViewById(R.id.ID_comments);
-        CheckBox checkbox = (CheckBox)findViewById(R.id.ID_checkbox);
-        Button viewstatus = (Button)findViewById(R.id.ID_viewStatus);
-        Button offerbutton = (Button)findViewById(R.id.ID_MakeOfferButton);
-        Button savebutton = (Button)findViewById(R.id.ID_savegiftcard);
-
         // Changing the viewing mode, example user view mode can edit, borrower can only see
-        ic.setViewMode(itemValue, itemName, quantity, qualitySpinner, categorySpinner, comments, checkbox, viewstatus, offerbutton, savebutton);
-
+        ic.setViewMode(etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner,
+                etComments, checkbox, viewStatusButton, offerButton, saveButton);
     }
 
 
