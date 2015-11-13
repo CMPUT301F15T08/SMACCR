@@ -19,7 +19,13 @@ import java.util.ArrayList;
 
 public class InventoryActivity extends ActionBarActivity {
 
+    // Constants
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
+    public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
+    public static final int ADD_STATE = 0; // add item
+    public static final int OWNER_STATE = 1; // view own item
+    public static final int BROWSER_STATE = 2; // view other's item
+
     String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
@@ -80,7 +86,7 @@ public class InventoryActivity extends ActionBarActivity {
                 //intent.putExtra("GiftCard", inv.getInvList().get(position));
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
-                intent.putExtra("state", 1); // view item
+                intent.putExtra(EXTRA_STATE, OWNER_STATE); // view item
                 //startActivity(intent);
                 startActivityForResult(intent, 1);
             }
@@ -171,7 +177,7 @@ public class InventoryActivity extends ActionBarActivity {
         Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
         intent.putExtra("position", 0);
         intent.putExtra("inventory", inv);
-        intent.putExtra("state", 0); // add item
+        intent.putExtra(EXTRA_STATE, ADD_STATE); // add item
         startActivityForResult(intent, 1);
 
     }

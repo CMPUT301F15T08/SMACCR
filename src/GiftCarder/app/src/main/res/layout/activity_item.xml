@@ -35,27 +35,13 @@
                 <Button
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/make_offer"
-                    android:id="@+id/ID_MakeOfferButton"
+                    android:text="@string/edit"
+                    android:id="@+id/editAndOfferButton"
                     android:layout_gravity="end"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/ID_pictureOfGiftCard"
                     android:background="#ff9600"
-                    android:textSize="20dp"
-                    android:visibility="gone"/>
-
-                <Button
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="View as Public"
-                    android:id="@+id/ID_viewStatus"
-                    android:layout_gravity="right"
-                    android:background="#00d4ff"
-                    android:textSize="20dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/ID_pictureOfGiftCard"
-                    android:onClick="setViewStatus" />
-
+                    android:textSize="20dp" />
 
             </RelativeLayout>
 
@@ -93,7 +79,7 @@
                     android:textSize="20sp"
                     android:id="@+id/ID_item_value"
                     android:singleLine="true"
-                    android:inputType="number" />
+                    android:inputType="numberDecimal" />
 
             </LinearLayout>
 
@@ -185,7 +171,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffff"
-                android:hint= "@string/enter_comments"
                 android:textSize="20dp"
                 android:id ="@+id/ID_comments"
                 android:paddingBottom="10dp"

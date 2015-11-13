@@ -12,21 +12,19 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.DecimalFormat;
 
 /**
- * Created by Richard on 2015-10-29.
+ * Created by Richard on 2015-10-29.  Edited by Carin.
  * // GiftCard(String merchant, int quantity, int quality, int category, String comments, Boolean shared)
  */
 public class ItemController {
 
+    // Constants
+    public static final int ADD_STATE = 0; // add item
+    public static final int OWNER_STATE = 1; // view own item
+    public static final int BROWSER_STATE = 2; // view other's item
     private File imageFile;
-
-    //false = owner's view, true = public view
-    private boolean viewMode = false;
-
-    public void setViewModeValue(boolean viewMode) {
-        this.viewMode = viewMode;
-    }
 
     public void takeAPicture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -38,44 +36,42 @@ public class ItemController {
 
     /**
      * displayGiftCardInfo
-     *display giftcard when given inventory and position of the giftcard.
-     * @param inv
-     * @param position
-     * @param itemValue
-     * @param itemName
-     * @param quantity
-     * @param qualitySpinner
-     * @param categorySpinner
-     * @param comments
-     * @param checkbox
+     * display giftcard when given inventory and position of the giftcard.
+     * @param inv Inventory
+     * @param position int
+     * @param etItemValue EditText
+     * @param etItemName EditText
+     * @param etQuantity EditText
+     * @param qualitySpinner Spinner
+     * @param categorySpinner Spinner
+     * @param etComments EditText
+     * @param checkbox CheckBox
      */
-    public void displayGiftCardInfo(Inventory inv, int position, EditText itemValue,
-                                    EditText itemName, EditText quantity, Spinner qualitySpinner,
-                                    Spinner categorySpinner, EditText comments, CheckBox checkbox) {
+    public void displayGiftCardInfo(Inventory inv, int position, int itemState, EditText etItemValue,
+                                    EditText etItemName, EditText etQuantity, Spinner qualitySpinner,
+                                    Spinner categorySpinner, EditText etComments, CheckBox checkbox) {
         GiftCard tempcard = inv.getInvList().get(position);
+        DecimalFormat df = new DecimalFormat("#.00");
 
         // Show hint if value is equal to 0
-        itemValue.setText(String.valueOf(tempcard.getValue()));
         if ((tempcard.getValue() == 0.00) || (tempcard.getValue() < 0)){
             // blank string will show hint in edittext widget
-            itemValue.setText("");
+            etItemValue.setText("");
         }
-        else {itemValue.setText(String.valueOf(tempcard.getValue()));}
+        else {etItemValue.setText(df.format(tempcard.getValue()));}
 
-        itemName.setText(tempcard.getMerchant());
+        etItemName.setText(tempcard.getMerchant());
 
-        quantity.setText(String.valueOf(tempcard.getQuantity()));
         // Show hint if value is equal to 0
         if ((tempcard.getQuantity() == 0 || (tempcard.getQuantity() < 0))){
             // blank string will show hint in edittext widget
-            quantity.setText("");
+            etQuantity.setText("");
         }
-        else {quantity.setText(String.valueOf(tempcard.getQuantity()));}
-
+        else {etQuantity.setText(String.valueOf(tempcard.getQuantity()));}
 
         categorySpinner.setSelection(tempcard.getCategory(), false);
         qualitySpinner.setSelection(tempcard.getQuality(), false);
-        comments.setText(tempcard.getComments());
+        etComments.setText(tempcard.getComments());
         checkbox.setChecked(tempcard.getShared());
     }
 
@@ -102,6 +98,7 @@ public class ItemController {
      * @param etComments EditText
      * @param checkbox CheckBox
      */
+    /*
     public void displayGiftCardInfo(GiftCard gc, EditText etItemValue, EditText etItemName,
                                     EditText etQuantity, Spinner qualitySpinner,
                                     Spinner categorySpinner, EditText etComments,
@@ -131,6 +128,7 @@ public class ItemController {
         etComments.setText(gc.getComments());
         checkbox.setChecked(gc.getShared());
     }
+    */
 
     /**
      setGiftCardInfo
@@ -187,7 +185,8 @@ public class ItemController {
 
     /**
      * setViewMode
-     * To set the view of current giftcard item
+     * To set the view of the ItemActivity
+     * @param itemState int
      * @param etItemValue EditText
      * @param etItemName EditText
      * @param etQuantity EditText
@@ -195,43 +194,71 @@ public class ItemController {
      * @param categorySpinner Spinner
      * @param etComments EditText
      * @param checkbox CheckBox
-     * @param viewStatusButton Button
-     * @param offerButton Button
+     * @param editAndOfferButton Button
      * @param saveButton Button
      */
-
-    public void setViewMode(EditText etItemValue ,EditText etItemName, EditText etQuantity,
-                            Spinner qualitySpinner, Spinner categorySpinner, EditText etComments,
-                            CheckBox checkbox, Button viewStatusButton, Button offerButton,
+    public void setViewMode(int itemState, EditText etItemValue ,EditText etItemName,
+                            EditText etQuantity, Spinner qualitySpinner, Spinner categorySpinner,
+                            EditText etComments, CheckBox checkbox, Button editAndOfferButton,
                             Button saveButton) {
 
-        etItemValue.setEnabled(viewMode);
-        etItemName.setEnabled(viewMode);
-        qualitySpinner.setEnabled(viewMode);
-        categorySpinner.setEnabled(viewMode);
-        etQuantity.setEnabled(viewMode);
-        etComments.setEnabled(viewMode);
-        checkbox.setEnabled(viewMode);
-
-        if (viewMode){
-            viewMode = false;
-            viewStatusButton.setText("View as Public");
-            offerButton.setVisibility(View.GONE);
+        if (itemState == ADD_STATE) {
+            etItemValue.setFocusableInTouchMode(true);
+            etItemName.setFocusableInTouchMode(true);
+            qualitySpinner.setClickable(true);
+            categorySpinner.setClickable(true);
+            etQuantity.setFocusableInTouchMode(true);
+            etComments.setFocusableInTouchMode(true);
+            checkbox.setEnabled(true);
             saveButton.setVisibility(View.VISIBLE);
-            etItemName.setTextColor(Color.BLACK);
-            etItemValue.setTextColor(Color.BLACK);
-            etQuantity.setTextColor(Color.BLACK);
-        }
-        else {
-            viewMode = true;
-            viewStatusButton.setText("View as Owner");
-            offerButton.setVisibility(View.VISIBLE);
+            editAndOfferButton.setVisibility(View.GONE);
+
+            if (etComments.getText().toString().trim().equals("")) {
+                etComments.setHint("Enter comments (optional)");
+            }
+
+        } else {
+            etItemValue.setFocusable(false);
+            etItemName.setFocusable(false);
+            qualitySpinner.setClickable(false);
+            categorySpinner.setClickable(false);
+            etQuantity.setFocusable(false);
+            etComments.setFocusable(false);
+            checkbox.setEnabled(false);
             saveButton.setVisibility(View.GONE);
-            etItemName.setTextColor(Color.RED);
-            etItemValue.setTextColor(Color.RED);
-            etQuantity.setTextColor(Color.RED);
+            editAndOfferButton.setVisibility(View.VISIBLE);
+
+            if (itemState == OWNER_STATE) {
+                editAndOfferButton.setText("Edit");
+            } else {
+                editAndOfferButton.setText("Make Offer");
+            }
         }
     }
 
+    /**
+     * Validates text fields (make sure that content exists and it is the correct format)
+     *
+     * @param       etItemValue EditText
+     * @param       etItemName EditText
+     * @param       etQuantity EditText
+     * @return      boolean
+     */
+    public boolean validateFields(EditText etItemValue, EditText etItemName, EditText etQuantity) {
+        boolean valid = true;
 
+        if (!Validation.hasText(etItemValue)) {
+            valid = false;
+        }
+
+        if (!Validation.hasText(etItemName)) {
+            valid = false;
+        }
+
+        if (!Validation.hasText(etQuantity)) {
+            valid = false;
+        }
+
+        return valid;
+    }
 }
