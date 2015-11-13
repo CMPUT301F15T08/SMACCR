@@ -19,7 +19,7 @@ public class SettingsActivityTest extends ActivityInstrumentationTestCase2 {
      */
     public void testRegisterButton() {
         MainActivity activity = (MainActivity) getActivity();
-        final Button logOutButton = (Button) activity.findViewById(R.id.logOutButton);
+        final Button logoutButton = (Button) activity.findViewById(R.id.logoutButton);
 
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
@@ -28,7 +28,7 @@ public class SettingsActivityTest extends ActivityInstrumentationTestCase2 {
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                logOutButton.performClick();
+                logoutButton.performClick();
             }
         });
         getInstrumentation().waitForIdleSync();

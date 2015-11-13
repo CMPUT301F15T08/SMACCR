@@ -72,5 +72,11 @@
 
     <string name="browseGo">Go</string>
     <string name="GiftCarder">GiftCarder</string>
->>>>>>> 6e8e31f1d5a6a3f0ba2786502555495fc5034aae
+    <string name="download_images">Download images:</string>
+    <string name="yes">Yes</string>
+    <string name="log_out">Log out</string>
+    <string name="logged_in_as">Logged in as: username</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="Logout">Logout</string>
+    >>>>>>> 6e8e31f1d5a6a3f0ba2786502555495fc5034aae
 </resources>

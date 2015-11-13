@@ -20,11 +20,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class BrowseActivity extends Activity {
+public class BrowseActivity extends ActionBarActivity {
+
+    public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
+    String username;
 
     private ArrayAdapter<GiftCard> adapter;
-
-
     Cache myCache = new Cache();
 
     private ListView inventorylistID;
@@ -62,6 +63,9 @@ public class BrowseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
+
+        Intent intent = getIntent();
+        username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
 
         final GiftCard giftCard1 = new GiftCard(12.34,"Test",1,1,6,"scratched but usable", Boolean.TRUE);
         myCache.add(giftCard1);
@@ -156,7 +160,9 @@ public class BrowseActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
+            Intent intent = new Intent(this, SettingsActivity.class);
+            intent.putExtra(EXTRA_USERNAME, username);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 public class UserProfileActivity extends ActionBarActivity {
 
+    public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     private EditText etCity;
     private EditText etPhone;
     private EditText etEmail;
@@ -36,7 +37,6 @@ public class UserProfileActivity extends ActionBarActivity {
     private MenuItem item;
 
     //getters for UI testing
-    public EditText getEtUsername() {return (EditText) findViewById(R.id.usernameTextView);}
     public EditText getEtCity() {return (EditText) findViewById(R.id.cityTextView);}
     public EditText getEtPhone() {return (EditText) findViewById(R.id.phoneTextView);}
     public EditText getEtEmail() {return (EditText) findViewById(R.id.emailTextView);}
@@ -46,7 +46,7 @@ public class UserProfileActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        EditText etUsername = (EditText) findViewById(R.id.usernameTextView);
+        TextView tvUsername = (TextView) findViewById(R.id.usernameTextView);
         etCity = (EditText) findViewById(R.id.cityTextView);
         etPhone = (EditText) findViewById(R.id.phoneTextView);
         etEmail = (EditText) findViewById(R.id.emailTextView);
@@ -57,14 +57,13 @@ public class UserProfileActivity extends ActionBarActivity {
         User user = urc.getUser(username);
 
         // Set text fields
-        if (!(user == null)) {
-            etUsername.setText(username);
+        if (username != null) {
+            tvUsername.setText(username);
             etCity.setText(user.getCity());
             etPhone.setText(user.getPhone());
             etEmail.setText(user.getEmail());
 
             // Disable editing
-            etUsername.setFocusable(false);
             etCity.setFocusable(false);
             etPhone.setFocusable(false);
             etEmail.setFocusable(false);
@@ -107,6 +106,7 @@ public class UserProfileActivity extends ActionBarActivity {
 
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
+            intent.putExtra(EXTRA_USERNAME, username);
             startActivity(intent);
             return true;
         }
@@ -127,7 +127,7 @@ public class UserProfileActivity extends ActionBarActivity {
             // Make menu (edit option) visible
             this.item.setVisible(true);
 
-            Button saveButton = (Button)findViewById(R.id.saveButton);
+            Button saveButton = (Button) findViewById(R.id.saveButton);
             saveButton.setVisibility(View.INVISIBLE);
 
             Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();

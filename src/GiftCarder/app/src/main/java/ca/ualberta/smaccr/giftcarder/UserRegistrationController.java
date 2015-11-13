@@ -53,9 +53,14 @@ public class UserRegistrationController {
 
     //Added by Richard to modify the user in userlist
     public void editUserInventory(String username, Inventory inv){
+        User user = getUser(username);
+        int userIndex = returnUserPosition(username);
 
-        //Getting the userlist
-        getUserList().getFriends().get(returnUserPosition(username)).setInv(inv);
+        // if user index is valid
+        if (userIndex != -1) {
+            user.setInv(inv);
+            getUserList().editUser(userIndex, user);
+        }
     }
     ///////////////////////////////////////////////////////////////////////////////
 
@@ -96,14 +101,20 @@ public class UserRegistrationController {
      */
     public void editUser(String username, EditText etCity, EditText etPhone, EditText etEmail) {
         User user = getUser(username);
+        int userIndex = returnUserPosition(username);
 
-        String city = convertToString(etCity);
-        String phone = convertToString(etPhone);
-        String email = convertToString(etEmail);
+        // if user index is valid
+        if (userIndex != -1) {
+            String city = convertToString(etCity);
+            String phone = convertToString(etPhone);
+            String email = convertToString(etEmail);
 
-        user.setCity(city);
-        user.setPhone(phone);
-        user.setEmail(email);
+            user.setCity(city);
+            user.setPhone(phone);
+            user.setEmail(email);
+
+            getUserList().editUser(userIndex, user);
+        }
     }
 
     /**

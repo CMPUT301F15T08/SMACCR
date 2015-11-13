@@ -7,32 +7,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SettingsActivity extends ActionBarActivity {
 
-    Inventory inv;
+    public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     String username;
+    Inventory inv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        Button logOutButton = (Button) findViewById(R.id.logOutButton);
 
+        Intent intent = getIntent();
+        username = intent.getStringExtra(InventoryActivity.EXTRA_USERNAME);
 
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //taken from: http://stackoverflow.com/questions/6330260/finish-all-previous-activities
-                //user DArkO
-
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
+        TextView tvLoggedInAs = (TextView) findViewById(R.id.loggedInAsTextView);
+        tvLoggedInAs.setText("Logged in as: " + username);
     }
 
     @Override
@@ -55,6 +48,32 @@ public class SettingsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Called when user presses Logout button.
+     * <p>
+     * Exits to MainActivity
+     *
+     * @param  view  view that is clicked
+     */
+    public void onLogoutButtonClick(View view) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    /**
+     * Called when user presses Edit Profile button.
+     * <p>
+     * Brings up UserProfileActivity
+     *
+     * @param  view  view that is clicked
+     */
+    public void onEditProfileButtonClick(View view) {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        intent.putExtra(EXTRA_USERNAME, username);
+        startActivity(intent);
     }
 
 }

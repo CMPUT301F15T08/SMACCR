@@ -7,12 +7,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by cbli on 11/6/15.
  */
 public class UserProfileActivityTest extends ActivityInstrumentationTestCase2 {
-    private EditText etUsername;
     private EditText etCity;
     private EditText etPhone;
     private EditText etEmail;
@@ -33,23 +33,19 @@ public class UserProfileActivityTest extends ActivityInstrumentationTestCase2 {
      */
     public void testEditUserProfile() {
         UserProfileActivity activity = (UserProfileActivity) getActivity();
-        final Button saveButton = (Button) activity.findViewById(R.id.saveButton);
-        etUsername = activity.getEtUsername();
         etCity = activity.getEtCity();
         etPhone = activity.getEtPhone();
         etEmail = activity.getEtEmail();
+        String username = "Link";
+        final UserRegistrationController urc = new UserRegistrationController();
 
         // Creates user
         User user = new User();
-        user.setUsername("Link");
+        user.setUsername(username);
         user.setCity("Skyloft");
         user.setPhone("555-555-5555");
         user.setEmail("hero@hyrule.com");
-
-        final UserRegistrationController urc = new UserRegistrationController();
-        urc.clearUsers();
         urc.getUserList().addUser(user);
-
 
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
@@ -58,20 +54,19 @@ public class UserProfileActivityTest extends ActivityInstrumentationTestCase2 {
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                User user = urc.getUser("Link");
-                saveButton.setVisibility(View.VISIBLE);
-
-                etUsername.setText("Link");
-                String username = "Link";
                 etCity.setText("Skyloft");
-                etPhone.setText("555-555-5555");
+                etPhone.setText("555-555-5556");
                 etEmail.setText("hero@hyrule.com");
-
-                saveButton.performClick();
             }
         });
         getInstrumentation().waitForIdleSync();
 
+        if (urc.validateEditedFields(etCity, etPhone, etEmail)) {
+            urc.editUser(username, etCity, etPhone, etEmail);
+        }
+
+        assertTrue(urc.getUser("Link").getCity().equals("Skyloft"));
+        assertTrue(urc.getUser("Link").getPhone().equals("555-555-5556"));
     }
 
 }

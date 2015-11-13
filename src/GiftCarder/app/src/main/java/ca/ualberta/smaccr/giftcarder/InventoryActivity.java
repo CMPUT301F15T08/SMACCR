@@ -139,6 +139,7 @@ public class InventoryActivity extends ActionBarActivity {
 
             //Pass the inventory to settings, so settings activity will send it back to main to update the inventory in singleton
             Intent intent1 = new Intent(InventoryActivity.this, SettingsActivity.class);
+            intent1.putExtra(EXTRA_USERNAME, username);
             startActivity(intent1);
         }
 
@@ -241,6 +242,7 @@ public class InventoryActivity extends ActionBarActivity {
 
     public void browseClick(MenuItem v) {
         Intent intent = new Intent(this, BrowseActivity.class);
+        intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);
     }
 }

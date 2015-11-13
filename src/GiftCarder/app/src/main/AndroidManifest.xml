@@ -49,7 +49,7 @@
         </activity>
         <activity
             android:name=".BrowseActivity"
-            android:label="@string/title_activity_browse" >
+            android:label="Browse" >
         </activity>
         <activity
             android:name=".TradeRequestActivity"

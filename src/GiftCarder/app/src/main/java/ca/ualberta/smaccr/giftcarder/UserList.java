@@ -35,17 +35,24 @@ public class UserList {
     }
 
     /**
+     * Edits user given its index in the list
+     * @param userIndex integer of user's index in list
+     * @param user User
+     */
+    public void editUser(int userIndex, User user){
+        userList.set(userIndex, user);
+    }
+
+    /**
      * Gets user given a username
      * @param username String
      */
     public User getUser(String username) {
-
         for (User user : userList ) {
             if (user.getUsername().equals(username)) {
                 return user;
             }
         }
-
         return null;
     }
 
@@ -81,10 +88,4 @@ public class UserList {
             userList.clear();
         }
     }
-
-    public List<User> getFriends(){
-        return this.userList;
-
-    }
-
 }

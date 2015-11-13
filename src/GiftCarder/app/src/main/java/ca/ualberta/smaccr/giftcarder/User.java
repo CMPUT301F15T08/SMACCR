@@ -9,7 +9,7 @@ public class User {
     private String phone;
     private String email;
     private Inventory inv;
-    private UserList friends;
+    private UserList friendsList;
 
     /**
      * Constructor: on creation of User, creates new inventory
@@ -17,7 +17,7 @@ public class User {
 
     public User() {
         this.inv = new Inventory();
-        this.friends = new UserList();
+        this.friendsList = new UserList();
     }
 
 
