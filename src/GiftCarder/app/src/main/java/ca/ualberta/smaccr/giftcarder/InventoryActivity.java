@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -139,13 +140,13 @@ public class InventoryActivity extends ActionBarActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_inventory, menu);
         return true;
     }
+    //commented out, might put back in if group wants the three dots
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -153,6 +154,8 @@ public class InventoryActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+
 
         // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -164,8 +167,17 @@ public class InventoryActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+
     }
 
+    //added to remove three dots (might remove later)
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item= menu.findItem(R.id.action_settings);
+        item.setVisible(false);
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
     /**
      * AddNewGiftCard
      * create a new giftcard and place in inventory, then switch to ItemActivity to edit that giftcard
@@ -194,6 +206,7 @@ public class InventoryActivity extends ActionBarActivity {
         startActivityForResult(intent, 1);
 
     }
+
 
     /*
     Retrieved Oct 28 2015
@@ -265,5 +278,43 @@ public class InventoryActivity extends ActionBarActivity {
         Intent intent = new Intent(this, BrowseActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);
+    }
+
+    public void settingsClick(MenuItem v){
+        Intent intent1 = new Intent(InventoryActivity.this, SettingsActivity.class);
+        intent1.putExtra(EXTRA_USERNAME, username);
+        startActivity(intent1);
+
+    }
+
+    public void addFriend(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setMessage("Enter their username:");
+
+        //textbox for user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                // Check if its a valid user, and send request
+                UserRegistrationController URC = new UserRegistrationController();
+                if (URC.checkForUser(value)){
+                    Toast.makeText(getApplicationContext(), "Friend request sent", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        alert.show();
     }
 }

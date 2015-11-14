@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -45,6 +46,13 @@ public class FriendsActivity extends ActionBarActivity {
                 public void onClick(DialogInterface dialog, int whichButton) {
                     String value = input.getText().toString();
                     // Check if its a valid user, and send request
+                    UserRegistrationController URC = new UserRegistrationController();
+                    if (URC.checkForUser(value)){
+                        Log.d("y","y");
+                    }
+                    else{
+                        Log.d("n","n");
+                    }
                 }
             });
 
@@ -63,4 +71,5 @@ public class FriendsActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
