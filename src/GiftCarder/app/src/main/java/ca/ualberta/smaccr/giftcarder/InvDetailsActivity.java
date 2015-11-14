@@ -9,33 +9,28 @@ import android.widget.TextView;
 
 public class InvDetailsActivity extends ActionBarActivity {
 
+    private InvDetailsController idc;
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inv_details);
         setTitle("Inventory Details");
 
+        // Get user using the app
+        Intent intent = getIntent();
+        String username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
+        UserRegistrationController urc = new UserRegistrationController();
+        this.user = urc.getUser(username);
+        // Create Controller with the user and this activity
+        this.idc = new InvDetailsController(user, user.getInv(), this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // Get user using the app
-        Intent intent = getIntent();
-        String username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
-        UserRegistrationController urc = new UserRegistrationController();
-        User user = urc.getUser(username);
-
-        String invDetailsTitle = user.getUsername() + "'s Inventory";
-        double totalValue = getTotalValue(user.getInv());
-        String invDetailsValue = "Total Value of Cards: $" + totalValue;
-
-        TextView detailsTitle = (TextView) findViewById(R.id.userInvDetTitleTextView);
-        detailsTitle.setText(invDetailsTitle);
-        TextView detailsValue = (TextView) findViewById(R.id.totalValueTextView);
-        detailsValue.setText(invDetailsValue);
-        TextView detailsNumberOfCards = (TextView) findViewById(R.id.ID_numberOfCards);
-        detailsNumberOfCards.setText(String.valueOf(user.getInv().getSize()));
+        idc.updateDetails();
     }
 
     @Override
@@ -58,13 +53,5 @@ public class InvDetailsActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    double getTotalValue(Inventory inv) {
-        double value = 0;
-        for (int i = 0; i < inv.getInvList().size(); ++i) {
-            value += inv.getInvList().get(i).getValue();
-        }
-        return value;
     }
 }
