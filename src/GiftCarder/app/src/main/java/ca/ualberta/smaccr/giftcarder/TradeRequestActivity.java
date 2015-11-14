@@ -1,11 +1,16 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class TradeRequestActivity extends ActionBarActivity {
+    private Button acceptTradeButton;
+
     /**
      +     * onCreate
      +     * Responses to a trade offer
@@ -16,6 +21,17 @@ public class TradeRequestActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_request);
+
+        acceptTradeButton = (Button) findViewById(R.id.acceptTradeButton);
+
+        acceptTradeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TradeRequestActivity.this, AcceptTradeActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

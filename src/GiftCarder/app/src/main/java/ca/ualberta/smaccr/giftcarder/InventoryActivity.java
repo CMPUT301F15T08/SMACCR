@@ -20,7 +20,13 @@ import java.util.ArrayList;
 
 public class InventoryActivity extends ActionBarActivity {
 
+    // Constants
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
+    public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
+    public static final int ADD_STATE = 0; // add item
+    public static final int OWNER_STATE = 1; // view own item
+    public static final int BROWSER_STATE = 2; // view other's item
+
     String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
@@ -60,13 +66,26 @@ public class InventoryActivity extends ActionBarActivity {
         tabHost.addTab(tabSpec);
 
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+        ListView tradesListView = (ListView) findViewById(R.id.tradesListView);
+        tradesListView.setAdapter(new TradesTabAdapter(this));
+        tradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(InventoryActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                //Create a new intent and pass in the position of the trade
+                // The position should match the index in the database
+                // This way the trade offer can be retrieved
+                Intent intent = new Intent(InventoryActivity.this, TradeRequestActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
         UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
 
-        Toast.makeText(getApplicationContext(), "Long click to delete giftcard", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Long click to delete gift card", Toast.LENGTH_LONG).show();
 
         inv = user.getInv();
         updateInvList(inv);
@@ -74,13 +93,14 @@ public class InventoryActivity extends ActionBarActivity {
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
 
-                // Switch to item activity and send inventory and position of giftcard to change
+                // Switch to item activity and send inventory and position of gift card to change
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
                 //intent.putExtra("GiftCard", inv.getInvList().get(position));
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
+                intent.putExtra(EXTRA_STATE, OWNER_STATE); // view item
                 //startActivity(intent);
                 startActivityForResult(intent, 1);
             }
@@ -178,10 +198,11 @@ public class InventoryActivity extends ActionBarActivity {
             GiftCardNames.add(0, tempArray.get(index).getMerchant());
         }
 
-        // Switch to item activity and send selected giftcard data
+        // Switch to item activity and send selected gift card data
         Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
         intent.putExtra("position", 0);
         intent.putExtra("inventory", inv);
+        intent.putExtra(EXTRA_STATE, ADD_STATE); // add item
         startActivityForResult(intent, 1);
 
     }

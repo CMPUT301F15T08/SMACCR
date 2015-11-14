@@ -78,5 +78,19 @@
     <string name="logged_in_as">Logged in as: username</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="Logout">Logout</string>
+    <string name="make_offer">Make Offer</string>
+    <string name="value">Value</string>
+    <string name="dollar_sign">$</string>
+    <string name="name">Name</string>
+    <string name="merchant">Enter merchant</string>
+    <string name="enter_value">Enter value</string>
+    <string name="category">Category</string>
+    <string name="Quantity">Quantity</string>
+    <string name="enter_quantity">Enter quantity</string>
+    <string name="quality">Quality</string>
+    <string name="comments">Comments</string>
+    <string name="enter_comments">Enter comments (optional)</string>
+    <string name="make_public">Make Public</string>
+    <string name="save_button">SAVE</string>
     >>>>>>> 6e8e31f1d5a6a3f0ba2786502555495fc5034aae
 </resources>
