@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
         user.setEmail("t@g.c");
         UserRegistrationController.getUserList().addUser(user);
         */
+
     }
 
     @Override

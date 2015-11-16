@@ -47,7 +47,7 @@ public class ItemController {
      * @param etComments EditText
      * @param checkbox CheckBox
      */
-    public void displayGiftCardInfo(Inventory inv, int position, int itemState, EditText etItemValue,
+    public void displayGiftCardInfo(Inventory inv, int position, EditText etItemValue,
                                     EditText etItemName, EditText etQuantity, Spinner qualitySpinner,
                                     Spinner categorySpinner, EditText etComments, CheckBox checkbox) {
         GiftCard tempcard = inv.getInvList().get(position);
