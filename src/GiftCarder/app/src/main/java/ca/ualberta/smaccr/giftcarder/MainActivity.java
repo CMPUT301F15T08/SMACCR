@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
 
         if (Validation.hasText(etUsername)) {
             if (urc.checkForUser(username)) {
-                Intent intent = new Intent(this, InventoryActivity.class);
+                Intent intent = new Intent(this, AllActivity.class);
                 intent.putExtra(EXTRA_USERNAME, username);
                 startActivity(intent);
 

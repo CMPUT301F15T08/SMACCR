@@ -6,9 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SettingsActivity extends ActionBarActivity {
 
@@ -22,7 +20,7 @@ public class SettingsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_settings);
 
         Intent intent = getIntent();
-        username = intent.getStringExtra(InventoryActivity.EXTRA_USERNAME);
+        username = intent.getStringExtra(AllActivity.EXTRA_USERNAME);
 
         TextView tvLoggedInAs = (TextView) findViewById(R.id.loggedInAsTextView);
         tvLoggedInAs.setText("Logged in as: " + username);
