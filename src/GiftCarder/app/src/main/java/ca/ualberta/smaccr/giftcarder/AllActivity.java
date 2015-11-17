@@ -308,7 +308,11 @@ public class AllActivity extends ActionBarActivity {
                 // Check if its a valid user, and send request
                 UserRegistrationController URC = new UserRegistrationController();
                 if (URC.checkForUser(value)){
-                    Toast.makeText(getApplicationContext(), "Friend request sent", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(AllActivity.this, UserProfileActivity.class);
+                    intent.putExtra(EXTRA_STATE, STRANGER_PROFILE_STATE);
+                    intent.putExtra(EXTRA_USERNAME, value);
+                    startActivity(intent);
+
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_LONG).show();

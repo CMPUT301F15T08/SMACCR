@@ -31,6 +31,14 @@
         android:onClick="onLogoutButtonClick"
         android:layout_gravity="bottom|top" />
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:text="Sync all"
+        android:id="@+id/syncButton"
+        android:onClick="onLogoutButtonClick"
+        android:layout_gravity="center_horizontal" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
