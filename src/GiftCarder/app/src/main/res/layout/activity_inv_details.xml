@@ -73,7 +73,7 @@
                     android:textSize="21sp"
                     android:textIsSelectable="false"
                     android:textColor="#111111"
-                    android:background="@drawable/border"
+                    android:background="#CCCCCC"
                     android:layout_span="2"
                     android:paddingLeft="3dp" />
             </TableRow>
@@ -149,7 +149,7 @@
                     android:textSize="21sp"
                     android:textIsSelectable="false"
                     android:textColor="#111111"
-                    android:background="@drawable/border"
+                    android:background="#CCCCCC"
                     android:layout_span="2"
                     android:paddingLeft="3dp" />
             </TableRow>
@@ -225,7 +225,7 @@
                     android:textSize="21sp"
                     android:textIsSelectable="false"
                     android:textColor="#111111"
-                    android:background="@drawable/border"
+                    android:background="#CCCCCC"
                     android:layout_span="2"
                     android:paddingLeft="3dp" />
             </TableRow>
@@ -301,7 +301,7 @@
                     android:textSize="21sp"
                     android:textIsSelectable="false"
                     android:textColor="#111111"
-                    android:background="@drawable/border"
+                    android:background="#CCCCCC"
                     android:layout_span="2"
                     android:paddingLeft="3dp" />
             </TableRow>
@@ -377,7 +377,7 @@
                     android:textSize="21sp"
                     android:textIsSelectable="false"
                     android:textColor="#111111"
-                    android:background="@drawable/border"
+                    android:background="#CCCCCC"
                     android:layout_span="2"
                     android:paddingLeft="3dp" />
             </TableRow>
@@ -453,7 +453,7 @@
                     android:textSize="21sp"
                     android:textIsSelectable="false"
                     android:textColor="#111111"
-                    android:background="@drawable/border"
+                    android:background="#CCCCCC"
                     android:layout_span="2"
                     android:paddingLeft="3dp" />
             </TableRow>
@@ -529,7 +529,7 @@
                     android:textSize="21sp"
                     android:textIsSelectable="false"
                     android:textColor="#111111"
-                    android:background="@drawable/border"
+                    android:background="#CCCCCC"
                     android:layout_span="2"
                     android:paddingLeft="3dp" />
             </TableRow>
@@ -681,7 +681,7 @@
                     android:textSize="21sp"
                     android:textIsSelectable="false"
                     android:textColor="#111111"
-                    android:background="@drawable/border"
+                    android:background="#CCCCCC"
                     android:layout_span="2"
                     android:paddingLeft="3dp" />
             </TableRow>
@@ -757,7 +757,7 @@
                     android:textSize="21sp"
                     android:textIsSelectable="false"
                     android:textColor="#111111"
-                    android:background="@drawable/border"
+                    android:background="#CCCCCC"
                     android:layout_span="2"
                     android:paddingLeft="3dp" />
 

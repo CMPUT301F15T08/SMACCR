@@ -60,68 +60,66 @@ public class InvDetailsController {
         TextView detailsNumberOfCards = (TextView) detailsActivity.findViewById(R.id.totalCountTextView);
         detailsNumberOfCards.setText(detailsStrTotalCount);
 
-        /*
         // Change the values of the "value" and "count" fields for each category
         // Food & Beverage:
         TextView tv = (TextView) detailsActivity.findViewById(R.id.foodCountTV);
-        tv.setText(foodCount);
+        tv.setText(""+this.foodCount);
         tv = (TextView) detailsActivity.findViewById(R.id.foodValTV);
-        tv.setText(""+foodValue);
+        tv.setText(""+this.foodValue);
 
         // Clothing:
         tv = (TextView) detailsActivity.findViewById(R.id.clothCountTV);
-        tv.setText(this.clothingCount);
+        tv.setText(""+this.clothingCount);
         tv = (TextView) detailsActivity.findViewById(R.id.clothValTV);
         tv.setText(""+this.clothingValue);
 
         // Home & Garden:
         tv = (TextView) detailsActivity.findViewById(R.id.hgCountTV);
-        tv.setText(this.hgCount);
+        tv.setText(""+this.hgCount);
         tv = (TextView) detailsActivity.findViewById(R.id.hgValTV);
         tv.setText(""+this.hgValue);
 
         // Electronics:
         tv = (TextView) detailsActivity.findViewById(R.id.elecCountTV);
-        tv.setText(this.electronicsCount);
+        tv.setText(""+this.electronicsCount);
         tv = (TextView) detailsActivity.findViewById(R.id.elecValTV);
         tv.setText(""+this.electronicsValue);
 
         // Department:
         tv = (TextView) detailsActivity.findViewById(R.id.depCountTV);
-        tv.setText(this.departmentCount);
+        tv.setText(""+this.departmentCount);
         tv = (TextView) detailsActivity.findViewById(R.id.depValTV);
         tv.setText(""+this.departmentValue);
 
         // Services:
         tv = (TextView) detailsActivity.findViewById(R.id.servCountTV);
-        tv.setText(this.serviceCount);
+        tv.setText(""+this.serviceCount);
         tv = (TextView) detailsActivity.findViewById(R.id.servValTV);
         tv.setText(""+this.serviceValue);
 
         // Entertainment:
         tv = (TextView) detailsActivity.findViewById(R.id.entCountTV);
-        tv.setText(this.entertainCount);
+        tv.setText(""+this.entertainCount);
         tv = (TextView) detailsActivity.findViewById(R.id.entValTV);
         tv.setText(""+this.entertainValue);
 
         // Online:
         tv = (TextView) detailsActivity.findViewById(R.id.onlineCountTV);
-        tv.setText(this.onlineCount);
+        tv.setText(""+this.onlineCount);
         tv = (TextView) detailsActivity.findViewById(R.id.onlineValTV);
         tv.setText(""+this.onlineValue);
 
         // Health & Beauty:
         tv = (TextView) detailsActivity.findViewById(R.id.hbCountTV);
-        tv.setText(this.healthCount);
+        tv.setText(""+this.healthCount);
         tv = (TextView) detailsActivity.findViewById(R.id.hbValTV);
         tv.setText(""+this.healthValue);
 
         // Other:
         tv = (TextView) detailsActivity.findViewById(R.id.otherCountTV);
-        tv.setText(this.otherCount);
+        tv.setText(""+this.otherCount);
         tv = (TextView) detailsActivity.findViewById(R.id.otherValTV);
         tv.setText(""+this.otherValue);
-    */
     }
 
     public void getValuesAndCategories() {
