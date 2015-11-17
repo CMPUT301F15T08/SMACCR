@@ -24,7 +24,7 @@ public class User {
         this.inv = new Inventory();
         List<String> friendsList = new ArrayList<String>();
         List<FriendRequest> friendRequests = new ArrayList<FriendRequest>();
-        addFriend("t");
+
     }
 
 
