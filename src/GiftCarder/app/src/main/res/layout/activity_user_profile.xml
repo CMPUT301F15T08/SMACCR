@@ -34,13 +34,11 @@
                 <Button
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/save"
-                    android:id="@+id/saveButton"
+                    android:id="@+id/multiButton"
                     android:background="#ff9600"
                     android:textSize="20dp"
                     android:layout_gravity="center_vertical"
-                    android:onClick="onSaveButtonClick"
-                    android:visibility="invisible" />
+                    android:onClick="onMultiButtonClick" />
 
             </LinearLayout>
 
@@ -117,6 +115,15 @@
                 android:inputType="textEmailAddress"
                 android:id="@+id/emailTextView" />
 
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save_button"
+                android:id="@+id/saveProfileButton"
+                android:layout_gravity="end"
+                android:background="#ffb700"
+                android:textSize="20dp"
+                android:onClick="onSaveButtonClick" />
 
         </LinearLayout>
 

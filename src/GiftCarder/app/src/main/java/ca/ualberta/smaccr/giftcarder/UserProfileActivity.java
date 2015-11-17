@@ -26,7 +26,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UserProfileActivity extends ActionBarActivity {
+public class UserProfileActivity extends Activity {
 
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     private EditText etCity;
@@ -34,12 +34,22 @@ public class UserProfileActivity extends ActionBarActivity {
     private EditText etEmail;
     private String username;
     private UserRegistrationController urc = new UserRegistrationController();
-    private MenuItem item;
+    private UserProfileController upc = new UserProfileController();
+    private int profileState;
+    private Button multiButton;
+    private Button saveButton;
 
     //getters for UI testing
     public EditText getEtCity() {return (EditText) findViewById(R.id.cityTextView);}
     public EditText getEtPhone() {return (EditText) findViewById(R.id.phoneTextView);}
     public EditText getEtEmail() {return (EditText) findViewById(R.id.emailTextView);}
+
+    // Constants
+    public final static String EXTRA_STATE = "ca.ualberta.smaccr.giftcarder.STATE";
+    public static final int OWNER_STATE = 0; // view own profile (has edit button)
+    public static final int EDIT_STATE = 1; // edit own profile (has save button)
+    public static final int STRANGER_STATE = 2; // send friend request to stranger (has send friend request button)
+    public static final int FRIEND_STATE = 3; // view friend's profile (no button)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +60,12 @@ public class UserProfileActivity extends ActionBarActivity {
         etCity = (EditText) findViewById(R.id.cityTextView);
         etPhone = (EditText) findViewById(R.id.phoneTextView);
         etEmail = (EditText) findViewById(R.id.emailTextView);
+        multiButton = (Button) findViewById(R.id.multiButton);
+        saveButton = (Button) findViewById(R.id.saveProfileButton);
 
         Intent intent = getIntent();
         username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
+        profileState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
 
         User user = urc.getUser(username);
 
@@ -62,77 +75,33 @@ public class UserProfileActivity extends ActionBarActivity {
             etCity.setText(user.getCity());
             etPhone.setText(user.getPhone());
             etEmail.setText(user.getEmail());
-
-            // Disable editing
-            etCity.setFocusable(false);
-            etPhone.setFocusable(false);
-            etEmail.setFocusable(false);
+            upc.setViewMode(profileState, etCity, etPhone, etEmail, multiButton, saveButton);
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_user_profile, menu);
-        return true;
+    public void onMultiButtonClick(View view){
+
+        // Edit button -> owner state changes to edit state
+        if (profileState == OWNER_STATE) {
+            upc.setViewMode(EDIT_STATE, etCity, etPhone, etEmail, multiButton, saveButton);
+
+        // if user clicks Send Friend Request button
+        }else if (profileState == STRANGER_STATE) {
+            Toast.makeText(this, "Friend request sent", Toast.LENGTH_LONG).show();
+        }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.edit_profile) {
-            // Make menu (edit option) invisible
-            this.item = item;
-            this.item.setVisible(false);
-
-            User user = urc.getUser(username);
-
-            Button saveButton = (Button)findViewById(R.id.saveButton);
-            saveButton.setVisibility(View.VISIBLE);
-
-            // Make editable
-            etCity.setFocusableInTouchMode(true);
-            etPhone.setFocusableInTouchMode(true);
-            etEmail.setFocusableInTouchMode(true);
-
-            return true;
-        }
-
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            intent.putExtra(EXTRA_USERNAME, username);
-            startActivity(intent);
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void onSaveButtonClick(View view){
-
+    public void onSaveButtonClick(View view) {
+        // valid input
         if (urc.validateEditedFields(etCity, etPhone, etEmail)) {
-
             urc.editUser(username, etCity, etPhone, etEmail);
-
-            etCity.setFocusable(false);
-            etPhone.setFocusable(false);
-            etEmail.setFocusable(false);
-
-            // Make menu (edit option) visible
-            this.item.setVisible(true);
-
-            Button saveButton = (Button) findViewById(R.id.saveButton);
-            saveButton.setVisibility(View.INVISIBLE);
-
             Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
+            upc.setViewMode(OWNER_STATE, etCity, etPhone, etEmail, multiButton, saveButton);
         }
+
+        // invalid input
         else
             Toast.makeText(this, "Form contains error", Toast.LENGTH_LONG).show();
     }
+
 }

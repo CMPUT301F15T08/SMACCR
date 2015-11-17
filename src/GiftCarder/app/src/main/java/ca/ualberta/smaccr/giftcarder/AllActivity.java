@@ -18,14 +18,20 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class InventoryActivity extends ActionBarActivity {
+public class AllActivity extends ActionBarActivity {
 
     // Constants
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
-    public static final int ADD_STATE = 0; // add item
-    public static final int OWNER_STATE = 1; // view own item
+
+    public static final int ADD_ITEM_STATE = 0; // add item
+    public static final int OWNER_ITEM_STATE = 1; // view own item
     public static final int BROWSER_STATE = 2; // view other's item
+
+    public static final int OWNER_PROFILE_STATE = 0; // view own profile (has edit button)
+    public static final int EDIT_PROFILE_STATE = 1; // edit own profile (has save button)
+    public static final int STRANGER_PROFILE_STATE = 2; // send friend request to stranger (has send friend request button)
+    public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
 
     String username;
     Inventory inv;
@@ -71,11 +77,11 @@ public class InventoryActivity extends ActionBarActivity {
         tradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(InventoryActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AllActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
                 //Create a new intent and pass in the position of the trade
                 // The position should match the index in the database
                 // This way the trade offer can be retrieved
-                Intent intent = new Intent(InventoryActivity.this, TradeRequestActivity.class);
+                Intent intent = new Intent(AllActivity.this, TradeRequestActivity.class);
                 startActivity(intent);
             }
         });
@@ -96,11 +102,11 @@ public class InventoryActivity extends ActionBarActivity {
                 //Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 // Switch to item activity and send inventory and position of gift card to change
-                Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
+                Intent intent = new Intent(AllActivity.this, ItemActivity.class);
                 //intent.putExtra("GiftCard", inv.getInvList().get(position));
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
-                intent.putExtra(EXTRA_STATE, OWNER_STATE); // view item
+                intent.putExtra(EXTRA_STATE, OWNER_ITEM_STATE); // view item
                 //startActivity(intent);
                 startActivityForResult(intent, 1);
             }
@@ -115,7 +121,7 @@ public class InventoryActivity extends ActionBarActivity {
 
                 Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
 
-                AlertDialog.Builder deletedialog = new AlertDialog.Builder(InventoryActivity.this);
+                AlertDialog.Builder deletedialog = new AlertDialog.Builder(AllActivity.this);
                 deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -161,7 +167,7 @@ public class InventoryActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
 
             //Pass the inventory to settings, so settings activity will send it back to main to update the inventory in singleton
-            Intent intent1 = new Intent(InventoryActivity.this, SettingsActivity.class);
+            Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
             intent1.putExtra(EXTRA_USERNAME, username);
             startActivity(intent1);
         }
@@ -199,10 +205,10 @@ public class InventoryActivity extends ActionBarActivity {
         }
 
         // Switch to item activity and send selected gift card data
-        Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
+        Intent intent = new Intent(AllActivity.this, ItemActivity.class);
         intent.putExtra("position", 0);
         intent.putExtra("inventory", inv);
-        intent.putExtra(EXTRA_STATE, ADD_STATE); // add item
+        intent.putExtra(EXTRA_STATE, ADD_ITEM_STATE); // add item
         startActivityForResult(intent, 1);
 
     }
@@ -281,7 +287,7 @@ public class InventoryActivity extends ActionBarActivity {
     }
 
     public void settingsClick(MenuItem v){
-        Intent intent1 = new Intent(InventoryActivity.this, SettingsActivity.class);
+        Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
         intent1.putExtra(EXTRA_USERNAME, username);
         startActivity(intent1);
 

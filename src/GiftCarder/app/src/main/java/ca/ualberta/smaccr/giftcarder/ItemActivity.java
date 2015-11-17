@@ -109,7 +109,7 @@ public class ItemActivity extends Activity {
         //Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
 
         if (inv != null) {
-            ic.displayGiftCardInfo(inv, position, itemState, etItemValue, etItemName, etQuantity,
+            ic.displayGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity,
                     qualitySpinner, categorySpinner, etComments, checkbox);
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);

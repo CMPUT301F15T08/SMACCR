@@ -28,7 +28,7 @@
             android:label="User Profile" >
         </activity>
         <activity
-            android:name=".InventoryActivity"
+            android:name=".AllActivity"
             android:label="GiftCarder" >
         </activity>
         <activity

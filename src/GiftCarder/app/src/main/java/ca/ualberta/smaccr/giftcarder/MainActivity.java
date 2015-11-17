@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
         user.setEmail("t@g.c");
         UserRegistrationController.getUserList().addUser(user);
         */
+
     }
 
     @Override
@@ -69,7 +70,7 @@ public class MainActivity extends Activity {
 
         if (Validation.hasText(etUsername)) {
             if (urc.checkForUser(username)) {
-                Intent intent = new Intent(this, InventoryActivity.class);
+                Intent intent = new Intent(this, AllActivity.class);
                 intent.putExtra(EXTRA_USERNAME, username);
                 startActivity(intent);
 
