@@ -36,6 +36,7 @@ public class AllActivity extends ActionBarActivity {
     String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
+    private ListView friendsListView;
 
 
     /**
@@ -262,6 +263,16 @@ public class AllActivity extends ActionBarActivity {
         UserRegistrationController uc= new UserRegistrationController();
         uc.editUserInventory(username, inv);
     }
+/*
+    public void updateFriendsList(ArrayList<String> friendsList){
+        friendsListView = (ListView) findViewById(R.id.id);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friendsList);
+
+        friendsListView.setAdapter(arrayAdapter);
+    }
+
+    */
 
     @Override
     public void onBackPressed() {
