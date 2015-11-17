@@ -1,5 +1,6 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.app.Activity;
 import android.util.Log;
 import android.widget.EditText;
 
@@ -9,6 +10,22 @@ import android.widget.EditText;
 public class UserRegistrationController {
 
     private UserListController ulc;
+    private Activity parentActivity;
+
+    private Runnable doFinishAdd = new Runnable() {
+        public void run() {
+            parentActivity.finish();
+        }
+    };
+
+    public UserRegistrationController() {
+        this.ulc = ulc;
+    }
+
+    public UserRegistrationController(Activity parentActivity) {
+        this.ulc = ulc;
+        this.parentActivity = parentActivity;
+    }
 
     // Lazy singleton
     private static UserList userList = null;
@@ -97,6 +114,10 @@ public class UserRegistrationController {
         thread.start();
     }
 
+    public void addUser(User user) {
+        getUserList().addUser(user);
+    }
+
     class AddThread extends Thread {
         private User user;
 
@@ -114,6 +135,8 @@ public class UserRegistrationController {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+            parentActivity.runOnUiThread(doFinishAdd);
         }
     }
 

@@ -46,7 +46,7 @@ public class ESUserManager {
     /**
      * Get a movie with the specified id
      */
-    public User getUser(int id) {
+    public User getUser(String id) {
         SearchHit<User> sr = null;
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(userlist.getResourceUrl() + id);
