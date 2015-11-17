@@ -13,6 +13,7 @@ public class User {
     private String email;
     private Inventory inv;
     private List<String> friendsList;
+    private List<FriendRequest> friendRequests;
 
 
     /**
@@ -22,6 +23,8 @@ public class User {
     public User() {
         this.inv = new Inventory();
         List<String> friendsList = new ArrayList<String>();
+        List<FriendRequest> friendRequests = new ArrayList<FriendRequest>();
+        addFriend("t");
     }
 
 
@@ -113,4 +116,15 @@ public class User {
     public void addFriend(String username) {
         friendsList.add(username);
     }
+
+
+    /**
+     * Add friend request
+     * @param  sender String, reciever String
+     */
+    public void addFriendRequest(String sender, String reciever) {
+        FriendRequest request = new FriendRequest(sender, reciever);
+        friendRequests.add(request);
+    }
+
 }

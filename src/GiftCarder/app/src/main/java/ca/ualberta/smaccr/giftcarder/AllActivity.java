@@ -36,6 +36,7 @@ public class AllActivity extends ActionBarActivity {
     String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
+    private ListView friendsListView;
 
 
     /**
@@ -262,7 +263,18 @@ public class AllActivity extends ActionBarActivity {
         UserRegistrationController uc= new UserRegistrationController();
         uc.editUserInventory(username, inv);
     }
+
     /*
+    public void updateFriendsList(ArrayList<String> friendsList){
+        friendsListView = (ListView) findViewById(R.id.id);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friendsList);
+
+        friendsListView.setAdapter(arrayAdapter);
+    }
+
+    */
+
     @Override
     public void onBackPressed() {
         // Back button disabled
@@ -302,7 +314,7 @@ public class AllActivity extends ActionBarActivity {
         final EditText input = new EditText(this);
         alert.setView(input);
 
-        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("View profile", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 // Check if its a valid user, and send request
