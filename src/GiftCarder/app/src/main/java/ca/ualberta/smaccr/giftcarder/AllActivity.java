@@ -26,7 +26,7 @@ public class AllActivity extends ActionBarActivity {
 
     public static final int ADD_ITEM_STATE = 0; // add item
     public static final int OWNER_ITEM_STATE = 1; // view own item
-    public static final int BROWSER_STATE = 2; // view other's item
+    public static final int BROWSER_ITEM_STATE = 2; // view other's item
 
     public static final int OWNER_PROFILE_STATE = 0; // view own profile (has edit button)
     public static final int EDIT_PROFILE_STATE = 1; // edit own profile (has save button)
@@ -94,7 +94,7 @@ public class AllActivity extends ActionBarActivity {
         Toast.makeText(getApplicationContext(), "Long click to delete gift card", Toast.LENGTH_LONG).show();
 
         inv = user.getInv();
-        updateInvList(inv);
+        //updateInvList(inv);
 
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -262,12 +262,12 @@ public class AllActivity extends ActionBarActivity {
         UserRegistrationController uc= new UserRegistrationController();
         uc.editUserInventory(username, inv);
     }
-
+    /*
     @Override
     public void onBackPressed() {
         // Back button disabled
     }
-
+    */
     public void getUserProfile(View view) {
         Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);

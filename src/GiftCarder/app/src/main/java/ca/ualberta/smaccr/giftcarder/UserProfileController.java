@@ -28,6 +28,7 @@ public class UserProfileController {
             etPhone.setFocusable(false);
             etEmail.setFocusable(false);
             saveButton.setVisibility(View.GONE);
+
             if (profileState != FRIEND_STATE) {
                 multiButton.setVisibility(View.VISIBLE);
                 if (profileState == OWNER_STATE) {
@@ -39,6 +40,7 @@ public class UserProfileController {
             } else {  // in FRIEND_STATE
                 multiButton.setVisibility(View.GONE);
             }
+
         } else { // in EDIT_STATE
             etCity.setFocusableInTouchMode(true);
             etPhone.setFocusableInTouchMode(true);
