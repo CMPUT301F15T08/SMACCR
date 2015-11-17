@@ -231,7 +231,7 @@ public class ItemController {
             if (itemState == OWNER_STATE) {
                 editAndOfferButton.setText("Edit");
             } else {
-                editAndOfferButton.setText("Make Offer");
+                editAndOfferButton.setText("Trade");
             }
         }
     }

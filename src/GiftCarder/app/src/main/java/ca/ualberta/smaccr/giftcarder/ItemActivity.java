@@ -128,7 +128,7 @@ public class ItemActivity extends Activity {
                 editAndOfferButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
-                        Toast.makeText(getApplicationContext(), "Make Offer Clicked", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Trade Button Clicked", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
