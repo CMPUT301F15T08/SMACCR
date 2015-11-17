@@ -26,8 +26,8 @@ import java.util.List;
 public class UserList implements Observable {
 
     private volatile ArrayList<Observer> observers = new ArrayList<Observer>();
-    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/testing/movie/";
-    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/testing/movie/_search";
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t08/user/";
+    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t08/user/";
 
     public void addObserver(Observer o) {
         observers.add(o);

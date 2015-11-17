@@ -22,13 +22,13 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
+
         user.setUsername("t");
         user.setCity("Edmo");
         user.setPhone("012-345-6789");
         user.setEmail("t@g.c");
         UserRegistrationController.getUserList().addUser(user);
-        */
+
 
     }
 
