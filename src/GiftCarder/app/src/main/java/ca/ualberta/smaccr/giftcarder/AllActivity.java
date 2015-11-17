@@ -89,7 +89,7 @@ public class AllActivity extends ActionBarActivity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
-        UserRegistrationController urc = new UserRegistrationController();
+        UserRegistrationController urc = new UserRegistrationController(this);
         User user = urc.getUser(username);
 
         Toast.makeText(getApplicationContext(), "Long click to delete gift card", Toast.LENGTH_LONG).show();
@@ -260,7 +260,7 @@ public class AllActivity extends ActionBarActivity {
         inventorylistID.setAdapter(displayAdapter);
 
         //Updates the user's inventory in userList in UserRegisteration controller
-        UserRegistrationController uc= new UserRegistrationController();
+        UserRegistrationController uc= new UserRegistrationController(this);
         uc.editUserInventory(username, inv);
     }
 

@@ -55,7 +55,7 @@ public class RegisterActivity extends Activity {
         EditText etPhone = (EditText) findViewById(R.id.registerPhone);
         EditText etEmail = (EditText) findViewById(R.id.registerEmail);
 
-        UserRegistrationController urc = new UserRegistrationController();
+        UserRegistrationController urc = new UserRegistrationController(this);
 
         if (urc.validateFields(etUsername, etCity, etPhone, etEmail)) {
             urc.addUser(etUsername, etCity, etPhone, etEmail);
