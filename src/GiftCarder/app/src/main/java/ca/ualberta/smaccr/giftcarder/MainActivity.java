@@ -8,10 +8,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 public class MainActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     Inventory inv;
     String username;
+
+    private ESUserManager userManager;
 
     //getter for UI testing
     public EditText getEtUsername() {return (EditText) findViewById(R.id.enterUsername);}
@@ -22,14 +26,21 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
+
         user.setUsername("t");
         user.setCity("Edmo");
         user.setPhone("012-345-6789");
         user.setEmail("t@g.c");
         UserRegistrationController.getUserList().addUser(user);
-        */
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        userManager = new ESUserManager("");
     }
 
     @Override
@@ -66,9 +77,11 @@ public class MainActivity extends Activity {
         EditText etUsername = (EditText) findViewById(R.id.enterUsername);
         String username = etUsername.getText().toString().trim();
 
-        UserRegistrationController urc = new UserRegistrationController();
+        UserRegistrationController urc = new UserRegistrationController(this);
+        userManager = new ESUserManager("");
 
         if (Validation.hasText(etUsername)) {
+            /*
             if (urc.checkForUser(username)) {
                 Intent intent = new Intent(this, AllActivity.class);
                 intent.putExtra(EXTRA_USERNAME, username);
@@ -76,10 +89,36 @@ public class MainActivity extends Activity {
 
             } else {
                 Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
+            }
+            */
 
+            Thread thread = new GetThread(username);
+            thread.start();
+
+            if (user != null) {
+                if (urc.getUser(user.getUsername()) == null) {
+                    urc.addUser(user);
+                }
+                Intent intent = new Intent(this, AllActivity.class);
+                intent.putExtra(EXTRA_USERNAME, username);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
             }
         }
     }
 
+    class GetThread extends Thread {
+        private String id;
 
+        public GetThread(String id) {
+            this.id = id;
+        }
+
+        @Override
+        public void run() {
+            user = userManager.getUser(id);
+            // runOnUiThread(doUpdate);
+        }
+    }
 }
