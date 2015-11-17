@@ -302,7 +302,7 @@ public class AllActivity extends ActionBarActivity {
         final EditText input = new EditText(this);
         alert.setView(input);
 
-        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("View profile", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 // Check if its a valid user, and send request

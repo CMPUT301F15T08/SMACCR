@@ -83,6 +83,7 @@ public class UserProfileActivity extends Activity {
 
         // if user clicks Send Friend Request button
         }else if (profileState == STRANGER_STATE) {
+
             Toast.makeText(this, "Friend request sent", Toast.LENGTH_LONG).show();
             finish();
         }
