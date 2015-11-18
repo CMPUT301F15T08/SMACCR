@@ -3,6 +3,7 @@ package ca.ualberta.smaccr.giftcarder;
 import android.app.Activity;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by Carin on 10/26/2015.
@@ -57,8 +58,6 @@ public class UserRegistrationController {
         return false;
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Added by Richard, to get position of user in userlist
     public int returnUserPosition(String username) {
 
         for (int i = 0; i < getUserList().getSize(); i+=1) {
@@ -71,7 +70,6 @@ public class UserRegistrationController {
         return -1;
     }
 
-    // Added by Richard to modify the user in userlist
     public void editUserInventory(String username, Inventory inv){
         User user = getUser(username);
         int userIndex = returnUserPosition(username);
@@ -82,7 +80,6 @@ public class UserRegistrationController {
             getUserList().editUser(userIndex, user);
         }
     }
-    ///////////////////////////////////////////////////////////////////////////////
 
     /**
      * Adds user to UserList
@@ -273,4 +270,5 @@ public class UserRegistrationController {
         return valid;
 
     }
+
 }

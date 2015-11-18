@@ -94,7 +94,7 @@ public class AllActivity extends ActionBarActivity {
         Toast.makeText(getApplicationContext(), "Long click to delete gift card", Toast.LENGTH_LONG).show();
 
         inv = user.getInv();
-        updateInvList(inv);
+        //updateInvList(inv);
 
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -261,7 +261,14 @@ public class AllActivity extends ActionBarActivity {
         //Updates the user's inventory in userList in UserRegisteration controller
         UserRegistrationController uc= new UserRegistrationController(this);
         uc.editUserInventory(username, inv);
+
+
+        //ulc = new UserListController(uc.getUserList());
+        //Thread thread = new updateThread(uc.getUser(username));
+        //thread.start();
     }
+
+
 
     @Override
     public void onBackPressed() {

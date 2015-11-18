@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -26,13 +27,13 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        /*
         user.setUsername("t");
         user.setCity("Edmo");
         user.setPhone("012-345-6789");
         user.setEmail("t@g.c");
         UserRegistrationController.getUserList().addUser(user);
-
+        */
 
     }
 
@@ -81,30 +82,9 @@ public class MainActivity extends Activity {
         userManager = new ESUserManager("");
 
         if (Validation.hasText(etUsername)) {
-            /*
-            if (urc.checkForUser(username)) {
-                Intent intent = new Intent(this, AllActivity.class);
-                intent.putExtra(EXTRA_USERNAME, username);
-                startActivity(intent);
-
-            } else {
-                Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
-            }
-            */
-
+            //Calls GetThreat to check if user is on server
             Thread thread = new GetThread(username);
             thread.start();
-
-            if (user != null) {
-                if (urc.getUser(user.getUsername()) == null) {
-                    urc.addUser(user);
-                }
-                Intent intent = new Intent(this, AllActivity.class);
-                intent.putExtra(EXTRA_USERNAME, username);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
-            }
         }
     }
 
@@ -118,7 +98,31 @@ public class MainActivity extends Activity {
         @Override
         public void run() {
             user = userManager.getUser(id);
-            // runOnUiThread(doUpdate);
+
+            runOnUiThread(checkUserONServer);
         }
+    }
+
+    private Runnable checkUserONServer = new Runnable() {
+        public void run() {
+            CheckforUserOnServer(user);
+        }
+    };
+
+    public void CheckforUserOnServer(User user){
+        UserRegistrationController urc = new UserRegistrationController(this);
+        userManager = new ESUserManager("");
+
+        if (user != null) {
+            Toast.makeText(this, user.getUsername(), Toast.LENGTH_LONG).show();
+            urc.addUser(user);
+            String usernameFromServer = user.getUsername();
+            Intent intent = new Intent(this, AllActivity.class);
+            intent.putExtra(EXTRA_USERNAME, usernameFromServer);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
+        }
+
     }
 }

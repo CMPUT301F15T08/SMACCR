@@ -1,5 +1,7 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import java.util.ArrayList;
+
 /**
  * Created by Carin on 10/25/2015.
  */
@@ -9,7 +11,7 @@ public class User {
     private String phone;
     private String email;
     private Inventory inv;
-    private UserList friendsList;
+    private ArrayList<String> friendsList;
 
     /**
      * Constructor: on creation of User, creates new inventory
@@ -17,7 +19,7 @@ public class User {
 
     public User() {
         this.inv = new Inventory();
-        this.friendsList = new UserList();
+        this.friendsList = new ArrayList<String>();
     }
 
 

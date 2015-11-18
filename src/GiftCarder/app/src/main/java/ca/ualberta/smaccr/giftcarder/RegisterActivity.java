@@ -58,8 +58,9 @@ public class RegisterActivity extends Activity {
         UserRegistrationController urc = new UserRegistrationController(this);
 
         if (urc.validateFields(etUsername, etCity, etPhone, etEmail)) {
-            urc.addUser(etUsername, etCity, etPhone, etEmail);
-            //Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
+
+            urc.addUser(etUsername,etCity, etPhone, etEmail);
 
             Intent intent = new Intent(this, AllActivity.class);
             String username = etUsername.getText().toString();
