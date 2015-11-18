@@ -22,8 +22,9 @@ public class User {
 
     public User() {
         this.inv = new Inventory();
-        List<String> friendsList = new ArrayList<String>();
-        List<FriendRequest> friendRequests = new ArrayList<FriendRequest>();
+        this.friendsList = new ArrayList<String>();
+        this.friendRequests = new ArrayList<FriendRequest>();
+
 
     }
 
@@ -114,17 +115,23 @@ public class User {
      * @param  username String
      */
     public void addFriend(String username) {
-        friendsList.add(username);
+        this.friendsList.add(username);
     }
 
+    public List<String> getFriendsList() {
+        return this.friendsList;
+    }
 
+    public void deleteFriend(String friend){
+        this.friendsList.remove(friend);
+    }
     /**
      * Add friend request
      * @param  sender String, reciever String
      */
     public void addFriendRequest(String sender, String reciever) {
         FriendRequest request = new FriendRequest(sender, reciever);
-        friendRequests.add(request);
+        this.friendRequests.add(request);
     }
 
 }
