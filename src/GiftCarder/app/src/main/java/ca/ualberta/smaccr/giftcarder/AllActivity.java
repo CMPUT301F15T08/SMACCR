@@ -279,7 +279,7 @@ public class AllActivity extends ActionBarActivity {
     public void onBackPressed() {
         // Back button disabled
     }
-    */
+
     public void getUserProfile(View view) {
         Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
