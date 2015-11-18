@@ -33,6 +33,8 @@ public class AllActivity extends ActionBarActivity {
     public static final int STRANGER_PROFILE_STATE = 2; // send friend request to stranger (has send friend request button)
     public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
 
+    private UserListController ulc;
+
     String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
@@ -263,9 +265,37 @@ public class AllActivity extends ActionBarActivity {
         uc.editUserInventory(username, inv);
 
 
-        //ulc = new UserListController(uc.getUserList());
-        //Thread thread = new updateThread(uc.getUser(username));
-        //thread.start();
+        ulc = new UserListController(uc.getUserList());
+        Thread thread = new updateThread(uc.getUser(username));
+        thread.start();
+    }
+
+    class updateThread extends Thread {
+        private User user;
+        UserRegistrationController uc= new UserRegistrationController();
+
+        public updateThread(User user) {
+            this.user = user;
+        }
+
+        @Override
+        public void run() {
+            //delete from server
+            ulc.deleteUser(user.getUsername());
+            //delete from userlist
+            //uc.getUserList().deleteUser(user);
+
+            //Add the new one back
+            ulc.addUser(user);
+            //uc.getUserList().addUser(user);
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

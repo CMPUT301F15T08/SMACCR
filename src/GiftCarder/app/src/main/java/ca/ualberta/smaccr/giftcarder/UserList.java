@@ -66,6 +66,10 @@ public class UserList implements Observable {
         userList.add(user);
     }
 
+    public void deleteUser(User user){
+        userList.remove(user);
+    }
+
     /**
      * Edits user given its index in the list
      * @param userIndex integer of user's index in list
