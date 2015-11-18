@@ -289,6 +289,7 @@ public class AllActivity extends ActionBarActivity {
             ulc.addUser(user);
             //uc.getUserList().addUser(user);
 
+
             // Give some time to get updated info
             try {
                 Thread.sleep(500);
