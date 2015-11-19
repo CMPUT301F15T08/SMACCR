@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AllActivity extends ActionBarActivity {
 
@@ -27,17 +26,18 @@ public class AllActivity extends ActionBarActivity {
 
     public static final int ADD_ITEM_STATE = 0; // add item
     public static final int OWNER_ITEM_STATE = 1; // view own item
-    public static final int BROWSER_ITEM_STATE = 2; // view other's item
+    public static final int BROWSER_STATE = 2; // view other's item
 
     public static final int OWNER_PROFILE_STATE = 0; // view own profile (has edit button)
     public static final int EDIT_PROFILE_STATE = 1; // edit own profile (has save button)
     public static final int STRANGER_PROFILE_STATE = 2; // send friend request to stranger (has send friend request button)
     public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
 
+    private UserListController ulc;
+
     String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
-    private ListView friendsListView;
 
 
     /**
@@ -75,7 +75,6 @@ public class AllActivity extends ActionBarActivity {
 
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
         ListView tradesListView = (ListView) findViewById(R.id.tradesListView);
-        final ListView friendsListView = (ListView) findViewById(R.id.friendListView);
         tradesListView.setAdapter(new TradesTabAdapter(this));
         tradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -89,14 +88,12 @@ public class AllActivity extends ActionBarActivity {
             }
         });
 
-
-
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
         UserRegistrationController urc = new UserRegistrationController(this);
         User user = urc.getUser(username);
 
-        Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Long click to delete gift card", Toast.LENGTH_LONG).show();
 
         inv = user.getInv();
         //updateInvList(inv);
@@ -114,50 +111,6 @@ public class AllActivity extends ActionBarActivity {
                 intent.putExtra(EXTRA_STATE, OWNER_ITEM_STATE); // view item
                 //startActivity(intent);
                 startActivityForResult(intent, 1);
-            }
-        });
-
-        friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedFriend = (String) friendsListView.getItemAtPosition(position);
-                Intent intent = new Intent(AllActivity.this, UserProfileActivity.class);
-                intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
-                intent.putExtra(EXTRA_USERNAME, selectedFriend);
-                startActivity(intent);
-            }
-        });
-
-
-        // Long click to delete listener
-        friendsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                final int pos = position;
-
-                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
-
-                AlertDialog.Builder deletedialog = new AlertDialog.Builder(AllActivity.this);
-                deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String selectedFriend = (String) friendsListView.getItemAtPosition(pos);
-                        UserRegistrationController u= new UserRegistrationController();
-                        User use = u.getUser(username);
-                        use.deleteFriend(selectedFriend);
-                        updateFriendsList(use.getFriendsList());
-                        friendsListView.deferNotifyDataSetChanged();
-
-                        dialog.dismiss();
-                    }
-                });
-                deletedialog.create().show();
-                return true;
             }
         });
 
@@ -193,19 +146,15 @@ public class AllActivity extends ActionBarActivity {
 
         updateInvList(inv);
 
-        user.addFriend(username);
-        updateFriendsList(user.getFriendsList());
-
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_inventory, menu);
         return true;
     }
-
+    //commented out, might put back in if group wants the three dots
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -219,7 +168,7 @@ public class AllActivity extends ActionBarActivity {
         // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            //Pass the inventory to settings, so settings activity will send it back to main to update the inventory in singleton
+            //Pass the  inventory to settings, so settings activity will send it back to main to update the inventory in singleton
             Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
             intent1.putExtra(EXTRA_USERNAME, username);
             startActivity(intent1);
@@ -314,18 +263,40 @@ public class AllActivity extends ActionBarActivity {
         //Updates the user's inventory in userList in UserRegisteration controller
         UserRegistrationController uc= new UserRegistrationController(this);
         uc.editUserInventory(username, inv);
+
+
+        ulc = new UserListController(uc.getUserList());
+        Thread thread = new updateThread(uc.getUser(username));
+        thread.start();
     }
 
+    class updateThread extends Thread {
+        private User user;
+        UserRegistrationController uc= new UserRegistrationController();
 
-    public void updateFriendsList(List<String> friendsList){
-        if (friendsList.isEmpty()){
-            return;
+        public updateThread(User user) {
+            this.user = user;
         }
-        ListView friendsListView = (ListView) findViewById(R.id.friendListView);
+
+        @Override
+        public void run() {
+            //delete from server
+            ulc.deleteUser(user.getUsername());
+            //delete from userlist
+            //uc.getUserList().deleteUser(user);
+
+            //Add the new one back
+            ulc.addUser(user);
+            //uc.getUserList().addUser(user);
 
 
-        displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friendsList);
-        friendsListView.setAdapter(displayAdapter);
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -369,17 +340,13 @@ public class AllActivity extends ActionBarActivity {
         final EditText input = new EditText(this);
         alert.setView(input);
 
-        alert.setPositiveButton("View profile", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String requiredUser = input.getText().toString();
+                String value = input.getText().toString();
                 // Check if its a valid user, and send request
                 UserRegistrationController URC = new UserRegistrationController();
-                if (URC.checkForUser(requiredUser)){
-                    Intent intent = new Intent(AllActivity.this, UserProfileActivity.class);
-                    intent.putExtra(EXTRA_STATE, STRANGER_PROFILE_STATE);
-                    intent.putExtra(EXTRA_USERNAME, requiredUser);
-                    startActivity(intent);
-
+                if (URC.checkForUser(value)){
+                    Toast.makeText(getApplicationContext(), "Friend request sent", Toast.LENGTH_LONG).show();
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_LONG).show();

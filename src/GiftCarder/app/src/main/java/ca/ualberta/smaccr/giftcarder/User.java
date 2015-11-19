@@ -1,7 +1,6 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Carin on 10/25/2015.
@@ -12,9 +11,7 @@ public class User {
     private String phone;
     private String email;
     private Inventory inv;
-    private List<String> friendsList;
-    private List<FriendRequest> friendRequests;
-
+    private ArrayList<String> friendsList;
 
     /**
      * Constructor: on creation of User, creates new inventory
@@ -23,12 +20,7 @@ public class User {
     public User() {
         this.inv = new Inventory();
         this.friendsList = new ArrayList<String>();
-        this.friendRequests = new ArrayList<FriendRequest>();
-
-
     }
-
-
 
 
     /**
@@ -109,29 +101,4 @@ public class User {
      * @param inventory Inventory of user's items
      */
     public void setInv(Inventory inventory) {this.inv = inventory;}
-
-    /**
-     * Add friend
-     * @param  username String
-     */
-    public void addFriend(String username) {
-        this.friendsList.add(username);
-    }
-
-    public List<String> getFriendsList() {
-        return this.friendsList;
-    }
-
-    public void deleteFriend(String friend){
-        this.friendsList.remove(friend);
-    }
-    /**
-     * Add friend request
-     * @param  sender String, reciever String
-     */
-    public void addFriendRequest(String sender, String reciever) {
-        FriendRequest request = new FriendRequest(sender, reciever);
-        this.friendRequests.add(request);
-    }
-
 }
