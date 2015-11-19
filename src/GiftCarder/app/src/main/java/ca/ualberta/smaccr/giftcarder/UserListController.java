@@ -51,7 +51,7 @@ public class UserListController {
     /**
      * Deletes the user with the specified id
      */
-    public void deleteUser(int userId) {
+    public void deleteUser(String userId) {
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
