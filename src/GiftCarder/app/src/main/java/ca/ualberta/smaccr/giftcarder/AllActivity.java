@@ -365,7 +365,7 @@ public class AllActivity extends ActionBarActivity {
 
         alert.setMessage("Enter their username:");
 
-        //textbox for user input
+        //text box for user input
         final EditText input = new EditText(this);
         alert.setView(input);
 
