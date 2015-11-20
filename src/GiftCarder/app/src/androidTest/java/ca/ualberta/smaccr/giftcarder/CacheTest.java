@@ -5,6 +5,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by mrijlaar on 10/28/15.
@@ -23,25 +24,25 @@ public class CacheTest extends ActivityInstrumentationTestCase2 {
 
         ArrayList<GiftCard> giftCards = new ArrayList<GiftCard>();
 
-        GiftCard giftCard1 = new GiftCard();
-        giftCard1.setMerchant("Bestbuy");
-        giftCard1.setQuantity(1);
-        giftCard1.setQuality(3);
-        giftCard1.setCategory(1);
-        giftCard1.setComments("scratched but usable");
-        giftCard1.setShared(Boolean.TRUE);
+        GiftCard giftCard1 = new GiftCard(1.10, "Test Merchant", 1,3,1, "scratched but usable");
 
         giftCards.add(giftCard1);
 
-        Cache cache = new Cache((Collection<GiftCard>)giftCards);
+        Inventory inventory = new Inventory(giftCards);
 
-        assertTrue(cache.size()>0);
+        Cache cache = new Cache();
+        cache.add(inventory);
+        cache.loadItems();
+
+        assertTrue(cache.itemsSize() > 0);
     }
 
     public void testGetItems() throws Exception {
         Cache c1 = new Cache();
+        Inventory inventory = new Inventory();
 
         GiftCard giftCard1 = new GiftCard();
+        giftCard1.setValue(10.10);
         giftCard1.setMerchant("Bestbuy");
         giftCard1.setQuantity(1);
         giftCard1.setQuality(3);
@@ -49,12 +50,21 @@ public class CacheTest extends ActivityInstrumentationTestCase2 {
         giftCard1.setComments("scratched but usable");
         giftCard1.setShared(Boolean.TRUE);
 
-        c1.add(giftCard1);
+        c1.add(inventory);
 
-        LinkedList<GiftCard> linkedList;
-        linkedList = c1.getItems();
+        ArrayList<GiftCard> arrayList;
+        arrayList = c1.getItems();
+        assertTrue(arrayList == null);
+        c1.loadItems();
+        arrayList = c1.getItems();
+        assertTrue(arrayList != null);
 
-        assertTrue(linkedList==c1.getItems());
+        assertTrue("val = "+arrayList.size(), arrayList.size()==0);
+
+        inventory.addGiftCard(giftCard1);
+        c1.loadItems();
+
+        assertTrue(arrayList==c1.getItems());
     }
 
     public void testSetItems() throws Exception {
@@ -73,44 +83,90 @@ public class CacheTest extends ActivityInstrumentationTestCase2 {
 
     }
 
-    public void testAdd() throws Exception {
-        GiftCard giftCard1 = new GiftCard();
-        Cache cache = new Cache();
-        int t1 = cache.size();
-        cache.add(giftCard1);
+    public void testMergeSort() throws Exception {
 
-        assertTrue("t1 == 0", t1 == 0);
-        assertTrue("0 - " + cache.size() + " = 1", t1 - cache.size() == -1);
-
-    }
-
-    public void testAdd1() throws Exception {
-
-        GiftCard giftCard1 = new GiftCard();
-        Cache cache = new Cache();
-        LinkedList<GiftCard> linkedList = new LinkedList<GiftCard>();
-
-        int t1 = cache.size();
-        cache.add(giftCard1);
-        int t2 = cache.size();
-
-        for(int i =0; i<5; i++){
-            linkedList.add(new GiftCard());
-            linkedList.getLast().setMerchant("Merchant "+i);
+        LinkedList<GiftCard> giftCard= new LinkedList<GiftCard>();
+        int size = 5;
+        for (int i=0; i<size; i++){
+            giftCard.add( new GiftCard((double)i, "TestMerchant", 1, (int)(Math.random()*4), (int)(Math.random()*11)));
+            TimeUnit.SECONDS.sleep(1);
         }
 
-        cache.add(linkedList);
-        int t3 = cache.size();
-        linkedList.clear();
+        ArrayList<GiftCard> al1, al2;
+        al1 = new ArrayList<GiftCard>();
+        al2 = new ArrayList<GiftCard>();
 
-        for(int i =5; i<12; i++){
-            linkedList.add(new GiftCard());
-            linkedList.getLast().setMerchant("Merchant "+i);
+        int r;//andom 0 or 1
+        int s;//elect 0-giftcar.size
+        for (int i=4; i>=0; i--){
+            r = (int)(Math.random()*2);
+
+            if (r==0){
+                al1.add(0, giftCard.remove(i));
+            } else {
+                al2.add(0, giftCard.remove(i));
+            }
         }
 
-        cache.add(linkedList);
+        Cache cache = new Cache();
+        Inventory inv1 = new Inventory(al1), inv2 = new Inventory(al2);
+        cache.add(inv1);
+        cache.add(inv2);
 
-        assertTrue(t3 - cache.size()==linkedList.size()*-1);
+        /*int v1 = cache.merge(al1, al2).size(), v2 = al1.size()+al2.size();
+        assertTrue("testMerge v2: (" + al1.size()+" + "+al2.size()+")= "+v2+" != v1: "+v1 ,v1 == v2);//*/
+
+        cache.loadItems();
+        ArrayList<GiftCard> items = cache.getItems();
+        String list = System.lineSeparator();
+
+        for (int i=0; i<size-1; i++){
+            list = list + i+", "+(i+1)+" = "+items.get(i).getDate().toString()+" < "+ items.get(i+1).getDate().toString()+ System.lineSeparator();
+            assertTrue(list, items.get(i).getDate().before(items.get(i+1).getDate()));
+        }
     }
+
+    public void testBrowseAll(){
+        ArrayList<GiftCard> giftCards = new ArrayList<GiftCard>(4);
+        giftCards.add(new GiftCard(10, "TestMerchant", 1, 0, 10));
+        giftCards.add(new GiftCard(10, "TestMerchant", 1, 0, 0));
+        giftCards.add(new GiftCard(10, "TestMerchant", 1, 0, 2));
+        giftCards.add(new GiftCard(10, "TestMerchant", 1, 0, 2));
+
+        Inventory inv = new Inventory(giftCards);
+
+        Cache cache = new Cache();
+        cache.add(inv);
+
+        assertTrue(cache.getfInv().size() == 1);
+
+        assertTrue(cache.getResults() == null);
+
+        cache.browseAll();
+
+        assertTrue(cache.getResults().size()==inv.getSize());
+    }
+
+    public void testBrowseCategory(){
+        ArrayList<GiftCard> giftCards = new ArrayList<GiftCard>(4);
+        giftCards.add(new GiftCard(10, "TestMerchant", 1, 0, 10));
+        giftCards.add(new GiftCard(10, "TestMerchant", 1, 0, 0));
+        giftCards.add(new GiftCard(10, "TestMerchant", 1, 0, 2));
+        giftCards.add(new GiftCard(10, "TestMerchant", 1, 0, 2));
+
+        Inventory inv = new Inventory(giftCards);
+
+        Cache cache = new Cache();
+        cache.add(inv);
+
+        cache.loadItems();
+        cache.browseCategory(2);
+
+        assertTrue(cache.itemsSize() == 4);
+        assertTrue(cache.resultsSize() == 2);
+        assertTrue(cache.getResults().get(0).getCategory()==2);
+        assertTrue(cache.getResults().get(1).getCategory()==2);
+    }
+
 
 }
