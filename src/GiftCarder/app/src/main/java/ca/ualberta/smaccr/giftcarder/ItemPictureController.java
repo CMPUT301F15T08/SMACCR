@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.opengl.Matrix;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -28,9 +29,22 @@ import java.io.IOException;
  * Created by Carin on 11/19/2015.
  */
 public class ItemPictureController {
+    int maxByteSize = 65536;
+    double scale = 0.8;
 
     public String onCaptureImageResult(Intent data) {
         Bitmap image = (Bitmap) data.getExtras().get("data");
+
+        System.out.println("Byte Size: " + image.getByteCount());
+        image = resizeBitmap(image);
+        System.out.println("Byte Size: " + image.getByteCount());
+        /*
+        while ((image != null) && (image.getByteCount() >= maxByteSize)) {
+            System.out.println("Byte Size: " + image.getByteCount());
+            image = resizeBitmap(image);
+        }
+        */
+
         return encodeToBase64(image);
     }
 
@@ -46,6 +60,29 @@ public class ItemPictureController {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
+
+    public Bitmap resizeBitmap(Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        double newWidth = (scale * width);
+        double newHeight = (scale * height);
+        /*
+        //Bitmap.createScaledBitmap(bitmap, (int)(newWidth + 0.5d), (int)(newHeight + 0.5d), false);
+
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+
+        // RESIZE THE BITMAP
+        matrix.postScale((float)newWidth, (loat) newHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, (int)(newWidth + 0.5d), (int)(newWidth + 0.5d), matrix, false);
+        bitmap.recycle();
+
+        */
+        return bitmap;
+    }
+
 
     @SuppressWarnings("deprecation")
     public void onSelectFromGalleryResult(Intent data) {

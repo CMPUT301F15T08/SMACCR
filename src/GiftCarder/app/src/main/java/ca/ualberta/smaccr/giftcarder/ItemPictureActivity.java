@@ -62,10 +62,10 @@ public class ItemPictureActivity extends ActionBarActivity {
             itemImagesList = new ArrayList<ItemImage>();
         }
 
-        if (itemState != ADD_STATE) {
-            addPhotoButton.setEnabled(false);
+        if (itemState != OWNER_STATE) {
+            addPhotoButton.setVisibility(View.VISIBLE);
         } else {
-            addPhotoButton.setEnabled(true);
+            addPhotoButton.setVisibility(View.INVISIBLE);;
         }
 
         gridView = (GridView) findViewById(R.id.pictureGridView);

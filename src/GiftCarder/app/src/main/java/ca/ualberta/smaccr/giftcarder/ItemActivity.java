@@ -87,6 +87,7 @@ public class ItemActivity extends Activity {
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
     public static final int BROWSER_STATE = 2; // view other's item
+    public static final int EDIT_STATE = 3; // edit item
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,9 +133,9 @@ public class ItemActivity extends Activity {
                 editAndOfferButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
-                        ic.setViewMode(ADD_STATE, etItemValue, etItemName, etQuantity, qualitySpinner,
+                        ic.setViewMode(EDIT_STATE, etItemValue, etItemName, etQuantity, qualitySpinner,
                                 categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
-                        itemState = ADD_STATE;
+                        itemState = EDIT_STATE;
                     }
                 });
             // if user clicks Make Offer button
@@ -217,22 +218,27 @@ public class ItemActivity extends Activity {
         }
     }
 
-    /*
+
     @Override
     public void onBackPressed() {
+        /*
         EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
         EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
         if ((itemName.getText().toString().equals("")) || itemValue.getText().toString().equals("")){
             inv.getInvList().remove(position);
         }
+        */
 
-        // inv.getInvList().remove(position);
+        if (itemState == ADD_STATE) {
+            inv.getInvList().remove(position);
+        }
+
         Intent intent = new Intent();
         intent.putExtra("ModifiedInventory", inv);
         setResult(RESULT_OK, intent);
         finish();
     }
-    */
+
 
     // https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
     // barebones right now

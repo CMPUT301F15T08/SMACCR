@@ -25,6 +25,7 @@ public class ItemController {
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
     public static final int BROWSER_STATE = 2; // view other's item
+    public static final int EDIT_STATE = 3; // add item
     private File imageFile;
 
     public void takeAPicture() {
@@ -205,7 +206,7 @@ public class ItemController {
                             EditText etComments, CheckBox checkbox, Button editAndOfferButton,
                             Button saveButton) {
 
-        if (itemState == ADD_STATE) {
+        if ((itemState == ADD_STATE) || (itemState == EDIT_STATE)) {
             etItemValue.setFocusableInTouchMode(true);
             etItemName.setFocusableInTouchMode(true);
             qualitySpinner.setClickable(true);
