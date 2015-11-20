@@ -61,7 +61,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * Tests that entering the username of a registered user starts the InventoryActivity
+     * Tests that entering the username of a registered user starts the AllActivity
      */
     public void testLoginRegisteredUser() {
         MainActivity activity = (MainActivity) getActivity();
@@ -89,7 +89,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
 
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
-                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                getInstrumentation().addMonitor(AllActivity.class.getName(),
                         null, false);
 
         activity.runOnUiThread(new Runnable() {
@@ -100,13 +100,13 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity has started
-        InventoryActivity receiverActivity = (InventoryActivity)
+        AllActivity receiverActivity = (AllActivity)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", receiverActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, receiverActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                InventoryActivity.class, receiverActivity.getClass());
+                AllActivity.class, receiverActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
@@ -116,7 +116,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * Tests that entering the username of an unregistered user does not start the InventoryActivity
+     * Tests that entering the username of an unregistered user does not start the AllActivity
      */
     public void testLoginUnregisteredUser() {
         MainActivity activity = (MainActivity) getActivity();
@@ -136,7 +136,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
 
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
-                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                getInstrumentation().addMonitor(AllActivity.class.getName(),
                         null, false);
 
         activity.runOnUiThread(new Runnable() {
@@ -147,7 +147,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity did not start
-        InventoryActivity receiverActivity = (InventoryActivity)
+        AllActivity receiverActivity = (AllActivity)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNull("ReceiverActivity is not null", receiverActivity);
 

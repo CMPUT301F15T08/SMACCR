@@ -27,7 +27,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2 {
 
     /**
      * Tests that clicking the Sign Up button without filling in all fields does not start
-     * the InventoryActivity
+     * the AllActivity
      */
     public void testSignUpButtonWithEmptyFields() {
         RegisterActivity activity = (RegisterActivity) getActivity();
@@ -46,7 +46,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity did not start
-        InventoryActivity receiverActivity = (InventoryActivity)
+        AllActivity receiverActivity = (AllActivity)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNull("ReceiverActivity is not null", receiverActivity);
 
@@ -55,7 +55,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * Tests that clicking the Sign Up button with valid input starts the InventoryActivity
+     * Tests that clicking the Sign Up button with valid input starts the AllActivity
      */
     public void testSignUpButtonWithValidFields() {
         RegisterActivity activity = (RegisterActivity) getActivity();
@@ -68,7 +68,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2 {
 
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
-                getInstrumentation().addMonitor(InventoryActivity.class.getName(),
+                getInstrumentation().addMonitor(AllActivity.class.getName(),
                         null, false);
 
         activity.runOnUiThread(new Runnable() {
@@ -83,13 +83,13 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         // Validate that ReceiverActivity has started
-        InventoryActivity receiverActivity = (InventoryActivity)
+        AllActivity receiverActivity = (AllActivity)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", receiverActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, receiverActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                InventoryActivity.class, receiverActivity.getClass());
+                AllActivity.class, receiverActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);

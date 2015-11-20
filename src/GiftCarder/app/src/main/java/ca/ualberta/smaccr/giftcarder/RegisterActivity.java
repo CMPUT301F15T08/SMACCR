@@ -13,7 +13,6 @@ package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -56,13 +55,14 @@ public class RegisterActivity extends Activity {
         EditText etPhone = (EditText) findViewById(R.id.registerPhone);
         EditText etEmail = (EditText) findViewById(R.id.registerEmail);
 
-        UserRegistrationController urc = new UserRegistrationController();
+        UserRegistrationController urc = new UserRegistrationController(this);
 
         if (urc.validateFields(etUsername, etCity, etPhone, etEmail)) {
-            urc.addUser(etUsername, etCity, etPhone, etEmail);
-            //Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent(this, InventoryActivity.class);
+            urc.addUser(etUsername,etCity, etPhone, etEmail);
+
+            Intent intent = new Intent(this, AllActivity.class);
             String username = etUsername.getText().toString();
             intent.putExtra(EXTRA_USERNAME, username);
             startActivity(intent);

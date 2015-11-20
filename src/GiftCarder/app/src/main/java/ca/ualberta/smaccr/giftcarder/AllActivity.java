@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -17,14 +18,22 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class InventoryActivity extends ActionBarActivity {
+public class AllActivity extends ActionBarActivity {
 
     // Constants
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
-    public static final int ADD_STATE = 0; // add item
-    public static final int OWNER_STATE = 1; // view own item
+
+    public static final int ADD_ITEM_STATE = 0; // add item
+    public static final int OWNER_ITEM_STATE = 1; // view own item
     public static final int BROWSER_STATE = 2; // view other's item
+
+    public static final int OWNER_PROFILE_STATE = 0; // view own profile (has edit button)
+    public static final int EDIT_PROFILE_STATE = 1; // edit own profile (has save button)
+    public static final int STRANGER_PROFILE_STATE = 2; // send friend request to stranger (has send friend request button)
+    public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
+
+    private UserListController ulc;
 
     String username;
     Inventory inv;
@@ -70,24 +79,24 @@ public class InventoryActivity extends ActionBarActivity {
         tradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(InventoryActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AllActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
                 //Create a new intent and pass in the position of the trade
                 // The position should match the index in the database
                 // This way the trade offer can be retrieved
-                Intent intent = new Intent(InventoryActivity.this, TradeRequestActivity.class);
+                Intent intent = new Intent(AllActivity.this, TradeRequestActivity.class);
                 startActivity(intent);
             }
         });
 
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
-        UserRegistrationController urc = new UserRegistrationController();
+        UserRegistrationController urc = new UserRegistrationController(this);
         User user = urc.getUser(username);
 
         Toast.makeText(getApplicationContext(), "Long click to delete gift card", Toast.LENGTH_LONG).show();
 
         inv = user.getInv();
-        updateInvList(inv);
+        //updateInvList(inv);
 
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -95,11 +104,11 @@ public class InventoryActivity extends ActionBarActivity {
                 //Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 // Switch to item activity and send inventory and position of gift card to change
-                Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
+                Intent intent = new Intent(AllActivity.this, ItemActivity.class);
                 //intent.putExtra("GiftCard", inv.getInvList().get(position));
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
-                intent.putExtra(EXTRA_STATE, OWNER_STATE); // view item
+                intent.putExtra(EXTRA_STATE, OWNER_ITEM_STATE); // view item
                 //startActivity(intent);
                 startActivityForResult(intent, 1);
             }
@@ -114,7 +123,7 @@ public class InventoryActivity extends ActionBarActivity {
 
                 Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
 
-                AlertDialog.Builder deletedialog = new AlertDialog.Builder(InventoryActivity.this);
+                AlertDialog.Builder deletedialog = new AlertDialog.Builder(AllActivity.this);
                 deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -139,13 +148,13 @@ public class InventoryActivity extends ActionBarActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_inventory, menu);
         return true;
     }
+    //commented out, might put back in if group wants the three dots
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -154,18 +163,29 @@ public class InventoryActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
+
         // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
             //Pass the inventory to settings, so settings activity will send it back to main to update the inventory in singleton
-            Intent intent1 = new Intent(InventoryActivity.this, SettingsActivity.class);
+            Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
             intent1.putExtra(EXTRA_USERNAME, username);
             startActivity(intent1);
         }
 
         return super.onOptionsItemSelected(item);
+
     }
 
+    //added to remove three dots (might remove later)
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item= menu.findItem(R.id.action_settings);
+        item.setVisible(false);
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
     /**
      * AddNewGiftCard
      * create a new giftcard and place in inventory, then switch to ItemActivity to edit that giftcard
@@ -187,13 +207,14 @@ public class InventoryActivity extends ActionBarActivity {
         }
 
         // Switch to item activity and send selected gift card data
-        Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
+        Intent intent = new Intent(AllActivity.this, ItemActivity.class);
         intent.putExtra("position", 0);
         intent.putExtra("inventory", inv);
-        intent.putExtra(EXTRA_STATE, ADD_STATE); // add item
+        intent.putExtra(EXTRA_STATE, ADD_ITEM_STATE); // add item
         startActivityForResult(intent, 1);
 
     }
+
 
     /*
     Retrieved Oct 28 2015
@@ -240,9 +261,45 @@ public class InventoryActivity extends ActionBarActivity {
         inventorylistID.setAdapter(displayAdapter);
 
         //Updates the user's inventory in userList in UserRegisteration controller
-        UserRegistrationController uc= new UserRegistrationController();
+        UserRegistrationController uc= new UserRegistrationController(this);
         uc.editUserInventory(username, inv);
+
+
+        ulc = new UserListController(uc.getUserList());
+        Thread thread = new updateThread(uc.getUser(username));
+        thread.start();
     }
+
+    class updateThread extends Thread {
+        private User user;
+        UserRegistrationController uc= new UserRegistrationController();
+
+        public updateThread(User user) {
+            this.user = user;
+        }
+
+        @Override
+        public void run() {
+            //delete from server
+            ulc.deleteUser(user.getUsername());
+            //delete from userlist
+            //uc.getUserList().deleteUser(user);
+
+            //Add the new one back
+            ulc.addUser(user);
+            //uc.getUserList().addUser(user);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
     @Override
     public void onBackPressed() {
@@ -265,5 +322,43 @@ public class InventoryActivity extends ActionBarActivity {
         Intent intent = new Intent(this, BrowseActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);
+    }
+
+    public void settingsClick(MenuItem v){
+        Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
+        intent1.putExtra(EXTRA_USERNAME, username);
+        startActivity(intent1);
+
+    }
+
+    public void addFriend(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setMessage("Enter their username:");
+
+        //textbox for user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                // Check if its a valid user, and send request
+                UserRegistrationController URC = new UserRegistrationController();
+                if (URC.checkForUser(value)){
+                    Toast.makeText(getApplicationContext(), "Friend request sent", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        alert.show();
     }
 }

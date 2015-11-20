@@ -9,24 +9,24 @@ import android.widget.ListView;
 /**
  * Created by splant on 11/5/15.
  */
-public class InventoryActivityTest extends ActivityInstrumentationTestCase2 {
+public class AllActivityTest extends ActivityInstrumentationTestCase2 {
 
-    public InventoryActivityTest() {
-        super(ca.ualberta.smaccr.giftcarder.InventoryActivity.class);
+    public AllActivityTest() {
+        super(AllActivity.class);
     }
 
     /*
-     *  Test that InventoryActivity starts
+     *  Test that AllActivity starts
      */
     public void testStart() throws Exception {
-        InventoryActivity activity = (InventoryActivity) getActivity();
+        AllActivity activity = (AllActivity) getActivity();
     }
 
     /*
      * Test that clicking the Inventory Details button starts the InvDetailsActivity
      */
     public void testInvDetButton() {
-        InventoryActivity activity = (InventoryActivity) getActivity();
+        AllActivity activity = (AllActivity) getActivity();
 
         final Button invDetButton = (Button) activity.findViewById(R.id.invDetailsButton);
 
@@ -61,7 +61,7 @@ public class InventoryActivityTest extends ActivityInstrumentationTestCase2 {
      * Test that clicking the Inventory Details button starts the InvDetailsActivity
      */
     public void testAddGiftCardButton() {
-        InventoryActivity activity = (InventoryActivity) getActivity();
+        AllActivity activity = (AllActivity) getActivity();
 
         final Button addGCButton = (Button) activity.findViewById(R.id.addGiftCardButton);
 
@@ -93,7 +93,7 @@ public class InventoryActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testInventoryClick() {
-        InventoryActivity activity = (InventoryActivity) getActivity();
+        AllActivity activity = (AllActivity) getActivity();
 
         User user = new User();
         Inventory inv = new Inventory();
@@ -132,7 +132,7 @@ public class InventoryActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testInventoryLongClick() {
-        InventoryActivity activity = (InventoryActivity) getActivity();
+        AllActivity activity = (AllActivity) getActivity();
 
         User user = new User();
         Inventory inv = new Inventory();

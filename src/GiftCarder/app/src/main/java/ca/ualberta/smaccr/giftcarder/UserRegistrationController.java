@@ -1,11 +1,32 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.app.Activity;
+import android.util.Log;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by Carin on 10/26/2015.
  */
 public class UserRegistrationController {
+
+    private UserListController ulc;
+    private Activity parentActivity;
+
+    private Runnable doFinishAdd = new Runnable() {
+        public void run() {
+            parentActivity.finish();
+        }
+    };
+
+    public UserRegistrationController() {
+        this.ulc = ulc;
+    }
+
+    public UserRegistrationController(Activity parentActivity) {
+        this.ulc = ulc;
+        this.parentActivity = parentActivity;
+    }
 
     // Lazy singleton
     private static UserList userList = null;
@@ -37,8 +58,6 @@ public class UserRegistrationController {
         return false;
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    //Added by Richard, to get position of user in userlist
     public int returnUserPosition(String username) {
 
         for (int i = 0; i < getUserList().getSize(); i+=1) {
@@ -47,11 +66,10 @@ public class UserRegistrationController {
             }
         }
 
-        //No user, so return invalid index
+        // No user, so return invalid index
         return -1;
     }
 
-    //Added by Richard to modify the user in userlist
     public void editUserInventory(String username, Inventory inv){
         User user = getUser(username);
         int userIndex = returnUserPosition(username);
@@ -62,7 +80,6 @@ public class UserRegistrationController {
             getUserList().editUser(userIndex, user);
         }
     }
-    ///////////////////////////////////////////////////////////////////////////////
 
     /**
      * Adds user to UserList
@@ -88,6 +105,36 @@ public class UserRegistrationController {
         user.setEmail(email);
 
         getUserList().addUser(user);
+
+        ulc = new UserListController(userList);
+        Thread thread = new AddThread(user);
+        thread.start();
+    }
+
+    public void addUser(User user) {
+        getUserList().addUser(user);
+    }
+
+    class AddThread extends Thread {
+        private User user;
+
+        public AddThread(User user) {
+            this.user = user;
+        }
+
+        @Override
+        public void run() {
+            ulc.addUser(user);
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            parentActivity.runOnUiThread(doFinishAdd);
+        }
     }
 
 
@@ -223,4 +270,5 @@ public class UserRegistrationController {
         return valid;
 
     }
+
 }

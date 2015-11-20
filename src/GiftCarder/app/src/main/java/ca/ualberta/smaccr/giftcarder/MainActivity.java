@@ -2,19 +2,21 @@ package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.EditText;
+
+import com.google.gson.Gson;
 
 public class MainActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     Inventory inv;
     String username;
+
+    private ESUserManager userManager;
 
     //getter for UI testing
     public EditText getEtUsername() {return (EditText) findViewById(R.id.enterUsername);}
@@ -32,6 +34,14 @@ public class MainActivity extends Activity {
         user.setEmail("t@g.c");
         UserRegistrationController.getUserList().addUser(user);
         */
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        userManager = new ESUserManager("");
     }
 
     @Override
@@ -68,19 +78,51 @@ public class MainActivity extends Activity {
         EditText etUsername = (EditText) findViewById(R.id.enterUsername);
         String username = etUsername.getText().toString().trim();
 
-        UserRegistrationController urc = new UserRegistrationController();
+        UserRegistrationController urc = new UserRegistrationController(this);
+        userManager = new ESUserManager("");
 
         if (Validation.hasText(etUsername)) {
-            if (urc.checkForUser(username)) {
-                Intent intent = new Intent(this, InventoryActivity.class);
-                intent.putExtra(EXTRA_USERNAME, username);
-                startActivity(intent);
-
-            } else {
-                Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
-
-            }
+            //Calls GetThreat to check if user is on server
+            Thread thread = new GetThread(username);
+            thread.start();
         }
     }
 
+    class GetThread extends Thread {
+        private String id;
+
+        public GetThread(String id) {
+            this.id = id;
+        }
+
+        @Override
+        public void run() {
+            user = userManager.getUser(id);
+
+            runOnUiThread(checkUserONServer);
+        }
+    }
+
+    private Runnable checkUserONServer = new Runnable() {
+        public void run() {
+            CheckforUserOnServer(user);
+        }
+    };
+
+    public void CheckforUserOnServer(User user){
+        UserRegistrationController urc = new UserRegistrationController(this);
+        userManager = new ESUserManager("");
+
+        if (user != null) {
+            Toast.makeText(this, user.getUsername(), Toast.LENGTH_LONG).show();
+            urc.addUser(user);
+            String usernameFromServer = user.getUsername();
+            Intent intent = new Intent(this, AllActivity.class);
+            intent.putExtra(EXTRA_USERNAME, usernameFromServer);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
+        }
+
+    }
 }
