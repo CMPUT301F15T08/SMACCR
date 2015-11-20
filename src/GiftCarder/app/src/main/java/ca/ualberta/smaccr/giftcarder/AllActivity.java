@@ -101,6 +101,7 @@ public class AllActivity extends ActionBarActivity {
         inv = user.getInv();
         //updateInvList(inv);
 
+        /*
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -160,6 +161,7 @@ public class AllActivity extends ActionBarActivity {
                 return true;
             }
         });
+        */
 
 
         // Long click to delete listener
@@ -193,8 +195,10 @@ public class AllActivity extends ActionBarActivity {
 
         updateInvList(inv);
 
+        /*
         user.addFriend(username);
         updateFriendsList(user.getFriendsList());
+        */
 
     }
 
