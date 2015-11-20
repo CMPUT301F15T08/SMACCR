@@ -108,4 +108,30 @@ public class GiftCard implements Serializable {
     public void setValue(double value) {
         this.value = value;
     }
+
+    public String getCategoryString() {
+        switch(this.category) {
+            case 0:
+                return "Food & Beverage";
+            case 1:
+                return "Clothing";
+            case 2:
+                return "Home & Garden";
+            case 3:
+                return "Electronics";
+            case 4:
+                return "Department Store";
+            case 5:
+                return "Services";
+            case 6:
+                return "Entertainment";
+            case 7:
+                return "Online Retailers";
+            case 8:
+                return "Health & Beauty";
+            case 9:
+                return "Other";
+        }
+        return ""; // Shouldn't get to here.
+    }
 }
