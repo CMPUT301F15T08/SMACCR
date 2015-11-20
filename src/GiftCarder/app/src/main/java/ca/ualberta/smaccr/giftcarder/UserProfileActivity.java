@@ -13,13 +13,9 @@
 
 package ca.ualberta.smaccr.giftcarder;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,7 +83,9 @@ public class UserProfileActivity extends Activity {
 
         // if user clicks Send Friend Request button
         }else if (profileState == STRANGER_STATE) {
+
             Toast.makeText(this, "Friend request sent", Toast.LENGTH_LONG).show();
+            finish();
         }
     }
 

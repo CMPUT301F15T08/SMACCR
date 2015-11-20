@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SettingsActivity extends ActionBarActivity {
 
@@ -72,6 +73,10 @@ public class SettingsActivity extends ActionBarActivity {
         Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);
+    }
+
+    public void onSyncAllButtonClick(View view) {
+        Toast.makeText(this, "Sync All Button clicked", Toast.LENGTH_LONG).show();
     }
 
 }

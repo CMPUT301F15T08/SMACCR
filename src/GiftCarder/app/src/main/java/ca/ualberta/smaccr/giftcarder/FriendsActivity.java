@@ -2,6 +2,7 @@ package ca.ualberta.smaccr.giftcarder;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,12 @@ import android.widget.EditText;
 
 public class FriendsActivity extends ActionBarActivity {
 
+    // Constants
+    public final static String EXTRA_STATE = "ca.ualberta.smaccr.giftcarder.STATE";
+    public static final int OWNER_STATE = 0; // view own profile (has edit button)
+    public static final int EDIT_STATE = 1; // edit own profile (has save button)
+    public static final int STRANGER_STATE = 2; // send friend request to stranger (has send friend request button)
+    public static final int FRIEND_STATE = 3; // view friend's profile (no button)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,9 @@ public class FriendsActivity extends ActionBarActivity {
                     UserRegistrationController URC = new UserRegistrationController();
                     if (URC.checkForUser(value)){
                         Log.d("y","y");
+                        Intent intent1 = new Intent(FriendsActivity.this, UserProfileActivity.class);
+                        intent1.putExtra(EXTRA_STATE, STRANGER_STATE);
+                        startActivity(intent1);
                     }
                     else{
                         Log.d("n","n");

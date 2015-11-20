@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AllActivity extends ActionBarActivity {
 
@@ -38,6 +39,7 @@ public class AllActivity extends ActionBarActivity {
     String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
+    private ListView friendsListView;
 
 
     /**
@@ -75,6 +77,7 @@ public class AllActivity extends ActionBarActivity {
 
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
         ListView tradesListView = (ListView) findViewById(R.id.tradesListView);
+        final ListView friendsListView = (ListView) findViewById(R.id.friendListView);
         tradesListView.setAdapter(new TradesTabAdapter(this));
         tradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -93,10 +96,57 @@ public class AllActivity extends ActionBarActivity {
         UserRegistrationController urc = new UserRegistrationController(this);
         User user = urc.getUser(username);
 
-        Toast.makeText(getApplicationContext(), "Long click to delete gift card", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
         inv = user.getInv();
         //updateInvList(inv);
+
+
+        /*
+        friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedFriend = (String) friendsListView.getItemAtPosition(position);
+                Intent intent = new Intent(AllActivity.this, UserProfileActivity.class);
+                intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
+                intent.putExtra(EXTRA_USERNAME, selectedFriend);
+                startActivity(intent);
+            }
+        });
+
+
+        // Long click to delete listener
+        friendsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                final int pos = position;
+
+                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder deletedialog = new AlertDialog.Builder(AllActivity.this);
+                deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String selectedFriend = (String) friendsListView.getItemAtPosition(pos);
+                        UserRegistrationController u= new UserRegistrationController();
+                        User use = u.getUser(username);
+                        use.deleteFriend(selectedFriend);
+                        updateFriendsList(use.getFriendsList());
+                        friendsListView.deferNotifyDataSetChanged();
+
+                        dialog.dismiss();
+                    }
+                });
+                deletedialog.create().show();
+                return true;
+            }
+        });
+        */
 
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -146,12 +196,17 @@ public class AllActivity extends ActionBarActivity {
 
         updateInvList(inv);
 
+        /*
+        user.addFriend(username);
+        updateFriendsList(user.getFriendsList());
+        */
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_inventory, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
     //commented out, might put back in if group wants the three dots
@@ -163,12 +218,10 @@ public class AllActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
-
         // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            //Pass the inventory to settings, so settings activity will send it back to main to update the inventory in singleton
+            //Pass the  inventory to settings, so settings activity will send it back to main to update the inventory in singleton
             Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
             intent1.putExtra(EXTRA_USERNAME, username);
             startActivity(intent1);
@@ -299,7 +352,14 @@ public class AllActivity extends ActionBarActivity {
         }
     }
 
-
+    public void updateFriendsList(List<String> friendsList) {
+        if (friendsList.isEmpty()) {
+            return;
+        }
+        ListView friendsListView = (ListView) findViewById(R.id.friendListView);
+        displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friendsList);
+        friendsListView.setAdapter(displayAdapter);
+    }
 
     @Override
     public void onBackPressed() {

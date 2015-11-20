@@ -1,31 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="ca.ualberta.smaccr.giftcarder.AllActivity">
-
+    tools:context="ca.ualberta.smaccr.giftcarder.InventoryActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
-
-    <item android:id="@+id/browse"
-        android:icon="@drawable/search"
-        android:title="@string/title_activity_browse"
-        app:showAsAction="always"
-        android:onClick="browseClick"/>
-
-    <item android:id="@+id/tradeNoti"
-        android:icon="@drawable/envelope"
-        android:title="@string/newTradeNotiNum"
-        app:showAsAction="always" />
-
-    <item android:id="@+id/friendNoti"
-        android:icon="@drawable/user_icon"
-        android:title="@string/newFriendNotiNum"
-        app:showAsAction="always" />
-
-    <item android:id="@+id/settings"
-        android:icon="@drawable/gear"
-        android:title="@string/title_activity_settings"
-        app:showAsAction="always"
-        android:onClick="settingsClick"/>
-
 </menu>
