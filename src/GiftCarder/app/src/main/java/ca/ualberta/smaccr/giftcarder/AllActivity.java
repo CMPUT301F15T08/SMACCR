@@ -101,23 +101,8 @@ public class AllActivity extends ActionBarActivity {
         inv = user.getInv();
         //updateInvList(inv);
 
+
         /*
-        inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
-
-                // Switch to item activity and send inventory and position of gift card to change
-                Intent intent = new Intent(AllActivity.this, ItemActivity.class);
-                //intent.putExtra("GiftCard", inv.getInvList().get(position));
-                intent.putExtra("position", position);
-                intent.putExtra("inventory", inv);
-                intent.putExtra(EXTRA_STATE, OWNER_ITEM_STATE); // view item
-                //startActivity(intent);
-                startActivityForResult(intent, 1);
-            }
-        });
-
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -162,6 +147,22 @@ public class AllActivity extends ActionBarActivity {
             }
         });
         */
+
+        inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+
+                // Switch to item activity and send inventory and position of gift card to change
+                Intent intent = new Intent(AllActivity.this, ItemActivity.class);
+                //intent.putExtra("GiftCard", inv.getInvList().get(position));
+                intent.putExtra("position", position);
+                intent.putExtra("inventory", inv);
+                intent.putExtra(EXTRA_STATE, OWNER_ITEM_STATE); // view item
+                //startActivity(intent);
+                startActivityForResult(intent, 1);
+            }
+        });
 
 
         // Long click to delete listener
