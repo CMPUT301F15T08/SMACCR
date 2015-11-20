@@ -20,7 +20,8 @@
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom = "10dp">
 
                 <ca.ualberta.smaccr.giftcarder.SquareImageView
                     android:layout_width="180dp"
@@ -30,7 +31,6 @@
                     android:layout_alignParentStart="true"
                     android:src="@drawable/card_icon"
                     android:onClick="takeGiftCardPic"
-                    android:padding="10dp"
                     android:scaleType="centerCrop" />
 
                 <Button
@@ -42,7 +42,8 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/ID_pictureOfGiftCard"
                     android:background="#ff9600"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:layout_marginLeft = "10dp" />
 
             </RelativeLayout>
 
