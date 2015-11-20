@@ -1,6 +1,8 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Richard on 2015-10-24.
@@ -21,7 +23,7 @@ public class GiftCard implements Serializable {
     // 1 = shared, 0 = not shared
     private Boolean shared = Boolean.TRUE;
 
-
+    private ArrayList<ItemImage> itemImagesList = new ArrayList<ItemImage>();
 
     public GiftCard() {
     }
@@ -108,4 +110,26 @@ public class GiftCard implements Serializable {
     public void setValue(double value) {
         this.value = value;
     }
+
+
+    public void addItemImage(ItemImage itemImage){
+        this.itemImagesList.add(0, itemImage);
+    }
+
+    public void deleteItemImage(int imageIndex){
+        this.itemImagesList.remove(imageIndex);
+    }
+
+    public int getSize(){
+        return this.itemImagesList.size();
+    }
+
+    public ArrayList<ItemImage> getItemImagesList() {
+        return this.itemImagesList;
+    }
+
+    public void setItemImagesList(ArrayList<ItemImage> itemImagesList) {
+        this.itemImagesList = itemImagesList;
+    }
+
 }

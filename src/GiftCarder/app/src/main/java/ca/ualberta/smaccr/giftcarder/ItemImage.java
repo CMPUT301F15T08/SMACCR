@@ -6,25 +6,23 @@ package ca.ualberta.smaccr.giftcarder;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 /**
  * Created by Carin on 11/19/2015.
  */
-public class ItemImage {
-    private Bitmap image;
+public class ItemImage implements Serializable{
+    private String bitmapString;
     private boolean featured;
 
-    public ItemImage(Bitmap image, String title) {
+    public ItemImage(String bitmapString) {
         super();
-        this.image = image;
+        this.bitmapString = bitmapString;
         this.featured = false;
     }
 
-    public Bitmap getImage() {
-        return image;
-    }
-
-    public void setImage(Bitmap image) {
-        this.image = image;
+    public String getBitmapString() {
+        return bitmapString;
     }
 
     public boolean isFeatured() {
@@ -34,4 +32,5 @@ public class ItemImage {
     public void setFeatured(boolean featured) {
         this.featured = featured;
     }
+
 }

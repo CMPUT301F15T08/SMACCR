@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 /**
  * Created by Richard on 2015-10-29.  Edited by Carin.
@@ -154,7 +155,8 @@ public class ItemController {
     public Inventory setGiftCardInfo(Inventory inv, int position, EditText etItemValue,
                                      EditText etItemName, EditText etQuantity,
                                      Spinner qualitySpinner, Spinner categorySpinner,
-                                     EditText etComments, CheckBox checkbox) {
+                                     EditText etComments, CheckBox checkbox,
+                                     ArrayList<ItemImage> itemImagesList) {
         GiftCard tempcard = inv.getInvList().get(position);
 
         // If invalid dollar, cent amount then set to zero for now!
@@ -178,6 +180,7 @@ public class ItemController {
         // Some weird bug when using spinner; it sets index out of range sometimes
         tempcard.setQuality(qualitySpinner.getSelectedItemPosition());
         tempcard.setCategory(categorySpinner.getSelectedItemPosition());
+        tempcard.setItemImagesList(itemImagesList);
 
         inv.getInvList().set(position, tempcard);
         return inv;

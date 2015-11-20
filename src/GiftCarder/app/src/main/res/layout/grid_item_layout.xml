@@ -7,10 +7,12 @@
     android:orientation="vertical"
     android:padding="5dp">
 
-    <ImageView
+    <ca.ualberta.smaccr.giftcarder.SquareImageView
         android:id="@+id/imageGridView"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        />
 
     <TextView
         android:id="@+id/tvFeaturedImage"

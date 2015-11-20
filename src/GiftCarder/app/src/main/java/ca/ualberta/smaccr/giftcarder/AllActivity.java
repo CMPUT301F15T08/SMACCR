@@ -96,7 +96,7 @@ public class AllActivity extends ActionBarActivity {
         UserRegistrationController urc = new UserRegistrationController(this);
         User user = urc.getUser(username);
 
-        Toast.makeText(getApplicationContext(), "Tips: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
         inv = user.getInv();
         //updateInvList(inv);

@@ -14,13 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ItemDetailsActivity extends Activity {
+    public final static String EXTRA_BITMAP_STRING = "ca.ualberta.smaccr.giftcarder.BITMAPSTRING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
 
-        Bitmap bitmap = getIntent().getParcelableExtra("image");
+        ItemPictureController ipc = new ItemPictureController();
+        String bitmapString = getIntent().getStringExtra(EXTRA_BITMAP_STRING);
+        Bitmap bitmap = ipc.decodeBase64(bitmapString);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageDetails);
         imageView.setImageBitmap(bitmap);

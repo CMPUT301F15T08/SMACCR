@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ public class ItemGridViewAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ItemPictureController ipc = new ItemPictureController();
         View row = convertView;
         ViewHolder holder = null;
 
@@ -44,15 +46,17 @@ public class ItemGridViewAdapter extends ArrayAdapter {
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
             //holder.imageTitle = (TextView) row.findViewById(R.id.text);
-            holder.image = (ImageView) row.findViewById(R.id.image);
+            holder.image = (ImageView) row.findViewById(R.id.imageGridView);
             row.setTag(holder);
         } else {
             holder = (ViewHolder) row.getTag();
         }
 
         ItemImage item = (ItemImage) data.get(position);
+        Bitmap bitmap = ipc.decodeBase64(item.getBitmapString());
+
         //holder.imageTitle.setText(item.getTitle());
-        holder.image.setImageBitmap(item.getImage());
+        holder.image.setImageBitmap(bitmap);
         return row;
     }
 
