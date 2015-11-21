@@ -118,6 +118,7 @@ public class AllActivity extends ActionBarActivity {
         //##################################################################################################################################
         //CLick listeners for FRIENDLIST
 
+        //click individual friend
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -129,7 +130,7 @@ public class AllActivity extends ActionBarActivity {
             }
         });
 
-        // Long click to delete listener
+        // Long click to delete friend
         friendsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -166,6 +167,8 @@ public class AllActivity extends ActionBarActivity {
 
         //##################################################################################################################################
         //CLick listeners for Inventory
+
+        //Click on individual item
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -216,7 +219,7 @@ public class AllActivity extends ActionBarActivity {
         //###############################################################################################################################################################
         //Calling update functions
         updateInvList(inv);
-        //updateFriendsList(friendsList);
+        updateFriendsList(fl);
         updateUserOnServer();
 
         //###############################################################################################################################################################
@@ -303,19 +306,9 @@ public class AllActivity extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String friendUserName = input.getText().toString();
 
-                // Check if its a valid user, and send request
+                //Start thread to search server for friend
                 Thread thread = new GetFriendThread(friendUserName);
                 thread.start();
-
-
-                /*
-                if (urc.checkForUser(friendUserName)) {
-                    friendsList.add(friendUserName);
-                    Toast.makeText(getApplicationContext(), "Friend request sent", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_LONG).show();
-                }
-                */
 
             }
         });
@@ -362,7 +355,7 @@ public class AllActivity extends ActionBarActivity {
         if (user != null) {
             //Check if friend already on friend list
             if (urc.getUser(username).getFl().containsFriend(user.getUsername())){
-                Toast.makeText(this, "User is already on your friendlist", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "User is already on your friend list", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -376,6 +369,13 @@ public class AllActivity extends ActionBarActivity {
             fl.addNewFriend(potientialFriendUser.getUsername());
             updateFriendsList(fl);
             Toast.makeText(getApplicationContext(),  "Friend Request sent to , [added to friendlist for now]", Toast.LENGTH_SHORT).show();
+
+            //!!!!!!!!!!!!!
+            //add friend to userList singleton
+            urc.addUser(potientialFriendUser);
+            //!!!!!!!!!!!!
+
+            //update server
             updateFriendsList(fl);
             updateUserOnServer();
 
