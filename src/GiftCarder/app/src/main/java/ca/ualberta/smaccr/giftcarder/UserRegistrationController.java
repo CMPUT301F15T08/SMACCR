@@ -5,6 +5,8 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by Carin on 10/26/2015.
  */
@@ -77,6 +79,18 @@ public class UserRegistrationController {
         // if user index is valid
         if (userIndex != -1) {
             user.setInv(inv);
+            getUserList().editUser(userIndex, user);
+        }
+    }
+
+    //This edits the user friendlist in the singleton
+    public void editUserFriendList(String username, FriendList fl){
+        User user = getUser(username);
+        int userIndex = returnUserPosition(username);
+
+        // if user index is valid
+        if (userIndex != -1) {
+            user.setFl(fl);
             getUserList().editUser(userIndex, user);
         }
     }

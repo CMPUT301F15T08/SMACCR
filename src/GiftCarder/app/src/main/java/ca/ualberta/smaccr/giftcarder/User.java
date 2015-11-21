@@ -12,8 +12,10 @@ public class User {
     private String phone;
     private String email;
     private Inventory inv;
-    private ArrayList<String> friendsList;
+    private FriendList fl;
     private List<FriendRequest> friendRequests;
+
+
 
     /**
      * Constructor: on creation of User, creates new inventory
@@ -21,7 +23,9 @@ public class User {
 
     public User() {
         this.inv = new Inventory();
-        this.friendsList = new ArrayList<String>();
+
+        this.fl = new FriendList();;
+
         this.friendRequests = new ArrayList<FriendRequest>();
     }
 
@@ -95,9 +99,7 @@ public class User {
      * Gets inventory
      * @return String
      */
-    public Inventory getInv() {
-        return this.inv;
-    }
+    public Inventory getInv() {return this.inv;}
 
     /**
      * Sets inventory
@@ -105,21 +107,10 @@ public class User {
      */
     public void setInv(Inventory inventory) {this.inv = inventory;}
 
-    /**
-     * Add friend
-     * @param  username String
-     */
-    public void addFriend(String username) {
-        this.friendsList.add(username);
-    }
+    public FriendList getFl() {return fl;}
 
-    public List<String> getFriendsList() {
-        return this.friendsList;
-    }
+    public void setFl(FriendList fl) {this.fl = fl;}
 
-    public void deleteFriend(String friend){
-        this.friendsList.remove(friend);
-    }
     /**
      * Add friend request
      * @param  sender String, reciever String
