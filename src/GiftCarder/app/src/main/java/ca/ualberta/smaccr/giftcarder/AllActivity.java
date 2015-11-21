@@ -39,7 +39,10 @@ public class AllActivity extends ActionBarActivity {
     String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
-    ArrayList<String> friendsList;
+
+    //friendlist contains an arraylist of strings
+    FriendList fl;
+
     UserRegistrationController urc = new UserRegistrationController();
 
 
@@ -104,7 +107,8 @@ public class AllActivity extends ActionBarActivity {
         User user = urc.getUser(username);
         inv = user.getInv();
 
-        friendsList = user.getFriendsList();
+        //FriendList class type
+        fl = user.getFl();
         //updateInvList(inv);
 
         //###########################################################################################################################
@@ -142,9 +146,9 @@ public class AllActivity extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        //friendsList.remove(pos);
-                        //updateFriendsList(friendsList);
-                        //updateUserOnServer();
+                        fl.deleteOldFriendIndex(pos);
+                        updateFriendsList(fl);
+                        updateUserOnServer();
 
                         dialog.dismiss();
                     }
@@ -211,7 +215,7 @@ public class AllActivity extends ActionBarActivity {
         //###############################################################################################################################################################
         //Calling update functions
         updateInvList(inv);
-        updateFriendsList(friendsList);
+        //updateFriendsList(friendsList);
         updateUserOnServer();
 
         //###############################################################################################################################################################
@@ -301,8 +305,8 @@ public class AllActivity extends ActionBarActivity {
 
                 Toast.makeText(getApplicationContext(), friendUserName,Toast.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(), username,Toast.LENGTH_SHORT).show();
-                friendsList.add(friendUserName);
-                updateFriendsList(friendsList);
+                fl.addNewFriend(friendUserName);
+                updateFriendsList(fl);
 
 
                 /*
@@ -361,10 +365,12 @@ public class AllActivity extends ActionBarActivity {
 
     }
 
-    public void updateFriendsList(ArrayList<String> friendsList) {
-        ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friendsList);
+    public void updateFriendsList(FriendList fl) {
+        ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl.getFriendList());
         ListView friendsListView = (ListView) findViewById(R.id.friendListView);
         friendsListView.setAdapter(displayAdapter1);
+
+        urc.editUserFriendList(username, fl);
     }
 
     //END OF updating user here
