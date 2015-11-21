@@ -101,7 +101,7 @@ public class AllActivity extends ActionBarActivity {
         inv = user.getInv();
         //updateInvList(inv);
 
-        /*
+
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -117,6 +117,7 @@ public class AllActivity extends ActionBarActivity {
                 startActivityForResult(intent, 1);
             }
         });
+        /*
 
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
