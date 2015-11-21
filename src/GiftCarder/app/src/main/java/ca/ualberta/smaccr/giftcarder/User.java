@@ -113,7 +113,7 @@ public class User {
         this.friendsList.add(username);
     }
 
-    public List<String> getFriendsList() {
+    public ArrayList<String> getFriendsList() {
         return this.friendsList;
     }
 

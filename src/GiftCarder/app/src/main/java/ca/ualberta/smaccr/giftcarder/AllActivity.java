@@ -39,7 +39,8 @@ public class AllActivity extends ActionBarActivity {
     String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
-    private ListView friendsListView;
+    ArrayList<String> friendsList;
+    UserRegistrationController urc = new UserRegistrationController();
 
 
     /**
@@ -78,6 +79,7 @@ public class AllActivity extends ActionBarActivity {
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
         ListView tradesListView = (ListView) findViewById(R.id.tradesListView);
         final ListView friendsListView = (ListView) findViewById(R.id.friendListView);
+
         tradesListView.setAdapter(new TradesTabAdapter(this));
         tradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,19 +92,25 @@ public class AllActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-
-        Intent intent = getIntent();
-        username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
-        UserRegistrationController urc = new UserRegistrationController(this);
-        User user = urc.getUser(username);
-
         Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
+        //###########################################################################################################################
+        //Only modify part of user
+        Intent intent = getIntent();
+        username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
+        //UserRegistrationController urc = new UserRegistrationController();
+        User user = urc.getUser(username);
         inv = user.getInv();
+
+        friendsList = user.getFriendsList();
         //updateInvList(inv);
 
+        //###########################################################################################################################
 
-        /*
+
+
+        //##################################################################################################################################
+        //CLick listeners for FRIENDLIST
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -113,7 +121,6 @@ public class AllActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-
 
         // Long click to delete listener
         friendsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -133,11 +140,11 @@ public class AllActivity extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String selectedFriend = (String) friendsListView.getItemAtPosition(pos);
-                        UserRegistrationController u= new UserRegistrationController();
-                        User use = u.getUser(username);
-                        use.deleteFriend(selectedFriend);
-                        updateFriendsList(use.getFriendsList());
-                        friendsListView.deferNotifyDataSetChanged();
+
+                        //User use = urc.getUser(username);
+                        //use.deleteFriend(selectedFriend);
+                        //updateFriendsList(use.getFriendsList());
+                        //friendsListView.deferNotifyDataSetChanged();
 
                         dialog.dismiss();
                     }
@@ -146,8 +153,14 @@ public class AllActivity extends ActionBarActivity {
                 return true;
             }
         });
-        */
 
+        //END of CLick listeners for Inventory
+        //##################################################################################################################################
+
+
+
+        //##################################################################################################################################
+        //CLick listeners for Inventory
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -163,7 +176,6 @@ public class AllActivity extends ActionBarActivity {
                 startActivityForResult(intent, 1);
             }
         });
-
 
         // Long click to delete listener
         inventorylistID.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -183,24 +195,25 @@ public class AllActivity extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // http://stackoverflow.com/questions/7073577/how-to-get-object-from-listview-in-setonitemclicklistener-in-android
+                        //Deleting giftcard and updating to server
                         inv.deleteGiftCard(pos);
                         updateInvList(inv);
+                        updateUserOnServer();
 
-                        dialog.dismiss();
-                    }
-                });
+                        dialog.dismiss();}});
                 deletedialog.create().show();
                 return true;
             }
         });
+        //END of CLick listeners for Inventory
+        //##################################################################################################################################
 
+        //###############################################################################################################################################################
+        //Calling update functions
         updateInvList(inv);
+        updateUserOnServer();
 
-        /*
-        user.addFriend(username);
-        updateFriendsList(user.getFriendsList());
-        */
-
+        //###############################################################################################################################################################
     }
 
     @Override
@@ -239,6 +252,9 @@ public class AllActivity extends ActionBarActivity {
         super.onPrepareOptionsMenu(menu);
         return true;
     }
+
+    //######################################################################################################
+    //ADDING something to user
     /**
      * AddNewGiftCard
      * create a new giftcard and place in inventory, then switch to ItemActivity to edit that giftcard
@@ -246,6 +262,7 @@ public class AllActivity extends ActionBarActivity {
      * return
      */
     public void AddNewGiftCard(View menu){
+
         // Add new giftcard
         GiftCard gc = new GiftCard();
         inv.addGiftCard(gc);
@@ -265,31 +282,47 @@ public class AllActivity extends ActionBarActivity {
         intent.putExtra("inventory", inv);
         intent.putExtra(EXTRA_STATE, ADD_ITEM_STATE); // add item
         startActivityForResult(intent, 1);
-
     }
 
+    public void addFriend(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-    /*
-    Retrieved Oct 28 2015
-    http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
-     */
+        alert.setMessage("Enter their username:");
 
-    /**
-     * onActivityResult
-     * Grab modified inventory back from giftcard, and reset the array adapter
-     * @param requestCode, resultCode, data
-     * return
-     */
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (resultCode == RESULT_OK) {
-                inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
-                updateInvList(inv);
+        //textbox for user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                // Check if its a valid user, and send request
+
+                if (urc.checkForUser(value)) {
+                    //urc.getUser(username).addFriend(username);
+                    //updateFriendsList(urc.getUser(username).getFriendsList());
+                    Toast.makeText(getApplicationContext(), "Friend request sent", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_LONG).show();
+                }
             }
-        }
-    }
+        });
 
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        alert.show();
+    }
+    //ADDING something to user
+    //############################################################################################################
+
+
+
+
+    //#############################################################################################################
+    //UPDATING part of user HERE!
     /**
      * updateInvList
      * update the display of the inventory listview
@@ -314,32 +347,55 @@ public class AllActivity extends ActionBarActivity {
         inventorylistID.setAdapter(displayAdapter);
 
         //Updates the user's inventory in userList in UserRegisteration controller
-        UserRegistrationController uc= new UserRegistrationController(this);
-        uc.editUserInventory(username, inv);
+        //UserRegistrationController uc= new UserRegistrationController(this);
+        urc.editUserInventory(username, inv);
 
-
-        ulc = new UserListController(uc.getUserList());
-        Thread thread = new updateThread(uc.getUser(username));
-        thread.start();
     }
 
+    public void updateFriendsList(ArrayList<String> friendsList) {
+        ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friendsList);
+        ListView friendsListView = (ListView) findViewById(R.id.friendListView);
+        friendsListView.setAdapter(displayAdapter1);
+    }
+
+    //END OF updating user here
+    //#############################################################################################################
+
+
+
+    //###############################################################################################################
+    // DANGER THIS SERVER STUFF
+    public void updateUserOnServer (){
+        ulc = new UserListController(urc.getUserList());
+        Thread thread = new updateThread(urc.getUser(username));
+        thread.start();
+
+    }
+
+    //Deletes user on server, and write back new modified user
     class updateThread extends Thread {
-        private User user;
+        private User userthread;
         UserRegistrationController uc= new UserRegistrationController();
 
         public updateThread(User user) {
-            this.user = user;
+            this.userthread = user;
         }
 
         @Override
         public void run() {
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             //delete from server
-            ulc.deleteUser(user.getUsername());
+            ulc.deleteUser(userthread.getUsername());
             //delete from userlist
             //uc.getUserList().deleteUser(user);
 
             //Add the new one back
-            ulc.addUser(user);
+            ulc.addUser(userthread);
             //uc.getUserList().addUser(user);
 
 
@@ -352,20 +408,41 @@ public class AllActivity extends ActionBarActivity {
         }
     }
 
-    public void updateFriendsList(List<String> friendsList) {
-        if (friendsList.isEmpty()) {
-            return;
+        /*
+    Retrieved Oct 28 2015
+    http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
+     */
+
+    /**
+     * onActivityResult
+     * Grab modified inventory back from giftcard, and reset the array adapter
+     * @param requestCode, resultCode, data
+     * return
+     */
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //This is for when you return from an activity, passing back data
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
+                updateInvList(inv);
+                updateUserOnServer();
+            }
         }
-        ListView friendsListView = (ListView) findViewById(R.id.friendListView);
-        displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, friendsList);
-        friendsListView.setAdapter(displayAdapter);
     }
+
+    //send of server stuff
+    //###############################################################################################################
+
 
     @Override
     public void onBackPressed() {
         // Back button disabled
     }
 
+
+    //###############################################################################################################
+    //SWITCHING TO OTHER ACTIVITIES
     public void getUserProfile(View view) {
         Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
@@ -388,37 +465,9 @@ public class AllActivity extends ActionBarActivity {
         Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
         intent1.putExtra(EXTRA_USERNAME, username);
         startActivity(intent1);
-
     }
 
-    public void addFriend(View view) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+    //END OF SWITCHING TO OTHER ACTIVITIES
+    //###############################################################################################################
 
-        alert.setMessage("Enter their username:");
-
-        //textbox for user input
-        final EditText input = new EditText(this);
-        alert.setView(input);
-
-        alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
-                // Check if its a valid user, and send request
-                UserRegistrationController URC = new UserRegistrationController();
-                if (URC.checkForUser(value)){
-                    Toast.makeText(getApplicationContext(), "Friend request sent", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-            }
-        });
-
-        alert.show();
-    }
 }
