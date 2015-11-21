@@ -1,6 +1,7 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Richard on 2015-10-24.
@@ -15,11 +16,13 @@ public class GiftCard implements Serializable {
     private int quantity = 0;
     // 3 = poor, 2 = okay, 1= good, 0 = excellent
     private int quality = 0;
-    // 0 = Food-Beverage, ..., 9 = other
+    // 0 = All, ..., 10 = other
     private int category = 0;
     private String comments = "";
     // 1 = shared, 0 = not shared
     private Boolean shared = Boolean.TRUE;
+// For sorting the order in which items display
+    private Date lastModified = new Date();
 
 
 
@@ -34,6 +37,29 @@ public class GiftCard implements Serializable {
         this.category = category;
         this.comments = comments;
         this.shared = shared;
+    }
+
+    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments) {        this.value = value;
+        this.merchant = merchant;
+        this.quantity = quantity;
+        this.quality = quality;
+        this.category = category;
+        this.comments = comments;
+    }
+
+    public GiftCard(double value, String merchant, int quantity, int quality, int category, Boolean shared) {        this.value = value;
+        this.merchant = merchant;
+        this.quantity = quantity;
+        this.quality = quality;
+        this.category = category;
+        this.shared = shared;
+    }
+
+    public GiftCard(double value, String merchant, int quantity, int quality, int category) {        this.value = value;
+        this.merchant = merchant;
+        this.quantity = quantity;
+        this.quality = quality;
+        this.category = category;
     }
 
     // Check valid category and quality
@@ -108,4 +134,13 @@ public class GiftCard implements Serializable {
     public void setValue(double value) {
         this.value = value;
     }
+
+    public Date getDate() {
+        return lastModified;
+    }
+
+    public void updateDate(){
+        this.lastModified = new Date();
+    }
+
 }

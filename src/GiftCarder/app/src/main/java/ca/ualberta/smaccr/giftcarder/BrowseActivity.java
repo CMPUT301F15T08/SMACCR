@@ -28,14 +28,14 @@ public class BrowseActivity extends ActionBarActivity {
     private ArrayAdapter<GiftCard> adapter;
     Cache myCache = new Cache();
 
-    private ListView inventorylistID;
+    private ListView browseListID;
     private BrowseActivity activity = this;
     private EditText searchBar;
     private Button goButton;
     private Spinner catSpinner;
 
-    public ListView getInventorylistID() {
-        return inventorylistID;
+    public ListView getbrowseListID() {
+        return browseListID;
     }
     public Cache getMyCache() {
         return myCache;
@@ -59,6 +59,7 @@ public class BrowseActivity extends ActionBarActivity {
         this.catSpinner = catSpinner;
     }
 
+
     @Override//FIXME get rid of the need for putextra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +69,11 @@ public class BrowseActivity extends ActionBarActivity {
         username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
 
         final GiftCard giftCard1 = new GiftCard(12.34,"Test",1,1,6,"scratched but usable", Boolean.TRUE);
-        myCache.add(giftCard1);
 
         searchBar = (EditText) findViewById(R.id.searchEditText);
         goButton = (Button) findViewById(R.id.browseGo);
         catSpinner = (Spinner) findViewById(R.id.browseCatSpinner);
-        inventorylistID = (ListView) findViewById(R.id.browseListView);
+        browseListID = (ListView) findViewById(R.id.browseListView);
 
         ListView browseListView = (ListView) findViewById(R.id.browseListView);
 
@@ -83,7 +83,7 @@ public class BrowseActivity extends ActionBarActivity {
 
                 // Switch to item activity and send selected giftcard data
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
-                intent.putExtra("gc", giftCard1);
+                //intent.putExtra("gc", giftCard1);
                 startActivity(intent);
             }
         });
@@ -126,11 +126,15 @@ public class BrowseActivity extends ActionBarActivity {
     protected void onResume(){
         super.onResume();
 
+        updateBrowseList();
+    }
+
+    public void updateBrowseList(){
         // Get ArrayList of Strings to display in Adapter ListView
-        LinkedList<GiftCard> tempArray = loadFromCache();
+        ArrayList<GiftCard> tempArray = loadFromCache();
         // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
 
-        ArrayList<String> GiftCardNames = new ArrayList<String>();
+        ArrayList<String> GiftCardNames = new ArrayList<String>(tempArray.size());
         for (int i = 0; i <tempArray.size(); i++){
             GiftCardNames.add(0, tempArray.get(i).getMerchant());
         }
@@ -140,13 +144,15 @@ public class BrowseActivity extends ActionBarActivity {
         //new ArrayAdapter<GiftCard>(this, R.layout.list_gc, (List<GiftCard>)myCache.getItems());
 
         //displayAdapter.getView()// turn GC into item with image and value
-        inventorylistID.setAdapter(displayAdapter);
+        browseListID.setAdapter(displayAdapter);
     }
 
     @Override
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
+
+        myCache.browseAll();
 
         Toast.makeText(getApplicationContext(), "LongClick to propose trade",Toast.LENGTH_SHORT).show();
     }
@@ -168,15 +174,15 @@ public class BrowseActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**FIXME to allow one friend's inventory
+    /**
      *loadFromCache
      * load screen full of
      *
-     * @return LinkedList<GiftCard>
+     * @return ArrayList<GiftCard>
      */
-    public LinkedList<GiftCard> loadFromCache(){                   //FIXME
+    public ArrayList<GiftCard> loadFromCache(){                   //FIXME
 
-        return myCache.getItems();
+        return myCache.getResults();
     };
 
     /**
@@ -189,4 +195,17 @@ public class BrowseActivity extends ActionBarActivity {
         intent.p
         startActivity(intent);
     }*/
+
+    public void clickGo(View v){
+        int cat = catSpinner.getSelectedItemPosition();
+
+        if (cat == 0){
+            myCache.browseAll();
+            updateBrowseList();
+        } else {
+            myCache.browseCategory(cat);
+            updateBrowseList();
+        }
+
+    }
 }
