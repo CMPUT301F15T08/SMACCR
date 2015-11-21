@@ -75,6 +75,7 @@ public class AllActivity extends ActionBarActivity {
         // Text on third tab:
         tabSpec.setIndicator("Friends");
         tabHost.addTab(tabSpec);
+        //END OF Manage the tabs between inventory, friends, and trades pages.
 
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
         ListView tradesListView = (ListView) findViewById(R.id.tradesListView);
@@ -92,12 +93,13 @@ public class AllActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-        Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
         //###########################################################################################################################
         //Only modify part of user
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
+        Toast.makeText(getApplicationContext(), username, Toast.LENGTH_LONG).show();
         //UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
         inv = user.getInv();
@@ -139,12 +141,10 @@ public class AllActivity extends ActionBarActivity {
                 }).setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String selectedFriend = (String) friendsListView.getItemAtPosition(pos);
 
-                        //User use = urc.getUser(username);
-                        //use.deleteFriend(selectedFriend);
-                        //updateFriendsList(use.getFriendsList());
-                        //friendsListView.deferNotifyDataSetChanged();
+                        //friendsList.remove(pos);
+                        //updateFriendsList(friendsList);
+                        //updateUserOnServer();
 
                         dialog.dismiss();
                     }
@@ -211,6 +211,7 @@ public class AllActivity extends ActionBarActivity {
         //###############################################################################################################################################################
         //Calling update functions
         updateInvList(inv);
+        updateFriendsList(friendsList);
         updateUserOnServer();
 
         //###############################################################################################################################################################
@@ -295,16 +296,24 @@ public class AllActivity extends ActionBarActivity {
 
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
+                String friendUserName = input.getText().toString();
                 // Check if its a valid user, and send request
 
-                if (urc.checkForUser(value)) {
-                    //urc.getUser(username).addFriend(username);
-                    //updateFriendsList(urc.getUser(username).getFriendsList());
+                Toast.makeText(getApplicationContext(), friendUserName,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), username,Toast.LENGTH_SHORT).show();
+                friendsList.add(friendUserName);
+                updateFriendsList(friendsList);
+
+
+                /*
+                if (urc.checkForUser(friendUserName)) {
+                    friendsList.add(friendUserName);
                     Toast.makeText(getApplicationContext(), "Friend request sent", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "User doesn't exist", Toast.LENGTH_LONG).show();
                 }
+                */
+
             }
         });
 
@@ -375,7 +384,7 @@ public class AllActivity extends ActionBarActivity {
     //Deletes user on server, and write back new modified user
     class updateThread extends Thread {
         private User userthread;
-        UserRegistrationController uc= new UserRegistrationController();
+        //UserRegistrationController uc= new UserRegistrationController();
 
         public updateThread(User user) {
             this.userthread = user;
@@ -383,12 +392,6 @@ public class AllActivity extends ActionBarActivity {
 
         @Override
         public void run() {
-            // Give some time to get updated info
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             //delete from server
             ulc.deleteUser(userthread.getUsername());
             //delete from userlist
