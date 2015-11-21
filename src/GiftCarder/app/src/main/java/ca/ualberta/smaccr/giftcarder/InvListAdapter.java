@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,12 +18,15 @@ import java.util.List;
  */
 public class InvListAdapter extends ArrayAdapter<GiftCard> {
 
+    ArrayList inv;
+
     public InvListAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
 
-    public InvListAdapter(Context context, int resource, List<GiftCard> items) {
+    public InvListAdapter(Context context, int resource, ArrayList<GiftCard> items) {
         super(context, resource, items);
+        this.inv = items;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class InvListAdapter extends ArrayAdapter<GiftCard> {
             v = vi.inflate(R.layout.adapter_inv_list, null);
         }
 
-        GiftCard gc = getGiftCard(position);
+        GiftCard gc = (GiftCard) inv.get(position);
 
         if (gc != null) {
             ImageView iv1 = (ImageView) v.findViewById(R.id.invListImageView);
