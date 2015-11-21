@@ -58,7 +58,7 @@ public class InvListAdapter extends ArrayAdapter<GiftCard> {
             }
 
             if (tt2 != null) {
-                tt2.setText("" + gc.getValue());
+                tt2.setText("$" + gc.getValue());
             }
 
             if (tt3 != null) {
@@ -66,7 +66,7 @@ public class InvListAdapter extends ArrayAdapter<GiftCard> {
             }
 
             if (tt4 != null) {
-                tt3.setText(gc.getCategoryString());
+                tt4.setText(gc.getCategoryString());
             }
         }
 
