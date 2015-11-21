@@ -24,13 +24,7 @@ public class User {
     public User() {
         this.inv = new Inventory();
 
-        this.fl = new FriendList();
-        this.fl.addNewFriend("a");
-
-        //ArrayList<String> a = new ArrayList<String>();
-        //a.add("A");
-        //this.friendsList = a;
-        //this.friendsList = new ArrayList<String>();
+        this.fl = new FriendList();;
 
         this.friendRequests = new ArrayList<FriendRequest>();
     }

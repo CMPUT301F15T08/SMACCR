@@ -13,16 +13,18 @@ public class FriendList {
         this.friendList.add(0,friendusername);
     }
 
-    public void deleteOldFriendName(String friendusername){
-        this.friendList.remove(friendusername);
-    }
+    public void deleteOldFriendName(String friendusername){this.friendList.remove(friendusername);}
 
     public void deleteOldFriendIndex(int i){
         this.friendList.remove(i);
     }
 
+    public boolean containsFriend(String friendusername){
+        return this.friendList.contains(friendusername);
+    }
 
 
+    //Getter, Setter
     public ArrayList<String> getFriendList() {
         return friendList;
     }
@@ -30,4 +32,6 @@ public class FriendList {
     public void setFriendList(ArrayList<String> friendList) {
         this.friendList = friendList;
     }
+
+
 }

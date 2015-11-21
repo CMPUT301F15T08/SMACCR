@@ -40,6 +40,7 @@ public class AllActivity extends ActionBarActivity {
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
 
+
     //friendlist contains an arraylist of strings
     FriendList fl;
 
@@ -88,7 +89,7 @@ public class AllActivity extends ActionBarActivity {
         tradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(AllActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AllActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
                 //Create a new intent and pass in the position of the trade
                 // The position should match the index in the database
                 // This way the trade offer can be retrieved
@@ -102,14 +103,13 @@ public class AllActivity extends ActionBarActivity {
         //Only modify part of user
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
-        Toast.makeText(getApplicationContext(), username, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
         //UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
         inv = user.getInv();
 
         //FriendList class type
         fl = user.getFl();
-        //updateInvList(inv);
 
         //###########################################################################################################################
 
@@ -117,6 +117,7 @@ public class AllActivity extends ActionBarActivity {
 
         //##################################################################################################################################
         //CLick listeners for FRIENDLIST
+
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -301,12 +302,10 @@ public class AllActivity extends ActionBarActivity {
         alert.setPositiveButton("Add", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String friendUserName = input.getText().toString();
-                // Check if its a valid user, and send request
 
-                Toast.makeText(getApplicationContext(), friendUserName,Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), username,Toast.LENGTH_SHORT).show();
-                fl.addNewFriend(friendUserName);
-                updateFriendsList(fl);
+                // Check if its a valid user, and send request
+                Thread thread = new GetFriendThread(friendUserName);
+                thread.start();
 
 
                 /*
@@ -325,8 +324,67 @@ public class AllActivity extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
             }
         });
-
         alert.show();
+
+    }
+
+    //Parameter for potietnial Friend on server
+    User potientialFriendUser =new User();
+
+    //Check friend is on server or not, if is send friend request, for now add to friendlist
+    class GetFriendThread extends Thread {
+        private String id;
+
+        public GetFriendThread(String id) {
+            this.id = id;
+        }
+
+        @Override
+        public void run() {
+            ESUserManager userManager = new ESUserManager("");
+
+            potientialFriendUser = userManager.getUser(id);
+
+
+            runOnUiThread(checkUserONServerFriend);
+        }
+    }
+
+    private Runnable checkUserONServerFriend = new Runnable() {
+        public void run() {
+            CheckforUserOnServerFriendList(potientialFriendUser);
+        }
+    };
+
+    public void CheckforUserOnServerFriendList(User user){
+        UserRegistrationController urc = new UserRegistrationController(this);
+
+        if (user != null) {
+            //Check if friend already on friend list
+            if (urc.getUser(username).getFl().containsFriend(user.getUsername())){
+                Toast.makeText(this, "User is already on your friendlist", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            //If you try to add yourself
+            if (potientialFriendUser.getUsername().equals(username)){
+                Toast.makeText(this, "You can't be your own friend :P", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            //add user to friend list and update server
+            fl.addNewFriend(potientialFriendUser.getUsername());
+            updateFriendsList(fl);
+            Toast.makeText(getApplicationContext(),  "Friend Request sent to , [added to friendlist for now]", Toast.LENGTH_SHORT).show();
+            updateFriendsList(fl);
+            updateUserOnServer();
+
+
+        } else {
+            //User does not exist on user
+            Toast.makeText(this, "User not found.", Toast.LENGTH_SHORT).show();
+        }
+
     }
     //ADDING something to user
     //############################################################################################################
