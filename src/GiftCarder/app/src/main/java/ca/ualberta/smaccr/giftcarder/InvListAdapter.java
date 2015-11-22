@@ -1,6 +1,7 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,14 @@ public class InvListAdapter extends ArrayAdapter<GiftCard> {
 
             if (iv1 != null) {
                 // iv1.setImageResource(p.getImage);
+                try {
+                    if (gc.getItemImagesList().get(0) != null) {
+                        ItemPictureController ipc = new ItemPictureController();
+                        Bitmap imageBitmap = ipc.decodeBase64(gc.getItemImagesList().get(0).getBitmapString());
+                        iv1.setImageBitmap(imageBitmap);
+                    }
+                } catch (Exception e) {
+                }
             }
 
             if (tt1 != null) {

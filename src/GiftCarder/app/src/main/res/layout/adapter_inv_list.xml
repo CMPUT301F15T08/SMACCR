@@ -8,7 +8,7 @@
         android:id="@+id/invListImageView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/gear"
+        android:src="@drawable/card_icon"
         android:padding="5dp"
         android:contentDescription="@string/inv_list_image_desc" />
 
