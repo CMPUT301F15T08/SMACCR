@@ -12,6 +12,11 @@ import java.util.LinkedList;
 
 /**
  * Created by mrijlaar on 10/27/15.
+ *
+ * Holds the inventories of all Friends             Maybe hold all friend objects of type User
+ * pulls Items out of inventories in chronological order so most recent is diplayed on the top
+ * copies that list into another list to be further refined
+ * iterates through items
  */
 public class Cache {
 
@@ -36,6 +41,10 @@ public class Cache {
         this.items = mergeSort(fInvItems);
     }
 
+    /**
+     * turns finv from arraylist of inventories to arraylist of arraylists of items
+     * @return
+     */
     private ArrayList<ArrayList<GiftCard>> assemble(){
 
         ArrayList<ArrayList<GiftCard>> fInvItems = new ArrayList<ArrayList<GiftCard>>();
@@ -45,10 +54,30 @@ public class Cache {
 
         while (itr.hasNext()){
             inventory = itr.next();
-            fInvItems.add(inventory.getInvList());
+            fInvItems.add(hidePrivate(inventory.getInvList()));
         }
 
         return fInvItems;
+    }
+
+    /**
+     * Returns all public giftcards and no private ones
+     * @param giftCards
+     * @return publicGiftcards
+     */
+    private ArrayList<GiftCard> hidePrivate(ArrayList<GiftCard> giftCards){
+        ArrayList<GiftCard> ret = new ArrayList<GiftCard>();
+
+        Iterator<GiftCard> iterator = giftCards.iterator();
+        GiftCard giftCard;
+        while (iterator.hasNext()){
+            giftCard = iterator.next();
+            if (giftCard.getShared()){
+                ret.add(giftCard);
+            }
+        }
+
+        return ret;
     }
 
     private ArrayList<GiftCard> mergeSort(ArrayList<ArrayList<GiftCard>> alAlGc){
@@ -186,11 +215,58 @@ public class Cache {
 
         if(results==null)browseAll();
 
+        if (cat == 0){
+            browseAll();
+            return;
+        }
+
         Iterator iterator = results.listIterator();
         GiftCard giftCard;
         while (iterator.hasNext()){
             giftCard = (GiftCard)iterator.next();
             if(giftCard.getCategory()!=cat) iterator.remove();
         }
+    }
+
+    public void browseSearch(String query){
+        GiftCard giftCard;
+        Iterator<GiftCard> iterator = results.iterator();
+        while (iterator.hasNext()){
+            giftCard = iterator.next();
+            if (!gCContains(giftCard,query)){
+                iterator.remove();
+            }
+        }
+    }
+
+    private Boolean gCContains(GiftCard giftCard, String query){
+        Boolean ret = Boolean.FALSE;
+        double val, lb, ub;
+        boolean parsable = true;
+
+        String[] terms = query.split(" ");
+
+        for (int i=0; i<terms.length; i++) {
+
+            if (giftCard.getMerchant().matches("(.*)" + terms[i] + "(.*)")){
+                return Boolean.TRUE;
+            }
+
+            val = -10;// will be less than lower bounds
+            try {
+                val = Double.valueOf(terms[i]);
+            }catch (NumberFormatException e){
+                parsable = false;
+            }
+            if (parsable) {
+                lb = giftCard.getValue() / 2;
+                ub = giftCard.getValue() * 2;
+                if (val <ub && val> lb){
+                    return  Boolean.TRUE;
+                }
+            }parsable = true;
+
+        }
+        return Boolean.FALSE;
     }
 }

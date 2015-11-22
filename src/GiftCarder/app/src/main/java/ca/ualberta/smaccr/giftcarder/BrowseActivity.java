@@ -197,15 +197,16 @@ public class BrowseActivity extends ActionBarActivity {
     }*/
 
     public void clickGo(View v){
+
         int cat = catSpinner.getSelectedItemPosition();
 
-        if (cat == 0){
-            myCache.browseAll();
-            updateBrowseList();
-        } else {
-            myCache.browseCategory(cat);
-            updateBrowseList();
+        myCache.browseCategory(cat);
+
+        if (searchBar.getText().length() > 0) {
+            myCache.browseSearch(String.valueOf(searchBar.getText()));
         }
+
+        updateBrowseList();
 
     }
 }
