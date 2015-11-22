@@ -31,7 +31,7 @@
         android:hint="@string/enter_username"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#938f90"
+        android:background="#CCCCCC"
         android:padding="12dp"
         android:singleLine="true" />
 
