@@ -117,7 +117,7 @@ public class AllActivity extends ActionBarActivity {
 
         //##################################################################################################################################
         //CLick listeners for FRIENDLIST
-
+        /*
         //click individual friend
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -129,6 +129,7 @@ public class AllActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+        */
 
         // Long click to delete friend
         friendsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -372,7 +373,7 @@ public class AllActivity extends ActionBarActivity {
 
             //!!!!!!!!!!!!!
             //add friend to userList singleton
-            urc.addUser(potientialFriendUser);
+            //urc.addUser(potientialFriendUser);
             //!!!!!!!!!!!!
 
             //update server
