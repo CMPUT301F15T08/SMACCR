@@ -3,6 +3,8 @@ package ca.ualberta.smaccr.giftcarder;
 import android.app.Activity;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by splant on 11/13/15.
  */
@@ -50,7 +52,9 @@ public class InvDetailsController {
 
         // Change the Title,total count and the Total Value fields
         String invDetailsTitle = user.getUsername() + "'s Inventory";
-        String invDetailsValue = "Total Value of GiftCards: $" + this.totalValue;
+
+        DecimalFormat df = new DecimalFormat("#.00");
+        String invDetailsValue = "Total Value of GiftCards: $" + df.format(this.totalValue);
         String detailsStrTotalCount = "Total Number of GiftCards: " + this.totalCount;
 
         TextView detailsTitle = (TextView) detailsActivity.findViewById(R.id.userInvDetTitleTextView);
