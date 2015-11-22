@@ -45,7 +45,7 @@ public class ItemGridViewAdapter extends ArrayAdapter {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
-            //holder.imageTitle = (TextView) row.findViewById(R.id.text);
+            holder.caption = (TextView) row.findViewById(R.id.tvFeaturedImage);
             holder.image = (ImageView) row.findViewById(R.id.imageGridView);
             row.setTag(holder);
         } else {
@@ -54,14 +54,17 @@ public class ItemGridViewAdapter extends ArrayAdapter {
 
         ItemImage item = (ItemImage) data.get(position);
         Bitmap bitmap = ipc.decodeBase64(item.getBitmapString());
+        Boolean featured = item.isFeatured();
 
-        //holder.imageTitle.setText(item.getTitle());
         holder.image.setImageBitmap(bitmap);
+        if (featured) {
+            holder.caption.setText("FEATURED");
+        }
         return row;
     }
 
     static class ViewHolder {
-        //TextView imageTitle;
+        TextView caption;
         ImageView image;
     }
 }

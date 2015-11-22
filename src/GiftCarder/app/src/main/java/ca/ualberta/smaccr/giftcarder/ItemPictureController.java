@@ -1,10 +1,18 @@
-/* Encode/decode bitmap
+/* Modified from Tejas Jasani, retrieved 11/18/15,
+ * http://www.theappguruz.com/blog/android-take-photo-camera-gallery-code-sample
+ *
+ * Encode/decode bitmap
  * Modified from Roman Truba, retrieved 11/20/15,
  * http://stackoverflow.com/questions/9768611/encode-and-decode-bitmap-object-in-base64-string-in-android
+ *
+ * Resize bitmap
+ * Modified from Alex, retrieved 11/22/15
+ * http://stackoverflow.com/questions/3331527/android-resize-a-large-bitmap-file-to-scaled-output-file/8497703#8497703
  */
 
 package ca.ualberta.smaccr.giftcarder;
 
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -30,30 +38,27 @@ import java.io.IOException;
  */
 public class ItemPictureController {
     int maxByteSize = 65536;
-    double scale = 0.8;
+    double scale = 0.5; // scale image by 1/2
 
     public String onCaptureImageResult(Intent data) {
         Bitmap image = (Bitmap) data.getExtras().get("data");
 
-        System.out.println("Byte Size: " + image.getByteCount());
-        image = resizeBitmap(image);
-        System.out.println("Byte Size: " + image.getByteCount());
-        /*
+        // resize image until less than maxByteSize
         while ((image != null) && (image.getByteCount() >= maxByteSize)) {
-            System.out.println("Byte Size: " + image.getByteCount());
-            image = resizeBitmap(image);
+            // resize Bitmap
+            image = Bitmap.createScaledBitmap(image, (int) (scale * image.getWidth()),
+                    (int)(scale * image.getHeight()), false);
         }
-        */
 
         return encodeToBase64(image);
     }
 
-    public String encodeToBase64(Bitmap image) {
+    public String encodeToBase64(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] b = baos.toByteArray();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
 
-        return Base64.encodeToString(b, Base64.DEFAULT); // returns encoded image as String
+        return Base64.encodeToString(data, Base64.DEFAULT); // returns encoded image as String
     }
 
     public Bitmap decodeBase64(String input) {
@@ -61,39 +66,16 @@ public class ItemPictureController {
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
-    public Bitmap resizeBitmap(Bitmap bitmap) {
-        int width = bitmap.getWidth();
-        int height = bitmap.getHeight();
-        double newWidth = (scale * width);
-        double newHeight = (scale * height);
-        /*
-        //Bitmap.createScaledBitmap(bitmap, (int)(newWidth + 0.5d), (int)(newHeight + 0.5d), false);
-
-        // CREATE A MATRIX FOR THE MANIPULATION
-        Matrix matrix = new Matrix();
-
-        // RESIZE THE BITMAP
-        matrix.postScale((float)newWidth, (loat) newHeight);
-
-        // "RECREATE" THE NEW BITMAP
-        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, (int)(newWidth + 0.5d), (int)(newWidth + 0.5d), matrix, false);
-        bitmap.recycle();
-
-        */
-        return bitmap;
-    }
-
-
+    /*
     @SuppressWarnings("deprecation")
-    public void onSelectFromGalleryResult(Intent data) {
-        /*
+    public String onSelectFromGalleryResult(Intent data) {
         Uri selectedImageUri = data.getData();
         String[] projection = { MediaStore.MediaColumns.DATA };
-        Cursor cursor = managedQuery(selectedImageUri, projection, null, null,
-                null);
+        CursorLoader cursorLoader = new CursorLoader(this, selectedImageUri, projection, null, null, null);
+
+        Cursor cursor =cursorLoader.loadInBackground();
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
         cursor.moveToFirst();
-
         String selectedImagePath = cursor.getString(column_index);
 
         Bitmap bm;
@@ -109,8 +91,7 @@ public class ItemPictureController {
         options.inJustDecodeBounds = false;
         bm = BitmapFactory.decodeFile(selectedImagePath, options);
 
-        ivImage.setImageBitmap(bm);
-        */
+        return encodeToBase64(bm);
     }
-
+    */
 }

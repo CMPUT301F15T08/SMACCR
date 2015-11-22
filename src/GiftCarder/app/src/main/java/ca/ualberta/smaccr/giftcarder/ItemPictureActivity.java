@@ -14,11 +14,14 @@ package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -29,12 +32,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class ItemPictureActivity extends ActionBarActivity {
     public final static String EXTRA_STATE = "ca.ualberta.smaccr.giftcarder.STATE";
     public final static String EXTRA_BITMAP_STRING = "ca.ualberta.smaccr.giftcarder.BITMAPSTRING";
+    public final static String EXTRA_FEATURED_STRING = "ca.ualberta.smaccr.giftcarder.FEATUREDSTRING";
     public final static String EXTRA_PICTURES = "ca.ualberta.smaccr.giftcarder.PICTURES";
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
@@ -62,12 +67,6 @@ public class ItemPictureActivity extends ActionBarActivity {
             itemImagesList = new ArrayList<ItemImage>();
         }
 
-        if (itemState != OWNER_STATE) {
-            addPhotoButton.setVisibility(View.VISIBLE);
-        } else {
-            addPhotoButton.setVisibility(View.INVISIBLE);;
-        }
-
         gridView = (GridView) findViewById(R.id.pictureGridView);
         updateImagesList();
 
@@ -76,13 +75,46 @@ public class ItemPictureActivity extends ActionBarActivity {
                 ItemImage item = (ItemImage) parent.getItemAtPosition(position);
                 //Create intent
                 Intent intent = new Intent(ItemPictureActivity.this, ItemDetailsActivity.class);
-                //intent.putExtra("title", item.getTitle());
+                intent.putExtra(EXTRA_FEATURED_STRING, item.isFeatured());
                 intent.putExtra(EXTRA_BITMAP_STRING, item.getBitmapString());
 
                 //Start details activity
                 startActivity(intent);
             }
         });
+
+        if (itemState != OWNER_STATE) {
+            addPhotoButton.setVisibility(View.VISIBLE);
+
+            // Long click to delete listener (modified from AllActivity)
+            gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    final int pos = position;
+
+                    AlertDialog.Builder deletedialog = new AlertDialog.Builder(ItemPictureActivity.this);
+                    deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            itemImagesList.remove(pos);
+                            updateImagesList();
+
+                            dialog.dismiss();
+                        }
+                    });
+                    deletedialog.create().show();
+                    return true;
+                }
+            });
+
+        } else {
+            addPhotoButton.setVisibility(View.INVISIBLE);;
+        }
 
     }
     /*
@@ -144,8 +176,7 @@ public class ItemPictureActivity extends ActionBarActivity {
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE)
-                ipc.onSelectFromGalleryResult(data);
-                //imageView.setImageBitmap(thumbnail);
+                itemImage = new ItemImage(onSelectFromGalleryResult(data));
             else if (requestCode == REQUEST_CAMERA)
                 itemImage = new ItemImage(ipc.onCaptureImageResult(data));
 
@@ -170,7 +201,39 @@ public class ItemPictureActivity extends ActionBarActivity {
     }
 
     public void updateImagesList() {
+        // first image gets "FEATURED" caption (first image is the one displayed for the image thumbnail)
+        if (!itemImagesList.isEmpty()) {
+            itemImagesList.get(0).setFeatured(true);
+        }
+
         gridAdapter = new ItemGridViewAdapter(this, R.layout.grid_item_layout, itemImagesList);
         gridView.setAdapter(gridAdapter);
+    }
+
+    @SuppressWarnings("deprecation")
+    public String onSelectFromGalleryResult(Intent data) {
+        Uri selectedImageUri = data.getData();
+        String[] projection = { MediaStore.MediaColumns.DATA };
+        CursorLoader cursorLoader = new CursorLoader(this, selectedImageUri, projection, null, null, null);
+
+        Cursor cursor =cursorLoader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+        cursor.moveToFirst();
+        String selectedImagePath = cursor.getString(column_index);
+
+        Bitmap bm;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(selectedImagePath, options);
+        final int REQUIRED_SIZE = 200;
+        int scale = 1;
+        while (options.outWidth / scale / 2 >= REQUIRED_SIZE
+                && options.outHeight / scale / 2 >= REQUIRED_SIZE)
+            scale *= 2;
+        options.inSampleSize = scale;
+        options.inJustDecodeBounds = false;
+        bm = BitmapFactory.decodeFile(selectedImagePath, options);
+
+        return ipc.encodeToBase64(bm);
     }
 }
