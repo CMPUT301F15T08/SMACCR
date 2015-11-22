@@ -96,4 +96,6 @@
     <string name="title_activity_picture">PictureActivity</string>
     <string name="add_photo">Add Photo</string>
     <string name="title_activity_item_details">ItemDetailsActivity</string>
+    <string name="count">Count:</string>
+    <string name="value_colon">Value:</string>
 </resources>
