@@ -60,8 +60,10 @@ public class RegisterActivity extends Activity {
         if (urc.validateFields(etUsername, etCity, etPhone, etEmail)) {
             Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
 
+            //Add the new user to singleton
             urc.addUser(etUsername,etCity, etPhone, etEmail);
 
+            //Start "all activity"
             Intent intent = new Intent(this, AllActivity.class);
             String username = etUsername.getText().toString();
             intent.putExtra(EXTRA_USERNAME, username);

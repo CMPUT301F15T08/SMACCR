@@ -118,7 +118,8 @@ public class AllActivity extends ActionBarActivity {
         //##################################################################################################################################
         //CLick listeners for FRIENDLIST
 
-        //click individual friend
+        //click individual friend, disabled cause we need cache or what to save it, friend stuff
+        /*
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -129,6 +130,7 @@ public class AllActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+        */
 
         // Long click to delete friend
         friendsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -372,7 +374,7 @@ public class AllActivity extends ActionBarActivity {
 
             //!!!!!!!!!!!!!
             //add friend to userList singleton
-            urc.addUser(potientialFriendUser);
+            //urc.addUser(potientialFriendUser);
             //!!!!!!!!!!!!
 
             //update server
@@ -510,6 +512,7 @@ public class AllActivity extends ActionBarActivity {
 
     //###############################################################################################################
     //SWITCHING TO OTHER ACTIVITIES
+
     public void getUserProfile(View view) {
         Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
