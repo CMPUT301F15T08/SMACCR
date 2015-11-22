@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AllActivity extends ActionBarActivity {
 
@@ -42,7 +40,7 @@ public class AllActivity extends ActionBarActivity {
     ArrayAdapter<String> displayAdapter;
 
 
-    //friendlist contains an arraylist of strings
+    // friendlist contains an arraylist of strings
     FriendList fl;
 
     UserRegistrationController urc = new UserRegistrationController();
@@ -80,7 +78,7 @@ public class AllActivity extends ActionBarActivity {
         // Text on third tab:
         tabSpec.setIndicator("Friends");
         tabHost.addTab(tabSpec);
-        //END OF Manage the tabs between inventory, friends, and trades pages.
+        // END OF Manage the tabs between inventory, friends, and trades pages.
 
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
         ListView tradesListView = (ListView) findViewById(R.id.tradesListView);
@@ -90,26 +88,26 @@ public class AllActivity extends ActionBarActivity {
         tradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(AllActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
-                //Create a new intent and pass in the position of the trade
+                // Toast.makeText(AllActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                // Create a new intent and pass in the position of the trade
                 // The position should match the index in the database
                 // This way the trade offer can be retrieved
                 Intent intent = new Intent(AllActivity.this, TradeRequestActivity.class);
                 startActivity(intent);
             }
         });
-        //Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
         //###########################################################################################################################
-        //Only modify part of user
+        // Only modify part of user
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
-        //Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
-        //UserRegistrationController urc = new UserRegistrationController();
+        // Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
+        // UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
         inv = user.getInv();
 
-        //FriendList class type
+        // FriendList class type
         fl = user.getFl();
         Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
@@ -117,9 +115,9 @@ public class AllActivity extends ActionBarActivity {
 
 
         //##################################################################################################################################
-        //CLick listeners for FRIENDLIST
+        // CLick listeners for FRIENDLIST
 
-        //click individual friend, disabled cause we need cache or what to save it, friend stuff
+        // click individual friend, disabled cause we need cache or what to save it, friend stuff
         /*
 
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -164,18 +162,18 @@ public class AllActivity extends ActionBarActivity {
             }
         });
 
-        //END of CLick listeners for Friendlist
+        // END of CLick listeners for Friendlist
         //##################################################################################################################################
 
 
         //##################################################################################################################################
-        //CLick listeners for Inventory
+        // CLick listeners for Inventory
 
-        //Click on individual item
+        // Click on individual item
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 // Switch to item activity and send inventory and position of gift card to change
                 Intent intent = new Intent(AllActivity.this, ItemActivity.class);
@@ -183,7 +181,7 @@ public class AllActivity extends ActionBarActivity {
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
                 intent.putExtra(EXTRA_STATE, OWNER_ITEM_STATE); // view item
-                //startActivity(intent);
+                // startActivity(intent);
                 startActivityForResult(intent, 1);
             }
         });
@@ -206,7 +204,7 @@ public class AllActivity extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // http://stackoverflow.com/questions/7073577/how-to-get-object-from-listview-in-setonitemclicklistener-in-android
-                        //Deleting giftcard and updating to server
+                        // Deleting giftcard and updating to server
                         inv.deleteGiftCard(pos);
                         updateInvList(inv);
                         updateUserOnServer();
@@ -217,15 +215,15 @@ public class AllActivity extends ActionBarActivity {
             }
         });
         // END of CLick listeners for Inventory
-        //##################################################################################################################################
+        //##########################################################################################
 
-        //###############################################################################################################################################################
-        //Calling update functions
+        //##########################################################################################
+        // Calling update functions
         updateInvList(inv);
         updateFriendsList(fl);
         updateUserOnServer();
 
-        //###############################################################################################################################################################
+        //##########################################################################################
     }
 
     @Override
@@ -234,7 +232,7 @@ public class AllActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-    //commented out, might put back in if group wants the three dots
+    // commented out, might put back in if group wants the three dots
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -246,7 +244,7 @@ public class AllActivity extends ActionBarActivity {
         // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            //Pass the  inventory to settings, so settings activity will send it back to main to update the inventory in singleton
+            // Pass the  inventory to settings, so settings activity will send it back to main to update the inventory in singleton
             Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
             intent1.putExtra(EXTRA_USERNAME, username);
             startActivity(intent1);
@@ -256,7 +254,7 @@ public class AllActivity extends ActionBarActivity {
 
     }
 
-    //added to remove three dots (might remove later)
+    // added to remove three dots (might remove later)
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item= menu.findItem(R.id.action_settings);
@@ -265,8 +263,8 @@ public class AllActivity extends ActionBarActivity {
         return true;
     }
 
-    //######################################################################################################
-    //ADDING something to user
+    //##############################################################################################
+    // ADDING something to user
     /**
      * AddNewGiftCard
      * create a new giftcard and place in inventory, then switch to ItemActivity to edit that giftcard
@@ -301,7 +299,7 @@ public class AllActivity extends ActionBarActivity {
 
         alert.setMessage("Enter their username:");
 
-        //textbox for user input
+        // textbox for user input
         final EditText input = new EditText(this);
         alert.setView(input);
 
@@ -309,7 +307,7 @@ public class AllActivity extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String friendUserName = input.getText().toString();
 
-                //Start thread to search server for friend
+                // Start thread to search server for friend
                 Thread thread = new GetFriendThread(friendUserName);
                 thread.start();
 
@@ -324,10 +322,10 @@ public class AllActivity extends ActionBarActivity {
 
     }
 
-    //Parameter for potietnial Friend on server
-    User potientialFriendUser =new User();
+    // Parameter for potential Friend on server
+    User potentialFriendUser = new User();
 
-    //Check friend is on server or not, if is send friend request, for now add to friendlist
+    // Check friend is on server or not, if is send friend request, for now add to friendlist
     class GetFriendThread extends Thread {
         private String id;
 
@@ -339,64 +337,64 @@ public class AllActivity extends ActionBarActivity {
         public void run() {
             ESUserManager userManager = new ESUserManager("");
 
-            potientialFriendUser = userManager.getUser(id);
+            potentialFriendUser = userManager.getUser(id);
 
 
-            runOnUiThread(checkUserONServerFriend);
+            runOnUiThread(checkUserOnServerFriend);
         }
     }
 
-    private Runnable checkUserONServerFriend = new Runnable() {
+    private Runnable checkUserOnServerFriend = new Runnable() {
         public void run() {
-            CheckforUserOnServerFriendList(potientialFriendUser);
+            checkforUserOnServerFriendList(potentialFriendUser);
         }
     };
 
-    public void CheckforUserOnServerFriendList(User user){
+    public void checkforUserOnServerFriendList(User user){
         UserRegistrationController urc = new UserRegistrationController(this);
 
         if (user != null) {
-            //Check if friend already on friend list
+            // Check if friend already on friend list
             if (urc.getUser(username).getFl().containsFriend(user.getUsername())){
                 Toast.makeText(this, "User is already on your friend list", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            //If you try to add yourself
-            if (potientialFriendUser.getUsername().equals(username)){
+            // If you try to add yourself
+            if (potentialFriendUser.getUsername().equals(username)){
                 Toast.makeText(this, "You can't be your own friend :P", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            //add user to friend list and update server
-            fl.addNewFriend(potientialFriendUser.getUsername());
+            // add user to friend list and update server
+            fl.addNewFriend(potentialFriendUser.getUsername());
             updateFriendsList(fl);
             Toast.makeText(getApplicationContext(),  "Friend Request sent to , [added to friendlist for now]", Toast.LENGTH_SHORT).show();
 
             //!!!!!!!!!!!!!
-            //add friend to userList singleton
-            //urc.addUser(potientialFriendUser);
+            // add friend to userList singleton
+            // urc.addUser(potentialFriendUser);
             //!!!!!!!!!!!!
 
-            //update server
+            // update server
             updateFriendsList(fl);
             updateUserOnServer();
 
 
         } else {
-            //User does not exist on user
+            // User does not exist on server
             Toast.makeText(this, "User not found.", Toast.LENGTH_SHORT).show();
         }
 
     }
-    //ADDING something to user
-    //############################################################################################################
+    // ADDING something to user
+    //##############################################################################################
 
 
 
 
-    //#############################################################################################################
-    //UPDATING part of user HERE!
+    //##############################################################################################
+    // UPDATING part of user HERE!
     /**
      * updateInvList
      * update the display of the inventory listview
@@ -421,8 +419,8 @@ public class AllActivity extends ActionBarActivity {
         // displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
         inventorylistID.setAdapter(customAdapter);
 
-        //Updates the user's inventory in userList in UserRegisteration controller
-        //UserRegistrationController uc= new UserRegistrationController(this);
+        // Updates the user's inventory in userList in UserRegisteration controller
+        // UserRegistrationController uc= new UserRegistrationController(this);
         urc.editUserInventory(username, inv);
 
     }
@@ -435,12 +433,12 @@ public class AllActivity extends ActionBarActivity {
         urc.editUserFriendList(username, fl);
     }
 
-    //END OF updating user here
-    //#############################################################################################################
+    // END OF updating user here
+    //##############################################################################################
 
 
 
-    //###############################################################################################################
+    //##############################################################################################
     // DANGER THIS SERVER STUFF
     public void updateUserOnServer (){
         ulc = new UserListController(urc.getUserList());
@@ -449,10 +447,10 @@ public class AllActivity extends ActionBarActivity {
 
     }
 
-    //Deletes user on server, and write back new modified user
+    // Deletes user on server, and write back new modified user
     class updateThread extends Thread {
         private User userthread;
-        //UserRegistrationController uc= new UserRegistrationController();
+        // UserRegistrationController uc= new UserRegistrationController();
 
         public updateThread(User user) {
             this.userthread = user;
@@ -460,14 +458,14 @@ public class AllActivity extends ActionBarActivity {
 
         @Override
         public void run() {
-            //delete from server
+            // delete from server
             ulc.deleteUser(userthread.getUsername());
-            //delete from userlist
-            //uc.getUserList().deleteUser(user);
+            // delete from userlist
+            // uc.getUserList().deleteUser(user);
 
-            //Add the new one back
+            // Add the new one back
             ulc.addUser(userthread);
-            //uc.getUserList().addUser(user);
+            // uc.getUserList().addUser(user);
 
 
             // Give some time to get updated info
@@ -491,7 +489,7 @@ public class AllActivity extends ActionBarActivity {
      * return
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //This is for when you return from an activity, passing back data
+        // This is for when you return from an activity, passing back data
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
@@ -502,7 +500,7 @@ public class AllActivity extends ActionBarActivity {
         }
     }
 
-    //send of server stuff
+    // send of server stuff
     //###############################################################################################################
 
 
@@ -513,7 +511,7 @@ public class AllActivity extends ActionBarActivity {
 
 
     //###############################################################################################################
-    //SWITCHING TO OTHER ACTIVITIES
+    // SWITCHING TO OTHER ACTIVITIES
 
     public void getUserProfile(View view) {
         Intent intent = new Intent(this, UserProfileActivity.class);
@@ -539,7 +537,7 @@ public class AllActivity extends ActionBarActivity {
         startActivity(intent1);
     }
 
-    //END OF SWITCHING TO OTHER ACTIVITIES
+    // END OF SWITCHING TO OTHER ACTIVITIES
     //###############################################################################################################
 
 }
