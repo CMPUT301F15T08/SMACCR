@@ -86,6 +86,7 @@ public class MainActivity extends Activity {
         }
     }
 
+    //Get thread to attempt to get user from server by id ->"this is his username"
     class GetThread extends Thread {
         private String id;
 
@@ -96,7 +97,6 @@ public class MainActivity extends Activity {
         @Override
         public void run() {
             user = userManager.getUser(id);
-
             runOnUiThread(checkUserONServer);
         }
     }
@@ -111,6 +111,7 @@ public class MainActivity extends Activity {
         UserRegistrationController urc = new UserRegistrationController(this);
         userManager = new ESUserManager("");
 
+        //If the user exist then we start "all activity", and he gets added to singleton, he is only user in the singleton right now
         if (user != null) {
             Toast.makeText(this, user.getUsername(), Toast.LENGTH_LONG).show();
             urc.addUser(user);

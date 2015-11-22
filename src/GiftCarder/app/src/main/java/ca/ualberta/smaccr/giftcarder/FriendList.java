@@ -7,14 +7,19 @@ import java.util.ArrayList;
  */
 public class FriendList {
 
+    //Array list of string of friends
     ArrayList<String> friendList = new ArrayList<String>();
 
+    //Add friend to top of list, so we can use position on onclick to delete position
     public void addNewFriend(String friendusername){
         this.friendList.add(0,friendusername);
     }
 
+    //Delete friend by name
     public void deleteOldFriendName(String friendusername){this.friendList.remove(friendusername);}
 
+
+    //Delete friend by index
     public void deleteOldFriendIndex(int i){
         this.friendList.remove(i);
     }
