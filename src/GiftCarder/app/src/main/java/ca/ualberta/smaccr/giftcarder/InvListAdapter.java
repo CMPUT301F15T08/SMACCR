@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +56,14 @@ public class InvListAdapter extends ArrayAdapter<GiftCard> {
 
             if (iv1 != null) {
                 try {
-                    if (gc.getItemImagesList().get(0) != null) {
-                        Bitmap imageBitmap = ipc.decodeBase64(gc.getItemImagesList().get(0).getBitmapString());
-                        iv1.setImageBitmap(imageBitmap);
+                    if (!(gc.getItemImagesList().isEmpty())) {
+                        ipc.displayFeaturedImage(gc.getItemImagesList(), iv1);
+                    } else {
+                        iv1.setImageResource(R.drawable.card_icon);
                     }
-                } catch (Exception e) {} // Do nothing to the default image if there are no images in the image list
+
+                } catch (Exception e) {
+                } // Do nothing to the default image if there are no images in the image list
             }
 
             if (tt1 != null) {

@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Carin on 11/19/2015.
@@ -65,6 +66,12 @@ public class ItemPictureController {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
+
+    public void displayFeaturedImage(ArrayList<ItemImage> itemImagesList, ImageView imageView) {
+        String bitmapString = itemImagesList.get(0).getBitmapString();
+        imageView.setImageBitmap(decodeBase64(bitmapString));
+    }
+
 
     /*
     @SuppressWarnings("deprecation")

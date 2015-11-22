@@ -178,12 +178,15 @@ public class ItemPictureActivity extends ActionBarActivity {
             if (requestCode == SELECT_FILE)
                 itemImage = new ItemImage(onSelectFromGalleryResult(data));
             else if (requestCode == REQUEST_CAMERA)
-                itemImage = new ItemImage(ipc.onCaptureImageResult(data));
-
+                if (data != null) {
+                    itemImage = new ItemImage(ipc.onCaptureImageResult(data));
+                }
         }
 
-        itemImagesList.add(itemImage);
-        updateImagesList();
+        if (itemImage != null) {
+            itemImagesList.add(itemImage);
+            updateImagesList();
+        }
     }
 
     @Override

@@ -122,10 +122,9 @@ public class ItemActivity extends Activity {
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
 
-            // TEMPORARY
+            // Display featured image
             if (!itemImagesList.isEmpty()) {
-                String bitmapString = itemImagesList.get(0).getBitmapString();
-                featuredImage.setImageBitmap(ipc.decodeBase64(bitmapString));
+                ipc.displayFeaturedImage(itemImagesList, featuredImage);
             }
 
             // if user clicks Edit button

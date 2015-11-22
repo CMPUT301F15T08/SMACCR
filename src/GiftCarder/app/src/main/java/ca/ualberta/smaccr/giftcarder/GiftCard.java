@@ -23,9 +23,10 @@ public class GiftCard implements Serializable {
     // 1 = shared, 0 = not shared
     private Boolean shared = Boolean.TRUE;
 
-    private ArrayList<ItemImage> itemImagesList = new ArrayList<ItemImage>();
+    private ArrayList<ItemImage> itemImagesList;
 
     public GiftCard() {
+        itemImagesList = new ArrayList<ItemImage>();
     }
 
     public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
