@@ -109,6 +109,15 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
 
         assertTrue(searchBar.getText().toString() + "==" + searchText, searchBar.getText().toString().equals(searchText));
 
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                searchBar.setText("other");
+                goButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        assertTrue(searchBar.getText().toString() + "==" + searchText, searchBar.getText().toString().equals("other"));
 
     }
 
