@@ -36,7 +36,9 @@ public class ItemActivity extends Activity {
     private CheckBox checkbox;
     private Button editAndOfferButton;
     private Button saveButton;
+    ImageView featuredImage;
     private int itemState;
+    protected ArrayList<ItemImage> itemImagesList;
 
     // getters for UI testing
     public EditText getEtItemName() {
@@ -76,12 +78,16 @@ public class ItemActivity extends Activity {
     }
 
     ItemController ic = new ItemController();
+    ItemPictureController ipc = new ItemPictureController();
 
     // Constants
     public final static String EXTRA_STATE = "ca.ualberta.smaccr.giftcarder.STATE";
+    public final static String EXTRA_PICTURES = "ca.ualberta.smaccr.giftcarder.PICTURES";
+    public final static String EXTRA_BITMAP_STRING = "ca.ualberta.smaccr.giftcarder.BITMAPSTRING";
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
     public static final int BROWSER_STATE = 2; // view other's item
+    public static final int EDIT_STATE = 3; // edit item
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +99,8 @@ public class ItemActivity extends Activity {
         inv = (Inventory) getIntent().getSerializableExtra("inventory");
         //gc = (GiftCard)getIntent().getSerializableExtra("gc");
         itemState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
+        itemImagesList = inv.getInvList().get(position).getItemImagesList();
+        featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
 
         // Get references to UI
         etItemValue = (EditText) findViewById(R.id.ID_item_value);
@@ -114,13 +122,20 @@ public class ItemActivity extends Activity {
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
 
+            // TEMPORARY
+            if (!itemImagesList.isEmpty()) {
+                String bitmapString = itemImagesList.get(0).getBitmapString();
+                featuredImage.setImageBitmap(ipc.decodeBase64(bitmapString));
+            }
+
             // if user clicks Edit button
             if (itemState == OWNER_STATE) {
                 editAndOfferButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
-                        ic.setViewMode(ADD_STATE, etItemValue, etItemName, etQuantity, qualitySpinner,
+                        ic.setViewMode(EDIT_STATE, etItemValue, etItemName, etQuantity, qualitySpinner,
                                 categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
+                        itemState = EDIT_STATE;
                     }
                 });
             // if user clicks Make Offer button
@@ -179,7 +194,7 @@ public class ItemActivity extends Activity {
         if (ic.validateFields(etItemValue, etItemName, etQuantity)) {
             // item controller to set the data into inventory
             inv = ic.setGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity, qualitySpinner,
-                    categorySpinner, etComments, checkbox);
+                    categorySpinner, etComments, checkbox, itemImagesList);
 
             Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
 
@@ -195,6 +210,7 @@ public class ItemActivity extends Activity {
             } else {
                 ic.setViewMode(OWNER_STATE, etItemValue, etItemName, etQuantity, qualitySpinner,
                         categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
+                itemState = OWNER_STATE;
             }
 
         } else {
@@ -202,22 +218,27 @@ public class ItemActivity extends Activity {
         }
     }
 
-    /*
+
     @Override
     public void onBackPressed() {
+        /*
         EditText itemValue = (EditText) findViewById(R.id.ID_item_value);
         EditText itemName = (EditText)findViewById(R.id.ID_item_Name);
         if ((itemName.getText().toString().equals("")) || itemValue.getText().toString().equals("")){
             inv.getInvList().remove(position);
         }
+        */
 
-        // inv.getInvList().remove(position);
+        if (itemState == ADD_STATE) {
+            inv.getInvList().remove(position);
+        }
+
         Intent intent = new Intent();
         intent.putExtra("ModifiedInventory", inv);
         setResult(RESULT_OK, intent);
         finish();
     }
-    */
+
 
     // https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
     // barebones right now
@@ -229,13 +250,18 @@ public class ItemActivity extends Activity {
      * @param menu
      */
     public void takeGiftCardPic(View menu) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent intent = new Intent(ItemActivity.this, ItemPictureActivity.class);
+        intent.putExtra(EXTRA_PICTURES, itemImagesList);
+        intent.putExtra(EXTRA_STATE, itemState);
+        startActivityForResult(intent, 1);
+
+        //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //intent.putExtra(MediaStore.EXTRA_OUTPUT, 1);
         //intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
         //setResult(RESULT_OK, intent);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, 2);
-        }
+        //if (intent.resolveActivity(getPackageManager()) != null) {
+          //  startActivityForResult(intent, 2);
+        //}
 
     }
     // https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
@@ -251,15 +277,15 @@ public class ItemActivity extends Activity {
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2) {
-            if (resultCode == RESULT_OK) {
-                Bundle bundle = new Bundle();
-                bundle = data.getExtras();
-                Bitmap BMP;
-                BMP = (Bitmap) bundle.get("data");
-                ImageView giftcardpic = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
-                giftcardpic.setImageBitmap(BMP);
 
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                itemImagesList = (ArrayList<ItemImage>)data.getSerializableExtra(EXTRA_PICTURES);
+                String bitmapString = data.getStringExtra(EXTRA_BITMAP_STRING);
+
+                if (bitmapString != null) {
+                    featuredImage.setImageBitmap(ipc.decodeBase64(bitmapString));
+                }
             }
         }
     }

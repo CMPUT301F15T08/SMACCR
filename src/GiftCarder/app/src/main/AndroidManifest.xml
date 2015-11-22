@@ -3,6 +3,8 @@
     package="ca.ualberta.smaccr.giftcarder" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -69,6 +71,14 @@
         <activity
             android:name=".InventoryActivity"
             android:label="@string/title_activity_inventory" >
+        </activity>
+        <activity
+            android:name=".ItemPictureActivity"
+            android:label="Images" >
+        </activity>
+        <activity
+            android:name=".ItemDetailsActivity"
+            android:label="@string/title_activity_item_details" >
         </activity>
     </application>
 

@@ -93,5 +93,7 @@
     <string name="make_public">Make Public</string>
     <string name="save_button">SAVE</string>
     <string name="inv_list_image_desc">GiftCard Image</string>
-    >>>>>>> 6e8e31f1d5a6a3f0ba2786502555495fc5034aae
+    <string name="title_activity_picture">PictureActivity</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="title_activity_item_details">ItemDetailsActivity</string>
 </resources>

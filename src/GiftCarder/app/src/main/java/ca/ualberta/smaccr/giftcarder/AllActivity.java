@@ -110,6 +110,7 @@ public class AllActivity extends ActionBarActivity {
 
         //FriendList class type
         fl = user.getFl();
+        Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
         //###########################################################################################################################
 
