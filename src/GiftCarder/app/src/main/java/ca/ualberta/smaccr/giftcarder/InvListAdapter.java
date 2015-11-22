@@ -2,6 +2,7 @@ package ca.ualberta.smaccr.giftcarder;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import java.util.List;
 public class InvListAdapter extends ArrayAdapter<GiftCard> {
 
     ArrayList inv;
+    ItemPictureController ipc = new ItemPictureController();
 
     public InvListAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
@@ -44,6 +46,7 @@ public class InvListAdapter extends ArrayAdapter<GiftCard> {
         GiftCard gc = (GiftCard) inv.get(position);
 
         if (gc != null) {
+
             ImageView iv1 = (ImageView) v.findViewById(R.id.invListImageView);
             TextView  tt1 = (TextView) v.findViewById(R.id.invListTitleTextView);
             TextView  tt2 = (TextView) v.findViewById(R.id.invListValueTextView);
@@ -51,15 +54,12 @@ public class InvListAdapter extends ArrayAdapter<GiftCard> {
             TextView  tt4 = (TextView) v.findViewById(R.id.invListCatTextView);
 
             if (iv1 != null) {
-                // iv1.setImageResource(p.getImage);
                 try {
                     if (gc.getItemImagesList().get(0) != null) {
-                        ItemPictureController ipc = new ItemPictureController();
                         Bitmap imageBitmap = ipc.decodeBase64(gc.getItemImagesList().get(0).getBitmapString());
                         iv1.setImageBitmap(imageBitmap);
                     }
-                } catch (Exception e) {
-                }
+                } catch (Exception e) {} // Do nothing to the default image if there are no images in the image list
             }
 
             if (tt1 != null) {
