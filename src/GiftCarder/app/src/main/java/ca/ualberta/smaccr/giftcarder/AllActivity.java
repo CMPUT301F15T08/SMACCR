@@ -120,6 +120,7 @@ public class AllActivity extends ActionBarActivity {
 
         //click individual friend, disabled cause we need cache or what to save it, friend stuff
         /*
+
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
