@@ -98,7 +98,7 @@ public class ItemActivity extends Activity {
         inv = (Inventory) getIntent().getSerializableExtra("inventory");
         gc = (GiftCard)getIntent().getSerializableExtra("gc");
         itemState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
-        itemImagesList = inv.getInvList().get(position).getItemImagesList();
+
         featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
 
         // Get references to UI
@@ -116,6 +116,7 @@ public class ItemActivity extends Activity {
         //Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
 
         if (inv != null) {
+            itemImagesList = inv.getInvList().get(position).getItemImagesList();
             ic.displayGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity,
                     qualitySpinner, categorySpinner, etComments, checkbox);
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
@@ -151,6 +152,7 @@ public class ItemActivity extends Activity {
         if (gc != null){
             ic.displayGiftCardInfo(gc, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox);
+            itemImagesList = gc.getItemImagesList();
             //ic.setViewModeValue(false);
             //ic.setViewMode(etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner,
             //        etComments, checkbox, viewStatusButton, offerButton, saveButton);
