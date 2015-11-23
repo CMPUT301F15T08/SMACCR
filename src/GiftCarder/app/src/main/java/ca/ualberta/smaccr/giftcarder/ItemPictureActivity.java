@@ -34,6 +34,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ItemPictureActivity extends ActionBarActivity {
@@ -86,6 +87,8 @@ public class ItemPictureActivity extends ActionBarActivity {
         if (itemState != OWNER_STATE) {
             addPhotoButton.setVisibility(View.VISIBLE);
 
+            Toast.makeText(getApplicationContext(), "Tip: Long click to delete image", Toast.LENGTH_LONG).show();
+
             // Long click to delete listener (modified from AllActivity)
             gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
@@ -115,7 +118,6 @@ public class ItemPictureActivity extends ActionBarActivity {
         } else {
             addPhotoButton.setVisibility(View.INVISIBLE);;
         }
-
     }
     /*
     @Override
@@ -173,14 +175,28 @@ public class ItemPictureActivity extends ActionBarActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         ItemImage itemImage = null;
+        Bitmap bitmap = null;
 
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE)
-                itemImage = new ItemImage(onSelectFromGalleryResult(data));
-            else if (requestCode == REQUEST_CAMERA)
-                if (data != null) {
-                    itemImage = new ItemImage(ipc.onCaptureImageResult(data));
+            if (data != null) {
+                if (requestCode == SELECT_FILE) {
+                    Uri uri = data.getData();
+
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
+                else if (requestCode == REQUEST_CAMERA) {
+                    bitmap = (Bitmap) data.getExtras().get("data");
+                }
+
+                if (bitmap != null) {
+                    itemImage = new ItemImage(ipc.processImageResult(bitmap));
+                }
+            }
         }
 
         if (itemImage != null) {
@@ -193,12 +209,6 @@ public class ItemPictureActivity extends ActionBarActivity {
     public void onBackPressed() {
         Intent returnIntent = new Intent();
         returnIntent.putExtra(EXTRA_PICTURES, itemImagesList);
-
-        if (!itemImagesList.isEmpty()) {
-            // temporary until I get pick featured working
-            returnIntent.putExtra(EXTRA_BITMAP_STRING, itemImagesList.get(0).getBitmapString());
-        }
-
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
@@ -213,30 +223,4 @@ public class ItemPictureActivity extends ActionBarActivity {
         gridView.setAdapter(gridAdapter);
     }
 
-    @SuppressWarnings("deprecation")
-    public String onSelectFromGalleryResult(Intent data) {
-        Uri selectedImageUri = data.getData();
-        String[] projection = { MediaStore.MediaColumns.DATA };
-        CursorLoader cursorLoader = new CursorLoader(this, selectedImageUri, projection, null, null, null);
-
-        Cursor cursor =cursorLoader.loadInBackground();
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-        cursor.moveToFirst();
-        String selectedImagePath = cursor.getString(column_index);
-
-        Bitmap bm;
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(selectedImagePath, options);
-        final int REQUIRED_SIZE = 200;
-        int scale = 1;
-        while (options.outWidth / scale / 2 >= REQUIRED_SIZE
-                && options.outHeight / scale / 2 >= REQUIRED_SIZE)
-            scale *= 2;
-        options.inSampleSize = scale;
-        options.inJustDecodeBounds = false;
-        bm = BitmapFactory.decodeFile(selectedImagePath, options);
-
-        return ipc.encodeToBase64(bm);
-    }
 }
