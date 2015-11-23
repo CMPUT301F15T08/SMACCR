@@ -138,7 +138,6 @@ public class GiftCard implements Serializable {
         this.value = value;
     }
 
-
     public String getCategoryString() {
         switch (this.category) {
             case 1:

@@ -101,7 +101,7 @@ public class ItemController {
      * @param etComments EditText
      * @param checkbox CheckBox
      */
-    /*
+
     public void displayGiftCardInfo(GiftCard gc, EditText etItemValue, EditText etItemName,
                                     EditText etQuantity, Spinner qualitySpinner,
                                     Spinner categorySpinner, EditText etComments,
@@ -131,7 +131,7 @@ public class ItemController {
         etComments.setText(gc.getComments());
         checkbox.setChecked(gc.getShared());
     }
-    */
+
 
     /**
      setGiftCardInfo

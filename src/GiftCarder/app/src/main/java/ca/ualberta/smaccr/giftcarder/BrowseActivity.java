@@ -17,16 +17,30 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class BrowseActivity extends ActionBarActivity {
 
+
+    public static final int ADD_ITEM_STATE = 0; // add item
+    public static final int OWNER_ITEM_STATE = 1; // view own item
+    public static final int BROWSER_STATE = 2; // view other's item
+
+    public static final int OWNER_PROFILE_STATE = 0; // view own profile (has edit button)
+    public static final int EDIT_PROFILE_STATE = 1; // edit own profile (has save button)
+    public static final int STRANGER_PROFILE_STATE = 2; // send friend request to stranger (has send friend request button)
+    public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
+
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
+    public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
     String username;
+    ArrayAdapter<String> displayAdapter;
 
     private ArrayAdapter<GiftCard> adapter;
-    Cache myCache = new Cache();
+
+    Cache myCache;
 
     private ListView browseListID;
     private BrowseActivity activity = this;
@@ -67,6 +81,7 @@ public class BrowseActivity extends ActionBarActivity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
+        myCache= new Cache(this, username);
 
         final GiftCard giftCard1 = new GiftCard(12.34,"Test",1,1,6,"scratched but usable", Boolean.TRUE);
 
@@ -81,10 +96,11 @@ public class BrowseActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                // Switch to item activity and send selected giftcard data
+// Switch to item activity and send selected gift card data//FIXME FIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXME
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
-                //intent.putExtra("gc", giftCard1);
-                startActivity(intent);
+                intent.putExtra("gc", myCache.getResults().get(position));
+                intent.putExtra(EXTRA_STATE, BROWSER_STATE); // add item
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -131,20 +147,20 @@ public class BrowseActivity extends ActionBarActivity {
 
     public void updateBrowseList(){
         // Get ArrayList of Strings to display in Adapter ListView
-        ArrayList<GiftCard> tempArray = loadFromCache();
+        ArrayList<GiftCard> tempArray = myCache.getResults();
         // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
 
-        ArrayList<String> GiftCardNames = new ArrayList<String>(tempArray.size());
-        for (int i = 0; i <tempArray.size(); i++){
-            GiftCardNames.add(0, tempArray.get(i).getMerchant());
+        ArrayList<String> GiftCardNames = new ArrayList<String>();
+        for (int index = 0; index <tempArray.size(); index++){
+
+            DecimalFormat df = new DecimalFormat("#.00");
+            GiftCardNames.add("$ "+df.format(tempArray.get(index).getValue()) + " " + tempArray.get(index).getMerchant());
         }
 
         // Display list of names of giftcards
-        ArrayAdapter<String> displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);//FixME format display to more than string
-        //new ArrayAdapter<GiftCard>(this, R.layout.list_gc, (List<GiftCard>)myCache.getItems());
-
-        //displayAdapter.getView()// turn GC into item with image and value
+        displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
         browseListID.setAdapter(displayAdapter);
+
     }
 
     @Override
@@ -152,9 +168,10 @@ public class BrowseActivity extends ActionBarActivity {
         // TODO Auto-generated method stub
         super.onStart();
 
+        myCache.updateFriends();
         myCache.browseAll();
 
-        Toast.makeText(getApplicationContext(), "LongClick to propose trade",Toast.LENGTH_SHORT).show();
+        updateBrowseList();
     }
 
     @Override
@@ -197,6 +214,8 @@ public class BrowseActivity extends ActionBarActivity {
     }*/
 
     public void clickGo(View v){
+
+
 
         int cat = catSpinner.getSelectedItemPosition();
 

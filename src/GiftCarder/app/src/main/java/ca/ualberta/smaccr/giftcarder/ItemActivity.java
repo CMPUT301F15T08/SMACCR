@@ -95,9 +95,9 @@ public class ItemActivity extends Activity {
         // receive inventory, position, and state of gift card
         position = (int) getIntent().getIntExtra("position", 0);
         inv = (Inventory) getIntent().getSerializableExtra("inventory");
-        //gc = (GiftCard)getIntent().getSerializableExtra("gc");
+        gc = (GiftCard)getIntent().getSerializableExtra("gc");
         itemState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
-        itemImagesList = inv.getInvList().get(position).getItemImagesList();
+
         featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
 
         // Get references to UI
@@ -115,6 +115,7 @@ public class ItemActivity extends Activity {
         //Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
 
         if (inv != null) {
+            itemImagesList = inv.getInvList().get(position).getItemImagesList();
             ic.displayGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity,
                     qualitySpinner, categorySpinner, etComments, checkbox);
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
@@ -146,16 +147,33 @@ public class ItemActivity extends Activity {
             }
         }
 
-        /*
+
         if (gc != null){
             ic.displayGiftCardInfo(gc, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox);
-            ic.setViewModeValue(false);
-            ic.setViewMode(etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner,
-                    etComments, checkbox, viewStatusButton, offerButton, saveButton);
-            viewStatusButton.setVisibility(View.GONE);
+            itemImagesList = gc.getItemImagesList();
+
+            // if user clicks Edit button
+            if (itemState == OWNER_STATE) {
+                editAndOfferButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        ic.setViewMode(EDIT_STATE, etItemValue, etItemName, etQuantity, qualitySpinner,
+                                categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
+                        itemState = EDIT_STATE;
+                    }
+                });
+                // if user clicks Make Offer button
+            } else if (itemState == BROWSER_STATE) {
+                editAndOfferButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        Toast.makeText(getApplicationContext(), "Trade Button Clicked", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
-        */
+
 
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbutton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
     }

@@ -120,4 +120,8 @@ public class User {
         this.friendRequests.add(request);
     }
 
+    public boolean isOwner(GiftCard giftCard){
+        ArrayList<GiftCard> giftCards = getInv().getInvList();
+        return giftCards.contains(giftCard);
+    }
 }
