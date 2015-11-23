@@ -23,7 +23,7 @@
         app:showAsAction="always" />
 
     <item android:id="@+id/settings"
-        android:icon="@drawable/gear"
+        android:icon="@drawable/gear2"
         android:title="@string/title_activity_settings"
         app:showAsAction="always"
         android:onClick="settingsClick"/>

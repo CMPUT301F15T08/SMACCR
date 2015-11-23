@@ -1,15 +1,21 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -18,7 +24,7 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class AllActivity extends ActionBarActivity {
+public class AllActivity extends AppCompatActivity {
 
     // Constants
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
@@ -56,7 +62,11 @@ public class AllActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_all);
+
+        // ActionBar actionBar = getActionBar();
+        // actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF8833")));
 
         // Manage the tabs between inventory, friends, and trades pages.
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost);

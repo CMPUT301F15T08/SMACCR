@@ -45,7 +45,8 @@
                             android:text="@string/addcard"
                             android:id="@+id/addGiftCardButton"
                             android:onClick="AddNewGiftCard"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-light" />
 
                         <Button
                             android:layout_width="match_parent"
@@ -53,7 +54,8 @@
                             android:text="@string/invdetails"
                             android:id="@+id/invDetailsButton"
                             android:onClick="inventoryDetailsButton"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-light" />
                     </LinearLayout>
 
                     <ListView
