@@ -42,7 +42,7 @@ public class Cache {
         this.lastUpdated = new Date();
     }
 
-    //lazt sigleton
+    //lazy singleton
     public ArrayList<User> getFriends() {
         if (friends==null){
             friends = new ArrayList<User>();
