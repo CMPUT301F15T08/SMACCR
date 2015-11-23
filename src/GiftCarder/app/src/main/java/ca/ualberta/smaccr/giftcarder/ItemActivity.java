@@ -44,6 +44,9 @@ public class ItemActivity extends Activity {
     private int itemState;
     protected ArrayList<ItemImage> itemImagesList;
 
+    // for cloning items only
+    public Inventory ownerInv;
+
     // Controllers
     ItemController ic = new ItemController();
     ItemPictureController ipc = new ItemPictureController();
@@ -105,6 +108,11 @@ public class ItemActivity extends Activity {
         itemState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
         itemImagesList = inv.getInvList().get(position).getItemImagesList();
         featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
+
+        // receive owner's inventory for cloning friend's items into it
+        if (itemState == BROWSER_STATE) {
+            ownerInv = (Inventory) getIntent().getSerializableExtra("ownerInventory");
+        }
 
         // Get references to UI
         etItemValue = (EditText) findViewById(R.id.ID_item_value);
@@ -302,7 +310,11 @@ public class ItemActivity extends Activity {
         }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //
+                if (ownerInv != null) {
+                    ic.cloneItem(inv, position, ownerInv);
+                    Toast.makeText(getApplicationContext(), "Item cloned successfully",
+                            Toast.LENGTH_LONG).show();
+                }
 
                 dialog.dismiss();
             }
