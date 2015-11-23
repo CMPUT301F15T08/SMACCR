@@ -63,12 +63,12 @@
     <string name="addcard">Add New GiftCard</string>
     <string name="usericon">UserIcon</string>
     <string name="title_activity_friends">FriendsActivity</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="invdetails">Inventory Details</string>
     <string name="title_activity_inv_details">InvDetailsActivity</string>
     <string name="userinventory">User Inventory</string>
     <!-- ITEM DROP DOWN MENU STUFF DONE -->
-    <string name="title_activity_browse">BrowseActivity</string>
+    <string name="title_activity_browse">Browse</string>
 
     <string name="browseGo">Go</string>
     <string name="GiftCarder">GiftCarder</string>
