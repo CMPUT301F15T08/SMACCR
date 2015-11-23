@@ -38,10 +38,11 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
         final ListView listView = activity.getbrowseListID();
         final Cache cache = activity.getMyCache();
 
-        Inventory inventory = new Inventory();
+        User user = new User();
+        Inventory inventory = user.getInv();
         GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
         inventory.addGiftCard(giftCard1);
-        cache.add(inventory);
+        cache.add(user);
         cache.loadItems();
 
         //Code from: https://developer.android.com/training/activity-testing/activity-functional-testing.html
@@ -92,10 +93,11 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
         final Spinner catSpinner = activity.getCatSpinner();
         final Cache cache = activity.getMyCache();
 
-        Inventory inventory = new Inventory();
+        User user = new User();
+        Inventory inventory = user.getInv();
         GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
         inventory.addGiftCard(giftCard1);
-        cache.add(inventory);
+        cache.add(user);
         cache.loadItems();
 
 
@@ -137,11 +139,12 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
         final Spinner catSpinner = activity.getCatSpinner();
         final Cache cache = activity.getMyCache();
 
-        Inventory inventory = new Inventory();
+        User user = new User();
+        Inventory inventory = user.getInv();
         GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
         inventory.addGiftCard(giftCard1);
-        cache.add(inventory);
-        cache.browseAll();
+        cache.add(user);
+        cache.loadItems();
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
@@ -204,10 +207,11 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
         final ListView listView = activity.getbrowseListID();
         final Cache cache = activity.getMyCache();
 
-        Inventory inventory = new Inventory();
+        User user = new User();
+        Inventory inventory = user.getInv();
         GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
         inventory.addGiftCard(giftCard1);
-        cache.add(inventory);
+        cache.add(user);
         cache.loadItems();
 
         activity.runOnUiThread(new Runnable() {
@@ -243,10 +247,11 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
         final ListView listView = activity.getbrowseListID();
         final Cache cache = activity.getMyCache();
 
-        Inventory inventory = new Inventory();
+        User user = new User();
+        Inventory inventory = user.getInv();
         GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
         inventory.addGiftCard(giftCard1);
-        cache.add(inventory);
+        cache.add(user);
         cache.loadItems();
 
         //Code from: https://developer.android.com/training/activity-testing/activity-functional-testing.html

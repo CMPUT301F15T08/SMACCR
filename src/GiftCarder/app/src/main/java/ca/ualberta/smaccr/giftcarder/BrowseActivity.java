@@ -22,11 +22,23 @@ import java.util.LinkedList;
 
 public class BrowseActivity extends ActionBarActivity {
 
+
+    public static final int ADD_ITEM_STATE = 0; // add item
+    public static final int OWNER_ITEM_STATE = 1; // view own item
+    public static final int BROWSER_STATE = 2; // view other's item
+
+    public static final int OWNER_PROFILE_STATE = 0; // view own profile (has edit button)
+    public static final int EDIT_PROFILE_STATE = 1; // edit own profile (has save button)
+    public static final int STRANGER_PROFILE_STATE = 2; // send friend request to stranger (has send friend request button)
+    public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
+
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
+    public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
     String username;
 
     private ArrayAdapter<GiftCard> adapter;
-    Cache myCache = new Cache();
+
+    Cache myCache;
 
     private ListView browseListID;
     private BrowseActivity activity = this;
@@ -67,6 +79,7 @@ public class BrowseActivity extends ActionBarActivity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
+        myCache= new Cache(this, username);
 
         final GiftCard giftCard1 = new GiftCard(12.34,"Test",1,1,6,"scratched but usable", Boolean.TRUE);
 
@@ -81,10 +94,12 @@ public class BrowseActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                // Switch to item activity and send selected giftcard data
+// Switch to item activity and send selected gift card data//FIXME FIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXME
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
-                //intent.putExtra("gc", giftCard1);
-                startActivity(intent);
+                intent.putExtra("position", 0);
+                intent.putExtra("inventory", inv);
+                intent.putExtra(EXTRA_STATE, BROWSER_STATE); // add item
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -152,9 +167,10 @@ public class BrowseActivity extends ActionBarActivity {
         // TODO Auto-generated method stub
         super.onStart();
 
+        myCache.updateFriends();
         myCache.browseAll();
 
-        Toast.makeText(getApplicationContext(), "LongClick to propose trade",Toast.LENGTH_SHORT).show();
+        updateBrowseList();
     }
 
     @Override
@@ -197,6 +213,8 @@ public class BrowseActivity extends ActionBarActivity {
     }*/
 
     public void clickGo(View v){
+
+
 
         int cat = catSpinner.getSelectedItemPosition();
 
