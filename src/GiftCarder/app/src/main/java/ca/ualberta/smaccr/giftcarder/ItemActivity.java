@@ -27,7 +27,7 @@ public class ItemActivity extends Activity {
 
     public Inventory inv;
     private int position;
-    //private GiftCard gc;
+    private GiftCard gc;
     private EditText etItemValue;
     private EditText etItemName;
     private EditText etQuantity;
@@ -148,26 +148,9 @@ public class ItemActivity extends Activity {
             ic.displayGiftCardInfo(gc, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox);
             itemImagesList = gc.getItemImagesList();
-
-            // if user clicks Edit button
-            if (itemState == OWNER_STATE) {
-                editAndOfferButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        ic.setViewMode(EDIT_STATE, etItemValue, etItemName, etQuantity, qualitySpinner,
-                                categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
-                        itemState = EDIT_STATE;
-                    }
-                });
-                // if user clicks Make Offer button
-            } else if (itemState == BROWSER_STATE) {
-                editAndOfferButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        Toast.makeText(getApplicationContext(), "Trade Button Clicked", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+            ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
+                    categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
+                    cloneItemButton);
         }
 
 
