@@ -96,7 +96,7 @@ public class GiftCard implements Serializable {
         this.quantity = quantity;
     }
 
-    public Boolean getShared() {
+    public Boolean isShared() {
         return shared;
     }
 
@@ -136,14 +136,6 @@ public class GiftCard implements Serializable {
                 return "Other";
         }
         return ""; // Shouldn't get to here.
-    }
-
-    public void addItemImage(ItemImage itemImage){
-        this.itemImagesList.add(0, itemImage);
-    }
-
-    public void deleteItemImage(int imageIndex){
-        this.itemImagesList.remove(imageIndex);
     }
 
     public int getSize(){

@@ -112,9 +112,9 @@ public class InventoryActivity extends Activity {
         }
 
         // Display list of names of giftcards
-        ListView inventorylistID = (ListView) findViewById(R.id.friendInventoryListViewID);
-        displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
-        inventorylistID.setAdapter(displayAdapter);
+        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+        InvListAdapter customAdapter = new InvListAdapter(this, R.layout.adapter_inv_list, tempArray);
+        inventorylistID.setAdapter(customAdapter);
 
         //Updates the user's inventory in userList in UserRegisteration controller
         UserRegistrationController uc= new UserRegistrationController();
