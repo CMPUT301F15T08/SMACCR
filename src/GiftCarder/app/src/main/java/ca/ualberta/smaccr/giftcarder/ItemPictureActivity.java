@@ -84,6 +84,7 @@ public class ItemPictureActivity extends ActionBarActivity {
             }
         });
 
+        // if in Add or Edit state
         if (itemState != OWNER_STATE) {
             addPhotoButton.setVisibility(View.VISIBLE);
 
@@ -115,8 +116,9 @@ public class ItemPictureActivity extends ActionBarActivity {
                 }
             });
 
+        // If in Owner state
         } else {
-            addPhotoButton.setVisibility(View.INVISIBLE);;
+            addPhotoButton.setVisibility(View.GONE);;
         }
     }
     /*

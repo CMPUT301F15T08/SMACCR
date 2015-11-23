@@ -61,7 +61,7 @@ public class UserProfileActivity extends Activity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
-        profileState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
+        profileState = getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
 
         User user = urc.getUser(username);
 

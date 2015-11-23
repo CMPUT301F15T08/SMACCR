@@ -45,7 +45,7 @@ public class UserProfileController {
             etCity.setFocusableInTouchMode(true);
             etPhone.setFocusableInTouchMode(true);
             etEmail.setFocusableInTouchMode(true);
-            multiButton.setVisibility(View.GONE);
+            multiButton.setVisibility(View.INVISIBLE);
             saveButton.setVisibility(View.VISIBLE);
         }
     }
