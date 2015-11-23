@@ -45,10 +45,10 @@
         <item>Clothing</item>
         <item>Home-garden</item>
         <item>Electronics</item>
-        <item>Department Store(eg. Walmart)</item>
+        <item>Department Store (e.g. Walmart)</item>
         <item>Services</item>
         <item>Entertainment</item>
-        <item>Online Retailers(eg. Amazon)</item>
+        <item>Online Retailers (e.g. Amazon)</item>
         <item>Health-beauty</item>
         <item>Other</item>
     </string-array>

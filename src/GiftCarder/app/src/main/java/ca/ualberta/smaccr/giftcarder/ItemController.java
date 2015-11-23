@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -248,7 +249,8 @@ public class ItemController {
      * @param       etQuantity EditText
      * @return      boolean
      */
-    public boolean validateFields(EditText etItemValue, EditText etItemName, EditText etQuantity) {
+    public boolean validateFields(EditText etItemValue, EditText etItemName, EditText etQuantity,
+                                  Spinner categorySpinner) {
         boolean valid = true;
 
         if (!Validation.hasText(etItemValue)) {
@@ -260,6 +262,19 @@ public class ItemController {
         }
 
         if (!Validation.hasText(etQuantity)) {
+            valid = false;
+        }
+
+        if (categorySpinner.getSelectedItemPosition() == 0) {
+
+            /* Modified from EdmundYeung99,retrieved 11/22/15
+             * http://stackoverflow.com/questions/3749971/creating-a-seterror-for-the-spinner
+             */
+            TextView errorText = (TextView)categorySpinner.getSelectedView();
+            errorText.setError("anything here, just to add the icon");
+            errorText.setTextColor(Color.RED);//just to highlight that this is an error
+            errorText.setText("Choose a category");//changes the selected item text to this
+
             valid = false;
         }
 

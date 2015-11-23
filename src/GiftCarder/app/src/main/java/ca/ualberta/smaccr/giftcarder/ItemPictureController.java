@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Carin on 11/19/2015.
@@ -40,8 +41,7 @@ public class ItemPictureController {
     int maxByteSize = 65536;
     double scale = 0.5; // scale image by 1/2
 
-    public String onCaptureImageResult(Intent data) {
-        Bitmap image = (Bitmap) data.getExtras().get("data");
+    public String processImageResult(Bitmap image) {
 
         // resize image until less than maxByteSize
         while ((image != null) && (image.getByteCount() >= maxByteSize)) {
@@ -66,32 +66,9 @@ public class ItemPictureController {
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
-    /*
-    @SuppressWarnings("deprecation")
-    public String onSelectFromGalleryResult(Intent data) {
-        Uri selectedImageUri = data.getData();
-        String[] projection = { MediaStore.MediaColumns.DATA };
-        CursorLoader cursorLoader = new CursorLoader(this, selectedImageUri, projection, null, null, null);
-
-        Cursor cursor =cursorLoader.loadInBackground();
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-        cursor.moveToFirst();
-        String selectedImagePath = cursor.getString(column_index);
-
-        Bitmap bm;
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(selectedImagePath, options);
-        final int REQUIRED_SIZE = 200;
-        int scale = 1;
-        while (options.outWidth / scale / 2 >= REQUIRED_SIZE
-                && options.outHeight / scale / 2 >= REQUIRED_SIZE)
-            scale *= 2;
-        options.inSampleSize = scale;
-        options.inJustDecodeBounds = false;
-        bm = BitmapFactory.decodeFile(selectedImagePath, options);
-
-        return encodeToBase64(bm);
+    public void displayFeaturedImage(ArrayList<ItemImage> itemImagesList, ImageView imageView) {
+        String bitmapString = itemImagesList.get(0).getBitmapString();
+        imageView.setImageBitmap(decodeBase64(bitmapString));
     }
-    */
+
 }

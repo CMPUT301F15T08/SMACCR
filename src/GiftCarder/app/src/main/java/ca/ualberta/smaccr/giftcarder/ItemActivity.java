@@ -83,7 +83,6 @@ public class ItemActivity extends Activity {
     // Constants
     public final static String EXTRA_STATE = "ca.ualberta.smaccr.giftcarder.STATE";
     public final static String EXTRA_PICTURES = "ca.ualberta.smaccr.giftcarder.PICTURES";
-    public final static String EXTRA_BITMAP_STRING = "ca.ualberta.smaccr.giftcarder.BITMAPSTRING";
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
     public static final int BROWSER_STATE = 2; // view other's item
@@ -122,10 +121,9 @@ public class ItemActivity extends Activity {
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
 
-            // TEMPORARY
+            // Display featured image
             if (!itemImagesList.isEmpty()) {
-                String bitmapString = itemImagesList.get(0).getBitmapString();
-                featuredImage.setImageBitmap(ipc.decodeBase64(bitmapString));
+                ipc.displayFeaturedImage(itemImagesList, featuredImage);
             }
 
             // if user clicks Edit button
@@ -191,7 +189,7 @@ public class ItemActivity extends Activity {
      * @param menu View
      */
     public void saveGiftCardInfo(View menu) {
-        if (ic.validateFields(etItemValue, etItemName, etQuantity)) {
+        if (ic.validateFields(etItemValue, etItemName, etQuantity, categorySpinner)) {
             // item controller to set the data into inventory
             inv = ic.setGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, itemImagesList);
@@ -281,11 +279,11 @@ public class ItemActivity extends Activity {
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 itemImagesList = (ArrayList<ItemImage>)data.getSerializableExtra(EXTRA_PICTURES);
-                String bitmapString = data.getStringExtra(EXTRA_BITMAP_STRING);
 
-                if (bitmapString != null) {
-                    featuredImage.setImageBitmap(ipc.decodeBase64(bitmapString));
+                if (!itemImagesList.isEmpty()) {
+                    ipc.displayFeaturedImage(itemImagesList, featuredImage);
                 }
+
             }
         }
     }
