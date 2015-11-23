@@ -91,7 +91,7 @@ public class ItemActivity extends Activity {
         // receive inventory, position, and state of gift card
         position = (int) getIntent().getIntExtra("position", 0);
         inv = (Inventory) getIntent().getSerializableExtra("inventory");
-        //gc = (GiftCard)getIntent().getSerializableExtra("gc");
+        gc = (GiftCard)getIntent().getSerializableExtra("gc");
         itemState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
 
         // Get references to UI
@@ -134,16 +134,16 @@ public class ItemActivity extends Activity {
             }
         }
 
-        /*
+
         if (gc != null){
             ic.displayGiftCardInfo(gc, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox);
-            ic.setViewModeValue(false);
-            ic.setViewMode(etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner,
-                    etComments, checkbox, viewStatusButton, offerButton, saveButton);
-            viewStatusButton.setVisibility(View.GONE);
+            //ic.setViewModeValue(false);
+            //ic.setViewMode(etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner,
+            //        etComments, checkbox, viewStatusButton, offerButton, saveButton);
+            //viewStatusButton.setVisibility(View.GONE);
         }
-        */
+
 
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbutton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
     }

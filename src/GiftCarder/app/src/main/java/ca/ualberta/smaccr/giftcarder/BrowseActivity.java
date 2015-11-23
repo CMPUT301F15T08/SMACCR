@@ -96,8 +96,7 @@ public class BrowseActivity extends ActionBarActivity {
 
 // Switch to item activity and send selected gift card data//FIXME FIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXME
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
-                intent.putExtra("position", 0);
-                intent.putExtra("inventory", inv);
+                intent.putExtra("gc", myCache.getResults().get(position));
                 intent.putExtra(EXTRA_STATE, BROWSER_STATE); // add item
                 startActivityForResult(intent, 1);
             }

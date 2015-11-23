@@ -148,10 +148,10 @@ public class Cache {
             gc2 = al2.get(s2);
 
             if (gc1.getDate().before(gc2.getDate())) {
-                retAl.add(0, gc1);
+                retAl.add(gc1);
                 s1++;
             } else {
-                retAl.add(0, gc2);
+                retAl.add(gc2);
                 s2++;
             }
         }
