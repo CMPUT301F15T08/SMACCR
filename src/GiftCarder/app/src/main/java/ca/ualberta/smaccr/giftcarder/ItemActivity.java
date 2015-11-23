@@ -3,7 +3,6 @@ package ca.ualberta.smaccr.giftcarder;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

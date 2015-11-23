@@ -60,7 +60,7 @@ public class UserProfileActivity extends Activity {
         saveButton = (Button) findViewById(R.id.saveProfileButton);
 
         Intent intent = getIntent();
-        username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
+        username = intent.getStringExtra(EXTRA_USERNAME);
         profileState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
 
         User user = urc.getUser(username);
