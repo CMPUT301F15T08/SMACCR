@@ -175,4 +175,8 @@ public class GiftCard implements Serializable {
     public ArrayList<ItemImage> getItemImagesList() {
         return itemImagesList;
     }
+
+    public void setItemImagesList(ArrayList<ItemImage> itemImagesList) {
+        this.itemImagesList = itemImagesList;
+    }
 }
