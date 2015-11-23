@@ -44,7 +44,7 @@ public class ESUserManager {
     }
 
     /**
-     * Get a movie with the specified id
+     * Get a user with the specified id
      */
     public User getUser(String id) {
         SearchHit<User> sr = null;
