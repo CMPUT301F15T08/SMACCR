@@ -153,10 +153,26 @@ public class ItemActivity extends Activity {
             ic.displayGiftCardInfo(gc, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox);
             itemImagesList = gc.getItemImagesList();
-            //ic.setViewModeValue(false);
-            //ic.setViewMode(etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner,
-            //        etComments, checkbox, viewStatusButton, offerButton, saveButton);
-            //viewStatusButton.setVisibility(View.GONE);
+
+            // if user clicks Edit button
+            if (itemState == OWNER_STATE) {
+                editAndOfferButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        ic.setViewMode(EDIT_STATE, etItemValue, etItemName, etQuantity, qualitySpinner,
+                                categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
+                        itemState = EDIT_STATE;
+                    }
+                });
+                // if user clicks Make Offer button
+            } else if (itemState == BROWSER_STATE) {
+                editAndOfferButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View arg0) {
+                        Toast.makeText(getApplicationContext(), "Trade Button Clicked", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
 
 

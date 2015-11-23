@@ -26,7 +26,6 @@ import java.util.concurrent.BlockingQueue;
 public class Cache {
 
     private static ArrayList<User> friends;
-    //private ArrayList<Inventory> fInv;//the inventories of all friends
     private ArrayList<GiftCard> items;// all the items owned by all friends, in order by most recent date
     private ArrayList<GiftCard> results;// results of searches
     private Date lastUpdated;
@@ -43,7 +42,11 @@ public class Cache {
         this.lastUpdated = new Date();
     }
 
+    //lazt sigleton
     public ArrayList<User> getFriends() {
+        if (friends==null){
+            friends = new ArrayList<User>();
+        }
 
         return friends;
     }

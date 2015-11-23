@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -35,6 +36,7 @@ public class BrowseActivity extends ActionBarActivity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
     String username;
+    ArrayAdapter<String> displayAdapter;
 
     private ArrayAdapter<GiftCard> adapter;
 
@@ -145,20 +147,20 @@ public class BrowseActivity extends ActionBarActivity {
 
     public void updateBrowseList(){
         // Get ArrayList of Strings to display in Adapter ListView
-        ArrayList<GiftCard> tempArray = loadFromCache();
+        ArrayList<GiftCard> tempArray = myCache.getResults();
         // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
 
-        ArrayList<String> GiftCardNames = new ArrayList<String>(tempArray.size());
-        for (int i = 0; i <tempArray.size(); i++){
-            GiftCardNames.add(tempArray.get(i).getMerchant());
+        ArrayList<String> GiftCardNames = new ArrayList<String>();
+        for (int index = 0; index <tempArray.size(); index++){
+
+            DecimalFormat df = new DecimalFormat("#.00");
+            GiftCardNames.add("$ "+df.format(tempArray.get(index).getValue()) + " " + tempArray.get(index).getMerchant());
         }
 
         // Display list of names of giftcards
-        ArrayAdapter<String> displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);//FixME format display to more than string
-        //new ArrayAdapter<GiftCard>(this, R.layout.list_gc, (List<GiftCard>)myCache.getItems());
-
-        //displayAdapter.getView()// turn GC into item with image and value
+        displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
         browseListID.setAdapter(displayAdapter);
+
     }
 
     @Override
