@@ -96,7 +96,7 @@ public class GiftCard implements Serializable {
         this.quantity = quantity;
     }
 
-    public Boolean isShared() {
+    public Boolean getShared() {
         return shared;
     }
 
