@@ -158,8 +158,10 @@ public class BrowseActivity extends ActionBarActivity {
         }
 
         // Display list of names of giftcards
-        displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
-        browseListID.setAdapter(displayAdapter);
+        InvListAdapter customAdapter = new InvListAdapter(this, R.layout.adapter_inv_list, tempArray);
+        // displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
+        browseListID.setAdapter(customAdapter);
+
 
     }
 
