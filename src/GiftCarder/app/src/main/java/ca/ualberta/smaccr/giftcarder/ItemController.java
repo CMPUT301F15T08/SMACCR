@@ -199,13 +199,13 @@ public class ItemController {
      * @param categorySpinner Spinner
      * @param etComments EditText
      * @param checkbox CheckBox
-     * @param editAndOfferButton Button
+     * @param editButton Button
      * @param saveButton Button
      */
     public void setViewMode(int itemState, EditText etItemValue ,EditText etItemName,
                             EditText etQuantity, Spinner qualitySpinner, Spinner categorySpinner,
-                            EditText etComments, CheckBox checkbox, Button editAndOfferButton,
-                            Button saveButton) {
+                            EditText etComments, CheckBox checkbox, Button editButton,
+                            Button saveButton, Button makeOfferButton, Button cloneItemButton) {
 
         if ((itemState == ADD_STATE) || (itemState == EDIT_STATE)) {
             etItemValue.setFocusableInTouchMode(true);
@@ -216,7 +216,9 @@ public class ItemController {
             etComments.setFocusableInTouchMode(true);
             checkbox.setEnabled(true);
             saveButton.setVisibility(View.VISIBLE);
-            editAndOfferButton.setVisibility(View.GONE);
+            editButton.setVisibility(View.GONE);
+            makeOfferButton.setVisibility(View.GONE);
+            cloneItemButton.setVisibility(View.GONE);
 
             if (etComments.getText().toString().trim().equals("")) {
                 etComments.setHint("Enter comments (optional)");
@@ -231,13 +233,19 @@ public class ItemController {
             etComments.setFocusable(false);
             checkbox.setEnabled(false);
             saveButton.setVisibility(View.GONE);
-            editAndOfferButton.setVisibility(View.VISIBLE);
 
             if (itemState == OWNER_STATE) {
-                editAndOfferButton.setText("Edit");
+                editButton.setVisibility(View.VISIBLE);
+                makeOfferButton.setVisibility(View.GONE);
+                cloneItemButton.setVisibility(View.GONE);
+
+            // in Browser State
             } else {
-                editAndOfferButton.setText("Trade");
+                editButton.setVisibility(View.GONE);
+                makeOfferButton.setVisibility(View.VISIBLE);
+                cloneItemButton.setVisibility(View.VISIBLE);
             }
+
         }
     }
 

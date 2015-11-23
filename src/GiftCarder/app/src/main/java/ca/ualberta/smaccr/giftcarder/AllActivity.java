@@ -30,14 +30,8 @@ public class AllActivity extends AppCompatActivity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
 
-    public static final int ADD_ITEM_STATE = 0; // add item
-    public static final int OWNER_ITEM_STATE = 1; // view own item
-    public static final int BROWSER_STATE = 2; // view other's item
-
-    public static final int OWNER_PROFILE_STATE = 0; // view own profile (has edit button)
-    public static final int EDIT_PROFILE_STATE = 1; // edit own profile (has save button)
-    public static final int STRANGER_PROFILE_STATE = 2; // send friend request to stranger (has send friend request button)
-    public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
+    public static final int ADD_STATE = 0; // add item
+    public static final int OWNER_STATE = 1; // view own item
 
     private UserListController ulc;
 
@@ -190,7 +184,7 @@ public class AllActivity extends AppCompatActivity {
                 //intent.putExtra("GiftCard", inv.getInvList().get(position));
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
-                intent.putExtra(EXTRA_STATE, OWNER_ITEM_STATE); // view item
+                intent.putExtra(EXTRA_STATE, OWNER_STATE); // view item
                 // startActivity(intent);
                 startActivityForResult(intent, 1);
             }
@@ -300,7 +294,7 @@ public class AllActivity extends AppCompatActivity {
         Intent intent = new Intent(AllActivity.this, ItemActivity.class);
         intent.putExtra("position", 0);
         intent.putExtra("inventory", inv);
-        intent.putExtra(EXTRA_STATE, ADD_ITEM_STATE); // add item
+        intent.putExtra(EXTRA_STATE, ADD_STATE); // add item
         startActivityForResult(intent, 1);
     }
 
@@ -523,11 +517,6 @@ public class AllActivity extends AppCompatActivity {
     //###############################################################################################################
     // SWITCHING TO OTHER ACTIVITIES
 
-    public void getUserProfile(View view) {
-        Intent intent = new Intent(this, UserProfileActivity.class);
-        intent.putExtra(EXTRA_USERNAME, username);
-        startActivity(intent);
-    }
 
     public void inventoryDetailsButton(View view) {
         Intent intent = new Intent(this, InvDetailsActivity.class);

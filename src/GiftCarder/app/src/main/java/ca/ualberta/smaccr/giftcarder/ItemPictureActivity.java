@@ -96,8 +96,8 @@ public class ItemPictureActivity extends ActionBarActivity {
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                     final int pos = position;
 
-                    AlertDialog.Builder deletedialog = new AlertDialog.Builder(ItemPictureActivity.this);
-                    deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    AlertDialog.Builder deleteDialog = new AlertDialog.Builder(ItemPictureActivity.this);
+                    deleteDialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -111,7 +111,7 @@ public class ItemPictureActivity extends ActionBarActivity {
                             dialog.dismiss();
                         }
                     });
-                    deletedialog.create().show();
+                    deleteDialog.create().show();
                     return true;
                 }
             });

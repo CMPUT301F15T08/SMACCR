@@ -14,39 +14,68 @@
         android:layout_height="fill_parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginBottom = "10dp">
 
                 <ca.ualberta.smaccr.giftcarder.SquareImageView
                     android:layout_width="180dp"
                     android:layout_height="180dp"
                     android:id="@+id/ID_pictureOfGiftCard"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
                     android:src="@drawable/card_icon"
                     android:onClick="takeGiftCardPic"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:layout_marginRight="5dp" />
 
-                <Button
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/edit"
-                    android:id="@+id/editAndOfferButton"
-                    android:layout_gravity="end"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/ID_pictureOfGiftCard"
-                    android:background="@drawable/button_orange"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="10dp"
-                    style="@style/ButtonText"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical|center_horizontal">
 
-            </RelativeLayout>
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit"
+                        android:id="@+id/editButton"
+                        android:background="@drawable/button_orange"
+                        android:textSize="20dp"
+                        android:onClick="onEditButtonClick"
+                        style="@style/ButtonText"/>
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/make_offer"
+                        android:id="@+id/makeOfferButton"
+                        android:layout_gravity="right"
+                        android:background="@drawable/button_green"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="onMakeOfferButtonClick"
+                        style="@style/ButtonText"/>
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/clone_item"
+                        android:id="@+id/cloneItemButton"
+                        android:layout_gravity="right"
+                        android:background="@drawable/button_orange"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="onCloneItemButtonClick"
+                        style="@style/ButtonText"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

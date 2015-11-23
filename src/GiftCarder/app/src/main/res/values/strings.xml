@@ -98,6 +98,7 @@
     <string name="title_activity_item_details">ItemDetailsActivity</string>
     <string name="count">Count:</string>
     <string name="value_colon">Value:</string>
+    <string name="clone_item">Clone Item</string>
 
     <!--retrieved from Fokert, 11/23/15, http://www.dibbus.com/2011/02/gradient-buttons-for-android/-->
     <style name="ButtonText">
