@@ -150,7 +150,7 @@ public class BrowseActivity extends ActionBarActivity {
 
         ArrayList<String> GiftCardNames = new ArrayList<String>(tempArray.size());
         for (int i = 0; i <tempArray.size(); i++){
-            GiftCardNames.add(0, tempArray.get(i).getMerchant());
+            GiftCardNames.add(tempArray.get(i).getMerchant());
         }
 
         // Display list of names of giftcards
