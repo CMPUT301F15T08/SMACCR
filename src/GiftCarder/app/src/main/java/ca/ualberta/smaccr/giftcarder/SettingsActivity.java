@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,10 @@ public class SettingsActivity extends ActionBarActivity {
 
         TextView tvLoggedInAs = (TextView) findViewById(R.id.loggedInAsTextView);
         tvLoggedInAs.setText("Logged in as: " + username);
+
+        // Disable no-downloads option
+        CheckBox checkbox = (CheckBox) findViewById(R.id.downloadCheckBox);
+        checkbox.setEnabled(false);
     }
 
     @Override

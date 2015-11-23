@@ -1,51 +1,81 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".ItemActivity"
-    >
+    tools:context=".ItemActivity">
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginBottom = "10dp">
 
                 <ca.ualberta.smaccr.giftcarder.SquareImageView
                     android:layout_width="180dp"
                     android:layout_height="180dp"
                     android:id="@+id/ID_pictureOfGiftCard"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
                     android:src="@drawable/card_icon"
                     android:onClick="takeGiftCardPic"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:layout_marginRight="5dp" />
 
-                <Button
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/edit"
-                    android:id="@+id/editAndOfferButton"
-                    android:layout_gravity="end"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/ID_pictureOfGiftCard"
-                    android:background="#ff9600"
-                    android:textSize="20dp"
-                    android:layout_marginLeft = "10dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical|center_horizontal">
 
-            </RelativeLayout>
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit"
+                        android:id="@+id/editButton"
+                        android:background="@drawable/button_orange"
+                        android:textSize="20dp"
+                        android:onClick="onEditButtonClick"
+                        style="@style/ButtonText"/>
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/make_offer"
+                        android:id="@+id/makeOfferButton"
+                        android:layout_gravity="right"
+                        android:background="@drawable/button_green"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="onMakeOfferButtonClick"
+                        style="@style/ButtonText"/>
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/clone_item"
+                        android:id="@+id/cloneItemButton"
+                        android:layout_gravity="right"
+                        android:background="@drawable/button_orange"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="onCloneItemButtonClick"
+                        style="@style/ButtonText"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -54,9 +84,7 @@
                 android:background="#938f90"
                 android:textColor="#000000"
                 android:textSize="20sp"
-                android:gravity="start"
-                />
-
+                android:gravity="start" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -111,8 +139,7 @@
                 android:background="#938f90"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                android:gravity="start"
-                 />
+                android:gravity="start" />
 
             <Spinner
                 android:layout_width="270dp"
@@ -129,8 +156,7 @@
                 android:background="#938f90"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                android:gravity="start"
-                />
+                android:gravity="start" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -149,8 +175,7 @@
                 android:background="#938f90"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                android:gravity="left"
-                />
+                android:gravity="left" />
 
             <Spinner
                 android:layout_width="200dp"
@@ -199,12 +224,14 @@
                 android:text="@string/save_button"
                 android:id="@+id/ID_savegiftcard"
                 android:layout_gravity="end"
-                android:background="#ffb700"
+                android:background="@drawable/button_green"
                 android:textSize="20dp"
                 android:onClick="saveGiftCardInfo"
-                android:visibility="visible"/>
+                android:visibility="visible"
+                style="@style/ButtonText" />
 
         </LinearLayout>
 
     </ScrollView>
+
 </LinearLayout>

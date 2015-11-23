@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:text="@string/yes"
             android:id="@+id/downloadCheckBox"
-            android:checked="false" />
+            android:checked="true" />
 
     </LinearLayout>
 
