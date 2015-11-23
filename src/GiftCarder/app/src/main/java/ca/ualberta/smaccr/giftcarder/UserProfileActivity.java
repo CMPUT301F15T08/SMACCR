@@ -29,6 +29,7 @@ public class UserProfileActivity extends Activity {
     private EditText etPhone;
     private EditText etEmail;
     private String username;
+    private String friendusername;
     private UserRegistrationController urc = new UserRegistrationController();
     private UserProfileController upc = new UserProfileController();
     private int profileState;
@@ -61,18 +62,35 @@ public class UserProfileActivity extends Activity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra(EXTRA_USERNAME);
+
+        friendusername = intent.getStringExtra("FRIENDUSERNAME");
+
         profileState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
 
-        User user = urc.getUser(username);
+        Cache cache = new Cache(this, username);
+        User cacheFriend = cache.getUser(friendusername);
 
-        // Set text fields
-        if (username != null) {
-            tvUsername.setText(username);
-            etCity.setText(user.getCity());
-            etPhone.setText(user.getPhone());
-            etEmail.setText(user.getEmail());
+        //First check if we showing friend profile , if not we show current logged in user's profile
+        if (friendusername != null) {
+            tvUsername.setText(cacheFriend.getUsername());
+            etCity.setText(cacheFriend.getCity());
+            etPhone.setText(cacheFriend.getPhone());
+            etEmail.setText(cacheFriend.getEmail());
             upc.setViewMode(profileState, etCity, etPhone, etEmail, multiButton, saveButton);
         }
+        else{
+            User user = urc.getUser(username);
+
+            // Set text fields
+            if (username != null) {
+                tvUsername.setText(username);
+                etCity.setText(user.getCity());
+                etPhone.setText(user.getPhone());
+                etEmail.setText(user.getEmail());
+                upc.setViewMode(profileState, etCity, etPhone, etEmail, multiButton, saveButton);
+            }
+        }
+
     }
 
     public void onMultiButtonClick(View view){

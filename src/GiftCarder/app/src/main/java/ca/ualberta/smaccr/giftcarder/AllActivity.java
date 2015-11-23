@@ -128,7 +128,7 @@ public class AllActivity extends AppCompatActivity {
         // CLick listeners for FRIENDLIST
 
         // click individual friend, disabled cause we need cache or what to save it, friend stuff
-        /*
+
 
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -136,11 +136,12 @@ public class AllActivity extends AppCompatActivity {
                 String selectedFriend = (String) friendsListView.getItemAtPosition(position);
                 Intent intent = new Intent(AllActivity.this, UserProfileActivity.class);
                 intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
-                intent.putExtra(EXTRA_USERNAME, selectedFriend);
+                intent.putExtra(EXTRA_USERNAME, username);
+                intent.putExtra("FRIENDUSERNAME", selectedFriend);
                 startActivity(intent);
             }
         });
-        */
+
 
         // Long click to delete friend
         friendsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
