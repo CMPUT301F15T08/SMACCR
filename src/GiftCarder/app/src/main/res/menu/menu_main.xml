@@ -14,7 +14,7 @@
 
     <item android:id="@+id/tradeNoti"
         android:icon="@drawable/envelope2png"
-        android:title=sp"@string/newTradeNotiNum"
+        android:title="@string/newTradeNotiNum"
         app:showAsAction="always" />
 
     <item android:id="@+id/friendNoti"
