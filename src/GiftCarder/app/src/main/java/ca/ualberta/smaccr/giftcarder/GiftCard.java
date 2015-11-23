@@ -2,6 +2,7 @@ package ca.ualberta.smaccr.giftcarder;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.ArrayList;
 
 /**
  * Created by Richard on 2015-10-24.
@@ -24,9 +25,10 @@ public class GiftCard implements Serializable {
 // For sorting the order in which items display
     private Date lastModified = new Date();
 
-
+    private ArrayList<ItemImage> itemImagesList;
 
     public GiftCard() {
+        itemImagesList = new ArrayList<ItemImage>();
     }
 
     public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
@@ -143,4 +145,49 @@ public class GiftCard implements Serializable {
         this.lastModified = new Date();
     }
 
+    public String getCategoryString() {
+        switch(this.category) {
+            case 1:
+                return "Food & Beverage";
+            case 2:
+                return "Clothing";
+            case 3:
+                return "Home & Garden";
+            case 4:
+                return "Electronics";
+            case 5:
+                return "Department Store";
+            case 6:
+                return "Services";
+            case 7:
+                return "Entertainment";
+            case 8:
+                return "Online Retailers";
+            case 9:
+                return "Health & Beauty";
+            case 10:
+                return "Other";
+        }
+        return ""; // Shouldn't get to here.
+    }
+
+    public void addItemImage(ItemImage itemImage){
+        this.itemImagesList.add(0, itemImage);
+    }
+
+    public void deleteItemImage(int imageIndex){
+        this.itemImagesList.remove(imageIndex);
+    }
+
+    public int getSize(){
+        return this.itemImagesList.size();
+    }
+
+    public ArrayList<ItemImage> getItemImagesList() {
+        return this.itemImagesList;
+    }
+
+    public void setItemImagesList(ArrayList<ItemImage> itemImagesList) {
+        this.itemImagesList = itemImagesList;
+    }
 }

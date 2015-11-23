@@ -45,10 +45,10 @@
         <item>Clothing</item>
         <item>Home-garden</item>
         <item>Electronics</item>
-        <item>Department Store(eg. Walmart)</item>
+        <item>Department Store (e.g. Walmart)</item>
         <item>Services</item>
         <item>Entertainment</item>
-        <item>Online Retailers(eg. Amazon)</item>
+        <item>Online Retailers (e.g. Amazon)</item>
         <item>Health-beauty</item>
         <item>Other</item>
     </string-array>
@@ -92,5 +92,10 @@
     <string name="enter_comments">Enter comments (optional)</string>
     <string name="make_public">Make Public</string>
     <string name="save_button">SAVE</string>
-    >>>>>>> 6e8e31f1d5a6a3f0ba2786502555495fc5034aae
+    <string name="inv_list_image_desc">GiftCard Image</string>
+    <string name="title_activity_picture">PictureActivity</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="title_activity_item_details">ItemDetailsActivity</string>
+    <string name="count">Count:</string>
+    <string name="value_colon">Value:</string>
 </resources>

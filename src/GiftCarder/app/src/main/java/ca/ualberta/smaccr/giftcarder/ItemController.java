@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 /**
  * Created by Richard on 2015-10-29.  Edited by Carin.
@@ -24,6 +26,7 @@ public class ItemController {
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
     public static final int BROWSER_STATE = 2; // view other's item
+    public static final int EDIT_STATE = 3; // add item
     private File imageFile;
 
     public void takeAPicture() {
@@ -154,7 +157,8 @@ public class ItemController {
     public Inventory setGiftCardInfo(Inventory inv, int position, EditText etItemValue,
                                      EditText etItemName, EditText etQuantity,
                                      Spinner qualitySpinner, Spinner categorySpinner,
-                                     EditText etComments, CheckBox checkbox) {
+                                     EditText etComments, CheckBox checkbox,
+                                     ArrayList<ItemImage> itemImagesList) {
         GiftCard tempcard = inv.getInvList().get(position);
 
         // If invalid dollar, cent amount then set to zero for now!
@@ -178,6 +182,7 @@ public class ItemController {
         // Some weird bug when using spinner; it sets index out of range sometimes
         tempcard.setQuality(qualitySpinner.getSelectedItemPosition());
         tempcard.setCategory(categorySpinner.getSelectedItemPosition());
+        tempcard.setItemImagesList(itemImagesList);
 
         inv.getInvList().set(position, tempcard);
         return inv;
@@ -202,7 +207,7 @@ public class ItemController {
                             EditText etComments, CheckBox checkbox, Button editAndOfferButton,
                             Button saveButton) {
 
-        if (itemState == ADD_STATE) {
+        if ((itemState == ADD_STATE) || (itemState == EDIT_STATE)) {
             etItemValue.setFocusableInTouchMode(true);
             etItemName.setFocusableInTouchMode(true);
             qualitySpinner.setClickable(true);
@@ -244,7 +249,8 @@ public class ItemController {
      * @param       etQuantity EditText
      * @return      boolean
      */
-    public boolean validateFields(EditText etItemValue, EditText etItemName, EditText etQuantity) {
+    public boolean validateFields(EditText etItemValue, EditText etItemName, EditText etQuantity,
+                                  Spinner categorySpinner) {
         boolean valid = true;
 
         if (!Validation.hasText(etItemValue)) {
@@ -256,6 +262,19 @@ public class ItemController {
         }
 
         if (!Validation.hasText(etQuantity)) {
+            valid = false;
+        }
+
+        if (categorySpinner.getSelectedItemPosition() == 0) {
+
+            /* Modified from EdmundYeung99,retrieved 11/22/15
+             * http://stackoverflow.com/questions/3749971/creating-a-seterror-for-the-spinner
+             */
+            TextView errorText = (TextView)categorySpinner.getSelectedView();
+            errorText.setError("anything here, just to add the icon");
+            errorText.setTextColor(Color.RED);//just to highlight that this is an error
+            errorText.setText("Choose a category");//changes the selected item text to this
+
             valid = false;
         }
 
