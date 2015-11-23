@@ -47,6 +47,7 @@ public class UserProfileActivity extends Activity {
     public static final int STRANGER_STATE = 2; // send friend request to stranger (has send friend request button)
     public static final int FRIEND_STATE = 3; // view friend's profile (no button)
 
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,14 @@ public class UserProfileActivity extends Activity {
         username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
         profileState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
 
-        User user = urc.getUser(username);
+        if (profileState != FRIEND_STATE) {
+            user = urc.getUser(username);
+        }else{
+
+            //will work once a singleton...
+            Cache myCache = new Cache();
+            user = myCache.getFriends().getUser(username);
+        }
 
         // Set text fields
         if (username != null) {

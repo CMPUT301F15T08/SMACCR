@@ -1,21 +1,15 @@
 package ca.ualberta.smaccr.giftcarder;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -44,6 +38,7 @@ public class AllActivity extends AppCompatActivity {
     String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
+    private Cache myCache;
 
 
     // friendlist contains an arraylist of strings
@@ -117,6 +112,9 @@ public class AllActivity extends AppCompatActivity {
         User user = urc.getUser(username);
         inv = user.getInv();
 
+        //initialize cache
+        myCache = new Cache();
+
         // FriendList class type
         fl = user.getFl();
         Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
@@ -128,19 +126,21 @@ public class AllActivity extends AppCompatActivity {
         // CLick listeners for FRIENDLIST
 
         // click individual friend, disabled cause we need cache or what to save it, friend stuff
-        /*
+
 
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 String selectedFriend = (String) friendsListView.getItemAtPosition(position);
                 Intent intent = new Intent(AllActivity.this, UserProfileActivity.class);
                 intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
                 intent.putExtra(EXTRA_USERNAME, selectedFriend);
+
                 startActivity(intent);
             }
         });
-        */
+
 
         // Long click to delete friend
         friendsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -436,6 +436,23 @@ public class AllActivity extends AppCompatActivity {
     }
 
     public void updateFriendsList(FriendList fl) {
+
+        myCache = new Cache();
+        User user = urc.getUser(username);
+        myCache.updateFriends(user.getFl().getFriendList());
+
+        urc = new UserRegistrationController();
+        //User me = urc.getUser(username);
+        //urc.setUserList(myCache.getFriends());
+        //urc.addUser(me);
+
+        String str = "";
+
+
+        //for (int i=0;i+1<ulc.getUserlist().getSize();i++) {
+       // str = str + ulc.getUserlist().getUsername(0);
+        //}
+        //Log.d("n", str);
         ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl.getFriendList());
         ListView friendsListView = (ListView) findViewById(R.id.friendListView);
         friendsListView.setAdapter(displayAdapter1);
@@ -512,6 +529,7 @@ public class AllActivity extends AppCompatActivity {
 
     // send of server stuff
     //###############################################################################################################
+
 
 
     @Override

@@ -4,10 +4,12 @@ package ca.ualberta.smaccr.giftcarder;
  * Created by splant on 11/16/15.
  */
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -17,16 +19,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import android.util.Log;
-import ca.ualberta.smaccr.giftcarder.Hits;
-import ca.ualberta.smaccr.giftcarder.SearchHit;
-import ca.ualberta.smaccr.giftcarder.SearchResponse;
-import ca.ualberta.smaccr.giftcarder.SimpleSearchCommand;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 
 public class ESUserManager {
 
@@ -40,7 +36,7 @@ public class ESUserManager {
 
     public ESUserManager(String search) {
         gson = new Gson();
-        // searchUserList(search, null);
+        //searchUserList(search, null);
     }
 
     /**
