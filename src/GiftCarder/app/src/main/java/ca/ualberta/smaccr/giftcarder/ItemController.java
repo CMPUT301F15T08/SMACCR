@@ -271,7 +271,7 @@ public class ItemController {
              * http://stackoverflow.com/questions/3749971/creating-a-seterror-for-the-spinner
              */
             TextView errorText = (TextView)categorySpinner.getSelectedView();
-            errorText.setError("anything here, just to add the icon");
+            errorText.setError("No category selected");
             errorText.setTextColor(Color.RED);//just to highlight that this is an error
             errorText.setText("Choose a category");//changes the selected item text to this
 
