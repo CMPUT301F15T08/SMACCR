@@ -149,6 +149,14 @@ public class ItemActivity extends Activity {
             ic.displayGiftCardInfo(gc, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox);
             itemImagesList = gc.getItemImagesList();
+            ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
+                    categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
+                    cloneItemButton);
+
+            // Display featured image
+            if (!itemImagesList.isEmpty()) {
+                ipc.displayFeaturedImage(itemImagesList, featuredImage);
+            }
         }
 
 

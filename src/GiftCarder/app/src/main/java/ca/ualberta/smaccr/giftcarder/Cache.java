@@ -289,6 +289,11 @@ public class Cache {
     }
 
     public void updateFriends() {
+        if (urc==null)Log.e("1------------", "urc is null");
+        if (urc.getUser(username)==null)Log.e("2------------", "urc.getUser(username) is null");
+        if (urc.getUser(username).getFl()==null)Log.e("3------------", "urc.getUser(username).getFl() is null");
+        if (urc.getUser(username).getFl().getFriendList()==null)Log.e("4------------", "urc.getUser(username).getFl().getFriendList() is null");
+
         ArrayList<String> friendsNames = urc.getUser(username).getFl().getFriendList();
         ArrayBlockingQueue<User> queue = new ArrayBlockingQueue<User>(friendsNames.size());
         User temp = null;
@@ -315,7 +320,7 @@ public class Cache {
 
     }
 
-    public User getOwner(GiftCard giftCard){
+    /*public User getOwner(GiftCard giftCard){
         User potOwner;
         Iterator<User> iterator = friends.iterator();
         while (iterator.hasNext()){
@@ -327,7 +332,7 @@ public class Cache {
 
         Log.e("Cache.getOner error: ", "Could not Find owner");
         return null;
-    }
+    }*/
 
     //Richards evil code below
 

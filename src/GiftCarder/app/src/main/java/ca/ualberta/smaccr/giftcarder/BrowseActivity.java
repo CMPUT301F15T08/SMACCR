@@ -21,7 +21,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class BrowseActivity extends ActionBarActivity {
+public class BrowseActivity extends AllActivity {
 
 
     public static final int ADD_ITEM_STATE = 0; // add item
@@ -81,7 +81,11 @@ public class BrowseActivity extends ActionBarActivity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
-        myCache= new Cache(this, username);
+        if (super.myCache!=null) {
+            myCache = super.myCache;
+        } else {
+            myCache = new Cache(this, username);
+        }
 
         final GiftCard giftCard1 = new GiftCard(12.34,"Test",1,1,6,"scratched but usable", Boolean.TRUE);
 
@@ -96,11 +100,11 @@ public class BrowseActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-// Switch to item activity and send selected gift card data//FIXME FIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXMEFIXME
+// Switch to item activity and send selected gift card data
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
                 intent.putExtra("gc", myCache.getResults().get(position));
                 intent.putExtra(EXTRA_STATE, BROWSER_STATE); // add item
-                startActivityForResult(intent, 1);
+                startActivity(intent);
             }
         });
 

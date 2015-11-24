@@ -42,6 +42,7 @@ public class AllActivity extends AppCompatActivity {
 
     // friendlist contains an arraylist of strings
     FriendList fl;
+    protected Cache myCache;
 
     UserRegistrationController urc = new UserRegistrationController();
 
@@ -110,6 +111,9 @@ public class AllActivity extends AppCompatActivity {
         // UserRegistrationController urc = new UserRegistrationController();
         User user = urc.getUser(username);
         inv = user.getInv();
+
+        myCache = new Cache(this, username);
+        myCache.updateFriends();
 
         // FriendList class type
         fl = user.getFl();
