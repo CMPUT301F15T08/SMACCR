@@ -163,12 +163,17 @@ public class GiftCard implements Serializable {
         }
         return ""; // shouldn't execute
     }
+
     public Date getDate() {
         return lastModified;
     }
 
     public void updateDate(){
         this.lastModified = new Date();
+    }
+
+    public int getSize(){
+        return this.itemImagesList.size();
     }
 
     public ArrayList<ItemImage> getItemImagesList() {

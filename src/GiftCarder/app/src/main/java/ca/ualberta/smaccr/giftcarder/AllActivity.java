@@ -27,6 +27,8 @@ public class AllActivity extends AppCompatActivity {
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
     public static final int FRIEND_STATE = 3; // view own item
+    //////
+    public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
 
     private UserListController ulc;
 
@@ -137,7 +139,7 @@ public class AllActivity extends AppCompatActivity {
                 String selectedFriend = (String) friendsListView.getItemAtPosition(position);
                 Intent intent = new Intent(AllActivity.this, InventoryActivity.class);
 
-                intent.putExtra(EXTRA_STATE, FRIEND_STATE);
+                intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
                 intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra("FRIENDUSERNAME", selectedFriend);
 
