@@ -115,7 +115,7 @@ public class AllActivity extends AppCompatActivity {
         inv = user.getInv();
 
         myCache = new Cache(this, username);
-        //myCache.updateFriends();
+        myCache.updateFriends();
 
         // FriendList class type
         fl = user.getFl();
