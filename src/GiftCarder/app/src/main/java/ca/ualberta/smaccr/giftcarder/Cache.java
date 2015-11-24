@@ -308,7 +308,8 @@ public class Cache {
 
         ArrayList<String> friendsNames = urc.getUser(username).getFl().getFriendList();
 
-        ArrayBlockingQueue<User> queue = new ArrayBlockingQueue<User>(friendsNames.size());
+        ArrayBlockingQueue<User> queue = new ArrayBlockingQueue<User>(Math.max(friendsNames.size(), 1));
+
         User temp = null;
 
         getFriends().clear();

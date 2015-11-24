@@ -78,8 +78,8 @@ public class TradeRequestActivity extends ActionBarActivity {
             public void onClick(View v) {
                 user.setTradesList(new TradesList());
                 userRegistrationController.editUserTradeList(CURRENT_USERNAME, user.getTradesList());
-                Thread thread = new updateThread(user);
-                thread.start();
+                //Thread thread = new updateThread(user);
+                //thread.start();
 
 
             }
