@@ -151,6 +151,10 @@ public class ItemActivity extends Activity {
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
                     cloneItemButton);
+            // Display featured image
+            if (!itemImagesList.isEmpty()) {
+                ipc.displayFeaturedImage(itemImagesList, featuredImage);
+            }
         }
 
 
@@ -296,6 +300,7 @@ public class ItemActivity extends Activity {
         intent.putExtra("inventory", inv);
         //startActivity(intent);
         */
+
         Toast.makeText(this, "Make Offer clicked", Toast.LENGTH_SHORT).show();
     }
 
