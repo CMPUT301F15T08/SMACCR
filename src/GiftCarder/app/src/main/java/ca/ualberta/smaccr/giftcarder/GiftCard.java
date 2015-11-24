@@ -1,8 +1,9 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
 
 /**
  * Created by Richard on 2015-10-24.
@@ -137,16 +138,8 @@ public class GiftCard implements Serializable {
         this.value = value;
     }
 
-    public Date getDate() {
-        return lastModified;
-    }
-
-    public void updateDate(){
-        this.lastModified = new Date();
-    }
-
     public String getCategoryString() {
-        switch(this.category) {
+        switch (this.category) {
             case 1:
                 return "Food & Beverage";
             case 2:
@@ -168,23 +161,18 @@ public class GiftCard implements Serializable {
             case 10:
                 return "Other";
         }
-        return ""; // Shouldn't get to here.
+        return ""; // shouldn't execute
+    }
+    public Date getDate() {
+        return lastModified;
     }
 
-    public void addItemImage(ItemImage itemImage){
-        this.itemImagesList.add(0, itemImage);
-    }
-
-    public void deleteItemImage(int imageIndex){
-        this.itemImagesList.remove(imageIndex);
-    }
-
-    public int getSize(){
-        return this.itemImagesList.size();
+    public void updateDate(){
+        this.lastModified = new Date();
     }
 
     public ArrayList<ItemImage> getItemImagesList() {
-        return this.itemImagesList;
+        return itemImagesList;
     }
 
     public void setItemImagesList(ArrayList<ItemImage> itemImagesList) {

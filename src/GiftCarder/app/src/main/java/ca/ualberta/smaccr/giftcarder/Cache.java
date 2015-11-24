@@ -25,7 +25,8 @@ import java.util.concurrent.BlockingQueue;
  */
 public class Cache {
 
-    private static ArrayList<User> friends;
+
+    private static ArrayList<User> friends = null;
     private ArrayList<GiftCard> items;// all the items owned by all friends, in order by most recent date
     private ArrayList<GiftCard> results;// results of searches
     private Date lastUpdated;
@@ -38,17 +39,35 @@ public class Cache {
         this.urc = new UserRegistrationController();
         this.username = username;
 
-        this.friends = new ArrayList<User>();
+        getFriends();
+        //this.friends = new ArrayList<User>();
         this.lastUpdated = new Date();
     }
 
     //lazy singleton
-    public ArrayList<User> getFriends() {
+    static public ArrayList<User> getFriends() {
         if (friends==null){
             friends = new ArrayList<User>();
         }
-
         return friends;
+    }
+
+    // Lazy singleton
+    private static UserList userList = null;
+    static public UserList getUserList() {
+        if (userList == null) {
+            userList = new UserList();
+        }
+        return userList;
+    }
+
+    public User getUser(String username) {
+        for (User user : getFriends() ) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public ArrayList<GiftCard> getItems() {
@@ -71,7 +90,7 @@ public class Cache {
 
         ArrayList<ArrayList<GiftCard>> fInvItems = new ArrayList<ArrayList<GiftCard>>();
 
-        Iterator<User> itr = friends.listIterator();
+        Iterator<User> itr = getFriends().listIterator();
         User user;
 
         while (itr.hasNext()) {
@@ -177,7 +196,7 @@ public class Cache {
     }
 
     public void add(User user){
-        friends.add(user);
+        getFriends().add(user);
     }
 
     public void setItems(ArrayList<GiftCard> giftCards) {
@@ -212,9 +231,6 @@ public class Cache {
         }
     }
 
-    public ArrayList<User> getfriends() {
-        return friends;
-    }
 
     public ArrayList<GiftCard> getResults() {
         return results;
@@ -298,7 +314,7 @@ public class Cache {
         ArrayBlockingQueue<User> queue = new ArrayBlockingQueue<User>(friendsNames.size());
         User temp = null;
 
-        friends.clear();
+        getFriends().clear();
 
         String friendUserName;
         Iterator<String> iterator = friendsNames.iterator();
@@ -315,14 +331,14 @@ public class Cache {
                 e.printStackTrace();
             }
 
-            friends.add(temp);
+            getFriends().add(temp);
         }
 
     }
 
     /*public User getOwner(GiftCard giftCard){
         User potOwner;
-        Iterator<User> iterator = friends.iterator();
+        Iterator<User> iterator = getFriends().iterator();
         while (iterator.hasNext()){
             potOwner = iterator.next();
             if (potOwner.isOwner(giftCard)){
@@ -347,6 +363,9 @@ public class Cache {
 
     //Parameter for potietnial Friend on server
     User friendUser;
+
+    public Cache() {
+    }
 
     //Check friend is on server or not, if is send friend request, for now add to friendlist
     class GetFriendThread extends Thread {
