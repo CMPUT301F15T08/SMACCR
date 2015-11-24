@@ -3,6 +3,8 @@ package ca.ualberta.smaccr.giftcarder;
 import android.app.Activity;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by splant on 11/13/15.
  */
@@ -13,28 +15,30 @@ public class InvDetailsController {
     private Activity detailsActivity;
 
     private int totalCount = 0;
-    private int foodCount = 0;          // 0
-    private int clothingCount = 0;      // 1
-    private int hgCount = 0;            // 2
-    private int electronicsCount = 0;   // 3
-    private int departmentCount = 0;    // 4
-    private int serviceCount = 0;       // 5
-    private int entertainCount = 0;     // 6
-    private int onlineCount = 0;        // 7
-    private int healthCount = 0;        // 8
-    private int otherCount = 0;         // 9
+    // private int allCount = 0;        // 0
+    private int foodCount = 0;          // 1
+    private int clothingCount = 0;      // 2
+    private int hgCount = 0;            // 3
+    private int electronicsCount = 0;   // 4
+    private int departmentCount = 0;    // 5
+    private int serviceCount = 0;       // 6
+    private int entertainCount = 0;     // 7
+    private int onlineCount = 0;        // 8
+    private int healthCount = 0;        // 9
+    private int otherCount = 0;         // 10
 
     private double totalValue = 0;
-    private double foodValue = 0;          // 0
-    private double clothingValue = 0;      // 1
-    private double hgValue = 0;            // 2
-    private double electronicsValue = 0;   // 3
-    private double departmentValue = 0;    // 4
-    private double serviceValue = 0;       // 5
-    private double entertainValue = 0;     // 6
-    private double onlineValue = 0;        // 7
-    private double healthValue = 0;        // 8
-    private double otherValue = 0;         // 9
+    // private double allValue = 0;        // 0
+    private double foodValue = 0;          // 1
+    private double clothingValue = 0;      // 2
+    private double hgValue = 0;            // 3
+    private double electronicsValue = 0;   // 4
+    private double departmentValue = 0;    // 5
+    private double serviceValue = 0;       // 6
+    private double entertainValue = 0;     // 7
+    private double onlineValue = 0;        // 8
+    private double healthValue = 0;        // 9
+    private double otherValue = 0;         // 10
 
     public InvDetailsController(User user, Inventory inv, Activity activity) {
         this.user = user;
@@ -48,7 +52,9 @@ public class InvDetailsController {
 
         // Change the Title,total count and the Total Value fields
         String invDetailsTitle = user.getUsername() + "'s Inventory";
-        String invDetailsValue = "Total Value of GiftCards: $" + this.totalValue;
+
+        DecimalFormat df = new DecimalFormat("#.00");
+        String invDetailsValue = "Total Value of GiftCards: $" + df.format(this.totalValue);
         String detailsStrTotalCount = "Total Number of GiftCards: " + this.totalCount;
 
         TextView detailsTitle = (TextView) detailsActivity.findViewById(R.id.userInvDetTitleTextView);
@@ -130,48 +136,48 @@ public class InvDetailsController {
             double value = this.inv.getInvList().get(i).getValue();
             int quantity = this.inv.getInvList().get(i).getQuantity();
 
-            this.totalCount++;
+            this.totalCount += quantity;
             this.totalValue += value*quantity;
 
             switch(inv.getInvList().get(i).getCategory()) {
-                case 0:
-                    this.foodCount++;
+                case 1:
+                    this.foodCount += quantity;
                     this.foodValue += value*quantity;
                     break;
-                case 1:
-                    this.clothingCount++;
+                case 2:
+                    this.clothingCount += quantity;
                     this.clothingValue += value*quantity;
                     break;
-                case 2:
-                    this.hgCount++;
+                case 3:
+                    this.hgCount += quantity;
                     this.hgValue += value*quantity;
                     break;
-                case 3:
-                    this.electronicsCount++;
+                case 4:
+                    this.electronicsCount += quantity;
                     this.electronicsValue += value*quantity;
                     break;
-                case 4:
-                    this.departmentCount++;
+                case 5:
+                    this.departmentCount += quantity;
                     this.departmentValue += value*quantity;
                     break;
-                case 5:
-                    this.serviceCount++;
+                case 6:
+                    this.serviceCount += quantity;
                     this.serviceValue += value*quantity;
                     break;
-                case 6:
-                    this.entertainCount++;
+                case 7:
+                    this.entertainCount += quantity;
                     this.entertainValue += value*quantity;
                     break;
-                case 7:
-                    this.onlineCount++;
+                case 8:
+                    this.onlineCount += quantity;
                     this.onlineValue += value*quantity;
                     break;
-                case 8:
-                    this.healthCount++;
+                case 9:
+                    this.healthCount += quantity;
                     this.healthValue += value*quantity;
                     break;
-                case 9:
-                    this.otherCount++;
+                case 10:
+                    this.otherCount += quantity;
                     this.otherValue += value*quantity;
                     break;
             }

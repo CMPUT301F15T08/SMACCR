@@ -1,11 +1,7 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 /**
  * Created by Carin on 10/26/2015.
@@ -30,9 +26,15 @@ public class UserRegistrationController {
         this.parentActivity = parentActivity;
     }
 
+    public static void setUserList(UserList userList) {
+        UserRegistrationController.userList = userList;
+
+    }
+
     // Lazy singleton
     private static UserList userList = null;
     static public UserList getUserList() {
+
         if (userList == null) {
             userList = new UserList();
         }

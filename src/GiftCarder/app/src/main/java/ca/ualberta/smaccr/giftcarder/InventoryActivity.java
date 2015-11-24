@@ -56,6 +56,7 @@ public class InventoryActivity extends Activity {
                 //intent.putExtra("GiftCard", inv.getInvList().get(position));
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
+               // intent.putExtra("ownerInventory", ownerInv);
                 intent.putExtra(EXTRA_STATE, BROWSER_ITEM_STATE); // view item
                 //startActivity(intent);
                 startActivityForResult(intent, 1);

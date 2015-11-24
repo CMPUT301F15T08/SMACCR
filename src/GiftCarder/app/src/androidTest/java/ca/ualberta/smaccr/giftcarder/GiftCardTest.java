@@ -180,7 +180,7 @@ public class GiftCardTest extends ActivityInstrumentationTestCase2 {
 
         ItemController ic = new ItemController();
 
-        inv = ic.setGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner, etComments, checkbox);
+        //inv = ic.setGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner, etComments, checkbox);
 
         assertTrue(teststring.equals(inv.getInvList().get(position).getMerchant()));
 

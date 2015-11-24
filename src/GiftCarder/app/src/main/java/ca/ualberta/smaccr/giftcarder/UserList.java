@@ -84,10 +84,10 @@ public class UserList implements Observable {
      * @param username String
      */
     public User getUser(String username) {
-        for (User user : userList ) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
+        for (int i=0;i<userList.size();i++){
+            if (userList.get(i).getUsername().equals(username)) return userList.get(i);
+
+
         }
         return null;
     }
@@ -116,6 +116,10 @@ public class UserList implements Observable {
         return userList.size();
     }
 
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
     /**
      * Clears user list (for UI testing)
      */
@@ -123,5 +127,6 @@ public class UserList implements Observable {
         if (!userList.isEmpty()) {
             userList.clear();
         }
+
     }
 }

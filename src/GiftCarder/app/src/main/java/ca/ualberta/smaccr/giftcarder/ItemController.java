@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 /**
  * Created by Richard on 2015-10-29.  Edited by Carin.
@@ -24,6 +26,7 @@ public class ItemController {
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
     public static final int BROWSER_STATE = 2; // view other's item
+    public static final int EDIT_STATE = 3; // add item
     private File imageFile;
 
     public void takeAPicture() {
@@ -98,7 +101,7 @@ public class ItemController {
      * @param etComments EditText
      * @param checkbox CheckBox
      */
-    /*
+
     public void displayGiftCardInfo(GiftCard gc, EditText etItemValue, EditText etItemName,
                                     EditText etQuantity, Spinner qualitySpinner,
                                     Spinner categorySpinner, EditText etComments,
@@ -128,7 +131,7 @@ public class ItemController {
         etComments.setText(gc.getComments());
         checkbox.setChecked(gc.getShared());
     }
-    */
+
 
     /**
      setGiftCardInfo
@@ -154,7 +157,8 @@ public class ItemController {
     public Inventory setGiftCardInfo(Inventory inv, int position, EditText etItemValue,
                                      EditText etItemName, EditText etQuantity,
                                      Spinner qualitySpinner, Spinner categorySpinner,
-                                     EditText etComments, CheckBox checkbox) {
+                                     EditText etComments, CheckBox checkbox,
+                                     ArrayList<ItemImage> itemImagesList) {
         GiftCard tempcard = inv.getInvList().get(position);
 
         // If invalid dollar, cent amount then set to zero for now!
@@ -178,6 +182,7 @@ public class ItemController {
         // Some weird bug when using spinner; it sets index out of range sometimes
         tempcard.setQuality(qualitySpinner.getSelectedItemPosition());
         tempcard.setCategory(categorySpinner.getSelectedItemPosition());
+        tempcard.setItemImagesList(itemImagesList);
 
         inv.getInvList().set(position, tempcard);
         return inv;
@@ -194,15 +199,15 @@ public class ItemController {
      * @param categorySpinner Spinner
      * @param etComments EditText
      * @param checkbox CheckBox
-     * @param editAndOfferButton Button
+     * @param editButton Button
      * @param saveButton Button
      */
     public void setViewMode(int itemState, EditText etItemValue ,EditText etItemName,
                             EditText etQuantity, Spinner qualitySpinner, Spinner categorySpinner,
-                            EditText etComments, CheckBox checkbox, Button editAndOfferButton,
-                            Button saveButton) {
+                            EditText etComments, CheckBox checkbox, Button editButton,
+                            Button saveButton, Button makeOfferButton, Button cloneItemButton) {
 
-        if (itemState == ADD_STATE) {
+        if ((itemState == ADD_STATE) || (itemState == EDIT_STATE)) {
             etItemValue.setFocusableInTouchMode(true);
             etItemName.setFocusableInTouchMode(true);
             qualitySpinner.setClickable(true);
@@ -211,7 +216,9 @@ public class ItemController {
             etComments.setFocusableInTouchMode(true);
             checkbox.setEnabled(true);
             saveButton.setVisibility(View.VISIBLE);
-            editAndOfferButton.setVisibility(View.GONE);
+            editButton.setVisibility(View.GONE);
+            makeOfferButton.setVisibility(View.GONE);
+            cloneItemButton.setVisibility(View.GONE);
 
             if (etComments.getText().toString().trim().equals("")) {
                 etComments.setHint("Enter comments (optional)");
@@ -226,14 +233,31 @@ public class ItemController {
             etComments.setFocusable(false);
             checkbox.setEnabled(false);
             saveButton.setVisibility(View.GONE);
-            editAndOfferButton.setVisibility(View.VISIBLE);
 
             if (itemState == OWNER_STATE) {
-                editAndOfferButton.setText("Edit");
+                editButton.setVisibility(View.VISIBLE);
+                makeOfferButton.setVisibility(View.GONE);
+                cloneItemButton.setVisibility(View.GONE);
+
+            // in Browser State
             } else {
-                editAndOfferButton.setText("Trade");
+                editButton.setVisibility(View.GONE);
+                makeOfferButton.setVisibility(View.VISIBLE);
+                cloneItemButton.setVisibility(View.VISIBLE);
             }
+
         }
+    }
+
+    /**
+     * Clones friend's item into user's (owner's) item
+     *
+     * @param inv friend's inventory
+     * @param position position of gift card in friend's inventory
+     * @param ownerInv user's (owner's) inventory that item will be cloned to
+     */
+    public void cloneItem(Inventory inv, int position, Inventory ownerInv) {
+        ownerInv.getInvList().set(position, inv.getInvList().get(position));
     }
 
     /**
@@ -244,7 +268,8 @@ public class ItemController {
      * @param       etQuantity EditText
      * @return      boolean
      */
-    public boolean validateFields(EditText etItemValue, EditText etItemName, EditText etQuantity) {
+    public boolean validateFields(EditText etItemValue, EditText etItemName, EditText etQuantity,
+                                  Spinner categorySpinner) {
         boolean valid = true;
 
         if (!Validation.hasText(etItemValue)) {
@@ -256,6 +281,19 @@ public class ItemController {
         }
 
         if (!Validation.hasText(etQuantity)) {
+            valid = false;
+        }
+
+        if (categorySpinner.getSelectedItemPosition() == 0) {
+
+            /* Modified from EdmundYeung99,retrieved 11/22/15
+             * http://stackoverflow.com/questions/3749971/creating-a-seterror-for-the-spinner
+             */
+            TextView errorText = (TextView)categorySpinner.getSelectedView();
+            errorText.setError("No category selected");
+            errorText.setTextColor(Color.RED);//just to highlight that this is an error
+            errorText.setText("Choose a category");//changes the selected item text to this
+
             valid = false;
         }
 
