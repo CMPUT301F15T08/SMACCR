@@ -25,7 +25,6 @@ import java.util.concurrent.BlockingQueue;
  */
 public class Cache {
 
-
     private static ArrayList<User> friends = null;
     private ArrayList<GiftCard> items;// all the items owned by all friends, in order by most recent date
     private ArrayList<GiftCard> results;// results of searches
@@ -363,9 +362,6 @@ public class Cache {
 
     //Parameter for potietnial Friend on server
     User friendUser;
-
-    public Cache() {
-    }
 
     //Check friend is on server or not, if is send friend request, for now add to friendlist
     class GetFriendThread extends Thread {

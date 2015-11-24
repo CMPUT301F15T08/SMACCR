@@ -1,11 +1,10 @@
 package ca.ualberta.smaccr.giftcarder;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -84,7 +83,7 @@ public class BrowseActivity extends AllActivity {
         if (super.myCache!=null) {
             myCache = super.myCache;
         } else {
-            myCache = new Cache(this, username);
+            myCache = new Cache(BrowseActivity.this, username);
         }
 
         final GiftCard giftCard1 = new GiftCard(12.34,"Test",1,1,6,"scratched but usable", Boolean.TRUE);
@@ -195,6 +194,11 @@ public class BrowseActivity extends AllActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     /**

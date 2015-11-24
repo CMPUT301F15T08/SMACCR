@@ -48,6 +48,7 @@ public class UserProfileActivity extends Activity {
     public static final int STRANGER_STATE = 2; // send friend request to stranger (has send friend request button)
     public static final int FRIEND_STATE = 3; // view friend's profile (no button)
 
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,21 +1,15 @@
 package ca.ualberta.smaccr.giftcarder;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -132,11 +126,14 @@ public class AllActivity extends AppCompatActivity {
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 String selectedFriend = (String) friendsListView.getItemAtPosition(position);
                 Intent intent = new Intent(AllActivity.this, UserProfileActivity.class);
+
                 intent.putExtra(EXTRA_STATE, FRIEND_STATE);
                 intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra("FRIENDUSERNAME", selectedFriend);
+
                 startActivity(intent);
             }
         });
@@ -512,6 +509,7 @@ public class AllActivity extends AppCompatActivity {
 
     // send of server stuff
     //###############################################################################################################
+
 
 
     @Override

@@ -4,16 +4,16 @@ package ca.ualberta.smaccr.giftcarder;
  * Created by splant on 11/16/15.
  */
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-
-import com.google.gson.Gson;
-
-import android.util.Log;
 
 public class UserListController {
     private Gson gson = new Gson();
@@ -67,4 +67,12 @@ public class UserListController {
         }
     }
 
+    public void setUserlist(UserList userlist) {
+        this.userlist = userlist;
+    }
+
+    public UserList getUserlist() {
+        return userlist;
+
+    }
 }
