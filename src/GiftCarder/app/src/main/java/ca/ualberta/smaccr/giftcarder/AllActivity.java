@@ -128,7 +128,7 @@ public class AllActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 String selectedFriend = (String) friendsListView.getItemAtPosition(position);
-                Intent intent = new Intent(AllActivity.this, UserProfileActivity.class);
+                Intent intent = new Intent(AllActivity.this, InventoryActivity.class);
 
                 intent.putExtra(EXTRA_STATE, FRIEND_STATE);
                 intent.putExtra(EXTRA_USERNAME, username);

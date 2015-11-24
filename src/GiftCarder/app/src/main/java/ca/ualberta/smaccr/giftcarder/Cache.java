@@ -8,12 +8,9 @@ import android.app.Activity;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 /**
  * Created by mrijlaar on 10/27/15.
