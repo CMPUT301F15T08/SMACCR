@@ -260,7 +260,9 @@ public class Cache {
         }
     }
 
-    public void browseSearch(String query) {
+    public void browseSearch(String oQuery) {
+        String query = oQuery.toLowerCase();
+
         GiftCard giftCard;
         Iterator<GiftCard> iterator = results.iterator();
         while (iterator.hasNext()) {
@@ -280,7 +282,7 @@ public class Cache {
 
         for (int i = 0; i < terms.length; i++) {
 
-            if (giftCard.getMerchant().matches("(.*)" + terms[i] + "(.*)")) {
+            if (giftCard.getMerchant().toLowerCase().matches("(.*)" + terms[i] + "(.*)")) {
                 return Boolean.TRUE;
             }
 
