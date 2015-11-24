@@ -29,6 +29,11 @@ public class FriendInvListAdapter extends InvListAdapter {
 
         if (gc != null) {
 
+            // If private, hide item
+            /*
+            * retrieved from Jaydipsinh Zala, 11/23/15
+             * http://stackoverflow.com/questions/13646147/hide-row-from-listview-without-taking-up-space
+             */
             if (!gc.getShared()) {
                 return vi.inflate(R.layout.blank_layout, parent,
                         false);
