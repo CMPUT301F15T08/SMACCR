@@ -53,8 +53,7 @@
             android:layout_marginEnd="5dp"
             android:clickable="true"
             android:onClick="logInUser"
-            android:padding="7dp"
-            style="@style/ButtonText"/>
+            android:padding="7dp" />
 
         <Button
             android:layout_width="match_parent"
@@ -65,8 +64,7 @@
             android:layout_weight="1"
             android:layout_marginStart="5dp"
             android:onClick="registerNewUser"
-            android:padding="7dp"
-            style="@style/ButtonText"/>
+            android:padding="7dp" />
     </LinearLayout>
 
 

@@ -301,6 +301,7 @@ public class ItemActivity extends Activity {
         intent.putExtra("inventory", inv);
         //startActivity(intent);
         */
+
         Toast.makeText(this, "Make Offer clicked", Toast.LENGTH_SHORT).show();
     }
 

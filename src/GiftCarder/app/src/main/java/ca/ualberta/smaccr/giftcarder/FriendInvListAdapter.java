@@ -1,42 +1,23 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Created by splant on 11/20/15.
- * Largely based off of Stack Overflow answer from
- * http://stackoverflow.com/questions/8166497/custom-adapter-for-list-view
+ * Created by cbli on 11/23/15.
  */
-public class InvListAdapter extends ArrayAdapter<GiftCard> {
+public class FriendInvListAdapter extends InvListAdapter {
 
-    ArrayList inv;
-    ItemPictureController ipc = new ItemPictureController();
-    LayoutInflater vi;
-
-    public InvListAdapter(Context context, int textViewResourceId) {
+    public FriendInvListAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
-    }
-
-    public InvListAdapter(Context context, int resource, ArrayList<GiftCard> items) {
-        super(context, resource, items);
-        this.inv = items;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         View v = convertView;
 
         if (v == null) {
@@ -48,8 +29,18 @@ public class InvListAdapter extends ArrayAdapter<GiftCard> {
 
         if (gc != null) {
 
+            // If private, hide item
+            /*
+            * retrieved from Jaydipsinh Zala, 11/23/15
+             * http://stackoverflow.com/questions/13646147/hide-row-from-listview-without-taking-up-space
+             */
+            if (!gc.getShared()) {
+                return vi.inflate(R.layout.blank_layout, parent,
+                        false);
+            }
+
             ImageView iv1 = (ImageView) v.findViewById(R.id.invListImageView);
-            TextView  tt1 = (TextView) v.findViewById(R.id.invListTitleTextView);
+            TextView tt1 = (TextView) v.findViewById(R.id.invListTitleTextView);
             TextView  tt2 = (TextView) v.findViewById(R.id.invListValueTextView);
             TextView  tt3 = (TextView) v.findViewById(R.id.invListQuantTextView);
             TextView  tt4 = (TextView) v.findViewById(R.id.invListCatTextView);
