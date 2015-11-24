@@ -95,6 +95,16 @@ public class UserRegistrationController {
         }
     }
 
+    public void editUserTradeList(String username, TradesList tradesList) {
+        User user = getUser(username);
+        int userIndex = returnUserPosition(username);
+
+        if (userIndex != -1) {
+            user.setTradesList(tradesList);
+            getUserList().editUser(userIndex, user);
+        }
+    }
+
     /**
      * Adds user to UserList
      *

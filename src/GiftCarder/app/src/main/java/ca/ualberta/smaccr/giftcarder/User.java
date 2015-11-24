@@ -14,6 +14,7 @@ public class User {
     private Inventory inv;
     private FriendList fl;
     private List<FriendRequest> friendRequests;
+    private TradesList tradesList;
 
 
 
@@ -24,7 +25,8 @@ public class User {
     public User() {
         this.inv = new Inventory();
 
-        this.fl = new FriendList();;
+        this.fl = new FriendList();
+        this.tradesList = new TradesList();
 
         this.friendRequests = new ArrayList<FriendRequest>();
     }
@@ -118,6 +120,14 @@ public class User {
     public void addFriendRequest(String sender, String reciever) {
         FriendRequest request = new FriendRequest(sender, reciever);
         this.friendRequests.add(request);
+    }
+
+    public TradesList getTradesList() {
+        return tradesList;
+    }
+
+    public void setTradesList(TradesList tradesList) {
+        this.tradesList = tradesList;
     }
 
 }
