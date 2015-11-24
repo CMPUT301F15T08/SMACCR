@@ -7,13 +7,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by cbli on 11/23/15.
  */
 public class FriendInvListAdapter extends InvListAdapter {
 
-    public FriendInvListAdapter(Context context, int textViewResourceId) {
-        super(context, textViewResourceId);
+    public FriendInvListAdapter(Context context, int resource, ArrayList<GiftCard> items) {
+        super(context, resource, items);
+        this.inv = items;
     }
 
     @Override

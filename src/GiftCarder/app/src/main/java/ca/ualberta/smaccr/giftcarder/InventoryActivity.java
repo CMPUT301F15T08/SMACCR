@@ -101,14 +101,7 @@ public class InventoryActivity extends Activity {
      */
     public void updateInvList(Inventory inv) {
         // Get ArrayList of Strings to display in Adapter ListView
-        ArrayList<GiftCard> tempArray = null;
-
-        for (int i=1; i<inv.getSize(); i++) {
-            if (inv.getInvList().get(i).getShared()) {
-                tempArray.add(inv.getInvList().get(i));
-            }
-        }
-
+        ArrayList<GiftCard> tempArray = inv.getInvList();
         // Toast.makeText(getApplicationContext(), Integer.toString(tempArray.size()),Toast.LENGTH_SHORT).show();
 
         ArrayList<String> GiftCardNames = new ArrayList<String>();
@@ -120,7 +113,7 @@ public class InventoryActivity extends Activity {
 
         // Display list of names of giftcards
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
-        InvListAdapter customAdapter = new InvListAdapter(this, R.layout.adapter_inv_list, tempArray);
+        FriendInvListAdapter customAdapter = new FriendInvListAdapter(this, R.layout.adapter_inv_list, tempArray);
         // displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
         inventorylistID.setAdapter(customAdapter);
     }
