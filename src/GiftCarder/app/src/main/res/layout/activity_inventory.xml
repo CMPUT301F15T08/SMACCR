@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/user_profile"
                 android:id="@+id/friendProfileButton"
-                android:onClick="friendProfileButton"
+                android:onClick="getUserProfile"
                 android:layout_weight="1" />
 
         </LinearLayout>
