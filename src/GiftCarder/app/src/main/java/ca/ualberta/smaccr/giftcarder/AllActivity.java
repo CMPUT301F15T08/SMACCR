@@ -36,7 +36,6 @@ public class AllActivity extends AppCompatActivity {
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
 
-
     // friendlist contains an arraylist of strings
     FriendList fl;
     protected Cache myCache;
@@ -516,7 +515,26 @@ public class AllActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Back button disabled
+        // Asks to exit on back button press
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage("Are you sure you want to exit?");
+
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // http://stackoverflow.com/questions/11643224/how-to-exit-android-application-from-exit-button
+                finish();
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        alert.show();
     }
 
 
