@@ -35,17 +35,15 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
         final String searchText = "Bestbuy";
         final EditText searchBar = activity.getSearchBar();
         final Spinner catSpinner = activity.getCatSpinner();
-        final ListView listView = activity.getInventorylistID();
+        final ListView listView = activity.getbrowseListID();
         final Cache cache = activity.getMyCache();
 
-        GiftCard giftCard1 = new GiftCard();
-        giftCard1.setMerchant("Bestbuy");
-        giftCard1.setQuantity(1);
-        giftCard1.setQuality(1);
-        giftCard1.setCategory(6);
-        giftCard1.setComments("scratched but usable");
-        giftCard1.setShared(Boolean.TRUE);
-        cache.add(giftCard1);
+        User user = new User();
+        Inventory inventory = user.getInv();
+        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
+        inventory.addGiftCard(giftCard1);
+        cache.add(user);
+        cache.loadItems();
 
         //Code from: https://developer.android.com/training/activity-testing/activity-functional-testing.html
         //Date: 2015-11-05
@@ -95,14 +93,12 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
         final Spinner catSpinner = activity.getCatSpinner();
         final Cache cache = activity.getMyCache();
 
-        GiftCard giftCard1 = new GiftCard();
-        giftCard1.setMerchant("Bestbuy");
-        giftCard1.setQuantity(1);
-        giftCard1.setQuality(1);
-        giftCard1.setCategory(6);
-        giftCard1.setComments("scratched but usable");
-        giftCard1.setShared(Boolean.TRUE);
-        cache.add(giftCard1);
+        User user = new User();
+        Inventory inventory = user.getInv();
+        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
+        inventory.addGiftCard(giftCard1);
+        cache.add(user);
+        cache.loadItems();
 
 
         activity.runOnUiThread(new Runnable() {
@@ -115,6 +111,15 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
 
         assertTrue(searchBar.getText().toString() + "==" + searchText, searchBar.getText().toString().equals(searchText));
 
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                searchBar.setText("other");
+                goButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        assertTrue(searchBar.getText().toString() + "==" + searchText, searchBar.getText().toString().equals("other"));
 
     }
 
@@ -131,31 +136,56 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
         UserRegistrationController.getUserList().addUser(user);*/
 
         final Button goButton = activity.getGoButton();
-        final String searchText = "Bestbuy";
-        final EditText searchBar = activity.getSearchBar();
         final Spinner catSpinner = activity.getCatSpinner();
         final Cache cache = activity.getMyCache();
 
-        GiftCard giftCard1 = new GiftCard();
-        giftCard1.setMerchant("Bestbuy");
-        giftCard1.setQuantity(1);
-        giftCard1.setQuality(1);
-        giftCard1.setCategory(6);
-        giftCard1.setComments("scratched but usable");
-        giftCard1.setShared(Boolean.TRUE);
-        cache.add(giftCard1);
+        User user = new User();
+        Inventory inventory = user.getInv();
+        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
+        inventory.addGiftCard(giftCard1);
+        cache.add(user);
+        cache.loadItems();
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                View v = catSpinner.getChildAt(0);
+                activity.updateBrowseList();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+        assertTrue("" + cache.getResults().size(), cache.getResults().size() > 0);
+        assertTrue("" + activity.getbrowseListID().getChildCount(), activity.getbrowseListID().getChildCount() > 0);
+
+        assertTrue("childCount" + catSpinner.getChildCount(), true);
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+
+                /*View v = catSpinner.getChildAt(0);
                 catSpinner.performClick();
-                catSpinner.performItemClick(v, 0, v.getId());
+                catSpinner.performItemClick(catSpinner, 2, catSpinner.getId());*/
+                catSpinner.setSelection(2);
                 goButton.performClick();
             }
         });
         getInstrumentation().waitForIdleSync();
 
-        assertFalse(cache.getItems().size() == 0);
+        assertTrue("" + cache.getResults().size(), cache.getResults().size() == 0);
+        assertTrue("" + activity.getbrowseListID().getChildCount(), activity.getbrowseListID().getChildCount() == 0);
+
+        assertTrue("childCount" + catSpinner.getChildCount(), true);
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+
+                /*View v = catSpinner.getChildAt(0);
+                catSpinner.performClick();
+                catSpinner.performItemClick(catSpinner, 2, catSpinner.getId());*/
+                catSpinner.setSelection(0);
+                goButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        assertTrue("" + cache.getResults().size(), cache.getResults().size() == 1);
+        assertTrue("" + activity.getbrowseListID().getChildCount(), activity.getbrowseListID().getChildCount() == 1);
     }
 
     public void testSearchBoth() throws Exception {
@@ -174,17 +204,15 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
         final String searchText = "Bestbuy";
         final EditText searchBar = activity.getSearchBar();
         final Spinner catSpinner = activity.getCatSpinner();
-        final ListView listView = activity.getInventorylistID();
+        final ListView listView = activity.getbrowseListID();
         final Cache cache = activity.getMyCache();
 
-        GiftCard giftCard1 = new GiftCard();
-        giftCard1.setMerchant("Bestbuy");
-        giftCard1.setQuantity(1);
-        giftCard1.setQuality(1);
-        giftCard1.setCategory(6);
-        giftCard1.setComments("scratched but usable");
-        giftCard1.setShared(Boolean.TRUE);
-        cache.add(giftCard1);
+        User user = new User();
+        Inventory inventory = user.getInv();
+        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
+        inventory.addGiftCard(giftCard1);
+        cache.add(user);
+        cache.loadItems();
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
@@ -216,17 +244,15 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
         final String searchText = "Bestbuy";
         final EditText searchBar = activity.getSearchBar();
         final Spinner catSpinner = activity.getCatSpinner();
-        final ListView listView = activity.getInventorylistID();
+        final ListView listView = activity.getbrowseListID();
         final Cache cache = activity.getMyCache();
 
-        GiftCard giftCard1 = new GiftCard();
-        giftCard1.setMerchant("Bestbuy");
-        giftCard1.setQuantity(1);
-        giftCard1.setQuality(1);
-        giftCard1.setCategory(6);
-        giftCard1.setComments("scratched but usable");
-        giftCard1.setShared(Boolean.TRUE);
-        cache.add(giftCard1);
+        User user = new User();
+        Inventory inventory = user.getInv();
+        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
+        inventory.addGiftCard(giftCard1);
+        cache.add(user);
+        cache.loadItems();
 
         //Code from: https://developer.android.com/training/activity-testing/activity-functional-testing.html
         //Date: 2015-11-05
@@ -257,4 +283,6 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(tradeActivityMonitor);//*/
     }
+
+
 }

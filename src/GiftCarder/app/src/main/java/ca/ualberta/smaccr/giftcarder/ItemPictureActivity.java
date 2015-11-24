@@ -44,6 +44,8 @@ public class ItemPictureActivity extends ActionBarActivity {
     public final static String EXTRA_PICTURES = "ca.ualberta.smaccr.giftcarder.PICTURES";
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
+    public static final int BROWSER_STATE = 2; // view other's item
+    public static final int EDIT_STATE = 3; // edit item
 
     private GridView gridView;
     private ItemGridViewAdapter gridAdapter;
@@ -84,7 +86,8 @@ public class ItemPictureActivity extends ActionBarActivity {
             }
         });
 
-        if (itemState != OWNER_STATE) {
+        // if in Add or Edit state
+        if ((itemState == ADD_STATE) || (itemState == EDIT_STATE)) {
             addPhotoButton.setVisibility(View.VISIBLE);
 
             Toast.makeText(getApplicationContext(), "Tip: Long click to delete image", Toast.LENGTH_LONG).show();
@@ -95,8 +98,8 @@ public class ItemPictureActivity extends ActionBarActivity {
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                     final int pos = position;
 
-                    AlertDialog.Builder deletedialog = new AlertDialog.Builder(ItemPictureActivity.this);
-                    deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    AlertDialog.Builder deleteDialog = new AlertDialog.Builder(ItemPictureActivity.this);
+                    deleteDialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -110,13 +113,14 @@ public class ItemPictureActivity extends ActionBarActivity {
                             dialog.dismiss();
                         }
                     });
-                    deletedialog.create().show();
+                    deleteDialog.create().show();
                     return true;
                 }
             });
 
+        // If in Owner state
         } else {
-            addPhotoButton.setVisibility(View.INVISIBLE);;
+            addPhotoButton.setVisibility(View.GONE);;
         }
     }
     /*

@@ -98,4 +98,22 @@
     <string name="title_activity_item_details">ItemDetailsActivity</string>
     <string name="count">Count:</string>
     <string name="value_colon">Value:</string>
+    <string name="clone_item">Clone Item</string>
+    <string name="user_profile">User Profile</string>
+
+    <!--retrieved from Fokert, 11/23/15, http://www.dibbus.com/2011/02/gradient-buttons-for-android/-->
+    <style name="ButtonText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
 </resources>

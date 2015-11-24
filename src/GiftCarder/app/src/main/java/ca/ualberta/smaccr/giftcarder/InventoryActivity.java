@@ -56,6 +56,7 @@ public class InventoryActivity extends Activity {
                 //intent.putExtra("GiftCard", inv.getInvList().get(position));
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
+               // intent.putExtra("ownerInventory", ownerInv);
                 intent.putExtra(EXTRA_STATE, BROWSER_ITEM_STATE); // view item
                 //startActivity(intent);
                 startActivityForResult(intent, 1);
@@ -111,13 +112,10 @@ public class InventoryActivity extends Activity {
         }
 
         // Display list of names of giftcards
-        ListView inventorylistID = (ListView) findViewById(R.id.friendInventoryListViewID);
-        displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
-        inventorylistID.setAdapter(displayAdapter);
-
-        //Updates the user's inventory in userList in UserRegisteration controller
-        UserRegistrationController uc= new UserRegistrationController();
-        uc.editUserInventory(username, inv);
+        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+        FriendInvListAdapter customAdapter = new FriendInvListAdapter(this, R.layout.adapter_inv_list, tempArray);
+        // displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
+        inventorylistID.setAdapter(customAdapter);
     }
 
     public void getUserProfile(View view) {

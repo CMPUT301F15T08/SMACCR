@@ -12,6 +12,8 @@ public class Inventory implements Serializable {
 
     public Inventory() {this.inv = new ArrayList<GiftCard>(); }
 
+    public Inventory(ArrayList<GiftCard> that) {this.inv = that; }
+
     public void addGiftCard(GiftCard gc){
         this.inv.add(0, gc);
     }
@@ -32,5 +34,9 @@ public class Inventory implements Serializable {
 
     public void setInv(ArrayList<GiftCard> inv) {
         this.inv = inv;
+    }
+
+    public GiftCard getGiftCard(int position) {
+        return this.inv.get(position);
     }
 }

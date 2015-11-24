@@ -24,7 +24,7 @@ public class User {
     public User() {
         this.inv = new Inventory();
 
-        this.fl = new FriendList();;
+        this.fl = new FriendList();
 
         this.friendRequests = new ArrayList<FriendRequest>();
     }
@@ -68,7 +68,7 @@ public class User {
      * @return String
      */
     public String getUsername() {
-        return username;
+        return (String) username;
     }
 
     /**
@@ -120,4 +120,8 @@ public class User {
         this.friendRequests.add(request);
     }
 
+    public boolean isOwner(GiftCard giftCard){
+        ArrayList<GiftCard> giftCards = getInv().getInvList();
+        return giftCards.contains(giftCard);
+    }
 }

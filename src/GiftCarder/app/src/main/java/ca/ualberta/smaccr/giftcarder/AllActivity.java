@@ -1,21 +1,15 @@
 package ca.ualberta.smaccr.giftcarder;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -30,13 +24,10 @@ public class AllActivity extends AppCompatActivity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
 
-    public static final int ADD_ITEM_STATE = 0; // add item
-    public static final int OWNER_ITEM_STATE = 1; // view own item
-    public static final int BROWSER_STATE = 2; // view other's item
-
-    public static final int OWNER_PROFILE_STATE = 0; // view own profile (has edit button)
-    public static final int EDIT_PROFILE_STATE = 1; // edit own profile (has save button)
-    public static final int STRANGER_PROFILE_STATE = 2; // send friend request to stranger (has send friend request button)
+    public static final int ADD_STATE = 0; // add item
+    public static final int OWNER_STATE = 1; // view own item
+    public static final int FRIEND_STATE = 3; // view own item
+    //////
     public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
 
     private UserListController ulc;
@@ -48,6 +39,7 @@ public class AllActivity extends AppCompatActivity {
 
     // friendlist contains an arraylist of strings
     FriendList fl;
+    protected Cache myCache;
 
     UserRegistrationController urc = new UserRegistrationController();
 
@@ -117,6 +109,9 @@ public class AllActivity extends AppCompatActivity {
         User user = urc.getUser(username);
         inv = user.getInv();
 
+        myCache = new Cache(this, username);
+        myCache.updateFriends();
+
         // FriendList class type
         fl = user.getFl();
         Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
@@ -128,19 +123,23 @@ public class AllActivity extends AppCompatActivity {
         // CLick listeners for FRIENDLIST
 
         // click individual friend, disabled cause we need cache or what to save it, friend stuff
-        /*
+
 
         friendsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 String selectedFriend = (String) friendsListView.getItemAtPosition(position);
-                Intent intent = new Intent(AllActivity.this, UserProfileActivity.class);
+                Intent intent = new Intent(AllActivity.this, InventoryActivity.class);
+
                 intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
-                intent.putExtra(EXTRA_USERNAME, selectedFriend);
+                intent.putExtra(EXTRA_USERNAME, username);
+                intent.putExtra("FRIENDUSERNAME", selectedFriend);
+
                 startActivity(intent);
             }
         });
-        */
+
 
         // Long click to delete friend
         friendsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -190,7 +189,7 @@ public class AllActivity extends AppCompatActivity {
                 //intent.putExtra("GiftCard", inv.getInvList().get(position));
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
-                intent.putExtra(EXTRA_STATE, OWNER_ITEM_STATE); // view item
+                intent.putExtra(EXTRA_STATE, OWNER_STATE); // view item
                 // startActivity(intent);
                 startActivityForResult(intent, 1);
             }
@@ -300,7 +299,7 @@ public class AllActivity extends AppCompatActivity {
         Intent intent = new Intent(AllActivity.this, ItemActivity.class);
         intent.putExtra("position", 0);
         intent.putExtra("inventory", inv);
-        intent.putExtra(EXTRA_STATE, ADD_ITEM_STATE); // add item
+        intent.putExtra(EXTRA_STATE, ADD_STATE); // add item
         startActivityForResult(intent, 1);
     }
 
@@ -514,6 +513,7 @@ public class AllActivity extends AppCompatActivity {
     //###############################################################################################################
 
 
+
     @Override
     public void onBackPressed() {
         // Back button disabled
@@ -523,11 +523,6 @@ public class AllActivity extends AppCompatActivity {
     //###############################################################################################################
     // SWITCHING TO OTHER ACTIVITIES
 
-    public void getUserProfile(View view) {
-        Intent intent = new Intent(this, UserProfileActivity.class);
-        intent.putExtra(EXTRA_USERNAME, username);
-        startActivity(intent);
-    }
 
     public void inventoryDetailsButton(View view) {
         Intent intent = new Intent(this, InvDetailsActivity.class);

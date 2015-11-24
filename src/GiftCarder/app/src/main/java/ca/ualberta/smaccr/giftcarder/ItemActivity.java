@@ -1,9 +1,10 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -34,13 +35,22 @@ public class ItemActivity extends Activity {
     private Spinner categorySpinner;
     private EditText etComments;
     private CheckBox checkbox;
-    private Button editAndOfferButton;
+    private Button editButton;
     private Button saveButton;
-    ImageView featuredImage;
+    private Button makeOfferButton;
+    private Button cloneItemButton;
+    protected ImageView featuredImage;
     private int itemState;
     protected ArrayList<ItemImage> itemImagesList;
 
-    // getters for UI testing
+    // for cloning items only
+    public Inventory ownerInv;
+
+    // Controllers
+    ItemController ic = new ItemController();
+    ItemPictureController ipc = new ItemPictureController();
+
+    // Getters for UI testing
     public EditText getEtItemName() {
         return (EditText) findViewById(R.id.ID_item_value);
     }
@@ -77,9 +87,6 @@ public class ItemActivity extends Activity {
         return position;
     }
 
-    ItemController ic = new ItemController();
-    ItemPictureController ipc = new ItemPictureController();
-
     // Constants
     public final static String EXTRA_STATE = "ca.ualberta.smaccr.giftcarder.STATE";
     public final static String EXTRA_PICTURES = "ca.ualberta.smaccr.giftcarder.PICTURES";
@@ -96,10 +103,15 @@ public class ItemActivity extends Activity {
         // receive inventory, position, and state of gift card
         position = (int) getIntent().getIntExtra("position", 0);
         inv = (Inventory) getIntent().getSerializableExtra("inventory");
-        //gc = (GiftCard)getIntent().getSerializableExtra("gc");
+        gc = (GiftCard)getIntent().getSerializableExtra("gc");
         itemState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
-        itemImagesList = inv.getInvList().get(position).getItemImagesList();
+
         featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
+
+        // receive owner's inventory for cloning friend's items into it
+        if (itemState == BROWSER_STATE) {
+            ownerInv = (Inventory) getIntent().getSerializableExtra("ownerInventory");
+        }
 
         // Get references to UI
         etItemValue = (EditText) findViewById(R.id.ID_item_value);
@@ -109,54 +121,43 @@ public class ItemActivity extends Activity {
         categorySpinner = (Spinner) findViewById(R.id.ID_categorySpin);
         etComments = (EditText) findViewById(R.id.ID_comments);
         checkbox = (CheckBox) findViewById(R.id.ID_checkbox);
-        editAndOfferButton = (Button) findViewById(R.id.editAndOfferButton);
+        editButton = (Button) findViewById(R.id.editButton);
         saveButton = (Button) findViewById(R.id.ID_savegiftcard);
+        makeOfferButton = (Button) findViewById(R.id.makeOfferButton);
+        cloneItemButton = (Button) findViewById(R.id.cloneItemButton);
 
         // itemName.setText(inv.getInvList().get(position).getMerchant());
         //Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
 
         if (inv != null) {
+            itemImagesList = inv.getInvList().get(position).getItemImagesList();
             ic.displayGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity,
                     qualitySpinner, categorySpinner, etComments, checkbox);
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
-                    categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
+                    categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
+                    cloneItemButton);
 
             // Display featured image
             if (!itemImagesList.isEmpty()) {
                 ipc.displayFeaturedImage(itemImagesList, featuredImage);
             }
-
-            // if user clicks Edit button
-            if (itemState == OWNER_STATE) {
-                editAndOfferButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        ic.setViewMode(EDIT_STATE, etItemValue, etItemName, etQuantity, qualitySpinner,
-                                categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
-                        itemState = EDIT_STATE;
-                    }
-                });
-            // if user clicks Make Offer button
-            } else if (itemState == BROWSER_STATE) {
-                editAndOfferButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View arg0) {
-                        Toast.makeText(getApplicationContext(), "Trade Button Clicked", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
         }
 
-        /*
+
         if (gc != null){
             ic.displayGiftCardInfo(gc, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox);
-            ic.setViewModeValue(false);
-            ic.setViewMode(etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner,
-                    etComments, checkbox, viewStatusButton, offerButton, saveButton);
-            viewStatusButton.setVisibility(View.GONE);
+            itemImagesList = gc.getItemImagesList();
+            ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
+                    categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
+                    cloneItemButton);
+
+            // Display featured image
+            if (!itemImagesList.isEmpty()) {
+                ipc.displayFeaturedImage(itemImagesList, featuredImage);
+            }
         }
-        */
+
 
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbutton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
     }
@@ -202,13 +203,14 @@ public class ItemActivity extends Activity {
             intent.putExtra("ModifiedInventory", inv);
             setResult(RESULT_OK, intent);
 
-            // only return to inventory when ItemActivity is in Add_STATE
+            // only return to inventory when ItemActivity is in Add State
             if (itemState == ADD_STATE) {
                 finish();
             } else {
-                ic.setViewMode(OWNER_STATE, etItemValue, etItemName, etQuantity, qualitySpinner,
-                        categorySpinner, etComments, checkbox, editAndOfferButton, saveButton);
                 itemState = OWNER_STATE;
+                ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
+                        categorySpinner, etComments, checkbox, editButton, saveButton,
+                        makeOfferButton, cloneItemButton);
             }
 
         } else {
@@ -237,10 +239,6 @@ public class ItemActivity extends Activity {
         finish();
     }
 
-
-    // https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
-    // barebones right now
-
     /**
      * takeGiftCardPic
      * takes a giftcard pic when you click on the profile picture
@@ -262,8 +260,6 @@ public class ItemActivity extends Activity {
         //}
 
     }
-    // https://www.youtube.com/watch?v=pk-80p2ha_Q retrived oct 30 2015
-    // Get picture data and put it in photo of giftcard
 
     /**
      * onActivityResult
@@ -278,6 +274,7 @@ public class ItemActivity extends Activity {
 
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
+
                 itemImagesList = (ArrayList<ItemImage>)data.getSerializableExtra(EXTRA_PICTURES);
 
                 if (!itemImagesList.isEmpty()) {
@@ -286,5 +283,48 @@ public class ItemActivity extends Activity {
 
             }
         }
+    }
+
+    public void onEditButtonClick(View view) {
+        itemState = EDIT_STATE;
+        ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
+                categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
+                cloneItemButton);
+    }
+
+    public void onMakeOfferButtonClick(View view) {
+        /*
+        // Switch to item activity and send inventory and position of gift card for trading
+        Intent intent = new Intent(ItemActivity.this, CreateTradeOfferActivity.class);
+        //intent.putExtra("GiftCard", inv.getInvList().get(position));
+        intent.putExtra("position", position);
+        intent.putExtra("inventory", inv);
+        //startActivity(intent);
+        */
+
+        Toast.makeText(this, "Make Offer clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onCloneItemButtonClick(View view) {
+        AlertDialog.Builder cloneItemDialog = new AlertDialog.Builder(ItemActivity.this);
+        cloneItemDialog.setMessage("Clone this item into your own inventory?").setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (ownerInv != null) {
+                    ic.cloneItem(inv, position, ownerInv);
+                    Toast.makeText(getApplicationContext(), "Item cloned successfully",
+                            Toast.LENGTH_LONG).show();
+                }
+
+                dialog.dismiss();
+            }
+        });
+        cloneItemDialog.create().show();
     }
 }

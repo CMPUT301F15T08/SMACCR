@@ -3,6 +3,7 @@ package ca.ualberta.smaccr.giftcarder;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 /**
  * Created by Richard on 2015-10-24.
@@ -17,11 +18,13 @@ public class GiftCard implements Serializable {
     private int quantity = 0;
     // 3 = poor, 2 = okay, 1= good, 0 = excellent
     private int quality = 0;
-    // 0 = Food-Beverage, ..., 9 = other
+    // 0 = All, ..., 10 = other
     private int category = 0;
     private String comments = "";
     // 1 = shared, 0 = not shared
     private Boolean shared = Boolean.TRUE;
+// For sorting the order in which items display
+    private Date lastModified = new Date();
 
     private ArrayList<ItemImage> itemImagesList;
 
@@ -37,6 +40,29 @@ public class GiftCard implements Serializable {
         this.category = category;
         this.comments = comments;
         this.shared = shared;
+    }
+
+    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments) {        this.value = value;
+        this.merchant = merchant;
+        this.quantity = quantity;
+        this.quality = quality;
+        this.category = category;
+        this.comments = comments;
+    }
+
+    public GiftCard(double value, String merchant, int quantity, int quality, int category, Boolean shared) {        this.value = value;
+        this.merchant = merchant;
+        this.quantity = quantity;
+        this.quality = quality;
+        this.category = category;
+        this.shared = shared;
+    }
+
+    public GiftCard(double value, String merchant, int quantity, int quality, int category) {        this.value = value;
+        this.merchant = merchant;
+        this.quantity = quantity;
+        this.quality = quality;
+        this.category = category;
     }
 
     // Check valid category and quality
@@ -113,7 +139,7 @@ public class GiftCard implements Serializable {
     }
 
     public String getCategoryString() {
-        switch(this.category) {
+        switch (this.category) {
             case 1:
                 return "Food & Beverage";
             case 2:
@@ -135,15 +161,15 @@ public class GiftCard implements Serializable {
             case 10:
                 return "Other";
         }
-        return ""; // Shouldn't get to here.
+        return ""; // shouldn't execute
     }
 
-    public void addItemImage(ItemImage itemImage){
-        this.itemImagesList.add(0, itemImage);
+    public Date getDate() {
+        return lastModified;
     }
 
-    public void deleteItemImage(int imageIndex){
-        this.itemImagesList.remove(imageIndex);
+    public void updateDate(){
+        this.lastModified = new Date();
     }
 
     public int getSize(){
@@ -151,7 +177,7 @@ public class GiftCard implements Serializable {
     }
 
     public ArrayList<ItemImage> getItemImagesList() {
-        return this.itemImagesList;
+        return itemImagesList;
     }
 
     public void setItemImagesList(ArrayList<ItemImage> itemImagesList) {
