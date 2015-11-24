@@ -307,6 +307,7 @@ public class Cache {
         if (urc.getUser(username).getFl().getFriendList()==null)Log.e("4------------", "urc.getUser(username).getFl().getFriendList() is null");
 
         ArrayList<String> friendsNames = urc.getUser(username).getFl().getFriendList();
+
         ArrayBlockingQueue<User> queue = new ArrayBlockingQueue<User>(friendsNames.size());
         User temp = null;
 
