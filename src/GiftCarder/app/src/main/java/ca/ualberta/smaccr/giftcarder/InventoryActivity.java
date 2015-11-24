@@ -26,6 +26,7 @@ public class InventoryActivity extends Activity {
     public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
 
     String username;
+    String friendusername;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
 
@@ -39,12 +40,17 @@ public class InventoryActivity extends Activity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
-        UserRegistrationController urc = new UserRegistrationController();
-        User user = urc.getUser(username);
+        Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
+        //UserRegistrationController urc = new UserRegistrationController();
+        //User user = urc.getUser(username);
+        friendusername = intent.getStringExtra("FRIENDUSERNAME");
+        Cache cache = new Cache(this, username);
+
+        User user = cache.getUser(friendusername);
 
         inv = user.getInv();
         updateInvList(inv);
-        tvUsername.setText(username);
+        tvUsername.setText(friendusername);
 
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -113,21 +119,23 @@ public class InventoryActivity extends Activity {
 
         // Display list of names of giftcards
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
-        FriendInvListAdapter customAdapter = new FriendInvListAdapter(this, R.layout.adapter_inv_list, tempArray);
-        // displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
-        inventorylistID.setAdapter(customAdapter);
+        //FriendInvListAdapter customAdapter = new FriendInvListAdapter(this, R.layout.adapter_inv_list, tempArray);
+        displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
+        //inventorylistID.setAdapter(customAdapter);
     }
 
     public void getUserProfile(View view) {
         Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
-        intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
+        intent.putExtra("FRIENDUSERNAME", friendusername);
+        intent.putExtra(EXTRA_STATE, friendusername);
         startActivity(intent);
     }
 
     public void inventoryDetailsButton(View view) {
         Intent intent = new Intent(this, InvDetailsActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
+        intent.putExtra("FRIENDUSERNAME", friendusername);
         startActivity(intent);
     }
 }
