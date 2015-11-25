@@ -50,9 +50,15 @@ public class ItemController {
      * @param etComments EditText
      * @param checkbox CheckBox
      */
-    public void displayGiftCardInfo(Inventory inv, int position, EditText etItemValue,
-                                    EditText etItemName, EditText etQuantity, Spinner qualitySpinner,
-                                    Spinner categorySpinner, EditText etComments, CheckBox checkbox) {
+    public void displayGiftCardInfo(Inventory inv,
+                                    int position,
+                                    EditText etItemValue,
+                                    EditText etItemName,
+                                    EditText etQuantity,
+                                    Spinner qualitySpinner,
+                                    Spinner categorySpinner,
+                                    EditText etComments,
+                                    CheckBox checkbox) {
         GiftCard tempcard = inv.getInvList().get(position);
         DecimalFormat df = new DecimalFormat("#.00");
 
@@ -93,6 +99,7 @@ public class ItemController {
      * displayGiftCardInfo
      * display the giftcard data in the view, with given giftcard
      * @param gc Giftcard
+     * @param tvOwnerTitle TextView
      * @param etItemValue EditText
      * @param etItemName EditText
      * @param etQuantity EditText
@@ -102,11 +109,12 @@ public class ItemController {
      * @param checkbox CheckBox
      */
 
-    public void displayGiftCardInfo(GiftCard gc, EditText etItemValue, EditText etItemName,
+    public void displayGiftCardInfo(GiftCard gc, TextView tvOwnerTitle, EditText etItemValue, EditText etItemName,
                                     EditText etQuantity, Spinner qualitySpinner,
                                     Spinner categorySpinner, EditText etComments,
                                     CheckBox checkbox) {
 
+        tvOwnerTitle.setText(gc.getOwner() + "'s GiftCard");
         // Show hint if value is equal to 0
         etItemValue.setText(String.valueOf(gc.getValue()));
         if ((gc.getValue() == 0.00) || (gc.getValue() < 0)){
@@ -124,7 +132,6 @@ public class ItemController {
             etQuantity.setText("");
         }
         else {etQuantity.setText(String.valueOf(gc.getQuantity()));}
-
 
         categorySpinner.setSelection(gc.getCategory(), false);
         qualitySpinner.setSelection(gc.getQuality(), false);

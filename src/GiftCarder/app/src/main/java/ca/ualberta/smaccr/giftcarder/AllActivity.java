@@ -183,7 +183,6 @@ public class AllActivity extends AppCompatActivity {
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 // Switch to item activity and send inventory and position of gift card to change
                 Intent intent = new Intent(AllActivity.this, ItemActivity.class);

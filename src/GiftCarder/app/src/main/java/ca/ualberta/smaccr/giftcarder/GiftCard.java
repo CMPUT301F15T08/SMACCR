@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by Richard on 2015-10-24.
  */
 public class GiftCard implements Serializable {
-    
+
     private String owner;                   // Owner's name
     private double value;                   // the monetary value of the giftcard
     private String merchant = "";           // Merchant includes only the name of the card
@@ -26,6 +26,7 @@ public class GiftCard implements Serializable {
     }
 
     public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
+        this.owner = MainActivity.EXTRA_USERNAME;
         this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
@@ -35,7 +36,9 @@ public class GiftCard implements Serializable {
         this.shared = shared;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments) {        this.value = value;
+    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments) {
+        this.owner = MainActivity.EXTRA_USERNAME;
+        this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
         this.quality = quality;
@@ -43,7 +46,9 @@ public class GiftCard implements Serializable {
         this.comments = comments;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category, Boolean shared) {        this.value = value;
+    public GiftCard(double value, String merchant, int quantity, int quality, int category, Boolean shared) {
+        this.owner = MainActivity.EXTRA_USERNAME;
+        this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
         this.quality = quality;
@@ -51,7 +56,9 @@ public class GiftCard implements Serializable {
         this.shared = shared;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category) {        this.value = value;
+    public GiftCard(double value, String merchant, int quantity, int quality, int category) {
+        this.owner = MainActivity.EXTRA_USERNAME;
+        this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
         this.quality = quality;
@@ -155,6 +162,10 @@ public class GiftCard implements Serializable {
                 return "Other";
         }
         return ""; // shouldn't execute
+    }
+
+    public String getOwner() {
+        return owner;
     }
 
     public Date getDate() {

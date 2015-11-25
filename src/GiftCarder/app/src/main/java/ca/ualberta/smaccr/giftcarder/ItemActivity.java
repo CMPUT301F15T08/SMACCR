@@ -22,6 +22,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 public class ItemActivity extends Activity {
@@ -116,7 +118,7 @@ public class ItemActivity extends Activity {
         }
 
         // Get references to UI
-        tvOwnerTitle = (TextView) findViewById(R.id.ID_item_Owner);
+        tvOwnerTitle = (TextView) findViewById(R.id.ID_itemOwner);
         etItemValue = (EditText) findViewById(R.id.ID_item_value);
         etItemName = (EditText) findViewById(R.id.ID_item_Name);
         etQuantity = (EditText) findViewById(R.id.ID_quantity);
@@ -147,8 +149,13 @@ public class ItemActivity extends Activity {
         }
 
 
-        if (gc != null){
-            ic.displayGiftCardInfo(gc, etItemValue, etItemName, etQuantity, qualitySpinner,
+        if (gc != null) {
+
+            Gson gson = new Gson();
+            String testCard = gson.toJson(gc);
+            System.out.println(testCard);
+
+            ic.displayGiftCardInfo(gc, tvOwnerTitle, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox);
             itemImagesList = gc.getItemImagesList();
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
@@ -160,7 +167,6 @@ public class ItemActivity extends Activity {
                 ipc.displayFeaturedImage(itemImagesList, featuredImage);
             }
         }
-
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbutton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
     }
 

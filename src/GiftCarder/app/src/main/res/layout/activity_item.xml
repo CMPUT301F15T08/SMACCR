@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/default_owner_title"
-        android:id="@+id/ID_item_Owner"
+        android:id="@+id/ID_itemOwner"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp" />
 
