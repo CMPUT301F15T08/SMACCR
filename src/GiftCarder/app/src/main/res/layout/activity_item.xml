@@ -15,7 +15,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/default_owner_title"
         android:id="@+id/ID_item_Owner"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp" />
 
     <ScrollView
         android:layout_width="fill_parent"
