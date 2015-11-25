@@ -134,7 +134,7 @@ public class ItemActivity extends Activity {
 
         if (inv != null) {
             itemImagesList = inv.getInvList().get(position).getItemImagesList();
-            ic.displayGiftCardInfo(inv, tvOwnerTitle, position, etItemValue, etItemName, etQuantity,
+            ic.displayGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity,
                     qualitySpinner, categorySpinner, etComments, checkbox);
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
@@ -160,7 +160,6 @@ public class ItemActivity extends Activity {
                 ipc.displayFeaturedImage(itemImagesList, featuredImage);
             }
         }
-
 
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbutton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
     }

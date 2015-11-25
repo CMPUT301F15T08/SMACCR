@@ -9,25 +9,18 @@ import java.util.Date;
  * Created by Richard on 2015-10-24.
  */
 public class GiftCard implements Serializable {
-
-    // the monetary value of the giftcard
-    private double value;
-
-    // Merchant includes only the name of the card
-    private String merchant = "";
+    
+    private String owner;                   // Owner's name
+    private double value;                   // the monetary value of the giftcard
+    private String merchant = "";           // Merchant includes only the name of the card
     private int quantity = 0;
-    // 3 = poor, 2 = okay, 1= good, 0 = excellent
-    private int quality = 0;
-    // 0 = All, ..., 10 = other
-    private int category = 0;
+    private int quality = 0;                // 3 = poor, 2 = okay, 1= good, 0 = excellent
+    private int category = 0;               // 0 = All, ..., 10 = other
     private String comments = "";
-    // 1 = shared, 0 = not shared
-    private Boolean shared = Boolean.TRUE;
-// For sorting the order in which items display
-    private Date lastModified = new Date();
+    private Boolean shared = Boolean.TRUE;  // 1 = shared, 0 = not shared
+    private Date lastModified = new Date(); // For sorting the order in which items display
 
     private ArrayList<ItemImage> itemImagesList;
-
     public GiftCard() {
         itemImagesList = new ArrayList<ItemImage>();
     }
