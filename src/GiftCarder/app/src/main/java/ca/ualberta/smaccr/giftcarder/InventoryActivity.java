@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,9 +47,15 @@ public class InventoryActivity extends Activity {
         friendusername = intent.getStringExtra("FRIENDUSERNAME");
         Cache cache = new Cache(this, username);
 
-        User user = cache.getUser(friendusername);
-
-        inv = user.getInv();
+        try {
+            User user = cache.getUser(friendusername);
+            inv = user.getInv();
+        } catch (NullPointerException e) {
+            // get user from server
+            // getCallingActivity().
+            // inv = user.getInv();
+            Log.e("1", "nulllllllllll");
+        }
         updateInvList(inv);
         tvUsername.setText(friendusername);
 

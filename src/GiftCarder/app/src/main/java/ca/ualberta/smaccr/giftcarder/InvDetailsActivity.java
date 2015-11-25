@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class InvDetailsActivity extends Activity {
 
     private InvDetailsController idc;
+    private String username;
     private User user;
 
     @Override
@@ -21,7 +22,11 @@ public class InvDetailsActivity extends Activity {
 
         // Get user using the app
         Intent intent = getIntent();
-        String username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
+        try {
+            username = intent.getStringExtra(InventoryActivity.EXTRA_USERNAME);
+        } catch (Exception e) {
+            username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
+        }
         UserRegistrationController urc = new UserRegistrationController();
         this.user = urc.getUser(username);
         // Create Controller with the user and this activity

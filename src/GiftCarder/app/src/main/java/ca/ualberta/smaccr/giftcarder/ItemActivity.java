@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class ItemActivity extends Activity {
     public Inventory inv;
     private int position;
     private GiftCard gc;
+    private TextView tvOwnerTitle;
     private EditText etItemValue;
     private EditText etItemName;
     private EditText etQuantity;
@@ -114,6 +116,7 @@ public class ItemActivity extends Activity {
         }
 
         // Get references to UI
+        tvOwnerTitle = (TextView) findViewById(R.id.ID_item_Owner);
         etItemValue = (EditText) findViewById(R.id.ID_item_value);
         etItemName = (EditText) findViewById(R.id.ID_item_Name);
         etQuantity = (EditText) findViewById(R.id.ID_quantity);
@@ -131,7 +134,7 @@ public class ItemActivity extends Activity {
 
         if (inv != null) {
             itemImagesList = inv.getInvList().get(position).getItemImagesList();
-            ic.displayGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity,
+            ic.displayGiftCardInfo(inv, tvOwnerTitle, position, etItemValue, etItemName, etQuantity,
                     qualitySpinner, categorySpinner, etComments, checkbox);
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,

@@ -100,6 +100,7 @@
     <string name="value_colon">Value:</string>
     <string name="clone_item">Clone Item</string>
     <string name="user_profile">User Profile</string>
+    <string name="default_owner_title">\"Owner\"\'s GiftCard</string>
 
     <!--retrieved from Fokert, 11/23/15, http://www.dibbus.com/2011/02/gradient-buttons-for-android/-->
     <style name="ButtonText">

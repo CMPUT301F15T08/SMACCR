@@ -135,7 +135,7 @@ public class AllActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra("FRIENDUSERNAME", selectedFriend);
 
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -354,11 +354,11 @@ public class AllActivity extends AppCompatActivity {
 
     private Runnable checkUserOnServerFriend = new Runnable() {
         public void run() {
-            checkforUserOnServerFriendList(potentialFriendUser);
+            checkForUserOnServerFriendList(potentialFriendUser);
         }
     };
 
-    public void checkforUserOnServerFriendList(User user){
+    public void checkForUserOnServerFriendList(User user){
         UserRegistrationController urc = new UserRegistrationController(this);
 
         if (user != null) {
@@ -381,7 +381,8 @@ public class AllActivity extends AppCompatActivity {
 
             //!!!!!!!!!!!!!
             // add friend to userList singleton
-            // urc.addUser(potentialFriendUser);
+            urc.addUser(potentialFriendUser);
+            myCache.updateFriends();
             //!!!!!!!!!!!!
 
             // update server
@@ -485,9 +486,9 @@ public class AllActivity extends AppCompatActivity {
         }
     }
 
-        /*
-    Retrieved Oct 28 2015
-    http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
+    /*
+     * Retrieved Oct 28 2015
+     * http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
      */
 
     /**

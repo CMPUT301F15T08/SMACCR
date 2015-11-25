@@ -41,6 +41,7 @@ public class ItemController {
      * displayGiftCardInfo
      * display giftcard when given inventory and position of the giftcard.
      * @param inv Inventory
+     * @param owner TextView
      * @param position int
      * @param etItemValue EditText
      * @param etItemName EditText
@@ -50,7 +51,7 @@ public class ItemController {
      * @param etComments EditText
      * @param checkbox CheckBox
      */
-    public void displayGiftCardInfo(Inventory inv, int position, EditText etItemValue,
+    public void displayGiftCardInfo(Inventory inv, TextView owner, int position, EditText etItemValue,
                                     EditText etItemName, EditText etQuantity, Spinner qualitySpinner,
                                     Spinner categorySpinner, EditText etComments, CheckBox checkbox) {
         GiftCard tempcard = inv.getInvList().get(position);
