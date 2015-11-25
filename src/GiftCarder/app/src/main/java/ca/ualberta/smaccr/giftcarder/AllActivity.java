@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -129,8 +131,8 @@ public class AllActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 String selectedFriend = (String) friendsListView.getItemAtPosition(position);
-                Intent intent = new Intent(AllActivity.this, InventoryActivity.class);
 
+                Intent intent = new Intent(AllActivity.this, InventoryActivity.class);
                 intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
                 intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra("FRIENDUSERNAME", selectedFriend);
