@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 public class InvDetailsActivity extends Activity {
 
+    public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     private InvDetailsController idc;
     private String username;
+    private String friendusername;
     private User user;
 
     @Override
@@ -22,15 +24,31 @@ public class InvDetailsActivity extends Activity {
 
         // Get user using the app
         Intent intent = getIntent();
+        /*
         try {
             username = intent.getStringExtra(InventoryActivity.EXTRA_USERNAME);
         } catch (Exception e) {
             username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
         }
-        UserRegistrationController urc = new UserRegistrationController();
-        this.user = urc.getUser(username);
-        // Create Controller with the user and this activity
-        this.idc = new InvDetailsController(user, user.getInv(), this);
+        */
+
+        username = intent.getStringExtra(EXTRA_USERNAME);
+
+        friendusername = intent.getStringExtra("FRIENDUSERNAME");
+
+
+        //First check if we showing friend profile , if not we show current logged in user's profile
+        if (friendusername != null) {
+            Cache cache = new Cache(this, username);
+            User cacheFriend = cache.getUser(friendusername);
+            this.idc = new InvDetailsController(cacheFriend, cacheFriend.getInv(), this);
+        }
+        else{
+            UserRegistrationController urc = new UserRegistrationController();
+            this.user = urc.getUser(username);
+            // Create Controller with the user and this activity
+            this.idc = new InvDetailsController(user, user.getInv(), this);
+        }
     }
 
     @Override
