@@ -20,20 +20,13 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/userImage1"
-            android:layout_column="0"
-            android:src="@drawable/user_icon"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Username"
-            android:id="@+id/username1"
-            android:layout_column="1" />
+            android:id="@+id/activity_create_trade_offer_username1"
+            android:layout_column="0" />
     </TableRow>
 
     <TableRow
@@ -44,7 +37,39 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/itemImage1"
+            android:id="@+id/activity_create_trade_offer_itemImage1"
+            android:layout_column="0" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_create_trade_offer_spinner"
+            android:layout_column="1" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Username"
+            android:id="@+id/activity_create_trade_offer_username2"
+            android:layout_column="0" />
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_create_trade_offer_itemImage2"
             android:layout_column="0" />
 
         <TextView
@@ -52,47 +77,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Item"
-            android:id="@+id/itemName1"
-            android:layout_column="1" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/userImage2"
-            android:layout_column="0"
-            android:src="@drawable/user_icon" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Username"
-            android:id="@+id/username2"
-            android:layout_column="1" />
-    </TableRow>
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/itemImage2"
-            android:layout_column="0" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Item"
-            android:id="@+id/itemName2"
+            android:id="@+id/activity_create_trade_offer_itemName2"
             android:layout_column="1" />
     </TableRow>
     <TableRow
@@ -105,7 +90,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:text="Make Offer"
-            android:id="@+id/makeOfferButton"
+            android:id="@+id/activity_create_trade_offer_makeOfferButton"
             android:layout_column="0" />
 
     </TableRow>

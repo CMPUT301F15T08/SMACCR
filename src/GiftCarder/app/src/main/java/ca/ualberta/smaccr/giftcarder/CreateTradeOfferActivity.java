@@ -1,11 +1,45 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class CreateTradeOfferActivity extends ActionBarActivity {
+
+    private String TRADE_OWNER;
+
+    private UserRegistrationController userRegistrationController;
+    private UserListController userListController;
+    private ESUserManager esUserManager;
+
+    private User tradeOwner;
+    private User tradeBorrower;
+    private GiftCard tradeOwnerItem;
+    private GiftCard tradeBorrowerItem;
+
+    private List<String> ownersInventoryListItems;
+
+    private TextView ownerTextView;
+    private TextView borrowerTextView;
+    private TextView borrowerItemTextView;
+    private Spinner spinner;
+    private Button makeOfferButton;
+
+
     /**
      +     * onCreate
      +     * Creates a new Trade request
@@ -16,6 +50,59 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_trade_offer);
+
+        userRegistrationController = new UserRegistrationController();
+        userListController = new UserListController(userRegistrationController.getUserList());
+        esUserManager = new ESUserManager("");
+        ownersInventoryListItems = new ArrayList<>();
+
+        ownerTextView = (TextView) findViewById(R.id.activity_create_trade_offer_username1);
+        borrowerTextView = (TextView) findViewById(R.id.activity_create_trade_offer_username2);
+        borrowerItemTextView = (TextView) findViewById(R.id.activity_create_trade_offer_itemName2);
+        spinner = (Spinner) findViewById(R.id.activity_create_trade_offer_spinner);
+        makeOfferButton = (Button) findViewById(R.id.activity_create_trade_offer_makeOfferButton);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            tradeOwner = userRegistrationController.getUser(extras.getString("TRADE_OWNER"));
+            tradeBorrowerItem = (GiftCard) getIntent().getSerializableExtra("TRADE_BORROWER_ITEM");
+
+            ownerTextView.setText(tradeOwner.getUsername());
+            borrowerTextView.setText(tradeBorrowerItem.getBelongsTo());
+            borrowerItemTextView.setText(tradeBorrowerItem.getMerchant());
+
+            for (int i = 0; i < tradeOwner.getInv().getInvList().size(); i++) {
+                ownersInventoryListItems.add(tradeOwner.getInv().getInvList().get(i).getMerchant());
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.activity_create_trade_offer_spinner_item,R.id.activity_create_trade_offer_item_textView, ownersInventoryListItems);
+            spinner.setAdapter(adapter);
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    tradeOwnerItem = tradeOwner.getInv().getGiftCard(position);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    tradeOwnerItem = null;
+
+                }
+            });
+
+        }
+
+        makeOfferButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Random rand = new Random();
+                long  tradeId = rand.nextInt(128);
+
+                Thread thread = new updateThread(tradeOwner.getUsername(), tradeBorrowerItem.getBelongsTo(), tradeOwnerItem, tradeBorrowerItem);
+                thread.start();
+            }
+        });
     }
 
     @Override
@@ -38,5 +125,50 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //Deletes user on server, and write back new modified user
+    class updateThread extends Thread {
+        private String ownerUsername;
+        private String borrowerUsername;
+        private GiftCard ownerItem;
+        private GiftCard borrowerItem;
+
+        //UserRegistrationController uc= new UserRegistrationController();
+
+        public updateThread(String ownerUsername, String borrowerUsername, GiftCard ownerItem, GiftCard borrowerItem) {
+            this.ownerUsername = ownerUsername;
+            this.borrowerUsername = borrowerUsername;
+            this.ownerItem = ownerItem;
+            this.borrowerItem = borrowerItem;
+        }
+
+        @Override
+        public void run() {
+            User owner = tradeOwner;
+            User borrower = esUserManager.getUser(borrowerUsername);
+            System.out.println(owner.getUsername());
+            System.out.println(owner.getTradesList());
+            owner.getTradesList().put("a", new Trade(owner.getUsername(), owner.getUsername(), ownerItem, borrowerItem));
+            System.out.println(owner.getTradesList());
+            borrower.getTradesList().put("a", new Trade(owner.getUsername(), borrower.getUsername(), ownerItem, borrowerItem));
+
+            //userRegistrationController.editUserTradeList(owner.getUsername(), owner.getTradesList());
+
+            System.out.println("sdfkjsdfjdsfjdsjfkldsjkljdfskl");
+
+
+            userListController.addUser(owner);
+            userListController.addUser(borrower);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

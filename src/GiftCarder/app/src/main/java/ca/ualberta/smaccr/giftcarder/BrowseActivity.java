@@ -94,7 +94,9 @@ public class BrowseActivity extends AllActivity {
 // Switch to item activity and send selected gift card data
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
                 intent.putExtra("gc", myCache.getResults().get(position));
+                intent.putExtra("BORROWER_USERNAME", myCache.getResults().get(position).getBelongsTo());
                 intent.putExtra(EXTRA_STATE, BROWSER_STATE); // add item
+                intent.putExtra("USERNAME", username);
                 startActivity(intent);
             }
         });

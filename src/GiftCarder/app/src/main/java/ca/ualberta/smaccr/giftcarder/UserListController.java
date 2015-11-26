@@ -34,7 +34,7 @@ public class UserListController {
 
         try {
             HttpPost addRequest = new HttpPost(userlist.getResourceUrl() + user.getUsername());
-
+            //System.out.println(gson.toJson(user));
             StringEntity stringEntity = new StringEntity(gson.toJson(user));
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");

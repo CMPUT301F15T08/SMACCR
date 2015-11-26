@@ -28,6 +28,8 @@ public class GiftCard implements Serializable {
 
     private ArrayList<ItemImage> itemImagesList;
 
+    private String belongsTo;
+
     public GiftCard() {
         itemImagesList = new ArrayList<ItemImage>();
     }
@@ -42,7 +44,8 @@ public class GiftCard implements Serializable {
         this.shared = shared;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments) {        this.value = value;
+    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments) {
+        this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
         this.quality = quality;
@@ -50,7 +53,8 @@ public class GiftCard implements Serializable {
         this.comments = comments;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category, Boolean shared) {        this.value = value;
+    public GiftCard(double value, String merchant, int quantity, int quality, int category, Boolean shared) {
+        this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
         this.quality = quality;
@@ -58,7 +62,8 @@ public class GiftCard implements Serializable {
         this.shared = shared;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category) {        this.value = value;
+    public GiftCard(double value, String merchant, int quantity, int quality, int category) {
+        this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
         this.quality = quality;
@@ -182,5 +187,13 @@ public class GiftCard implements Serializable {
 
     public void setItemImagesList(ArrayList<ItemImage> itemImagesList) {
         this.itemImagesList = itemImagesList;
+    }
+
+    public String getBelongsTo() {
+        return belongsTo;
+    }
+
+    public void setBelongsTo(String belongsTo) {
+        this.belongsTo = belongsTo;
     }
 }

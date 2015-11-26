@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ItemActivity extends Activity {
+    private String username;
 
     public Inventory inv;
     private int position;
@@ -100,11 +102,13 @@ public class ItemActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
+
         // receive inventory, position, and state of gift card
         position = (int) getIntent().getIntExtra("position", 0);
         inv = (Inventory) getIntent().getSerializableExtra("inventory");
         gc = (GiftCard)getIntent().getSerializableExtra("gc");
         itemState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
+        username = getIntent().getStringExtra("USERNAME");
 
         featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
 
@@ -293,14 +297,18 @@ public class ItemActivity extends Activity {
     }
 
     public void onMakeOfferButtonClick(View view) {
-        /*
         // Switch to item activity and send inventory and position of gift card for trading
         Intent intent = new Intent(ItemActivity.this, CreateTradeOfferActivity.class);
+        intent.putExtra("TRADE_OWNER", username);
+        intent.putExtra("TRADE_BORROWER", "TRADE_BORROWER");
+        intent.putExtra("TRADE_BORROWER_ITEM", gc);
         //intent.putExtra("GiftCard", inv.getInvList().get(position));
-        intent.putExtra("position", position);
-        intent.putExtra("inventory", inv);
-        //startActivity(intent);
-        */
+        //intent.putExtra("position", position);
+        //intent.putExtra("inventory", inv);
+        startActivity(intent);
+
+
+
 
         Toast.makeText(this, "Make Offer clicked", Toast.LENGTH_SHORT).show();
     }

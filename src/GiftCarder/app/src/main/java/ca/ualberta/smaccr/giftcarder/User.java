@@ -14,6 +14,7 @@ public class User {
     private Inventory inv;
     private FriendList fl;
     private List<FriendRequest> friendRequests;
+    private TradesList tradesList;
 
 
 
@@ -23,10 +24,9 @@ public class User {
 
     public User() {
         this.inv = new Inventory();
-
         this.fl = new FriendList();
-
         this.friendRequests = new ArrayList<FriendRequest>();
+        this.tradesList = new TradesList();
     }
 
 
@@ -123,5 +123,13 @@ public class User {
     public boolean isOwner(GiftCard giftCard){
         ArrayList<GiftCard> giftCards = getInv().getInvList();
         return giftCards.contains(giftCard);
+    }
+
+    public TradesList getTradesList() {
+        return tradesList;
+    }
+
+    public void setTradesList(TradesList tradesList) {
+        this.tradesList = tradesList;
     }
 }
