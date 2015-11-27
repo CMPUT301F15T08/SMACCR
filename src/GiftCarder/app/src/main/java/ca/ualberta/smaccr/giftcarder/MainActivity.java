@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 public class MainActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
@@ -81,14 +78,19 @@ public class MainActivity extends Activity {
         UserRegistrationController urc = new UserRegistrationController(this);
         userManager = new ESUserManager("");
 
-        if (Validation.hasText(etUsername)) {
-            //Calls GetThreat to check if user is on server
-            Thread thread = new GetThread(username);
-            thread.start();
+        // Try to retrieve the data. If no internet, 
+        try {
+            if (Validation.hasText(etUsername)) {
+                // Calls GetThreat to check if user is on server
+                Thread thread = new GetThread(username);
+                thread.start();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Error retrieving data", Toast.LENGTH_SHORT).show();
         }
     }
 
-    //Get thread to attempt to get user from server by id ->"this is his username"
+    // Get thread to attempt to get user from server by id ->"this is his username"
     class GetThread extends Thread {
         private String id;
 
@@ -99,17 +101,17 @@ public class MainActivity extends Activity {
         @Override
         public void run() {
             user = userManager.getUser(id);
-            runOnUiThread(checkUserONServer);
+            runOnUiThread(checkUserOnServer);
         }
     }
 
-    private Runnable checkUserONServer = new Runnable() {
+    private Runnable checkUserOnServer = new Runnable() {
         public void run() {
-            CheckforUserOnServer(user);
+            checkForUserOnServer(user);
         }
     };
 
-    public void CheckforUserOnServer(User user){
+    public void checkForUserOnServer(User user){
         UserRegistrationController urc = new UserRegistrationController(this);
         userManager = new ESUserManager("");
 
