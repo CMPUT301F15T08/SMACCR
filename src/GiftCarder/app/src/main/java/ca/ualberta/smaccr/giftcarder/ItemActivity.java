@@ -9,6 +9,7 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +21,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -30,6 +34,8 @@ public class ItemActivity extends Activity {
     public Inventory inv;
     private int position;
     private GiftCard gc;
+    private String owner;
+    private TextView tvOwnerTitle;
     private EditText etItemValue;
     private EditText etItemName;
     private EditText etQuantity;
@@ -90,6 +96,7 @@ public class ItemActivity extends Activity {
     }
 
     // Constants
+    public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     public final static String EXTRA_STATE = "ca.ualberta.smaccr.giftcarder.STATE";
     public final static String EXTRA_PICTURES = "ca.ualberta.smaccr.giftcarder.PICTURES";
     public static final int ADD_STATE = 0; // add item
@@ -118,6 +125,7 @@ public class ItemActivity extends Activity {
         }
 
         // Get references to UI
+        tvOwnerTitle = (TextView) findViewById(R.id.ID_itemOwner);
         etItemValue = (EditText) findViewById(R.id.ID_item_value);
         etItemName = (EditText) findViewById(R.id.ID_item_Name);
         etQuantity = (EditText) findViewById(R.id.ID_quantity);
@@ -131,11 +139,11 @@ public class ItemActivity extends Activity {
         cloneItemButton = (Button) findViewById(R.id.cloneItemButton);
 
         // itemName.setText(inv.getInvList().get(position).getMerchant());
-        //Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
 
         if (inv != null) {
             itemImagesList = inv.getInvList().get(position).getItemImagesList();
-            ic.displayGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity,
+            ic.displayGiftCardInfo(inv, position, tvOwnerTitle, etItemValue, etItemName, etQuantity,
                     qualitySpinner, categorySpinner, etComments, checkbox);
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
@@ -148,8 +156,8 @@ public class ItemActivity extends Activity {
         }
 
 
-        if (gc != null){
-            ic.displayGiftCardInfo(gc, etItemValue, etItemName, etQuantity, qualitySpinner,
+        if (gc != null) {
+            ic.displayGiftCardInfo(gc, tvOwnerTitle, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox);
             itemImagesList = gc.getItemImagesList();
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
@@ -161,8 +169,6 @@ public class ItemActivity extends Activity {
                 ipc.displayFeaturedImage(itemImagesList, featuredImage);
             }
         }
-
-
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbutton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
     }
 
@@ -194,18 +200,23 @@ public class ItemActivity extends Activity {
      * @param menu View
      */
     public void saveGiftCardInfo(View menu) {
+
+        // Get current username - whoever is editing a card is the owner, and is logged in.
+        Intent intent = getIntent();
+        owner = intent.getStringExtra(EXTRA_USERNAME);
+
         if (ic.validateFields(etItemValue, etItemName, etQuantity, categorySpinner)) {
             // item controller to set the data into inventory
-            inv = ic.setGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity, qualitySpinner,
+            inv = ic.setGiftCardInfo(inv, owner, position, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, itemImagesList);
 
             Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
 
             // http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
             // send the modified inventory back to inventory activity
-            Intent intent = new Intent();
-            intent.putExtra("ModifiedInventory", inv);
-            setResult(RESULT_OK, intent);
+            Intent intent2 = new Intent();
+            intent2.putExtra("ModifiedInventory", inv);
+            setResult(RESULT_OK, intent2);
 
             // only return to inventory when ItemActivity is in Add State
             if (itemState == ADD_STATE) {

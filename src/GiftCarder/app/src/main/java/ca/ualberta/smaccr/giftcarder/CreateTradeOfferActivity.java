@@ -68,7 +68,7 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
             tradeBorrowerItem = (GiftCard) getIntent().getSerializableExtra("TRADE_BORROWER_ITEM");
 
             ownerTextView.setText(tradeOwner.getUsername());
-            borrowerTextView.setText(tradeBorrowerItem.getBelongsTo());
+            borrowerTextView.setText(tradeBorrowerItem.getOwner());
             borrowerItemTextView.setText(tradeBorrowerItem.getMerchant());
 
             for (int i = 0; i < tradeOwner.getInv().getInvList().size(); i++) {
@@ -99,7 +99,7 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
                 Random rand = new Random();
                 long  tradeId = rand.nextInt(128);
 
-                Thread thread = new updateThread(tradeOwner.getUsername(), tradeBorrowerItem.getBelongsTo(), tradeOwnerItem, tradeBorrowerItem);
+                Thread thread = new updateThread(tradeOwner.getUsername(), tradeBorrowerItem.getOwner(), tradeOwnerItem, tradeBorrowerItem);
                 thread.start();
             }
         });

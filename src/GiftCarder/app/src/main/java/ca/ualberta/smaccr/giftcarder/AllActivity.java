@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -129,13 +131,13 @@ public class AllActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 String selectedFriend = (String) friendsListView.getItemAtPosition(position);
-                Intent intent = new Intent(AllActivity.this, InventoryActivity.class);
 
+                Intent intent = new Intent(AllActivity.this, InventoryActivity.class);
                 intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
                 intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra("FRIENDUSERNAME", selectedFriend);
 
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -181,11 +183,11 @@ public class AllActivity extends AppCompatActivity {
         inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Toast.makeText(getApplicationContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 // Switch to item activity and send inventory and position of gift card to change
                 Intent intent = new Intent(AllActivity.this, ItemActivity.class);
                 //intent.putExtra("GiftCard", inv.getInvList().get(position));
+                intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
                 intent.putExtra(EXTRA_STATE, OWNER_STATE); // view item
@@ -283,7 +285,6 @@ public class AllActivity extends AppCompatActivity {
 
         // Add new giftcard
         GiftCard gc = new GiftCard();
-        gc.setBelongsTo(username);
         inv.addGiftCard(gc);
 
         // Get ArrayList of Strings to display in Adapter ListView
@@ -355,11 +356,11 @@ public class AllActivity extends AppCompatActivity {
 
     private Runnable checkUserOnServerFriend = new Runnable() {
         public void run() {
-            checkforUserOnServerFriendList(potentialFriendUser);
+            checkForUserOnServerFriendList(potentialFriendUser);
         }
     };
 
-    public void checkforUserOnServerFriendList(User user){
+    public void checkForUserOnServerFriendList(User user){
         UserRegistrationController urc = new UserRegistrationController(this);
 
         if (user != null) {
@@ -382,7 +383,8 @@ public class AllActivity extends AppCompatActivity {
 
             //!!!!!!!!!!!!!
             // add friend to userList singleton
-            // urc.addUser(potentialFriendUser);
+            urc.addUser(potentialFriendUser);
+            myCache.updateFriends();
             //!!!!!!!!!!!!
 
             // update server
@@ -486,9 +488,9 @@ public class AllActivity extends AppCompatActivity {
         }
     }
 
-        /*
-    Retrieved Oct 28 2015
-    http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
+    /*
+     * Retrieved Oct 28 2015
+     * http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
      */
 
     /**
