@@ -99,7 +99,7 @@ public class AllActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
         //###########################################################################################################################
         // Only modify part of user
