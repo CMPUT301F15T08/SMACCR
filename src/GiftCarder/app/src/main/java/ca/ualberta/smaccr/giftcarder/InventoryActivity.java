@@ -139,6 +139,7 @@ public class InventoryActivity extends Activity {
                 Intent intent = new Intent();
                 intent.putExtra("ModifiedInventory", ownerInv);
                 setResult(RESULT_OK, intent);
+
             }
         }
     }

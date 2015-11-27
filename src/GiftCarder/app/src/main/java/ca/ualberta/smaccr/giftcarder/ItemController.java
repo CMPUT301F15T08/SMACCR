@@ -291,10 +291,11 @@ public class ItemController {
      * @param ownerInv user's (owner's) inventory that item will be cloned to
      * @param ownerUsername user's (owner's) username
      */
-    public void cloneItem(Inventory inv, int position, Inventory ownerInv, String ownerUsername) {
+    public Inventory cloneItem(Inventory inv, int position, Inventory ownerInv, String ownerUsername) {
         GiftCard giftCard = inv.getInvList().get(position);
         giftCard.setOwner(ownerUsername);
         ownerInv.addGiftCard(giftCard);
+        return ownerInv;
     }
 
     /**
@@ -304,9 +305,10 @@ public class ItemController {
      * @param ownerInv user's (owner's) inventory that item will be cloned to
      * @param ownerUsername user's (owner's) username
      */
-    public void cloneItem(GiftCard giftCard, Inventory ownerInv, String ownerUsername) {
+    public Inventory cloneItem(GiftCard giftCard, Inventory ownerInv, String ownerUsername) {
         giftCard.setOwner(ownerUsername);
         ownerInv.addGiftCard(giftCard);
+        return ownerInv;
     }
 
 

@@ -331,14 +331,19 @@ public class ItemActivity extends Activity {
         }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent();
+
+                // to Browse Activity
                 if (gc != null) {
-                    ic.cloneItem(gc, ownerInv, ownerUsername);
-                } else if (inv != null) {
-                    ic.cloneItem(inv, position, ownerInv, ownerUsername);
+                    ownerInv = ic.cloneItem(gc, ownerInv, ownerUsername);
+                    intent.putExtra("BrowseInventory", ownerInv);
+
+                // to Inventory Activity
+                } else {
+                    ownerInv = ic.cloneItem(inv, position, ownerInv, ownerUsername);
+                    intent.putExtra("ModifiedInventory", ownerInv);
                 }
 
-                Intent intent = new Intent();
-                intent.putExtra("ModifiedInventory", ownerInv);
                 setResult(RESULT_OK, intent);
                 Toast.makeText(getApplicationContext(), "Check inventory to view clone",
                         Toast.LENGTH_LONG).show();
