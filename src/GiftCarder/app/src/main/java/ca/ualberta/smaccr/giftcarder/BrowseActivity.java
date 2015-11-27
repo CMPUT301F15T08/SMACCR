@@ -71,14 +71,12 @@ public class BrowseActivity extends AllActivity {
         setContentView(R.layout.activity_browse);
 
         Intent intent = getIntent();
-        username = intent.getStringExtra(RegisterActivity.EXTRA_USERNAME);
+        username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
         if (super.myCache!=null) {
             myCache = super.myCache;
         } else {
             myCache = new Cache(BrowseActivity.this, username);
         }
-
-        final GiftCard giftCard1 = new GiftCard(12.34,"Test",1,1,6,"scratched but usable", Boolean.TRUE);
 
         searchBar = (EditText) findViewById(R.id.searchEditText);
         goButton = (Button) findViewById(R.id.browseGo);
@@ -91,7 +89,7 @@ public class BrowseActivity extends AllActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-// Switch to item activity and send selected gift card data
+        // Switch to item activity and send selected gift card data
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
                 intent.putExtra("gc", myCache.getResults().get(position));
                 intent.putExtra(EXTRA_STATE, BROWSER_STATE); // add item

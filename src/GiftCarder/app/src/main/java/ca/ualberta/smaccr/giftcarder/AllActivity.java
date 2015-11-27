@@ -187,6 +187,7 @@ public class AllActivity extends AppCompatActivity {
                 // Switch to item activity and send inventory and position of gift card to change
                 Intent intent = new Intent(AllActivity.this, ItemActivity.class);
                 //intent.putExtra("GiftCard", inv.getInvList().get(position));
+                intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
                 intent.putExtra(EXTRA_STATE, OWNER_STATE); // view item

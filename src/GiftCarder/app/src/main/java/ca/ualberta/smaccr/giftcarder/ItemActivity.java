@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ public class ItemActivity extends Activity {
     public Inventory inv;
     private int position;
     private GiftCard gc;
+    private String owner;
     private TextView tvOwnerTitle;
     private EditText etItemValue;
     private EditText etItemName;
@@ -92,6 +94,7 @@ public class ItemActivity extends Activity {
     }
 
     // Constants
+    public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     public final static String EXTRA_STATE = "ca.ualberta.smaccr.giftcarder.STATE";
     public final static String EXTRA_PICTURES = "ca.ualberta.smaccr.giftcarder.PICTURES";
     public static final int ADD_STATE = 0; // add item
@@ -132,11 +135,11 @@ public class ItemActivity extends Activity {
         cloneItemButton = (Button) findViewById(R.id.cloneItemButton);
 
         // itemName.setText(inv.getInvList().get(position).getMerchant());
-        //Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
 
         if (inv != null) {
             itemImagesList = inv.getInvList().get(position).getItemImagesList();
-            ic.displayGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity,
+            ic.displayGiftCardInfo(inv, position, tvOwnerTitle, etItemValue, etItemName, etQuantity,
                     qualitySpinner, categorySpinner, etComments, checkbox);
             ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
@@ -150,11 +153,6 @@ public class ItemActivity extends Activity {
 
 
         if (gc != null) {
-
-            Gson gson = new Gson();
-            String testCard = gson.toJson(gc);
-            System.out.println(testCard);
-
             ic.displayGiftCardInfo(gc, tvOwnerTitle, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox);
             itemImagesList = gc.getItemImagesList();
@@ -198,18 +196,23 @@ public class ItemActivity extends Activity {
      * @param menu View
      */
     public void saveGiftCardInfo(View menu) {
+
+        // Get current username - whoever is editing a card is the owner, and is logged in.
+        Intent intent = getIntent();
+        owner = intent.getStringExtra(EXTRA_USERNAME);
+
         if (ic.validateFields(etItemValue, etItemName, etQuantity, categorySpinner)) {
             // item controller to set the data into inventory
-            inv = ic.setGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity, qualitySpinner,
+            inv = ic.setGiftCardInfo(inv, owner, position, etItemValue, etItemName, etQuantity, qualitySpinner,
                     categorySpinner, etComments, checkbox, itemImagesList);
 
             Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
 
             // http://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
             // send the modified inventory back to inventory activity
-            Intent intent = new Intent();
-            intent.putExtra("ModifiedInventory", inv);
-            setResult(RESULT_OK, intent);
+            Intent intent2 = new Intent();
+            intent2.putExtra("ModifiedInventory", inv);
+            setResult(RESULT_OK, intent2);
 
             // only return to inventory when ItemActivity is in Add State
             if (itemState == ADD_STATE) {

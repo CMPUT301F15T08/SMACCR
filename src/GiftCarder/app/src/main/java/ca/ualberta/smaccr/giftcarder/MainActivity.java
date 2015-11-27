@@ -78,7 +78,7 @@ public class MainActivity extends Activity {
         UserRegistrationController urc = new UserRegistrationController(this);
         userManager = new ESUserManager("");
 
-        // Try to retrieve the data. If no internet, 
+        // Try to retrieve the data. If no internet, pop up some toast to say so.
         try {
             if (Validation.hasText(etUsername)) {
                 // Calls GetThreat to check if user is on server

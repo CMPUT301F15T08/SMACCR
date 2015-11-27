@@ -1,5 +1,7 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.content.Intent;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +27,8 @@ public class GiftCard implements Serializable {
         itemImagesList = new ArrayList<ItemImage>();
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
-        this.owner = MainActivity.EXTRA_USERNAME;
+    public GiftCard(String owner, double value, String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
+        this.owner = owner;
         this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
@@ -36,8 +38,8 @@ public class GiftCard implements Serializable {
         this.shared = shared;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments) {
-        this.owner = MainActivity.EXTRA_USERNAME;
+    public GiftCard(String owner, double value, String merchant, int quantity, int quality, int category, String comments) {
+        this.owner = owner;
         this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
@@ -46,8 +48,8 @@ public class GiftCard implements Serializable {
         this.comments = comments;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category, Boolean shared) {
-        this.owner = MainActivity.EXTRA_USERNAME;
+    public GiftCard(String owner, double value, String merchant, int quantity, int quality, int category, Boolean shared) {
+        this.owner = owner;
         this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
@@ -56,8 +58,8 @@ public class GiftCard implements Serializable {
         this.shared = shared;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category) {
-        this.owner = MainActivity.EXTRA_USERNAME;
+    public GiftCard(String owner, double value, String merchant, int quantity, int quality, int category) {
+        this.owner = owner;
         this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
@@ -166,6 +168,10 @@ public class GiftCard implements Serializable {
 
     public String getOwner() {
         return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public Date getDate() {
