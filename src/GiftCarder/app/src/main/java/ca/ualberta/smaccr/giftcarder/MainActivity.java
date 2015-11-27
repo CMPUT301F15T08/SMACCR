@@ -79,14 +79,15 @@ public class MainActivity extends Activity {
         userManager = new ESUserManager("");
 
         // Try to retrieve the data. If no internet, pop up some toast to say so.
-        try {
+
+        if (!NetworkChecker.isNetworkAvailable(this)) {
+            Toast.makeText(this, "Error retrieving data", Toast.LENGTH_SHORT).show();
+        } else {
             if (Validation.hasText(etUsername)) {
                 // Calls GetThreat to check if user is on server
                 Thread thread = new GetThread(username);
                 thread.start();
             }
-        } catch (Exception e) {
-            Toast.makeText(this, "Error retrieving data", Toast.LENGTH_SHORT).show();
         }
     }
 
