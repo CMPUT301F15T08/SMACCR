@@ -4,26 +4,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -34,6 +26,12 @@ public class ItemActivity extends Activity {
     private GiftCard gc;
     private String owner;
     private TextView tvOwnerTitle;
+    private TextView tvCategoryTitle;
+    private TextView tvQualityTitle;
+    private TextView tvCommentsTitle;
+    private TextView tvQuantityTitle;
+    private TextView tvValueTitle;
+    private TextView tvMerchantTitle;
     private EditText etItemValue;
     private EditText etItemName;
     private EditText etQuantity;
@@ -115,13 +113,15 @@ public class ItemActivity extends Activity {
 
         featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
 
-        // receive owner's inventory for cloning friend's items into it
-        if (itemState == BROWSER_STATE) {
-            ownerInv = (Inventory) getIntent().getSerializableExtra("ownerInventory");
-        }
 
         // Get references to UI
         tvOwnerTitle = (TextView) findViewById(R.id.ID_itemOwner);
+        tvCategoryTitle = (TextView) findViewById(R.id.tvCategoryTitle);
+        tvQualityTitle = (TextView) findViewById(R.id.tvQualityTitle);
+        tvQuantityTitle = (TextView) findViewById(R.id.tvQuantityTitle);
+        tvCommentsTitle = (TextView) findViewById(R.id.tvCommentsTitle);
+        tvValueTitle = (TextView) findViewById(R.id.tvValueTitle);
+        tvMerchantTitle = (TextView) findViewById(R.id.tvMerchantTitle);
         etItemValue = (EditText) findViewById(R.id.ID_item_value);
         etItemName = (EditText) findViewById(R.id.ID_item_Name);
         etQuantity = (EditText) findViewById(R.id.ID_quantity);
@@ -133,6 +133,13 @@ public class ItemActivity extends Activity {
         saveButton = (Button) findViewById(R.id.ID_savegiftcard);
         makeOfferButton = (Button) findViewById(R.id.makeOfferButton);
         cloneItemButton = (Button) findViewById(R.id.cloneItemButton);
+
+
+        // receive owner's inventory for cloning friend's items into it
+        if (itemState == BROWSER_STATE) {
+            ownerInv = (Inventory) getIntent().getSerializableExtra("ownerInventory");
+
+        }
 
         // itemName.setText(inv.getInvList().get(position).getMerchant());
         // Toast.makeText(getApplicationContext(), "Click user photofile to take temporary giftcard picture,  need camera settings to be emulated to work on virtual phone", Toast.LENGTH_LONG).show();
@@ -166,6 +173,60 @@ public class ItemActivity extends Activity {
             }
         }
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbutton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
+
+        // receive owner's inventory for cloning friend's items into it
+        if (itemState == BROWSER_STATE) {
+            //delete make public stuff
+            findViewById(R.id.MakePublicTextView).setVisibility(View.GONE);
+            checkbox.setVisibility(View.GONE);
+
+
+
+            //add the values to the title
+            tvQualityTitle.append(": " + qualitySpinner.getSelectedItem().toString());
+            tvCategoryTitle.append(": " + categorySpinner.getSelectedItem().toString());
+            tvCommentsTitle.append(":");
+            tvValueTitle.append(": " + etItemValue.getText());
+            tvMerchantTitle.append(": " + etItemName.getText());
+            tvQuantityTitle.append(": " + etQuantity.getText());
+
+            //set their padding
+            tvQualityTitle.setPadding(10, 10, 10, 10);
+            tvCategoryTitle.setPadding(10, 10, 10, 10);
+            tvCommentsTitle.setPadding(10, 10, 10, 10);
+            tvValueTitle.setPadding(10, 10, 10, 10);
+            tvMerchantTitle.setPadding(10, 10, 10, 10);
+            tvQuantityTitle.setPadding(10, 10, 10, 10);
+            etComments.setPadding(10, 10, 10, 10);
+
+            //set their color
+            tvQualityTitle.setBackgroundColor(Color.LTGRAY);
+            tvCategoryTitle.setBackgroundColor(Color.LTGRAY);
+            tvCommentsTitle.setBackgroundColor(Color.LTGRAY);
+            tvValueTitle.setBackgroundColor(Color.LTGRAY);
+            tvMerchantTitle.setBackgroundColor(Color.LTGRAY);
+            tvQuantityTitle.setBackgroundColor(Color.LTGRAY);
+            etComments.setBackgroundColor(Color.LTGRAY);
+
+
+            //remove the value as it is now in the title
+            etItemName.setVisibility(View.GONE);
+            etQuantity.setVisibility(View.GONE);
+            etItemValue.setVisibility(View.GONE);
+            findViewById(R.id.dollarSignEditText).setVisibility(View.GONE);
+            etItemName.setVisibility(View.GONE);
+            tvQuantityTitle.setVisibility(View.GONE);
+            qualitySpinner.setVisibility(View.GONE);
+            categorySpinner.setVisibility(View.GONE);
+
+            if (etComments.getText().toString().equals("")){
+                etComments.setVisibility(View.GONE);
+                tvCommentsTitle.setVisibility(View.GONE);
+            }
+
+
+
+        }
     }
 
     @Override
