@@ -252,7 +252,7 @@ public class ItemActivity extends Activity {
 
     /**
      * takeGiftCardPic
-     * takes a giftcard pic when you click on the profile picture
+     * takes a giftcard pic when you click on the generic gift card picture
      *
      * @param menu
      */
@@ -273,7 +273,6 @@ public class ItemActivity extends Activity {
     }
 
     /**
-     * onActivityResult
      * Saves the picture data into the image parameter
      *
      * @param requestCode int
@@ -296,6 +295,11 @@ public class ItemActivity extends Activity {
         }
     }
 
+    /**
+     * changes owner state to edit state when edit button is clicked
+     *
+     * @param view
+     */
     public void onEditButtonClick(View view) {
         itemState = EDIT_STATE;
         ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,

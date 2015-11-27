@@ -129,9 +129,8 @@ public class InventoryActivity extends Activity {
 
     public void getUserProfile(View view) {
         Intent intent = new Intent(this, UserProfileActivity.class);
-        intent.putExtra(EXTRA_USERNAME, username);
         intent.putExtra("FRIENDUSERNAME", friendUsername);
-        intent.putExtra(EXTRA_STATE, friendUsername);
+        intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
         startActivity(intent);
     }
 

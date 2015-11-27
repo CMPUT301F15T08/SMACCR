@@ -33,7 +33,7 @@ public class UserProfileActivity extends Activity {
     private UserRegistrationController urc = new UserRegistrationController();
     private UserProfileController upc = new UserProfileController();
     private int profileState;
-    private Button multiButton;
+    private Button editButton;
     private Button saveButton;
 
     //getters for UI testing
@@ -45,7 +45,6 @@ public class UserProfileActivity extends Activity {
     public final static String EXTRA_STATE = "ca.ualberta.smaccr.giftcarder.STATE";
     public static final int OWNER_STATE = 0; // view own profile (has edit button)
     public static final int EDIT_STATE = 1; // edit own profile (has save button)
-    public static final int STRANGER_STATE = 2; // send friend request to stranger (has send friend request button)
     public static final int FRIEND_STATE = 3; // view friend's profile (no button)
 
     User user;
@@ -58,14 +57,12 @@ public class UserProfileActivity extends Activity {
         etCity = (EditText) findViewById(R.id.cityTextView);
         etPhone = (EditText) findViewById(R.id.phoneTextView);
         etEmail = (EditText) findViewById(R.id.emailTextView);
-        multiButton = (Button) findViewById(R.id.multiButton);
+        editButton = (Button) findViewById(R.id.editButton);
         saveButton = (Button) findViewById(R.id.saveProfileButton);
 
         Intent intent = getIntent();
         username = intent.getStringExtra(EXTRA_USERNAME);
-
         friendusername = intent.getStringExtra("FRIENDUSERNAME");
-
         profileState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
 
         Cache cache = new Cache(this, username);
@@ -77,7 +74,7 @@ public class UserProfileActivity extends Activity {
             etCity.setText(cacheFriend.getCity());
             etPhone.setText(cacheFriend.getPhone());
             etEmail.setText(cacheFriend.getEmail());
-            upc.setViewMode(profileState, etCity, etPhone, etEmail, multiButton, saveButton);
+            upc.setViewMode(profileState, etCity, etPhone, etEmail, editButton, saveButton);
         }
         else{
             User user = urc.getUser(username);
@@ -88,24 +85,14 @@ public class UserProfileActivity extends Activity {
                 etCity.setText(user.getCity());
                 etPhone.setText(user.getPhone());
                 etEmail.setText(user.getEmail());
-                upc.setViewMode(profileState, etCity, etPhone, etEmail, multiButton, saveButton);
+                upc.setViewMode(profileState, etCity, etPhone, etEmail, editButton, saveButton);
             }
         }
 
     }
 
-    public void onMultiButtonClick(View view){
-
-        // Edit button -> owner state changes to edit state
-        if (profileState == OWNER_STATE) {
-            upc.setViewMode(EDIT_STATE, etCity, etPhone, etEmail, multiButton, saveButton);
-
-        // if user clicks Send Friend Request button
-        }else if (profileState == STRANGER_STATE) {
-
-            Toast.makeText(this, "Friend request sent", Toast.LENGTH_LONG).show();
-            finish();
-        }
+    public void onEditButtonClick(View view){
+        upc.setViewMode(EDIT_STATE, etCity, etPhone, etEmail, editButton, saveButton);
     }
 
     public void onSaveButtonClick(View view) {
@@ -113,7 +100,7 @@ public class UserProfileActivity extends Activity {
         if (urc.validateEditedFields(etCity, etPhone, etEmail)) {
             urc.editUser(username, etCity, etPhone, etEmail);
             Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
-            upc.setViewMode(OWNER_STATE, etCity, etPhone, etEmail, multiButton, saveButton);
+            upc.setViewMode(OWNER_STATE, etCity, etPhone, etEmail, editButton, saveButton);
         }
 
         // invalid input
