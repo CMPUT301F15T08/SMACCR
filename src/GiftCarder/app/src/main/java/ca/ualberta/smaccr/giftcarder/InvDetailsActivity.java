@@ -2,18 +2,16 @@ package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 public class InvDetailsActivity extends Activity {
 
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     private InvDetailsController idc;
     private String username;
-    private String friendusername;
+    private String friendUsername;
     private User user;
 
     @Override
@@ -33,17 +31,14 @@ public class InvDetailsActivity extends Activity {
         */
 
         username = intent.getStringExtra(EXTRA_USERNAME);
+        friendUsername = intent.getStringExtra("FRIENDUSERNAME");
 
-        friendusername = intent.getStringExtra("FRIENDUSERNAME");
-
-
-        //First check if we showing friend profile , if not we show current logged in user's profile
-        if (friendusername != null) {
+        // First check if we are showing friend profile. If not, we show currently logged in user's profile
+        if (friendUsername != null) {
             Cache cache = new Cache(this, username);
-            User cacheFriend = cache.getUser(friendusername);
+            User cacheFriend = cache.getUser(friendUsername);
             this.idc = new InvDetailsController(cacheFriend, cacheFriend.getInv(), this);
-        }
-        else{
+        } else {
             UserRegistrationController urc = new UserRegistrationController();
             this.user = urc.getUser(username);
             // Create Controller with the user and this activity
