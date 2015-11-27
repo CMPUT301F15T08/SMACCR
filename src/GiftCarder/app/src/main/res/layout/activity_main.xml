@@ -65,6 +65,7 @@
             android:layout_marginStart="5dp"
             android:onClick="registerNewUser"
             android:padding="7dp" />
+
     </LinearLayout>
 
 

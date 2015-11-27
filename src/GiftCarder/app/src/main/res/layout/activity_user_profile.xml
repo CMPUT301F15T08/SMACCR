@@ -13,11 +13,12 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/multiButton"
+        android:text="@string/edit"
+        android:id="@+id/editButton"
         android:background="@drawable/button_orange"
         android:textSize="20dp"
         android:layout_gravity="center_vertical"
-        android:onClick="onMultiButtonClick"
+        android:onClick="onEditButtonClick"
         style="@style/ButtonText"/>
 
     <TextView
