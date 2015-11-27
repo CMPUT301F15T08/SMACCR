@@ -12,4 +12,10 @@ public class TradesList extends HashMap<String, Trade> {
         userRegistrationController.getUser(user.getUsername());
     }
 
+    // I (Spencer) created this default constructor to deal with an error User.java
+    // Full disclosure, I don't know what the purpose of this class is so this is a band-aid fix.
+    public TradesList() {
+
+    }
+
 }
