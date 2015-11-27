@@ -68,11 +68,12 @@ public class UserProfileActivity extends Activity {
 
         profileState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
 
-        Cache cache = new Cache(this, username);
-        User cacheFriend = cache.getUser(friendusername);
+
 
         //First check if we showing friend profile , if not we show current logged in user's profile
         if (friendusername != null) {
+            Cache cache = new Cache(this, username);
+            User cacheFriend = cache.getUser(friendusername);
             tvUsername.setText(cacheFriend.getUsername());
             etCity.setText(cacheFriend.getCity());
             etPhone.setText(cacheFriend.getPhone());
