@@ -52,7 +52,6 @@ public class GiftCard implements Serializable {
         this.comments = comments;
     }
 
-
     public GiftCard(String owner, double value, String merchant, int quantity, int quality, int category, Boolean shared) {
         this.owner = owner;
         this.value = value;
@@ -62,7 +61,6 @@ public class GiftCard implements Serializable {
         this.category = category;
         this.shared = shared;
     }
-
 
     public GiftCard(String owner, double value, String merchant, int quantity, int quality, int category) {
         this.owner = owner;
@@ -198,13 +196,5 @@ public class GiftCard implements Serializable {
 
     public void setItemImagesList(ArrayList<ItemImage> itemImagesList) {
         this.itemImagesList = itemImagesList;
-    }
-
-    public String getBelongsTo() {
-        return belongsTo;
-    }
-
-    public void setBelongsTo(String belongsTo) {
-        this.belongsTo = belongsTo;
     }
 }
