@@ -14,6 +14,7 @@ public class TradeRequestActivity extends ActionBarActivity {
 
     private String tradeId;
     private UserRegistrationController userRegistrationController;
+    private Trade trade;
     private User owner;
 
     private TextView ownerTextView;
@@ -45,13 +46,17 @@ public class TradeRequestActivity extends ActionBarActivity {
         if (extras != null) {
             tradeId = extras.getString("TRADE_ID");
             owner = userRegistrationController.getUser(extras.getString("CURRENT_USERNAME"));
-            Trade trade = owner.getTradesList().get(tradeId);
+            trade = owner.getTradesList().get(tradeId);
 
             ownerTextView.setText(trade.getOwner());
             ownerItemTextView.setText(trade.getOwnerItem().getMerchant());
             borrowerTextView.setText(trade.getBorrower());
             borrowerItemTextView.setText(trade.getBorrowerItem().getMerchant());
 
+        }
+
+        if (owner.getUsername().equals(trade.getOwner())) {
+            acceptTradeButton.setVisibility(View.INVISIBLE);
         }
 
         acceptTradeButton.setOnClickListener(new View.OnClickListener() {

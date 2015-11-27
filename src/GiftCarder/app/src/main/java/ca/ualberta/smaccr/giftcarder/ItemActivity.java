@@ -311,7 +311,6 @@ public class ItemActivity extends Activity {
         // Switch to item activity and send inventory and position of gift card for trading
         Intent intent = new Intent(ItemActivity.this, CreateTradeOfferActivity.class);
         intent.putExtra("TRADE_OWNER", username);
-        intent.putExtra("TRADE_BORROWER", "TRADE_BORROWER");
         intent.putExtra("TRADE_BORROWER_ITEM", gc);
         //intent.putExtra("GiftCard", inv.getInvList().get(position));
         //intent.putExtra("position", position);

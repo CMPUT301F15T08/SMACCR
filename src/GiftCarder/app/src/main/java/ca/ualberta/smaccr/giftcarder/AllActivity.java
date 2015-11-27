@@ -286,6 +286,7 @@ public class AllActivity extends AppCompatActivity {
 
         // Add new giftcard
         GiftCard gc = new GiftCard();
+        gc.setBelongsTo(username);
         inv.addGiftCard(gc);
 
         // Get ArrayList of Strings to display in Adapter ListView

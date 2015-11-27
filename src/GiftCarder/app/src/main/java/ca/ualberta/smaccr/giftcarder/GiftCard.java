@@ -24,6 +24,14 @@ public class GiftCard implements Serializable {
 
     private ArrayList<ItemImage> itemImagesList;
 
+    public String getBelongsTo() {
+        return belongsTo;
+    }
+
+    public void setBelongsTo(String belongsTo) {
+        this.belongsTo = belongsTo;
+    }
+
     private String belongsTo;
 
     public GiftCard() {
