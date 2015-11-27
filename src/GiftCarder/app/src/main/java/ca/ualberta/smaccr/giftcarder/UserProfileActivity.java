@@ -78,6 +78,7 @@ public class UserProfileActivity extends Activity {
             etPhone.setText(cacheFriend.getPhone());
             etEmail.setText(cacheFriend.getEmail());
             upc.setViewMode(profileState, etCity, etPhone, etEmail, multiButton, saveButton);
+            multiButton.setVisibility(View.GONE);
         }
         else{
             User user = urc.getUser(username);
