@@ -49,6 +49,14 @@ public class ItemActivity extends Activity {
     private int itemState;
     protected ArrayList<ItemImage> itemImagesList;
 
+    public int getItemState() {
+        return itemState;
+    }
+
+    public void setItemState(int itemState) {
+        this.itemState = itemState;
+    }
+
     // for cloning items only
     public Inventory ownerInv;
 
@@ -111,13 +119,16 @@ public class ItemActivity extends Activity {
         position = (int) getIntent().getIntExtra("position", 0);
         inv = (Inventory) getIntent().getSerializableExtra("inventory");
         gc = (GiftCard)getIntent().getSerializableExtra("gc");
-        itemState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
+        setItemState(getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE));
 
         featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
 
         // receive owner's inventory for cloning friend's items into it
-        if (itemState == BROWSER_STATE) {
+        if (getItemState() == BROWSER_STATE) {
             ownerInv = (Inventory) getIntent().getSerializableExtra("ownerInventory");
+            if (ownerInv == null) {
+                Log.e("---------", "ownerInv is null: ItemActivity.java in onCreate");
+            }
         }
 
         // Get references to UI

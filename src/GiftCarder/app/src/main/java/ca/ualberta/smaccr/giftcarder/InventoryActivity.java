@@ -28,6 +28,16 @@ public class InventoryActivity extends Activity {
     String username;
     String friendUsername;
     Inventory inv;
+    private Inventory ownerInv;
+
+    public Inventory getOwnerInv() {
+        return ownerInv;
+    }
+
+    public void setOwnerInv(Inventory ownerInv) {
+        this.ownerInv = ownerInv;
+    }
+
     ArrayAdapter<String> displayAdapter;
 
     @Override
@@ -48,8 +58,13 @@ public class InventoryActivity extends Activity {
         Cache cache = new Cache(this, username);
 
         try {
-            User user = cache.getUser(friendUsername);
-            inv = user.getInv();
+            User friendUser = cache.getUser(friendUsername);
+            inv = friendUser.getInv();
+
+            UserRegistrationController urc = new UserRegistrationController();
+            User user = urc.getUser(username);
+            setOwnerInv(user.getInv());
+
         } catch (NullPointerException e) {
             Log.e("1", "nulllllllllll");
         }
@@ -65,7 +80,7 @@ public class InventoryActivity extends Activity {
                 // intent.putExtra("GiftCard", inv.getInvList().get(position));
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
-                // intent.putExtra("ownerInventory", ownerInv);
+                intent.putExtra("ownerInventory", getOwnerInv());
                 intent.putExtra(EXTRA_STATE, BROWSER_ITEM_STATE); // view item
                 // startActivity(intent);
                 startActivityForResult(intent, 1);

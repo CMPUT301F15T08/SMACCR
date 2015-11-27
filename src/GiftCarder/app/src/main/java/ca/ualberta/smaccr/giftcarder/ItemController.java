@@ -284,14 +284,14 @@ public class ItemController {
     }
 
     /**
-     * Clones friend's item into user's (owner's) item
+     * Clones friend's item into user's (owner's) inventory
      *
      * @param inv friend's inventory
      * @param position position of gift card in friend's inventory
      * @param ownerInv user's (owner's) inventory that item will be cloned to
      */
     public void cloneItem(Inventory inv, int position, Inventory ownerInv) {
-        ownerInv.getInvList().set(position, inv.getInvList().get(position));
+        ownerInv.getInvList().set(0, inv.getInvList().get(position));
     }
 
     /**
