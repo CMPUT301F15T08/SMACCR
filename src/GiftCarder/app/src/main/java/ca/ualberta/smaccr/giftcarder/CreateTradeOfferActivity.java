@@ -134,7 +134,6 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
         private GiftCard ownerItem;
         private GiftCard borrowerItem;
 
-        //UserRegistrationController uc= new UserRegistrationController();
 
         public updateThread(String ownerUsername, String borrowerUsername, GiftCard ownerItem, GiftCard borrowerItem) {
             this.ownerUsername = ownerUsername;
@@ -147,20 +146,12 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
         public void run() {
             User owner = tradeOwner;
             User borrower = esUserManager.getUser(borrowerUsername);
-            System.out.println(owner.getUsername());
-            System.out.println(owner.getTradesList());
-            owner.getTradesList().put("a", new Trade(owner.getUsername(), owner.getUsername(), ownerItem, borrowerItem));
-            System.out.println(owner.getTradesList());
+
+            owner.getTradesList().put("a", new Trade(owner.getUsername(), borrower.getUsername(), ownerItem, borrowerItem));
             borrower.getTradesList().put("a", new Trade(owner.getUsername(), borrower.getUsername(), ownerItem, borrowerItem));
-
-            //userRegistrationController.editUserTradeList(owner.getUsername(), owner.getTradesList());
-
-            System.out.println("sdfkjsdfjdsfjdsjfkldsjkljdfskl");
-
 
             userListController.addUser(owner);
             userListController.addUser(borrower);
-
 
             // Give some time to get updated info
             try {

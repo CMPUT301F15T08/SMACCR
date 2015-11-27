@@ -87,7 +87,7 @@ public class AllActivity extends AppCompatActivity {
         ListView tradesListView = (ListView) findViewById(R.id.tradesListView);
         final ListView friendsListView = (ListView) findViewById(R.id.friendListView);
 
-        tradesListView.setAdapter(new TradesTabAdapter(this));
+        tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
         tradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -96,6 +96,8 @@ public class AllActivity extends AppCompatActivity {
                 // The position should match the index in the database
                 // This way the trade offer can be retrieved
                 Intent intent = new Intent(AllActivity.this, TradeRequestActivity.class);
+                intent.putExtra("TRADE_ID", Long.toHexString(id));
+                intent.putExtra("CURRENT_USERNAME", getIntent().getStringExtra(MainActivity.EXTRA_USERNAME));
                 startActivity(intent);
             }
         });

@@ -19,20 +19,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/userImage1"
-                android:layout_column="0"
-                android:src="@drawable/user_icon"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Username"
-                android:id="@+id/username1"
-                android:layout_column="1" />
+                android:id="@+id/activity_trade_request_username1"
+                android:layout_column="0" />
         </TableRow>
 
         <TableRow
@@ -51,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Item"
-                android:id="@+id/itemName1"
+                android:id="@+id/activity_trade_request_itemName1"
                 android:layout_column="1" />
         </TableRow>
 
@@ -60,20 +54,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/userImage2"
-                android:layout_column="0"
-                android:src="@drawable/user_icon" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Username"
-                android:id="@+id/username2"
-                android:layout_column="1" />
+                android:id="@+id/activity_trade_request_username2"
+                android:layout_column="0" />
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
@@ -91,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Item"
-                android:id="@+id/itemName2"
+                android:id="@+id/activity_trade_request_itemName2"
                 android:layout_column="1" />
         </TableRow>
         <TableRow
@@ -104,7 +91,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:text="Accept Trade"
-                android:id="@+id/acceptTradeButton"
+                android:id="@+id/activity_trade_request_acceptTradeButton"
                 android:layout_column="0" />
 
         </TableRow>
@@ -118,7 +105,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:text="Decline Trade"
-                android:id="@+id/declineTradeButton"
+                android:id="@+id/activity_trade_request_declineTradeButton"
                 android:layout_column="0" />
 
         </TableRow>
@@ -132,7 +119,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:text="Propose Counter Trade"
-                android:id="@+id/counterTradeButton"
+                android:id="@+id/activity_trade_request_counterTradeButton"
                 android:layout_column="0" />
 
         </TableRow>
