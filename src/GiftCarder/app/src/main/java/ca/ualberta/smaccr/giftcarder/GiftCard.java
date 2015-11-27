@@ -1,5 +1,7 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.content.Intent;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,21 +12,15 @@ import java.util.Date;
  */
 public class GiftCard implements Serializable {
 
-    // the monetary value of the giftcard
-    private double value;
-
-    // Merchant includes only the name of the card
-    private String merchant = "";
+    private String owner;                   // Owner's name
+    private double value;                   // the monetary value of the giftcard
+    private String merchant = "";           // Merchant includes only the name of the card
     private int quantity = 0;
-    // 3 = poor, 2 = okay, 1= good, 0 = excellent
-    private int quality = 0;
-    // 0 = All, ..., 10 = other
-    private int category = 0;
+    private int quality = 0;                // 3 = poor, 2 = okay, 1= good, 0 = excellent
+    private int category = 0;               // 0 = All, ..., 10 = other
     private String comments = "";
-    // 1 = shared, 0 = not shared
-    private Boolean shared = Boolean.TRUE;
-// For sorting the order in which items display
-    private Date lastModified = new Date();
+    private Boolean shared = Boolean.TRUE;  // 1 = shared, 0 = not shared
+    private Date lastModified = new Date(); // For sorting the order in which items display
 
     private ArrayList<ItemImage> itemImagesList;
 
@@ -34,7 +30,8 @@ public class GiftCard implements Serializable {
         itemImagesList = new ArrayList<ItemImage>();
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
+    public GiftCard(String owner, double value, String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
+        this.owner = owner;
         this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
@@ -44,7 +41,9 @@ public class GiftCard implements Serializable {
         this.shared = shared;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments) {
+
+    public GiftCard(String owner, double value, String merchant, int quantity, int quality, int category, String comments) {
+        this.owner = owner;
         this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
@@ -53,7 +52,9 @@ public class GiftCard implements Serializable {
         this.comments = comments;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category, Boolean shared) {
+
+    public GiftCard(String owner, double value, String merchant, int quantity, int quality, int category, Boolean shared) {
+        this.owner = owner;
         this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
@@ -62,7 +63,9 @@ public class GiftCard implements Serializable {
         this.shared = shared;
     }
 
-    public GiftCard(double value, String merchant, int quantity, int quality, int category) {
+
+    public GiftCard(String owner, double value, String merchant, int quantity, int quality, int category) {
+        this.owner = owner;
         this.value = value;
         this.merchant = merchant;
         this.quantity = quantity;
@@ -167,6 +170,14 @@ public class GiftCard implements Serializable {
                 return "Other";
         }
         return ""; // shouldn't execute
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public Date getDate() {

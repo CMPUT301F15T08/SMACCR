@@ -7,9 +7,6 @@ import java.util.HashMap;
  */
 public class TradesList extends HashMap<String, Trade> {
 
-    public TradesList(User user) {
-        UserRegistrationController userRegistrationController = new UserRegistrationController();
-        userRegistrationController.getUser(user.getUsername());
-    }
+
 
 }

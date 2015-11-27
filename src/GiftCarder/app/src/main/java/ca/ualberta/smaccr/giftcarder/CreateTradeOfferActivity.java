@@ -150,6 +150,10 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
             owner.getTradesList().put("a", new Trade(owner.getUsername(), borrower.getUsername(), ownerItem, borrowerItem));
             borrower.getTradesList().put("a", new Trade(owner.getUsername(), borrower.getUsername(), ownerItem, borrowerItem));
 
+            userRegistrationController.editUserTradeList(owner.getUsername(), owner.getTradesList());
+            userRegistrationController.editUserTradeList(borrower.getUsername(), borrower.getTradesList());
+
+
             userListController.addUser(owner);
             userListController.addUser(borrower);
 

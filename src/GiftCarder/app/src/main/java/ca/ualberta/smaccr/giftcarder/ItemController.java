@@ -50,10 +50,21 @@ public class ItemController {
      * @param etComments EditText
      * @param checkbox CheckBox
      */
-    public void displayGiftCardInfo(Inventory inv, int position, EditText etItemValue,
-                                    EditText etItemName, EditText etQuantity, Spinner qualitySpinner,
-                                    Spinner categorySpinner, EditText etComments, CheckBox checkbox) {
+    public void displayGiftCardInfo(Inventory inv,
+                                    int position,
+                                    TextView tvOwnerTitle,
+                                    EditText etItemValue,
+                                    EditText etItemName,
+                                    EditText etQuantity,
+                                    Spinner qualitySpinner,
+                                    Spinner categorySpinner,
+                                    EditText etComments,
+                                    CheckBox checkbox) {
+
         GiftCard tempcard = inv.getInvList().get(position);
+        if (tempcard.getOwner() != null) {
+            tvOwnerTitle.setText(tempcard.getOwner() + "'s GiftCard");
+        }
         DecimalFormat df = new DecimalFormat("#.00");
 
         // Show hint if value is equal to 0
@@ -93,6 +104,7 @@ public class ItemController {
      * displayGiftCardInfo
      * display the giftcard data in the view, with given giftcard
      * @param gc Giftcard
+     * @param tvOwnerTitle TextView
      * @param etItemValue EditText
      * @param etItemName EditText
      * @param etQuantity EditText
@@ -102,11 +114,19 @@ public class ItemController {
      * @param checkbox CheckBox
      */
 
-    public void displayGiftCardInfo(GiftCard gc, EditText etItemValue, EditText etItemName,
-                                    EditText etQuantity, Spinner qualitySpinner,
-                                    Spinner categorySpinner, EditText etComments,
+    public void displayGiftCardInfo(GiftCard gc,
+                                    TextView tvOwnerTitle,
+                                    EditText etItemValue,
+                                    EditText etItemName,
+                                    EditText etQuantity,
+                                    Spinner qualitySpinner,
+                                    Spinner categorySpinner,
+                                    EditText etComments,
                                     CheckBox checkbox) {
 
+        if (gc.getOwner() != null) {
+            tvOwnerTitle.setText(gc.getOwner() + "'s GiftCard");
+        }
         // Show hint if value is equal to 0
         etItemValue.setText(String.valueOf(gc.getValue()));
         if ((gc.getValue() == 0.00) || (gc.getValue() < 0)){
@@ -124,7 +144,6 @@ public class ItemController {
             etQuantity.setText("");
         }
         else {etQuantity.setText(String.valueOf(gc.getQuantity()));}
-
 
         categorySpinner.setSelection(gc.getCategory(), false);
         qualitySpinner.setSelection(gc.getQuality(), false);
@@ -154,12 +173,19 @@ public class ItemController {
      * @param checkbox CheckBox
      * @return inv
      */
-    public Inventory setGiftCardInfo(Inventory inv, int position, EditText etItemValue,
-                                     EditText etItemName, EditText etQuantity,
-                                     Spinner qualitySpinner, Spinner categorySpinner,
-                                     EditText etComments, CheckBox checkbox,
+    public Inventory setGiftCardInfo(Inventory inv,
+                                     String owner,
+                                     int position,
+                                     EditText etItemValue,
+                                     EditText etItemName,
+                                     EditText etQuantity,
+                                     Spinner qualitySpinner,
+                                     Spinner categorySpinner,
+                                     EditText etComments,
+                                     CheckBox checkbox,
                                      ArrayList<ItemImage> itemImagesList) {
         GiftCard tempcard = inv.getInvList().get(position);
+        tempcard.setOwner(owner);
 
         // If invalid dollar, cent amount then set to zero for now!
         try {
@@ -202,10 +228,18 @@ public class ItemController {
      * @param editButton Button
      * @param saveButton Button
      */
-    public void setViewMode(int itemState, EditText etItemValue ,EditText etItemName,
-                            EditText etQuantity, Spinner qualitySpinner, Spinner categorySpinner,
-                            EditText etComments, CheckBox checkbox, Button editButton,
-                            Button saveButton, Button makeOfferButton, Button cloneItemButton) {
+    public void setViewMode(int itemState,
+                            EditText etItemValue,
+                            EditText etItemName,
+                            EditText etQuantity,
+                            Spinner qualitySpinner,
+                            Spinner categorySpinner,
+                            EditText etComments,
+                            CheckBox checkbox,
+                            Button editButton,
+                            Button saveButton,
+                            Button makeOfferButton,
+                            Button cloneItemButton) {
 
         if ((itemState == ADD_STATE) || (itemState == EDIT_STATE)) {
             etItemValue.setFocusableInTouchMode(true);
