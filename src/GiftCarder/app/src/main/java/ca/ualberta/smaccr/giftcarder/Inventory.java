@@ -22,6 +22,15 @@ public class Inventory implements Serializable {
         this.inv.remove(gcIndex);
     }
 
+    public void removeGiftCard(GiftCard giftCard) {
+        for (int i = 0; i < this.inv.size(); i++) {
+            if (this.getGiftCard(i).getMerchant().equals(giftCard.getMerchant())) {
+                deleteGiftCard(i);
+            }
+
+        }
+    }
+
     public int getSize(){
         return this.inv.size();
     }
