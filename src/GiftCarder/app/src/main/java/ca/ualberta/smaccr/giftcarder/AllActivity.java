@@ -499,6 +499,7 @@ public class AllActivity extends AppCompatActivity {
      * @param requestCode, resultCode, data
      * return
      */
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // This is for when you return from an activity, passing back data
         super.onActivityResult(requestCode, resultCode, data);
@@ -511,7 +512,7 @@ public class AllActivity extends AppCompatActivity {
         }
     }
 
-    // send of server stuff
+    // end of server stuff
     //###############################################################################################################
 
 
@@ -554,7 +555,7 @@ public class AllActivity extends AppCompatActivity {
     public void browseClick(MenuItem v) {
         Intent intent = new Intent(this, BrowseActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     public void settingsClick(MenuItem v){

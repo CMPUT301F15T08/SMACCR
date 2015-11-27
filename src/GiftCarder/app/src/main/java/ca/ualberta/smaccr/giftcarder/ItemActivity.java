@@ -32,7 +32,7 @@ public class ItemActivity extends Activity {
     public Inventory inv;
     private int position;
     private GiftCard gc;
-    private String owner;
+    private String ownerUsername;
     private TextView tvOwnerTitle;
     private EditText etItemValue;
     private EditText etItemName;
@@ -108,16 +108,19 @@ public class ItemActivity extends Activity {
         setContentView(R.layout.activity_item);
 
         // receive inventory, position, and state of gift card
-        position = (int) getIntent().getIntExtra("position", 0);
-        inv = (Inventory) getIntent().getSerializableExtra("inventory");
-        gc = (GiftCard)getIntent().getSerializableExtra("gc");
-        itemState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
+        Intent intent = getIntent();
+        position = (int) intent.getIntExtra("position", 0);
+        inv = (Inventory) intent.getSerializableExtra("inventory");
+        gc = (GiftCard)intent.getSerializableExtra("gc");
+        itemState = (int) intent.getIntExtra(EXTRA_STATE, OWNER_STATE);
+
 
         featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
 
         // receive owner's inventory for cloning friend's items into it
         if (itemState == BROWSER_STATE) {
             ownerInv = (Inventory) getIntent().getSerializableExtra("ownerInventory");
+            ownerUsername = intent.getStringExtra(EXTRA_USERNAME);
         }
 
         // Get references to UI
@@ -196,15 +199,10 @@ public class ItemActivity extends Activity {
      * @param menu View
      */
     public void saveGiftCardInfo(View menu) {
-
-        // Get current username - whoever is editing a card is the owner, and is logged in.
-        Intent intent = getIntent();
-        owner = intent.getStringExtra(EXTRA_USERNAME);
-
         if (ic.validateFields(etItemValue, etItemName, etQuantity, categorySpinner)) {
             // item controller to set the data into inventory
-            inv = ic.setGiftCardInfo(inv, owner, position, etItemValue, etItemName, etQuantity, qualitySpinner,
-                    categorySpinner, etComments, checkbox, itemImagesList);
+            inv = ic.setGiftCardInfo(inv, ownerUsername, position, etItemValue, etItemName,
+                    etQuantity, qualitySpinner, categorySpinner, etComments, checkbox, itemImagesList);
 
             Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
 
@@ -239,14 +237,16 @@ public class ItemActivity extends Activity {
             inv.getInvList().remove(position);
         }
         */
+        if (itemState != BROWSER_STATE) {
+            Intent intent = new Intent();
 
-        if (itemState == ADD_STATE) {
-            inv.getInvList().remove(position);
+            if (itemState == ADD_STATE) {
+                inv.getInvList().remove(position);
+            }
+
+            intent.putExtra("ModifiedInventory", inv);
+            setResult(RESULT_OK, intent);
         }
-
-        Intent intent = new Intent();
-        intent.putExtra("ModifiedInventory", inv);
-        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -331,12 +331,17 @@ public class ItemActivity extends Activity {
         }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (ownerInv != null) {
-                    ic.cloneItem(inv, position, ownerInv);
-                    Toast.makeText(getApplicationContext(), "Item cloned successfully",
-                            Toast.LENGTH_LONG).show();
+                if (gc != null) {
+                    ic.cloneItem(gc, ownerInv, ownerUsername);
+                } else if (inv != null) {
+                    ic.cloneItem(inv, position, ownerInv, ownerUsername);
                 }
 
+                Intent intent = new Intent();
+                intent.putExtra("ModifiedInventory", ownerInv);
+                setResult(RESULT_OK, intent);
+                Toast.makeText(getApplicationContext(), "Check inventory to view clone",
+                        Toast.LENGTH_LONG).show();
                 dialog.dismiss();
             }
         });

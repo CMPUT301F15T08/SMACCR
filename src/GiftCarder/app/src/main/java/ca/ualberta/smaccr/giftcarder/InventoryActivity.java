@@ -25,10 +25,11 @@ public class InventoryActivity extends Activity {
     public static final int BROWSER_ITEM_STATE = 2; // view other's item
     public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
 
-    String username;
-    String friendUsername;
-    Inventory inv;
-    ArrayAdapter<String> displayAdapter;
+    protected String username;
+    protected String friendUsername;
+    protected Inventory ownerInv;
+    protected Inventory inv;
+    protected ArrayAdapter<String> displayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +40,10 @@ public class InventoryActivity extends Activity {
         TextView tvUsername = (TextView) findViewById(R.id.tvUsernameInventory);
 
         Intent intent = getIntent();
+        UserRegistrationController urc = new UserRegistrationController();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
+        ownerInv = urc.getUser(username).getInv();
 
-        // UserRegistrationController urc = new UserRegistrationController();
         // User user = urc.getUser(username);
         friendUsername = intent.getStringExtra("FRIENDUSERNAME");
         Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
@@ -65,7 +67,8 @@ public class InventoryActivity extends Activity {
                 // intent.putExtra("GiftCard", inv.getInvList().get(position));
                 intent.putExtra("position", position);
                 intent.putExtra("inventory", inv);
-                // intent.putExtra("ownerInventory", ownerInv);
+                intent.putExtra("ownerInventory", ownerInv);
+                intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra(EXTRA_STATE, BROWSER_ITEM_STATE); // view item
                 // startActivity(intent);
                 startActivityForResult(intent, 1);
@@ -125,6 +128,19 @@ public class InventoryActivity extends Activity {
         FriendInvListAdapter customAdapter = new FriendInvListAdapter(this, R.layout.adapter_inv_list, tempArray);
         // displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
         inventorylistID.setAdapter(customAdapter);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // This is for when you return from an activity, passing back data
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                ownerInv = (Inventory) data.getSerializableExtra("ModifiedInventory");
+                Intent intent = new Intent();
+                intent.putExtra("ModifiedInventory", ownerInv);
+                setResult(RESULT_OK, intent);
+            }
+        }
     }
 
     public void getUserProfile(View view) {
