@@ -42,7 +42,7 @@ public class AllActivity extends AppCompatActivity {
     FriendList fl;
     public Cache myCache;
 
-    UserRegistrationController urc = new UserRegistrationController();
+    UserRegistrationController urc;
 
 
     /**
@@ -99,14 +99,17 @@ public class AllActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
         //###########################################################################################################################
         // Only modify part of user
+        urc = new UserRegistrationController();
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
         // Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
         // UserRegistrationController urc = new UserRegistrationController();
+
+        Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
         User user = urc.getUser(username);
         inv = user.getInv();
 
@@ -115,7 +118,8 @@ public class AllActivity extends AppCompatActivity {
 
         // FriendList class type
         fl = user.getFl();
-        Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
+
+        //Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
         //###########################################################################################################################
 
@@ -500,9 +504,12 @@ public class AllActivity extends AppCompatActivity {
      * @param requestCode, resultCode, data
      * return
      */
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // This is for when you return from an activity, passing back data
         super.onActivityResult(requestCode, resultCode, data);
+        //updateInvList(inv);
+        //updateUserOnServer();
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
@@ -512,7 +519,7 @@ public class AllActivity extends AppCompatActivity {
         }
     }
 
-    // send of server stuff
+    // end of server stuff
     //###############################################################################################################
 
 
@@ -555,7 +562,7 @@ public class AllActivity extends AppCompatActivity {
     public void browseClick(MenuItem v) {
         Intent intent = new Intent(this, BrowseActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     public void settingsClick(MenuItem v){

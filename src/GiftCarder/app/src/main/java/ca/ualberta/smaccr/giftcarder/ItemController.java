@@ -289,10 +289,28 @@ public class ItemController {
      * @param inv friend's inventory
      * @param position position of gift card in friend's inventory
      * @param ownerInv user's (owner's) inventory that item will be cloned to
+     * @param ownerUsername user's (owner's) username
      */
-    public void cloneItem(Inventory inv, int position, Inventory ownerInv) {
-        ownerInv.getInvList().set(0, inv.getInvList().get(position));
+    public Inventory cloneItem(Inventory inv, int position, Inventory ownerInv, String ownerUsername) {
+        GiftCard giftCard = inv.getInvList().get(position);
+        giftCard.setOwner(ownerUsername);
+        ownerInv.addGiftCard(giftCard);
+        return ownerInv;
     }
+
+    /**
+     * Clones friend's item into user's (owner's) item
+     *
+     * @param giftCard GiftCard
+     * @param ownerInv user's (owner's) inventory that item will be cloned to
+     * @param ownerUsername user's (owner's) username
+     */
+    public Inventory cloneItem(GiftCard giftCard, Inventory ownerInv, String ownerUsername) {
+        giftCard.setOwner(ownerUsername);
+        ownerInv.addGiftCard(giftCard);
+        return ownerInv;
+    }
+
 
     /**
      * Validates text fields (make sure that content exists and it is the correct format)
