@@ -107,7 +107,6 @@ public class MainActivity extends Activity {
         @Override
         public void run() {
             user = userManager.getUser(id);
-            System.out.println(user.getTradesList().keySet());
             runOnUiThread(checkUserOnServer);
         }
     }

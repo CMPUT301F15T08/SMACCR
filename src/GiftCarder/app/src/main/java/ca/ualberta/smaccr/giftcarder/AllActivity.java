@@ -34,6 +34,8 @@ public class AllActivity extends AppCompatActivity {
 
     private UserListController ulc;
 
+    private ListView tradesListView;
+
     String username;
     Inventory inv;
     ArrayAdapter<String> displayAdapter;
@@ -83,7 +85,7 @@ public class AllActivity extends AppCompatActivity {
         // END OF Manage the tabs between inventory, friends, and trades pages.
 
         ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
-        ListView tradesListView = (ListView) findViewById(R.id.tradesListView);
+        tradesListView = (ListView) findViewById(R.id.tradesListView);
         final ListView friendsListView = (ListView) findViewById(R.id.friendListView);
 
         tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
@@ -97,7 +99,7 @@ public class AllActivity extends AppCompatActivity {
                 Intent intent = new Intent(AllActivity.this, TradeRequestActivity.class);
                 intent.putExtra("TRADE_ID", Long.toHexString(id));
                 intent.putExtra("CURRENT_USERNAME", getIntent().getStringExtra(MainActivity.EXTRA_USERNAME));
-                startActivity(intent);
+                startActivityForResult(intent, 2);
             }
         });
         // Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
@@ -236,6 +238,8 @@ public class AllActivity extends AppCompatActivity {
 
         //##########################################################################################
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -510,7 +514,14 @@ public class AllActivity extends AppCompatActivity {
                 updateInvList(inv);
                 updateUserOnServer();
             }
-        }if (requestCode == 3) {
+        }if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
+
+            }
+        }
+
+        if (requestCode == 3) {
             if (resultCode == RESULT_OK) {
                 finish();
             }
@@ -560,7 +571,7 @@ public class AllActivity extends AppCompatActivity {
     public void browseClick(MenuItem v) {
         Intent intent = new Intent(this, BrowseActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
-        startActivity(intent);
+        startActivityForResult(intent, 2);
     }
 
     public void settingsClick(MenuItem v){

@@ -125,6 +125,8 @@ public class BrowseActivity extends AllActivity {
         });
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -189,6 +191,7 @@ public class BrowseActivity extends AllActivity {
 
     @Override
     public void onBackPressed() {
+        setResult(RESULT_OK);
         finish();
     }
 

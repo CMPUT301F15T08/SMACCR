@@ -72,6 +72,12 @@ public class TradeRequestActivity extends ActionBarActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_trade_request, menu);
