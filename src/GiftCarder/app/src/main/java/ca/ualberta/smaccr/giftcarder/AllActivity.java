@@ -40,7 +40,7 @@ public class AllActivity extends AppCompatActivity {
 
     // friendlist contains an arraylist of strings
     FriendList fl;
-    protected Cache myCache;
+    public Cache myCache;
 
     UserRegistrationController urc = new UserRegistrationController();
 
@@ -300,6 +300,7 @@ public class AllActivity extends AppCompatActivity {
         Intent intent = new Intent(AllActivity.this, ItemActivity.class);
         intent.putExtra("position", 0);
         intent.putExtra("inventory", inv);
+        intent.putExtra("username", username);
         intent.putExtra(EXTRA_STATE, ADD_STATE); // add item
         startActivityForResult(intent, 1);
     }

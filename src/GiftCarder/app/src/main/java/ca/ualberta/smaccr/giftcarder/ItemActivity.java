@@ -210,7 +210,7 @@ public class ItemActivity extends Activity {
 
         // Get current username - whoever is editing a card is the owner, and is logged in.
         Intent intent = getIntent();
-        owner = intent.getStringExtra(EXTRA_USERNAME);
+        owner = intent.getStringExtra("username");
 
         if (ic.validateFields(etItemValue, etItemName, etQuantity, categorySpinner)) {
             // item controller to set the data into inventory
