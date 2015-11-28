@@ -38,8 +38,6 @@ public class InventoryActivity extends Activity {
         this.ownerInv = ownerInv;
     }
 
-    protected ArrayAdapter<String> displayAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
