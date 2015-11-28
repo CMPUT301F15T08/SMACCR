@@ -30,8 +30,6 @@ public class BrowseActivity extends AllActivity {
     protected Inventory inv;
     ArrayAdapter<String> displayAdapter;
 
-    private ArrayAdapter<GiftCard> adapter;
-
     Cache myCache;
 
     private ListView browseListID;
