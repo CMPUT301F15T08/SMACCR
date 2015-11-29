@@ -19,7 +19,8 @@ License
    limitations under the License.
 
 
-Credits:
+Credits
+=======
 
 I used gson/json(com.google.code.json:gson:2.3.1) for internal file storage. To enable in Android Studio File->Project Structure-> go to Module/Dependencies -> click plus button and search gson and add.
 
