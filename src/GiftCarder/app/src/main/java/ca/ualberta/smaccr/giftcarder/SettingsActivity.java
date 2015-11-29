@@ -28,8 +28,8 @@ import android.widget.Toast;
 public class SettingsActivity extends ActionBarActivity {
 
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
-    String username;
-    Inventory inv;
+    private String username;
+    private Inventory inv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
