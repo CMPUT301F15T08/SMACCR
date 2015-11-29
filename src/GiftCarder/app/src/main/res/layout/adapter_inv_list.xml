@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <ImageView
+    <ca.ualberta.smaccr.giftcarder.SquareImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:id="@+id/invListImageView"
@@ -10,6 +10,7 @@
         android:layout_alignParentStart="true"
         android:src="@drawable/card_icon"
         android:padding="5dp"
+        android:scaleType="centerCrop"
         android:contentDescription="@string/inv_list_image_desc" />
 
     <TextView

@@ -26,10 +26,9 @@ public class BrowseActivity extends AllActivity {
 
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
-    String username;
+    protected String username;
+    protected Inventory inv;
     ArrayAdapter<String> displayAdapter;
-
-    private ArrayAdapter<GiftCard> adapter;
 
     Cache myCache;
 
@@ -70,8 +69,11 @@ public class BrowseActivity extends AllActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
 
+        UserRegistrationController urc = new UserRegistrationController();
         Intent intent = getIntent();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
+        inv = urc.getUser(username).getInv(); // owner's inventory
+
         if (super.myCache!=null) {
             myCache = super.myCache;
         } else {
@@ -92,9 +94,15 @@ public class BrowseActivity extends AllActivity {
         // Switch to item activity and send selected gift card data
                 Intent intent = new Intent(BrowseActivity.this, ItemActivity.class);
                 intent.putExtra("gc", myCache.getResults().get(position));
-                intent.putExtra(EXTRA_STATE, BROWSER_STATE); // add item
-                intent.putExtra("USERNAME", username);
-                startActivity(intent);
+
+                ///intent.putExtra(EXTRA_STATE, BROWSER_STATE); // add item
+                ///intent.putExtra("USERNAME", username);
+                ///startActivity(intent);
+
+                intent.putExtra("ownerInventory", inv);
+                intent.putExtra(EXTRA_USERNAME, username);
+                intent.putExtra(EXTRA_STATE, BROWSER_STATE); // browse item
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -134,12 +142,14 @@ public class BrowseActivity extends AllActivity {
         return true;
     }
 
+    /*
     @Override
     protected void onResume(){
         super.onResume();
 
         updateBrowseList();
     }
+    */
 
     public void updateBrowseList(){
         // Get ArrayList of Strings to display in Adapter ListView
@@ -218,9 +228,6 @@ public class BrowseActivity extends AllActivity {
     }*/
 
     public void clickGo(View v){
-
-
-
         int cat = catSpinner.getSelectedItemPosition();
 
         myCache.browseCategory(cat);
@@ -231,5 +238,18 @@ public class BrowseActivity extends AllActivity {
 
         updateBrowseList();
 
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // This is for when you return from an activity, passing back data
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                inv = (Inventory) data.getSerializableExtra("BrowseInventory");
+                Intent intent = new Intent();
+                intent.putExtra("ModifiedInventory", inv);
+                setResult(RESULT_OK, intent);
+            }
+        }
     }
 }

@@ -8,34 +8,36 @@ import android.graphics.Bitmap;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 
 public class ItemActivity extends Activity {
-    private String username;
 
+
+    private String ownerUsername;
     public Inventory inv;
     private int position;
     private GiftCard gc;
     private String owner;
     private TextView tvOwnerTitle;
+    private TextView tvCategoryTitle;
+    private TextView tvQualityTitle;
+    private TextView tvCommentsTitle;
+    private TextView tvQuantityTitle;
+    private TextView tvValueTitle;
+    private TextView tvMerchantTitle;
     private EditText etItemValue;
     private EditText etItemName;
     private EditText etQuantity;
@@ -50,6 +52,15 @@ public class ItemActivity extends Activity {
     protected ImageView featuredImage;
     private int itemState;
     protected ArrayList<ItemImage> itemImagesList;
+
+
+    public int getItemState() {
+        return itemState;
+    }
+
+    public void setItemState(int itemState) {
+        this.itemState = itemState;
+    }
 
     // for cloning items only
     public Inventory ownerInv;
@@ -111,21 +122,27 @@ public class ItemActivity extends Activity {
 
 
         // receive inventory, position, and state of gift card
-        position = (int) getIntent().getIntExtra("position", 0);
-        inv = (Inventory) getIntent().getSerializableExtra("inventory");
-        gc = (GiftCard)getIntent().getSerializableExtra("gc");
-        itemState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
-        username = getIntent().getStringExtra("USERNAME");
-
+        Intent intent = getIntent();
+        position = (int) intent.getIntExtra("position", 0);
+        inv = (Inventory) intent.getSerializableExtra("inventory");
+        gc = (GiftCard)intent.getSerializableExtra("gc");
+        itemState = (int) intent.getIntExtra(EXTRA_STATE, OWNER_STATE);
         featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
 
         // receive owner's inventory for cloning friend's items into it
-        if (itemState == BROWSER_STATE) {
+        if (getItemState() == BROWSER_STATE) {
             ownerInv = (Inventory) getIntent().getSerializableExtra("ownerInventory");
+            ownerUsername = intent.getStringExtra(EXTRA_USERNAME);
         }
 
         // Get references to UI
         tvOwnerTitle = (TextView) findViewById(R.id.ID_itemOwner);
+        tvCategoryTitle = (TextView) findViewById(R.id.tvCategoryTitle);
+        tvQualityTitle = (TextView) findViewById(R.id.tvQualityTitle);
+        tvQuantityTitle = (TextView) findViewById(R.id.tvQuantityTitle);
+        tvCommentsTitle = (TextView) findViewById(R.id.tvCommentsTitle);
+        tvValueTitle = (TextView) findViewById(R.id.tvValueTitle);
+        tvMerchantTitle = (TextView) findViewById(R.id.tvMerchantTitle);
         etItemValue = (EditText) findViewById(R.id.ID_item_value);
         etItemName = (EditText) findViewById(R.id.ID_item_Name);
         etQuantity = (EditText) findViewById(R.id.ID_quantity);
@@ -155,6 +172,62 @@ public class ItemActivity extends Activity {
             }
         }
 
+        // receive owner's inventory for cloning friend's items into it
+        if (itemState == BROWSER_STATE) {
+            //delete make public stuff
+            /*
+            if (itemState != OWNER_STATE) {
+                findViewById(R.id.MakePublicTextView).setVisibility(View.GONE);
+                checkbox.setVisibility(View.GONE);
+            }*/
+
+
+
+            //add the values to the title
+            tvQualityTitle.append(": " + qualitySpinner.getSelectedItem().toString());
+            tvCategoryTitle.append(": " + categorySpinner.getSelectedItem().toString());
+            tvCommentsTitle.append(":");
+            tvValueTitle.append(": " + etItemValue.getText());
+            tvMerchantTitle.append(": " + etItemName.getText());
+            tvQuantityTitle.append(": " + etQuantity.getText());
+
+            //set their padding
+            tvQualityTitle.setPadding(10, 10, 10, 10);
+            tvCategoryTitle.setPadding(10, 10, 10, 10);
+            tvCommentsTitle.setPadding(10, 10, 10, 10);
+            tvValueTitle.setPadding(10, 10, 10, 10);
+            tvMerchantTitle.setPadding(10, 10, 10, 10);
+            tvQuantityTitle.setPadding(10, 10, 10, 10);
+            etComments.setPadding(10, 10, 10, 10);
+
+            //set their color
+            tvQualityTitle.setBackgroundColor(Color.LTGRAY);
+            tvCategoryTitle.setBackgroundColor(Color.LTGRAY);
+            tvCommentsTitle.setBackgroundColor(Color.LTGRAY);
+            tvValueTitle.setBackgroundColor(Color.LTGRAY);
+            tvMerchantTitle.setBackgroundColor(Color.LTGRAY);
+            tvQuantityTitle.setBackgroundColor(Color.LTGRAY);
+            etComments.setBackgroundColor(Color.LTGRAY);
+
+
+            //remove the value as it is now in the title
+            etItemName.setVisibility(View.GONE);
+            etQuantity.setVisibility(View.GONE);
+            etItemValue.setVisibility(View.GONE);
+            findViewById(R.id.dollarSignEditText).setVisibility(View.GONE);
+            etItemName.setVisibility(View.GONE);
+            tvQuantityTitle.setVisibility(View.GONE);
+            qualitySpinner.setVisibility(View.GONE);
+            categorySpinner.setVisibility(View.GONE);
+
+            if (etComments.getText().toString().equals("")){
+                etComments.setVisibility(View.GONE);
+                tvCommentsTitle.setVisibility(View.GONE);
+            }
+
+
+
+        }
 
         if (gc != null) {
             ic.displayGiftCardInfo(gc, tvOwnerTitle, etItemValue, etItemName, etQuantity, qualitySpinner,
@@ -200,15 +273,10 @@ public class ItemActivity extends Activity {
      * @param menu View
      */
     public void saveGiftCardInfo(View menu) {
-
-        // Get current username - whoever is editing a card is the owner, and is logged in.
-        Intent intent = getIntent();
-        owner = intent.getStringExtra(EXTRA_USERNAME);
-
         if (ic.validateFields(etItemValue, etItemName, etQuantity, categorySpinner)) {
             // item controller to set the data into inventory
-            inv = ic.setGiftCardInfo(inv, owner, position, etItemValue, etItemName, etQuantity, qualitySpinner,
-                    categorySpinner, etComments, checkbox, itemImagesList);
+            inv = ic.setGiftCardInfo(inv, ownerUsername, position, etItemValue, etItemName,
+                    etQuantity, qualitySpinner, categorySpinner, etComments, checkbox, itemImagesList);
 
             Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
 
@@ -243,20 +311,22 @@ public class ItemActivity extends Activity {
             inv.getInvList().remove(position);
         }
         */
+        if (itemState != BROWSER_STATE) {
+            Intent intent = new Intent();
 
-        if (itemState == ADD_STATE) {
-            inv.getInvList().remove(position);
+            if (itemState == ADD_STATE) {
+                inv.getInvList().remove(position);
+            }
+
+            intent.putExtra("ModifiedInventory", inv);
+            setResult(RESULT_OK, intent);
         }
-
-        Intent intent = new Intent();
-        intent.putExtra("ModifiedInventory", inv);
-        setResult(RESULT_OK, intent);
         finish();
     }
 
     /**
      * takeGiftCardPic
-     * takes a giftcard pic when you click on the profile picture
+     * takes a giftcard pic when you click on the generic gift card picture
      *
      * @param menu
      */
@@ -277,7 +347,6 @@ public class ItemActivity extends Activity {
     }
 
     /**
-     * onActivityResult
      * Saves the picture data into the image parameter
      *
      * @param requestCode int
@@ -300,6 +369,11 @@ public class ItemActivity extends Activity {
         }
     }
 
+    /**
+     * changes owner state to edit state when edit button is clicked
+     *
+     * @param view
+     */
     public void onEditButtonClick(View view) {
         itemState = EDIT_STATE;
         ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
@@ -310,7 +384,7 @@ public class ItemActivity extends Activity {
     public void onMakeOfferButtonClick(View view) {
         // Switch to item activity and send inventory and position of gift card for trading
         Intent intent = new Intent(ItemActivity.this, CreateTradeOfferActivity.class);
-        intent.putExtra("TRADE_OWNER", username);
+        intent.putExtra("TRADE_OWNER", ownerUsername);
         intent.putExtra("TRADE_BORROWER_ITEM", gc);
         //intent.putExtra("GiftCard", inv.getInvList().get(position));
         //intent.putExtra("position", position);
@@ -334,12 +408,22 @@ public class ItemActivity extends Activity {
         }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (ownerInv != null) {
-                    ic.cloneItem(inv, position, ownerInv);
-                    Toast.makeText(getApplicationContext(), "Item cloned successfully",
-                            Toast.LENGTH_LONG).show();
+                Intent intent = new Intent();
+
+                // to Browse Activity
+                if (gc != null) {
+                    ownerInv = ic.cloneItem(gc, ownerInv, ownerUsername);
+                    intent.putExtra("BrowseInventory", ownerInv);
+
+                // to Inventory Activity
+                } else {
+                    ownerInv = ic.cloneItem(inv, position, ownerInv, ownerUsername);
+                    intent.putExtra("ModifiedInventory", ownerInv);
                 }
 
+                setResult(RESULT_OK, intent);
+                Toast.makeText(getApplicationContext(), "Check inventory to view clone",
+                        Toast.LENGTH_LONG).show();
                 dialog.dismiss();
             }
         });

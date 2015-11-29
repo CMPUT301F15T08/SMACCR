@@ -92,7 +92,9 @@
                 android:text="@string/value"
                 android:textColor="#000000"
                 android:textSize="20sp"
-                android:gravity="start" />
+                android:gravity="start"
+                android:id="@+id/tvValueTitle"
+                android:layout_marginBottom="10dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -107,7 +109,7 @@
                     android:text = "@string/dollar_sign"
                     android:textSize="40dp"
                     android:textColor="#2bff00"
-                    android:id="@+id/editText" />
+                    android:id="@+id/dollarSignEditText" />
 
                 <EditText
                     android:layout_width="330dp"
@@ -124,11 +126,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/name"
+                android:text="Merchant"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:gravity="start"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="10dp"
+                android:id="@+id/tvMerchantTitle"
+                android:layout_marginBottom="10dp" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -146,7 +150,9 @@
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:gravity="start"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="10dp"
+                android:id="@+id/tvCategoryTitle"
+                android:layout_marginBottom="10dp" />
 
             <Spinner
                 android:layout_width="270dp"
@@ -163,7 +169,9 @@
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:gravity="start"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="10dp"
+                android:id="@+id/tvQuantityTitle"
+                android:layout_marginBottom="10dp" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -182,7 +190,9 @@
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:gravity="left"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="10dp"
+                android:id="@+id/tvQualityTitle"
+                android:layout_marginBottom="10dp" />
 
             <Spinner
                 android:layout_width="200dp"
@@ -199,7 +209,8 @@
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:gravity="start"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="10dp"
+                android:id="@+id/tvCommentsTitle" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -217,7 +228,8 @@
                 android:textColor="#000000"
                 android:textSize="20dp"
                 android:gravity="start"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp"
+                android:id="@+id/MakePublicTextView" />
 
             <CheckBox
                 android:layout_width="wrap_content"
