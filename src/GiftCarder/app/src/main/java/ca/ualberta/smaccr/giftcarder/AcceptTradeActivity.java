@@ -138,8 +138,8 @@ public class AcceptTradeActivity extends ActionBarActivity {
             borrower.getInv().addGiftCard(trade.getOwnerItem());
             borrower.getInv().removeGiftCard(trade.getBorrowerItem());
 
-            owner.getTradesList().get(tradeId).setIsCompleted(true);
-            borrower.getTradesList().get(tradeId).setIsCompleted(true);
+            owner.getTradesList().get(tradeId).setStatus(Trade.COMPLETED);
+            borrower.getTradesList().get(tradeId).setStatus(Trade.COMPLETED);
 
             userRegistrationController.editUserInventory(owner.getUsername(), owner.getInv());
             userRegistrationController.editUserInventory(borrower.getUsername(), borrower.getInv());

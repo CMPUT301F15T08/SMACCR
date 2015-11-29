@@ -84,11 +84,7 @@ public class TradesTabAdapter extends BaseAdapter {
 
         username1.setText(values.get(position).getOwner());
         username2.setText(values.get(position).getBorrower());
-        if (values.get(position).getIsCompleted()) {
-            status.setText("Trade Completed");
-        }else {
-            status.setText("Trade In Progress");
-        }
+        status.setText(values.get(position).getStatus());
         return view;
     }
 }

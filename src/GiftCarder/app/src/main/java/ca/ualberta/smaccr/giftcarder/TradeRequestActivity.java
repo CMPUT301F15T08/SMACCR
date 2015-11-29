@@ -170,8 +170,8 @@ public class TradeRequestActivity extends ActionBarActivity {
             User owner = esUserManager.getUser(trade.getOwner());
             User borrower = esUserManager.getUser(trade.getBorrower());
 
-            owner.getTradesList().remove(tradeId);
-            borrower.getTradesList().remove(tradeId);
+            owner.getTradesList().get(tradeId).setStatus(Trade.DECLINED);
+            borrower.getTradesList().get(tradeId).setStatus(Trade.DECLINED);
 
             userRegistrationController.editUserTradeList(owner.getUsername(), owner.getTradesList());
             userRegistrationController.editUserTradeList(borrower.getUsername(), borrower.getTradesList());
