@@ -97,6 +97,7 @@ public class TradeRequestActivity extends ActionBarActivity {
 
         if (owner.getUsername().equals(trade.getOwner())) {
             acceptTradeButton.setVisibility(View.INVISIBLE);
+            counterTradeButton.setVisibility(View.INVISIBLE);
         }
 
         acceptTradeButton.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +106,7 @@ public class TradeRequestActivity extends ActionBarActivity {
                 Intent intent = new Intent(TradeRequestActivity.this, AcceptTradeActivity.class);
                 intent.putExtra("TRADE_ID", tradeId);
                 intent.putExtra("CURRENT_USERNAME", owner.getUsername());
-                startActivityForResult(intent, 4);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -133,24 +134,26 @@ public class TradeRequestActivity extends ActionBarActivity {
 
     }
 
+
+
     @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // This is for when you return from an activity, passing back data
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                setResult(RESULT_OK);
+                Intent intent = new Intent();
+                intent.putExtra("ModifiedInventory", (Inventory) data.getSerializableExtra("ModifiedInventory"));
+                setResult(RESULT_OK, intent);
                 finish();
+
             }
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        setResult(RESULT_OK);
-        finish();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

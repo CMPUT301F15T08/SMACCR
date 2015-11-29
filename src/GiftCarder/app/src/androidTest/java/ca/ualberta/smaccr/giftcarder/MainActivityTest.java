@@ -27,7 +27,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
 
-
     /**
      * Tests that clicking the register button starts the RegisterActivity
      */

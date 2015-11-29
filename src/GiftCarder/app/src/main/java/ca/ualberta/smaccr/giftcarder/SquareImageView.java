@@ -26,6 +26,7 @@ import android.widget.ImageView;
 /**
  * Created by Carin on 11/20/2015.
  */
+/* SquareImageView makes images appear as squares */
 public class SquareImageView extends ImageView {
 
     public SquareImageView(Context context) {

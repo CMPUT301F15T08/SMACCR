@@ -23,6 +23,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.List;
 
 public class AcceptTradeActivity extends ActionBarActivity {
 
@@ -37,6 +40,7 @@ public class AcceptTradeActivity extends ActionBarActivity {
 
     private Button sendEmailButton;
     private EditText emailText;
+    private ListView inventorylistID;
 
     /**
      +     * onCreate
@@ -51,6 +55,8 @@ public class AcceptTradeActivity extends ActionBarActivity {
 
         sendEmailButton = (Button) findViewById(R.id.activity_accept_trade_sendEmailButton);
         emailText = (EditText) findViewById(R.id.activity_accept_trade_emailText);
+        inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+
 
         userRegistrationController = new UserRegistrationController();
         userListController = new UserListController(userRegistrationController.getUserList());
@@ -70,7 +76,7 @@ public class AcceptTradeActivity extends ActionBarActivity {
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*String to = "dummy@email.com";
+                /*String to = userRegistrationController.getUser(currentUsername).getEmail();
                 String subject = "New Trade Offer";
                 String message = emailText.getText().toString();
 
@@ -152,10 +158,15 @@ public class AcceptTradeActivity extends ActionBarActivity {
             userListController.addUser(owner);
             userListController.addUser(borrower);
 
+
+
+
             // Give some time to get updated info
             try {
                 Thread.sleep(500);
-                setResult(RESULT_OK);
+                Intent intent = new Intent();
+                intent.putExtra("ModifiedInventory", currentUser.getInv());
+                setResult(RESULT_OK, intent);
                 finish();
             } catch (InterruptedException e) {
                 e.printStackTrace();

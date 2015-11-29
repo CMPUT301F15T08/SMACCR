@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/* ItemActivity handles viewing and actions regarding the selected item */
 public class ItemActivity extends Activity {
 
 

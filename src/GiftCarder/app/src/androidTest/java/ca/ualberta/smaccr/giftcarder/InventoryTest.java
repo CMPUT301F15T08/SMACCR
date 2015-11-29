@@ -6,7 +6,7 @@ package ca.ualberta.smaccr.giftcarder;
 public class InventoryTest extends android.test.ActivityInstrumentationTestCase2 {
 
     public InventoryTest(){
-        super(InventoryTest.class);
+        super(Inventory.class);
     }
 
     public void testAddCard() throws Exception {
