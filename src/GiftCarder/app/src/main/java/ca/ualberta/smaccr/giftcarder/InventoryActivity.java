@@ -31,6 +31,7 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/* InventoryActivity handles viewing of friend's inventories (public items only) */
 public class InventoryActivity extends Activity {
 
     // Constants

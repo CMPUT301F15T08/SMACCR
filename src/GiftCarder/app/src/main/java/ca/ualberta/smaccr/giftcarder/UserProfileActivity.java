@@ -13,10 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 and limitations under the License.
 */
 
-/* UserProfileActivity displays user profile based on retrieved profileState from other activities
- * Allows editing of own user profile
- */
-
 /* References:
  * Hussain Akhtar Wahid 'Ghouri',
  * http://stackoverflow.com/questions/19452269/android-set-text-to-textview, retrieved 11/02/15
@@ -42,6 +38,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+/* UserProfileActivity displays user profile based on retrieved profileState from other activities
+ * Allows editing of own user profile
+ */
 public class UserProfileActivity extends Activity {
 
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";

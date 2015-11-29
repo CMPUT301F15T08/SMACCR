@@ -25,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+
 public class FriendsActivity extends ActionBarActivity {
 
     // Constants

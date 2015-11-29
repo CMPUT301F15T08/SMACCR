@@ -38,6 +38,8 @@ import java.util.ArrayList;
 /**
  * Created by Carin on 11/19/2015.
  */
+
+/* ItemGridViewAdapter is the adapter for the ItemPictureActivity */
 public class ItemGridViewAdapter extends ArrayAdapter {
     private Context context;
     private int layoutResourceId;
