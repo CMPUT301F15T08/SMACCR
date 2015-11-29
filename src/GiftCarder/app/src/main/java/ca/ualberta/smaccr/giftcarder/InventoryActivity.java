@@ -53,7 +53,7 @@ public class InventoryActivity extends Activity {
 
         // User user = urc.getUser(username);
         friendUsername = intent.getStringExtra("FRIENDUSERNAME");
-        Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
         Cache cache = new Cache(this, username);
 
         try {

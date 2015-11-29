@@ -26,9 +26,12 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
         MainActivity activity = (MainActivity) getActivity();
     }
 
+
+
     /**
      * Tests that clicking the register button starts the RegisterActivity
      */
+
     public void testRegisterButton() {
         MainActivity activity = (MainActivity) getActivity();
         final Button registerButton = (Button) activity.findViewById(R.id.registerButton);
@@ -146,9 +149,10 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
+
         // Validate that ReceiverActivity did not start
         AllActivity receiverActivity = (AllActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
+                receiverActivityMonitor.waitForActivityWithTimeout(10);
         assertNull("ReceiverActivity is not null", receiverActivity);
 
         // Remove the ActivityMonitor

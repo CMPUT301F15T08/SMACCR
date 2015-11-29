@@ -57,21 +57,27 @@ public class RegisterActivity extends Activity {
 
         UserRegistrationController urc = new UserRegistrationController(this);
 
-        if (urc.validateFields(etUsername, etCity, etPhone, etEmail)) {
-            Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
+        // Try to register user. If no internet, toast message
+        if (!NetworkChecker.isNetworkAvailable(this)) {
+            Toast.makeText(this, "No internet connection.  Please check your internet connection and try again.", Toast.LENGTH_LONG).show();
+        } else {
+            if (urc.validateFields(etUsername, etCity, etPhone, etEmail)) {
+                Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
 
-            //Add the new user to singleton
-            urc.addUser(etUsername,etCity, etPhone, etEmail);
+                //Add the new user to singleton
+                urc.addUser(etUsername,etCity, etPhone, etEmail);
 
-            //Start "all activity"
-            Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, AllActivity.class);
-            String username = etUsername.getText().toString();
-            intent.putExtra(EXTRA_USERNAME, username);
-            startActivity(intent);
+                //Start "all activity"
+                Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, AllActivity.class);
+                String username = etUsername.getText().toString();
+                intent.putExtra(EXTRA_USERNAME, username);
+                startActivity(intent);
+            } else {
+                Toast.makeText(RegisterActivity.this, "Form contains error", Toast.LENGTH_LONG).show();
+            }
         }
-        else
-            Toast.makeText(RegisterActivity.this, "Form contains error", Toast.LENGTH_LONG).show();
+
     }
 
 }

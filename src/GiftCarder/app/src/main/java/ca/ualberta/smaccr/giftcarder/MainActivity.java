@@ -10,28 +10,16 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
-    Inventory inv;
-    String username;
-
     private ESUserManager userManager;
+    private User user;
 
     //getter for UI testing
     public EditText getEtUsername() {return (EditText) findViewById(R.id.enterUsername);}
-    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        /*
-        user.setUsername("t");
-        user.setCity("Edmo");
-        user.setPhone("012-345-6789");
-        user.setEmail("t@g.c");
-        UserRegistrationController.getUserList().addUser(user);
-        */
-
     }
 
     @Override
@@ -86,7 +74,7 @@ public class MainActivity extends Activity {
 
         // Try to retrieve the data. If no internet, pop up some toast to say so.
         if (!NetworkChecker.isNetworkAvailable(this)) {
-            Toast.makeText(this, "Error retrieving data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No internet connection.  Please check your internet connection and try again.", Toast.LENGTH_LONG).show();
         } else {
             if (Validation.hasText(etUsername)) {
                 // Calls GetThreat to check if user is on server
@@ -117,6 +105,11 @@ public class MainActivity extends Activity {
         }
     };
 
+    /**
+     * Checks for user on server
+     *
+     * @param  user User
+     */
     public void checkForUserOnServer(User user){
         UserRegistrationController urc = new UserRegistrationController(this);
         userManager = new ESUserManager("");
