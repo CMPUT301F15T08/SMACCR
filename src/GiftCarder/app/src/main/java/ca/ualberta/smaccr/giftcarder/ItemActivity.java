@@ -67,6 +67,10 @@ public class ItemActivity extends Activity {
     ItemPictureController ipc = new ItemPictureController();
 
     // Getters for UI testing
+    public TextView getTVOwnerTitle() {
+        return tvOwnerTitle;
+    }
+
     public EditText getEtItemName() {
         return (EditText) findViewById(R.id.ID_item_value);
     }

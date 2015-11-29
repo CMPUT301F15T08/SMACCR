@@ -1,3 +1,5 @@
+/* UserProfileActivityTest provides testing for UserProfileActivity */
+
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Instrumentation;
@@ -29,23 +31,24 @@ public class UserProfileActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * Tests editing user profile
+     * Tests editing user profile (UC 2.4, 10.2)
      */
     public void testEditUserProfile() {
         UserProfileActivity activity = (UserProfileActivity) getActivity();
         etCity = activity.getEtCity();
         etPhone = activity.getEtPhone();
         etEmail = activity.getEtEmail();
-        String username = "Link";
+        final String username = "Test";
         final UserRegistrationController urc = new UserRegistrationController();
 
         // Creates user
         User user = new User();
         user.setUsername(username);
-        user.setCity("Skyloft");
+        user.setCity("Testlandia");
         user.setPhone("555-555-5555");
-        user.setEmail("hero@hyrule.com");
+        user.setEmail("testing@gmail.com");
         urc.getUserList().addUser(user);
+
 
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
@@ -54,19 +57,18 @@ public class UserProfileActivityTest extends ActivityInstrumentationTestCase2 {
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                etCity.setText("Skyloft");
+                etCity.setText("Testopia");
                 etPhone.setText("555-555-5556");
-                etEmail.setText("hero@hyrule.com");
+                etEmail.setText("tester@gmail.com");
+                if (urc.validateEditedFields(etCity, etPhone, etEmail)) {
+                    urc.editUser(username, etCity, etPhone, etEmail);
+                }
             }
         });
         getInstrumentation().waitForIdleSync();
 
-        if (urc.validateEditedFields(etCity, etPhone, etEmail)) {
-            urc.editUser(username, etCity, etPhone, etEmail);
-        }
-
-        assertTrue(urc.getUser("Link").getCity().equals("Skyloft"));
-        assertTrue(urc.getUser("Link").getPhone().equals("555-555-5556"));
+        assertTrue(urc.getUser(username).getCity().equals("Testopia"));
+        assertTrue(urc.getUser(username).getPhone().equals("555-555-5556"));
     }
 
 }

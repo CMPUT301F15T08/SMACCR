@@ -80,6 +80,17 @@ public class GiftCard implements Serializable {
         this.category = category;
     }
 
+    // For AllActivity UI Test
+    public GiftCard(double value, String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
+        this.value = value;
+        this.merchant = merchant;
+        this.quantity = quantity;
+        this.quality = quality;
+        this.category = category;
+        this.comments = comments;
+        this.shared = shared;
+    }
+
     // Check valid category and quality
     public boolean checkCategory(){
         if ((this.getCategory() >= 0) && (this.getCategory() < 11)) {
