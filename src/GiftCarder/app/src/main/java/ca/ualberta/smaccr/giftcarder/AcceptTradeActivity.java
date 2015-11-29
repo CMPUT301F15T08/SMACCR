@@ -70,11 +70,6 @@ public class AcceptTradeActivity extends ActionBarActivity {
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Thread thread = new updateThread(trade.getOwner(), trade.getBorrower(), trade.getOwnerItem(), trade.getBorrowerItem());
-                thread.start();
-
-
                 /*String to = "dummy@email.com";
                 String subject = "New Trade Offer";
                 String message = emailText.getText().toString();
@@ -88,6 +83,8 @@ public class AcceptTradeActivity extends ActionBarActivity {
                 email.setType("message/rfc822");
 
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));*/
+                Thread thread = new updateThread(trade.getOwner(), trade.getBorrower(), trade.getOwnerItem(), trade.getBorrowerItem());
+                thread.start();
             }
         });
     }
@@ -134,8 +131,10 @@ public class AcceptTradeActivity extends ActionBarActivity {
             User owner = esUserManager.getUser(ownerUsername);
             User borrower = esUserManager.getUser(borrowerUsername);
 
+            trade.getBorrowerItem().setBelongsTo(owner.getUsername());
             owner.getInv().addGiftCard(trade.getBorrowerItem());
             owner.getInv().removeGiftCard(trade.getOwnerItem());
+            trade.getOwnerItem().setBelongsTo(borrower.getUsername());
             borrower.getInv().addGiftCard(trade.getOwnerItem());
             borrower.getInv().removeGiftCard(trade.getBorrowerItem());
 
@@ -156,6 +155,8 @@ public class AcceptTradeActivity extends ActionBarActivity {
             // Give some time to get updated info
             try {
                 Thread.sleep(500);
+                setResult(RESULT_OK);
+                finish();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -24,10 +24,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 public class TradeRequestActivity extends ActionBarActivity {
     private ESUserManager esUserManager;
     private Button acceptTradeButton;
     private Button declineTradeButton;
+    private Button counterTradeButton;
 
     private String tradeId;
     private UserRegistrationController userRegistrationController;
@@ -55,6 +58,7 @@ public class TradeRequestActivity extends ActionBarActivity {
 
         acceptTradeButton = (Button) findViewById(R.id.activity_trade_request_acceptTradeButton);
         declineTradeButton = (Button) findViewById(R.id.activity_trade_request_declineTradeButton);
+        counterTradeButton = (Button) findViewById(R.id.activity_trade_request_counterTradeButton);
         ownerTextView = (TextView) findViewById(R.id.activity_trade_request_username1);
         borrowerTextView = (TextView) findViewById(R.id.activity_trade_request_username2);
         ownerItemTextView = (TextView) findViewById(R.id.activity_trade_request_itemName1);
@@ -87,7 +91,7 @@ public class TradeRequestActivity extends ActionBarActivity {
                 Intent intent = new Intent(TradeRequestActivity.this, AcceptTradeActivity.class);
                 intent.putExtra("TRADE_ID", tradeId);
                 intent.putExtra("CURRENT_USERNAME", owner.getUsername());
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -100,7 +104,27 @@ public class TradeRequestActivity extends ActionBarActivity {
             }
         });
 
+        counterTradeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // This is for when you return from an activity, passing back data
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                setResult(RESULT_OK);
+                finish();
+            }
+        }
     }
 
     @Override
