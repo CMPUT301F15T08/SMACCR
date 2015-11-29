@@ -11,6 +11,10 @@ import java.util.Date;
  * Created by Richard on 2015-10-24.
  */
 
+/*
+GiftCard Class is responsible for being a giftcard and hold all giftcard related info
+ */
+
 public class GiftCard implements Serializable {
 
     private String owner;                   // Owner's name

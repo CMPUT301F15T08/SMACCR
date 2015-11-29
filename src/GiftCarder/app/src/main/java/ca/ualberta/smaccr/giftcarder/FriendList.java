@@ -5,6 +5,11 @@ import java.util.ArrayList;
 /**
  * Created by Richard on 2015-11-21.
  */
+
+/*
+FriendList Class is responsible for add/Deleting Friends which controls an arraylist of string that are references to users, as users are
+identified by their username which is their unique id which is a string.
+ */
 public class FriendList {
     private ArrayList<String> friendList;
     //Cache myCache;

@@ -185,7 +185,7 @@ public class ItemController {
                                      CheckBox checkbox,
                                      ArrayList<ItemImage> itemImagesList) {
         GiftCard tempcard = inv.getInvList().get(position);
-        tempcard.setOwner(owner);
+        tempcard.setOwner(tempcard.getBelongsTo());
 
         // If invalid dollar, cent amount then set to zero for now!
         try {
