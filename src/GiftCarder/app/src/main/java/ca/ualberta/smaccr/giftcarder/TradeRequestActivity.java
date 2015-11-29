@@ -10,10 +10,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class TradeRequestActivity extends ActionBarActivity {
+    private ESUserManager esUserManager;
     private Button acceptTradeButton;
+    private Button declineTradeButton;
 
     private String tradeId;
     private UserRegistrationController userRegistrationController;
+    private UserListController userListController;
     private Trade trade;
     private User owner;
 
@@ -24,23 +27,27 @@ public class TradeRequestActivity extends ActionBarActivity {
 
 
     /**
-     +     * onCreate
-     +     * Responses to a trade offer
-     +     * @param savedInstanceState
-     +     * return
-     +     */
+     * +     * onCreate
+     * +     * Responses to a trade offer
+     * +     * @param savedInstanceState
+     * +     * return
+     * +
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_request);
 
         acceptTradeButton = (Button) findViewById(R.id.activity_trade_request_acceptTradeButton);
+        declineTradeButton = (Button) findViewById(R.id.activity_trade_request_declineTradeButton);
         ownerTextView = (TextView) findViewById(R.id.activity_trade_request_username1);
         borrowerTextView = (TextView) findViewById(R.id.activity_trade_request_username2);
         ownerItemTextView = (TextView) findViewById(R.id.activity_trade_request_itemName1);
         borrowerItemTextView = (TextView) findViewById(R.id.activity_trade_request_itemName2);
 
         userRegistrationController = new UserRegistrationController();
+        userListController = new UserListController(userRegistrationController.getUserList());
+        esUserManager = new ESUserManager("");
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -68,6 +75,16 @@ public class TradeRequestActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+
+        declineTradeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Thread thread = new updateThread(tradeId);
+                thread.start();
+
+            }
+        });
+
 
     }
 
@@ -97,5 +114,38 @@ public class TradeRequestActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class updateThread extends Thread {
+        private String tradeId;
+
+
+        public updateThread(String tradeId) {
+            this.tradeId = tradeId;
+        }
+
+        @Override
+        public void run() {
+            User owner = esUserManager.getUser(trade.getOwner());
+            User borrower = esUserManager.getUser(trade.getBorrower());
+
+            owner.getTradesList().remove(tradeId);
+            borrower.getTradesList().remove(tradeId);
+
+            userRegistrationController.editUserTradeList(owner.getUsername(), owner.getTradesList());
+            userRegistrationController.editUserTradeList(borrower.getUsername(), borrower.getTradesList());
+
+            userListController.addUser(owner);
+            userListController.addUser(borrower);
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+                setResult(RESULT_OK);
+                finish();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

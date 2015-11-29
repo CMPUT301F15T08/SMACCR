@@ -160,6 +160,7 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
             // Give some time to get updated info
             try {
                 Thread.sleep(500);
+                finish();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
