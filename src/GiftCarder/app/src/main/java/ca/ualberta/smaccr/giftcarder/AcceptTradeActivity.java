@@ -55,11 +55,6 @@ public class AcceptTradeActivity extends ActionBarActivity {
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Thread thread = new updateThread(trade.getOwner(), trade.getBorrower(), trade.getOwnerItem(), trade.getBorrowerItem());
-                thread.start();
-
-
                 /*String to = "dummy@email.com";
                 String subject = "New Trade Offer";
                 String message = emailText.getText().toString();
@@ -73,6 +68,8 @@ public class AcceptTradeActivity extends ActionBarActivity {
                 email.setType("message/rfc822");
 
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));*/
+                Thread thread = new updateThread(trade.getOwner(), trade.getBorrower(), trade.getOwnerItem(), trade.getBorrowerItem());
+                thread.start();
             }
         });
     }
@@ -141,6 +138,8 @@ public class AcceptTradeActivity extends ActionBarActivity {
             // Give some time to get updated info
             try {
                 Thread.sleep(500);
+                setResult(RESULT_OK);
+                finish();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
