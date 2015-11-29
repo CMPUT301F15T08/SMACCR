@@ -479,7 +479,7 @@ public class AllActivity extends AppCompatActivity {
      *
      */
     public void updateFriendsList(FriendList fl) {
-
+/*
         int topTrades = 0;
         int topTraderIndex = -1;
 
@@ -495,16 +495,16 @@ public class AllActivity extends AppCompatActivity {
         oldUserString = fl2.get(topTraderIndex);
         if (topTraderIndex>-1){
             fl2.set(topTraderIndex, fl2.get(topTraderIndex) + " *TOP TRADER*");
-        }
-        ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl2);
+        }*/
+        ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl.getFriendList());
 
 
         ListView friendsListView = (ListView) findViewById(R.id.friendListView);
         friendsListView.setAdapter(displayAdapter1);
-
+/*
         if (topTraderIndex>-1){
             fl.getFriendList().set(topTraderIndex, oldUserString);
-        }
+        }*/
 
         urc.editUserFriendList(username, fl);
     }
