@@ -25,6 +25,8 @@ import android.net.NetworkInfo;
  * Alexandre Jasmin
  * http://stackoverflow.com/questions/4238921/detect-whether-there-is-an-internet-connection-available-on-android
  */
+
+/* NetworkCheckers checks to see if the network is available */
 public class NetworkChecker {
 
     static public boolean isNetworkAvailable(Context context) {

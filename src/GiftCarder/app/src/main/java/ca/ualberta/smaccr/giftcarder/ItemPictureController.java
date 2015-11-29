@@ -52,6 +52,8 @@ import java.util.ArrayList;
 /**
  * Created by Carin on 11/19/2015.
  */
+
+/* ItemPictureController is responsible for processing images for storage */
 public class ItemPictureController {
     int maxByteSize = 65536;
     double scale = 0.5; // scale image by 1/2

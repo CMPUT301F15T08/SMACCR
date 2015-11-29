@@ -34,6 +34,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/* RegisterActivity is responsible for adding the user to the server and to the singleton */
 public class RegisterActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
 

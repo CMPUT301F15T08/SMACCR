@@ -18,7 +18,6 @@ package ca.ualberta.smaccr.giftcarder;
 /**
  * Created by splant on 11/16/15.
  *
- * The UserListController is responsible for adding users to server and deleting them from the user using their username
  */
 
 import android.util.Log;
@@ -32,6 +31,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+/* The UserListController is responsible for adding users to server and deleting them from the user using their username */
 public class UserListController {
     private Gson gson = new Gson();
     private UserList userlist;
