@@ -81,6 +81,20 @@ public class TradeRequestActivity extends ActionBarActivity {
 
         }
 
+
+
+        if (trade.getStatus().equals(Trade.COMPLETED)){
+            acceptTradeButton.setVisibility(View.INVISIBLE);
+            declineTradeButton.setVisibility(View.INVISIBLE);
+            counterTradeButton.setVisibility(View.INVISIBLE);
+        }
+        else if (trade.getStatus().equals(Trade.IN_PROGRESS)){
+            acceptTradeButton.setVisibility(View.VISIBLE);
+            declineTradeButton.setVisibility(View.VISIBLE);
+            counterTradeButton.setVisibility(View.VISIBLE);
+
+        }
+
         if (owner.getUsername().equals(trade.getOwner())) {
             acceptTradeButton.setVisibility(View.INVISIBLE);
         }
