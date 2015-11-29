@@ -18,7 +18,6 @@ and limitations under the License.
 package ca.ualberta.smaccr.giftcarder;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Carin on 10/25/2015.
@@ -31,6 +30,7 @@ public class User {
     private Inventory inv;
     private FriendList fl;
     private TradesList tradesList;
+    private int tradeCount;
 
     /**
      * Constructor: on creation of User, creates new inventory and new FriendList
@@ -39,6 +39,7 @@ public class User {
         this.inv = new Inventory();
         this.fl = new FriendList();
         this.tradesList = new TradesList();
+        this.tradeCount = 0;
     }
 
     /**
@@ -153,6 +154,7 @@ public class User {
      * Sets FriendList
      * @param fl FriendList
      */
+
     public void setFl(FriendList fl) {this.fl = fl;}
 
     /**
