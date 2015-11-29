@@ -73,3 +73,6 @@ Tejas Jasani, http://www.theappguruz.com/blog/android-take-photo-camera-gallery-
 Get Serializable code:  
 MCeley, http://stackoverflow.com/questions/12493818/how-to-pass-arraylistcustomobject-to-an-activity-in-another-application, retrieved 11/20/15
 
+Internet Connection:  
+Alexandre Jasmin retrieved 11/20/15, http://stackoverflow.com/questions/4238921/detect-whether-there-is-an-internet-connection-available-on-android
+
