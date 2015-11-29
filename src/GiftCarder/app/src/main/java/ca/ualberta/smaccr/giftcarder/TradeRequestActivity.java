@@ -107,7 +107,9 @@ public class TradeRequestActivity extends ActionBarActivity {
         counterTradeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TradeRequestActivity.this, ProposeCounterTradeActivity.class);
+                Intent intent = new Intent(TradeRequestActivity.this, CreateTradeOfferActivity.class);
+                intent.putExtra("TRADE_OWNER", owner.getUsername());
+                intent.putExtra("TRADE_BORROWER_ITEM", trade.getBorrowerItem());
                 startActivity(intent);
 
             }
