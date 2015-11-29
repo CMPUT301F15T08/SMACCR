@@ -14,15 +14,15 @@ and limitations under the License.
 */
 
 
-//From Joshua Charles Campbell, retrieved 2015-10-27, https://github.com/joshua2ua/AndroidElasticSearch.git
-//From the elastic search lab
-
 package ca.ualberta.smaccr.giftcarder;
 
 /**
  * Created by splant on 11/16/15.
  */
 
+
+//From Joshua Charles Campbell, retrieved 2015-10-27, https://github.com/joshua2ua/AndroidElasticSearch.git
+//From the elastic search lab
 public class SimpleSearchCommand {
     private SimpleSearchQuery query;
 
