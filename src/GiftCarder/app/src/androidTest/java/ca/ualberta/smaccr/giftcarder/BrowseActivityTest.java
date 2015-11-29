@@ -40,7 +40,7 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
 
         User user = new User();
         Inventory inventory = user.getInv();
-        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
+        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable", true);
         inventory.addGiftCard(giftCard1);
         cache.add(user);
         cache.loadItems();
@@ -95,7 +95,7 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
 
         User user = new User();
         Inventory inventory = user.getInv();
-        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
+        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable", true);
         inventory.addGiftCard(giftCard1);
         cache.add(user);
         cache.loadItems();
@@ -141,7 +141,7 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
 
         User user = new User();
         Inventory inventory = user.getInv();
-        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
+        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable", true);
         inventory.addGiftCard(giftCard1);
         cache.add(user);
         cache.loadItems();
@@ -209,7 +209,7 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
 
         User user = new User();
         Inventory inventory = user.getInv();
-        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
+        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable", true);
         inventory.addGiftCard(giftCard1);
         cache.add(user);
         cache.loadItems();
@@ -249,7 +249,7 @@ public class BrowseActivityTest extends ActivityInstrumentationTestCase2 {
 
         User user = new User();
         Inventory inventory = user.getInv();
-        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable");
+        GiftCard giftCard1 = new GiftCard(10.00, "Bestbuy", 1, 1, 6, "scratched but usable", true);
         inventory.addGiftCard(giftCard1);
         cache.add(user);
         cache.loadItems();

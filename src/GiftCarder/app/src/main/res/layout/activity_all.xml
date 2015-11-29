@@ -101,14 +101,17 @@
                             android:layout_marginTop="5dp">
 
                             <Button
-                                style="?android:attr/buttonStyleSmall"
+
                                 android:layout_width="match_parent"
-                                android:layout_height="35dp"
+                                android:layout_height="48dp"
                                 android:text="Add Friend"
                                 android:id="@+id/addFriendButton"
                                 android:onClick="addFriend"
                                 android:layout_alignParentTop="true"
-                                android:layout_alignParentEnd="true" />
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="sans-serif-light" />
+
+
 
                         </LinearLayout>
 

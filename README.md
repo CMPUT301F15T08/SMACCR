@@ -2,6 +2,7 @@
 
 License
 =======
+   GiftCarder: Android App for trading gift cards
    
    Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
 

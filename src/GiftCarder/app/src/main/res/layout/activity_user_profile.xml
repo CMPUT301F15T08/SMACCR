@@ -25,11 +25,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/username"
-        android:background="#938f90"
+        android:background="#FFCCCCCC"
         android:textColor="#000000"
         android:textSize="20dp"
         android:layout_marginTop="5dp"
-        android:gravity="left"/>
+        android:gravity="left"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp"
+        android:padding="5dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -39,16 +42,18 @@
         android:singleLine="true"
         android:id="@+id/usernameTextView"
         android:gravity="center_vertical"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:paddingLeft="5dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/city"
-        android:background="#938f90"
+        android:background="#FFCCCCCC"
         android:textColor="#000000"
         android:textSize="20dp"
-        android:gravity="left"/>
+        android:gravity="left"
+        android:padding="5dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -57,16 +62,19 @@
         android:textSize="20dp"
         android:singleLine="true"
         android:inputType="textCapWords"
-        android:id="@+id/cityTextView" />
+        android:id="@+id/cityTextView"
+        android:padding="5dp"
+        android:paddingLeft="5dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/phone"
-        android:background="#938f90"
+        android:background="#FFCCCCCC"
         android:textColor="#000000"
         android:textSize="20dp"
-        android:gravity="left"/>
+        android:gravity="left"
+        android:padding="5dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -75,16 +83,18 @@
         android:textSize="20dp"
         android:singleLine="true"
         android:inputType="phone"
-        android:id="@+id/phoneTextView" />
+        android:id="@+id/phoneTextView"
+        android:paddingLeft="5dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/email"
-        android:background="#938f90"
+        android:background="#FFCCCCCC"
         android:textColor="#000000"
         android:textSize="20dp"
-        android:gravity="left"/>
+        android:gravity="left"
+        android:padding="5dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -94,7 +104,8 @@
         android:singleLine="true"
         android:inputType="textEmailAddress"
         android:layout_marginBottom="5dp"
-        android:id="@+id/emailTextView" />
+        android:id="@+id/emailTextView"
+        android:paddingLeft="5dp" />
 
     <Button
         android:layout_width="fill_parent"

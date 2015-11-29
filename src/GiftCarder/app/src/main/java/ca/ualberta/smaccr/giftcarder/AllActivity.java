@@ -1,3 +1,18 @@
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
+
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.AlertDialog;
@@ -15,10 +30,12 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+/*
+All Activity contains all tab for the user's inventory, trade, friend list and all associated functions for that
+ */
 
 public class AllActivity extends AppCompatActivity {
 
@@ -118,7 +135,7 @@ public class AllActivity extends AppCompatActivity {
 
         // FriendList class type
         fl = user.getFl();
-        Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
+
 
         //###########################################################################################################################
 
@@ -378,14 +395,14 @@ public class AllActivity extends AppCompatActivity {
 
             // If you try to add yourself
             if (potentialFriendUser.getUsername().equals(username)){
-                Toast.makeText(this, "You can't be your own friend :P", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You can't be your own friend", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // add user to friend list and update server
             fl.addNewFriend(potentialFriendUser.getUsername());
             updateFriendsList(fl);
-            Toast.makeText(getApplicationContext(),  "Friend Request sent to , [added to friendlist for now]", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),  "Friend Added", Toast.LENGTH_SHORT).show();
 
             //!!!!!!!!!!!!!
             // add friend to userList singleton
@@ -400,7 +417,7 @@ public class AllActivity extends AppCompatActivity {
 
         } else {
             // User does not exist on server
-            Toast.makeText(this, "User not found.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -542,7 +559,7 @@ public class AllActivity extends AppCompatActivity {
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // http://stackoverflow.com/questions/11643224/how-to-exit-android-application-from-exit-button
-                finish();
+                //finish();
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

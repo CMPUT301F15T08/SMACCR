@@ -1,15 +1,27 @@
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
+
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Build;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,6 +82,10 @@ public class ItemActivity extends Activity {
     ItemPictureController ipc = new ItemPictureController();
 
     // Getters for UI testing
+    public TextView getTVOwnerTitle() {
+        return tvOwnerTitle;
+    }
+
     public EditText getEtItemName() {
         return (EditText) findViewById(R.id.ID_item_value);
     }
@@ -173,23 +189,40 @@ public class ItemActivity extends Activity {
         }
 
         // receive owner's inventory for cloning friend's items into it
+
+
+        if (gc != null) {
+            ic.displayGiftCardInfo(gc, tvOwnerTitle, etItemValue, etItemName, etQuantity, qualitySpinner,
+                    categorySpinner, etComments, checkbox);
+            itemImagesList = gc.getItemImagesList();
+            ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
+                    categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
+                    cloneItemButton);
+
+            // Display featured image
+            if (!itemImagesList.isEmpty()) {
+                ipc.displayFeaturedImage(itemImagesList, featuredImage);
+            }
+        }
+
         if (itemState == BROWSER_STATE) {
             //delete make public stuff
-            /*
+
             if (itemState != OWNER_STATE) {
                 findViewById(R.id.MakePublicTextView).setVisibility(View.GONE);
                 checkbox.setVisibility(View.GONE);
-            }*/
-
+            }
 
 
             //add the values to the title
-            tvQualityTitle.append(": " + qualitySpinner.getSelectedItem().toString());
-            tvCategoryTitle.append(": " + categorySpinner.getSelectedItem().toString());
-            tvCommentsTitle.append(":");
-            tvValueTitle.append(": " + etItemValue.getText());
-            tvMerchantTitle.append(": " + etItemName.getText());
-            tvQuantityTitle.append(": " + etQuantity.getText());
+
+            //tvQualityTitle.setTypeface(null, Typeface.BOLD);
+            tvQualityTitle.setText(Html.fromHtml("<b>" + tvQualityTitle.getText() + ": " + "</b> " + qualitySpinner.getSelectedItem().toString()));
+            tvCategoryTitle.setText(Html.fromHtml("<b>" + tvCategoryTitle.getText() + ": " + "</b> " +categorySpinner.getSelectedItem().toString()));
+            tvCommentsTitle.setText(Html.fromHtml("<b>" + tvCommentsTitle.getText() + ": " + "</b> "));
+            tvValueTitle.setText(Html.fromHtml("<b>" + tvValueTitle.getText() + ": $" + "</b> " + etItemValue.getText()));
+            tvMerchantTitle.setText(Html.fromHtml("<b>" + tvMerchantTitle.getText() + ": " + "</b> " + etItemName.getText()));
+            tvQuantityTitle.setText(Html.fromHtml("<b>" + tvQualityTitle.getText() + ": " + "</b> " + etQuantity.getText()));
 
             //set their padding
             tvQualityTitle.setPadding(10, 10, 10, 10);
@@ -220,26 +253,9 @@ public class ItemActivity extends Activity {
             qualitySpinner.setVisibility(View.GONE);
             categorySpinner.setVisibility(View.GONE);
 
-            if (etComments.getText().toString().equals("")){
+            if (etComments.getText().toString().equals("")) {
                 etComments.setVisibility(View.GONE);
                 tvCommentsTitle.setVisibility(View.GONE);
-            }
-
-
-
-        }
-
-        if (gc != null) {
-            ic.displayGiftCardInfo(gc, tvOwnerTitle, etItemValue, etItemName, etQuantity, qualitySpinner,
-                    categorySpinner, etComments, checkbox);
-            itemImagesList = gc.getItemImagesList();
-            ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
-                    categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
-                    cloneItemButton);
-
-            // Display featured image
-            if (!itemImagesList.isEmpty()) {
-                ipc.displayFeaturedImage(itemImagesList, featuredImage);
             }
         }
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbutton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();
@@ -392,8 +408,6 @@ public class ItemActivity extends Activity {
         startActivity(intent);
 
 
-
-
         Toast.makeText(this, "Make Offer clicked", Toast.LENGTH_SHORT).show();
     }
 
@@ -413,7 +427,7 @@ public class ItemActivity extends Activity {
                 // to Browse Activity
                 if (gc != null) {
                     ownerInv = ic.cloneItem(gc, ownerInv, ownerUsername);
-                    intent.putExtra("BrowseInventory", ownerInv);
+                    intent.putExtra("ClonedInventory", ownerInv);
 
                 // to Inventory Activity
                 } else {
