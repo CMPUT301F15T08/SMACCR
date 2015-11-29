@@ -81,6 +81,20 @@ public class TradeRequestActivity extends ActionBarActivity {
 
         }
 
+
+
+        if (trade.getStatus().equals(Trade.COMPLETED)){
+            acceptTradeButton.setVisibility(View.INVISIBLE);
+            declineTradeButton.setVisibility(View.INVISIBLE);
+            counterTradeButton.setVisibility(View.INVISIBLE);
+        }
+        else if (trade.getStatus().equals(Trade.IN_PROGRESS)){
+            acceptTradeButton.setVisibility(View.VISIBLE);
+            declineTradeButton.setVisibility(View.VISIBLE);
+            counterTradeButton.setVisibility(View.VISIBLE);
+
+        }
+
         if (owner.getUsername().equals(trade.getOwner())) {
             acceptTradeButton.setVisibility(View.INVISIBLE);
         }
@@ -107,7 +121,9 @@ public class TradeRequestActivity extends ActionBarActivity {
         counterTradeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TradeRequestActivity.this, ProposeCounterTradeActivity.class);
+                Intent intent = new Intent(TradeRequestActivity.this, CreateTradeOfferActivity.class);
+                intent.putExtra("TRADE_OWNER", owner.getUsername());
+                intent.putExtra("TRADE_BORROWER_ITEM", trade.getBorrowerItem());
                 startActivity(intent);
 
             }
@@ -170,8 +186,8 @@ public class TradeRequestActivity extends ActionBarActivity {
             User owner = esUserManager.getUser(trade.getOwner());
             User borrower = esUserManager.getUser(trade.getBorrower());
 
-            owner.getTradesList().remove(tradeId);
-            borrower.getTradesList().remove(tradeId);
+            owner.getTradesList().get(tradeId).setStatus(Trade.DECLINED);
+            borrower.getTradesList().get(tradeId).setStatus(Trade.DECLINED);
 
             userRegistrationController.editUserTradeList(owner.getUsername(), owner.getTradesList());
             userRegistrationController.editUserTradeList(borrower.getUsername(), borrower.getTradesList());

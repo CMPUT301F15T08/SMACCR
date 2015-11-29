@@ -20,18 +20,22 @@ package ca.ualberta.smaccr.giftcarder;
  */
 public class Trade {
 
+    public static String DECLINED = "Trade Declined";
+    public static String IN_PROGRESS = "Trade In Progress";
+    public static String COMPLETED = "Trade Completed";
+
     private String owner;
     private String borrower;
     private GiftCard ownerItem;
     private GiftCard borrowerItem;
-    private Boolean isCompleted;
+    private String status;
 
     public Trade(String owner, String borrower, GiftCard ownerItem, GiftCard borrowerItem) {
         this.owner = owner;
         this.borrower = borrower;
         this.ownerItem = ownerItem;
         this.borrowerItem = borrowerItem;
-        this.isCompleted = false;
+        this.status = Trade.IN_PROGRESS;
     }
 
     public String getOwner() {
@@ -66,11 +70,14 @@ public class Trade {
         this.borrowerItem = borrowerItem;
     }
 
-    public Boolean getIsCompleted() {
-        return isCompleted;
+    public String getStatus() {
+        return status;
     }
 
-    public void setIsCompleted(Boolean isCompleted) {
-        this.isCompleted = isCompleted;
+    public void setStatus(String status) {
+        this.status = status;
     }
+
+
+
 }
