@@ -38,6 +38,10 @@ import java.util.List;
 /**
  * Created by Carin on 10/26/2015.
  */
+
+/*
+The UserList class is responsible for containing users, and contain address to write them on elastic search server
+ */
 public class UserList implements Observable {
 
     private volatile ArrayList<Observer> observers = new ArrayList<Observer>();
