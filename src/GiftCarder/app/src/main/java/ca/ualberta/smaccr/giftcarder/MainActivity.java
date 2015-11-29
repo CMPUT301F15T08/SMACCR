@@ -123,7 +123,7 @@ public class MainActivity extends Activity {
 
         //If the user exist then we start "all activity", and he gets added to singleton, he is only user in the singleton right now
         if (user != null) {
-            Toast.makeText(this, user.getUsername(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, user.getUsername(), Toast.LENGTH_LONG).show();
             urc.addUser(user);
             String usernameFromServer = user.getUsername();
             Intent intent = new Intent(this, AllActivity.class);

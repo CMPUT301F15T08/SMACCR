@@ -4,12 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Build;
-import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -173,23 +170,40 @@ public class ItemActivity extends Activity {
         }
 
         // receive owner's inventory for cloning friend's items into it
+
+
+        if (gc != null) {
+            ic.displayGiftCardInfo(gc, tvOwnerTitle, etItemValue, etItemName, etQuantity, qualitySpinner,
+                    categorySpinner, etComments, checkbox);
+            itemImagesList = gc.getItemImagesList();
+            ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
+                    categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
+                    cloneItemButton);
+
+            // Display featured image
+            if (!itemImagesList.isEmpty()) {
+                ipc.displayFeaturedImage(itemImagesList, featuredImage);
+            }
+        }
+
         if (itemState == BROWSER_STATE) {
             //delete make public stuff
-            /*
+
             if (itemState != OWNER_STATE) {
                 findViewById(R.id.MakePublicTextView).setVisibility(View.GONE);
                 checkbox.setVisibility(View.GONE);
-            }*/
-
+            }
 
 
             //add the values to the title
-            tvQualityTitle.append(": " + qualitySpinner.getSelectedItem().toString());
-            tvCategoryTitle.append(": " + categorySpinner.getSelectedItem().toString());
-            tvCommentsTitle.append(":");
-            tvValueTitle.append(": " + etItemValue.getText());
-            tvMerchantTitle.append(": " + etItemName.getText());
-            tvQuantityTitle.append(": " + etQuantity.getText());
+
+            //tvQualityTitle.setTypeface(null, Typeface.BOLD);
+            tvQualityTitle.setText(Html.fromHtml("<b>" + tvQualityTitle.getText() + ": " + "</b> " + qualitySpinner.getSelectedItem().toString()));
+            tvCategoryTitle.setText(Html.fromHtml("<b>" + tvCategoryTitle.getText() + ": " + "</b> " +categorySpinner.getSelectedItem().toString()));
+            tvCommentsTitle.setText(Html.fromHtml("<b>" + tvCommentsTitle.getText() + ": " + "</b> "));
+            tvValueTitle.setText(Html.fromHtml("<b>" + tvValueTitle.getText() + ": $" + "</b> " + etItemValue.getText()));
+            tvMerchantTitle.setText(Html.fromHtml("<b>" + tvMerchantTitle.getText() + ": " + "</b> " + etItemName.getText()));
+            tvQuantityTitle.setText(Html.fromHtml("<b>" + tvQualityTitle.getText() + ": " + "</b> " + etQuantity.getText()));
 
             //set their padding
             tvQualityTitle.setPadding(10, 10, 10, 10);
@@ -220,26 +234,9 @@ public class ItemActivity extends Activity {
             qualitySpinner.setVisibility(View.GONE);
             categorySpinner.setVisibility(View.GONE);
 
-            if (etComments.getText().toString().equals("")){
+            if (etComments.getText().toString().equals("")) {
                 etComments.setVisibility(View.GONE);
                 tvCommentsTitle.setVisibility(View.GONE);
-            }
-
-
-
-        }
-
-        if (gc != null) {
-            ic.displayGiftCardInfo(gc, tvOwnerTitle, etItemValue, etItemName, etQuantity, qualitySpinner,
-                    categorySpinner, etComments, checkbox);
-            itemImagesList = gc.getItemImagesList();
-            ic.setViewMode(itemState, etItemValue, etItemName, etQuantity, qualitySpinner,
-                    categorySpinner, etComments, checkbox, editButton, saveButton, makeOfferButton,
-                    cloneItemButton);
-
-            // Display featured image
-            if (!itemImagesList.isEmpty()) {
-                ipc.displayFeaturedImage(itemImagesList, featuredImage);
             }
         }
         // Toast.makeText(getApplicationContext(), "Save Button at Bottom, and return to inventory, backbutton disabled for now till we can delete a giftcard as if user push backbutton it creates giftcard",Toast.LENGTH_LONG).show();

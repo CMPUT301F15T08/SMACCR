@@ -17,11 +17,6 @@
         android:title="@string/newTradeNotiNum"
         app:showAsAction="always" />
 
-    <item android:id="@+id/friendNoti"
-        android:icon="@drawable/user_icon"
-        android:title="@string/newFriendNotiNum"
-        app:showAsAction="always" />
-
     <item android:id="@+id/settings"
         android:icon="@drawable/gear2"
         android:title="@string/title_activity_settings"

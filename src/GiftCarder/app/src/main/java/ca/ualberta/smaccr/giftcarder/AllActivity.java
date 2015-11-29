@@ -15,8 +15,6 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -118,7 +116,7 @@ public class AllActivity extends AppCompatActivity {
 
         // FriendList class type
         fl = user.getFl();
-        Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
+
 
         //###########################################################################################################################
 
@@ -378,14 +376,14 @@ public class AllActivity extends AppCompatActivity {
 
             // If you try to add yourself
             if (potentialFriendUser.getUsername().equals(username)){
-                Toast.makeText(this, "You can't be your own friend :P", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You can't be your own friend", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // add user to friend list and update server
             fl.addNewFriend(potentialFriendUser.getUsername());
             updateFriendsList(fl);
-            Toast.makeText(getApplicationContext(),  "Friend Request sent to , [added to friendlist for now]", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),  "Friend Added", Toast.LENGTH_SHORT).show();
 
             //!!!!!!!!!!!!!
             // add friend to userList singleton
@@ -400,7 +398,7 @@ public class AllActivity extends AppCompatActivity {
 
         } else {
             // User does not exist on server
-            Toast.makeText(this, "User not found.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
         }
 
     }

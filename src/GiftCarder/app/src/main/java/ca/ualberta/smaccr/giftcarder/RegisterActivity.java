@@ -64,6 +64,7 @@ public class RegisterActivity extends Activity {
             urc.addUser(etUsername,etCity, etPhone, etEmail);
 
             //Start "all activity"
+            Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, AllActivity.class);
             String username = etUsername.getText().toString();
             intent.putExtra(EXTRA_USERNAME, username);
