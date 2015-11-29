@@ -18,6 +18,10 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/*
+All Activity contains all tab for the user's inventory, trade, friend list and all associated functions for that
+ */
+
 public class AllActivity extends AppCompatActivity {
 
     // Constants

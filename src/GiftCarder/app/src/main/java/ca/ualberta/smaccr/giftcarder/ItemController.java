@@ -18,7 +18,9 @@ import java.util.ArrayList;
 
 /**
  * Created by Richard on 2015-10-29.  Edited by Carin.
- * // GiftCard(String merchant, int quantity, int quality, int category, String comments, Boolean shared)
+ *
+ * Item controller controls the item for setting the states and viewing mode for giftcard
+ *
  */
 public class ItemController {
 
