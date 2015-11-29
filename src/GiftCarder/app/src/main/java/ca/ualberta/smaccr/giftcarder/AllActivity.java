@@ -169,7 +169,7 @@ public class AllActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 final int pos = position;
 
-                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder deletedialog = new AlertDialog.Builder(AllActivity.this);
                 deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -223,7 +223,7 @@ public class AllActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final int pos = position;
 
-                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder deletedialog = new AlertDialog.Builder(AllActivity.this);
                 deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -347,10 +347,13 @@ public class AllActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String friendUserName = input.getText().toString();
 
-                // Start thread to search server for friend
-                Thread thread = new GetFriendThread(friendUserName);
-                thread.start();
-
+                if (!NetworkChecker.isNetworkAvailable(AllActivity.this)) {
+                    Toast.makeText(AllActivity.this, "No internet connection.  Please check your internet connection and try again.", Toast.LENGTH_LONG).show();
+                } else {
+                    // Start thread to search server for friend
+                    Thread thread = new GetFriendThread(friendUserName);
+                    thread.start();
+                }
             }
         });
 

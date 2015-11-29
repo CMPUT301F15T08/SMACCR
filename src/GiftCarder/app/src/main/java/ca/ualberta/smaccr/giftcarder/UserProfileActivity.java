@@ -108,7 +108,6 @@ public class UserProfileActivity extends Activity {
             etEmail.setText(user.getEmail());
 
         }
-
         upc.setViewMode(profileState, etCity, etPhone, etEmail, editButton, saveButton);
 
     }

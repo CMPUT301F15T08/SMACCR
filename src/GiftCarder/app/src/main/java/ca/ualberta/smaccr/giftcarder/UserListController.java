@@ -17,6 +17,8 @@ package ca.ualberta.smaccr.giftcarder;
 
 /**
  * Created by splant on 11/16/15.
+ *
+ * The UserListController is responsible for adding users to server and deleting them from the user using their username
  */
 
 import android.util.Log;

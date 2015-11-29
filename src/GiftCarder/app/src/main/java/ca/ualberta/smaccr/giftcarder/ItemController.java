@@ -340,6 +340,7 @@ public class ItemController {
     public boolean validateFields(EditText etItemValue, EditText etItemName, EditText etQuantity,
                                   Spinner categorySpinner) {
         boolean valid = true;
+        int quantity = Integer.parseInt(etQuantity.getText().toString().trim());
 
         if (!Validation.hasText(etItemValue)) {
             valid = false;
@@ -350,6 +351,11 @@ public class ItemController {
         }
 
         if (!Validation.hasText(etQuantity)) {
+            valid = false;
+        }
+
+        if (quantity == 0 ) {
+            etQuantity.setError("Cannot have zero gift cards");
             valid = false;
         }
 

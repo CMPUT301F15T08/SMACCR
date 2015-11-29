@@ -26,9 +26,12 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
         MainActivity activity = (MainActivity) getActivity();
     }
 
+
+
     /**
      * Tests that clicking the register button starts the RegisterActivity
      */
+
     public void testRegisterButton() {
         MainActivity activity = (MainActivity) getActivity();
         final Button registerButton = (Button) activity.findViewById(R.id.registerButton);
@@ -129,7 +132,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                etUsername.setText("Link");
+                etUsername.setText("Zelda");
             }
         });
         getInstrumentation().waitForIdleSync();
@@ -145,6 +148,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
             }
         });
         getInstrumentation().waitForIdleSync();
+
 
         // Validate that ReceiverActivity did not start
         AllActivity receiverActivity = (AllActivity)

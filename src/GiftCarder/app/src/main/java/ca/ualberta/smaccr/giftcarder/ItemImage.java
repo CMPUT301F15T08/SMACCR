@@ -27,6 +27,10 @@ import java.io.Serializable;
 /**
  * Created by Carin on 11/19/2015.
  */
+
+/* ItemImage is responsible for holding a bitmapString of an image and a boolean that indicates
+ * whether the image is featured or not
+ */
 public class ItemImage implements Serializable{
     private String bitmapString;
     private boolean featured;
@@ -37,14 +41,26 @@ public class ItemImage implements Serializable{
         this.featured = false;
     }
 
+    /**
+     * Returns bitmap string
+     * @return String (bitmap)
+     */
     public String getBitmapString() {
         return bitmapString;
     }
 
+    /**
+     * Returns if image is featured or not
+     * @return boolean
+     */
     public boolean isFeatured() {
         return featured;
     }
 
+    /**
+     * Sets image as featured or not featured
+     * @param featured boolean
+     */
     public void setFeatured(boolean featured) {
         this.featured = featured;
     }

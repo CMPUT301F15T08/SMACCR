@@ -56,6 +56,11 @@ public class ItemPictureController {
     int maxByteSize = 65536;
     double scale = 0.5; // scale image by 1/2
 
+    /**
+     * Resizes bitmap to less than maxByteSize then converts it to a string
+     * @param image Bitmap
+     * @return String
+     */
     public String processImageResult(Bitmap image) {
 
         // resize image until less than maxByteSize
@@ -65,9 +70,15 @@ public class ItemPictureController {
                     (int)(scale * image.getHeight()), false);
         }
 
+        // return Bitmap as string
         return encodeToBase64(image);
     }
 
+    /**
+     * Converts bitmap to string
+     * @param bitmap Bitmap
+     * @return String
+     */
     public String encodeToBase64(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -76,11 +87,20 @@ public class ItemPictureController {
         return Base64.encodeToString(data, Base64.DEFAULT); // returns encoded image as String
     }
 
+    /**
+     * Converts string to Bitmap
+     * @param input String
+     * @return Bitmap
+     */
     public Bitmap decodeBase64(String input) {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
+    /**
+     * Displays featured image (first image in itemImagesList)
+     * @param itemImagesList ArrayList
+     */
     public void displayFeaturedImage(ArrayList<ItemImage> itemImagesList, ImageView imageView) {
         String bitmapString = itemImagesList.get(0).getBitmapString();
         imageView.setImageBitmap(decodeBase64(bitmapString));
