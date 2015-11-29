@@ -22,11 +22,24 @@ License
 Credits
 =======
 
-I used gson/json(com.google.code.json:gson:2.3.1) for internal file storage. To enable in Android Studio File->Project Structure-> go to Module/Dependencies -> click plus button and search gson and add.
+Credit of code is also indicated where it is used in code
 
-credit of code is also indicated where it is used in code
+Internal storage:
+gson/json(com.google.code.json:gson:2.3.1) for internal file storage. To enable in Android Studio File->Project Structure-> go to Module/Dependencies -> click plus button and search gson and add.
 
+Loading and saving to internal storage:
 loadFromFile(), saveInFile() is from "Joshua Charles Campbell" (joshua2ua) monday lab, retrieved 2015-09-21
 Joshua Charles Campbell, retrieved 2015-09-21, https://github.com/joshua2ua/lonelyTwitter
 
+AndroidElasicSearch lab:
 From Joshua Charles Campbell, retrieved 2015-10-27, https://github.com/joshua2ua/AndroidElasticSearch.git
+ 
+Email regular expression:
+Lokesh Gupta, http://howtodoinjava.com/2014/11/11/java-regex-validate-email-address/, retrieved
+26/10/15
+
+Phone regular expression:
+Steven Smith, http://regexlib.com/Search.aspx?k=phone+number, retrieved 26/10/15
+
+Image resizing:
+from rogcg, retrieved 11/20/15, http://www.rogcg.com/blog/2013/11/01/gridview-with-auto-resized-images-on-android
