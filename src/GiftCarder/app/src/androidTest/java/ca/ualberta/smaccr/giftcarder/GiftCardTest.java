@@ -16,12 +16,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 /**
  * Created by Richard on 2015-10-29.
  */
 public class GiftCardTest extends ActivityInstrumentationTestCase2 {
 
+    private TextView tvOwnerTitle;
     private EditText etItemName;
     private EditText etItemValue;
     private EditText etQuantity;
@@ -150,6 +152,7 @@ public class GiftCardTest extends ActivityInstrumentationTestCase2 {
         final String teststring = "Subway";
         final int testnumber = 1;
 
+        String owner = activity.getTVOwnerTitle().getText().toString();;
         etItemName = activity.getEtItemName();
         etItemValue = activity.getEtItemValue();
         etQuantity = activity.getEtQuantity();
@@ -180,7 +183,7 @@ public class GiftCardTest extends ActivityInstrumentationTestCase2 {
 
         ItemController ic = new ItemController();
 
-        inv = ic.setGiftCardInfo(inv, position, etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner, etComments, checkbox,  new ArrayList<ItemImage>());
+        inv = ic.setGiftCardInfo(inv, owner, position, etItemValue, etItemName, etQuantity, qualitySpinner, categorySpinner, etComments, checkbox,  new ArrayList<ItemImage>());
 
         assertTrue(teststring.equals(inv.getInvList().get(position).getMerchant()));
 
