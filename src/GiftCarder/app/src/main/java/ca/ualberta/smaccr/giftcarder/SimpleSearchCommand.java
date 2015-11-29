@@ -13,6 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 and limitations under the License.
 */
 
+
+//From Joshua Charles Campbell, retrieved 2015-10-27, https://github.com/joshua2ua/AndroidElasticSearch.git
+//From the elastic search lab
+
 package ca.ualberta.smaccr.giftcarder;
 
 /**
