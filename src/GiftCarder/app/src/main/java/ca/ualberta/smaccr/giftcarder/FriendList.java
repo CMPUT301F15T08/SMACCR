@@ -5,6 +5,11 @@ import java.util.ArrayList;
 /**
  * Created by Richard on 2015-11-21.
  */
+
+/*
+FriendList class contains an arraylist of strings of your friends, as the user's id is his username which is a string,
+so this is use for reference to get him.
+ */
 public class FriendList {
     private ArrayList<String> friendList;
     //Cache myCache;

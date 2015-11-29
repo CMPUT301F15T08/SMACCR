@@ -11,6 +11,10 @@ import java.util.Date;
  * Created by Richard on 2015-10-24.
  */
 
+/*
+Giftcard class is the item we are trading, used to store information about the giftcard
+ */
+
 public class GiftCard implements Serializable {
 
     private String owner;                   // Owner's name

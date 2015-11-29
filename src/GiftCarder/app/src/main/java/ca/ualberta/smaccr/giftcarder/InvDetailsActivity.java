@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/*
+Activity to display the details regarding giftcards of a user's inventory
+ */
+
 public class InvDetailsActivity extends Activity {
 
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";

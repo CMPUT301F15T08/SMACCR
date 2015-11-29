@@ -24,6 +24,10 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
+/*
+Manager used for dealing with the elastic search, retrieving and search for data.
+ */
+
 public class ESUserManager {
 
     private static final String TAG = "UserSearch";
