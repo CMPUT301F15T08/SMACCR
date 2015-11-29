@@ -91,7 +91,7 @@ public class TradeRequestActivity extends ActionBarActivity {
                 Intent intent = new Intent(TradeRequestActivity.this, AcceptTradeActivity.class);
                 intent.putExtra("TRADE_ID", tradeId);
                 intent.putExtra("CURRENT_USERNAME", owner.getUsername());
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, 4);
             }
         });
 
@@ -107,6 +107,8 @@ public class TradeRequestActivity extends ActionBarActivity {
         counterTradeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(TradeRequestActivity.this, ProposeCounterTradeActivity.class);
+                startActivity(intent);
 
             }
         });

@@ -25,6 +25,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/*
+Settings Activity contains the option to log out, and see logged in user's profile
+ */
 public class SettingsActivity extends ActionBarActivity {
 
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
