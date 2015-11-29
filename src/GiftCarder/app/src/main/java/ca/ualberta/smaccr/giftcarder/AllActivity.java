@@ -328,6 +328,12 @@ public class AllActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
+    //Adding the friend to the current user's friend list and update server
+
+    /**addFriend
+     * tries to add friend from user to friend list
+     * @param view
+     */
     public void addFriend(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -384,6 +390,10 @@ public class AllActivity extends AppCompatActivity {
         }
     };
 
+    /**checkForUserOnServerFriendList
+     *Gives a toast response for whether the user exist on friendlist or not, then add if does exist
+     * @param user
+     */
     public void checkForUserOnServerFriendList(User user){
         UserRegistrationController urc = new UserRegistrationController(this);
 
@@ -460,6 +470,11 @@ public class AllActivity extends AppCompatActivity {
 
     }
 
+    /**updateFriendsList
+     * Updates the user's friend list on server
+     * @param fl
+     *
+     */
     public void updateFriendsList(FriendList fl) {
         ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl.getFriendList());
         ListView friendsListView = (ListView) findViewById(R.id.friendListView);
@@ -475,6 +490,10 @@ public class AllActivity extends AppCompatActivity {
 
     //##############################################################################################
     // DANGER THIS SERVER STUFF
+
+    /**updateUserOnServer
+     *This function updates the entire user on server
+     */
     public void updateUserOnServer (){
         ulc = new UserListController(urc.getUserList());
         Thread thread = new updateThread(urc.getUser(username));
@@ -549,8 +568,6 @@ public class AllActivity extends AppCompatActivity {
     // send of server stuff
     //###############################################################################################################
 
-
-
     @Override
     public void onBackPressed() {
         // Asks to exit on back button press
@@ -579,19 +596,30 @@ public class AllActivity extends AppCompatActivity {
     //###############################################################################################################
     // SWITCHING TO OTHER ACTIVITIES
 
-
+    /**inventoryDetailsButton
+     * Switch to the inv details activity
+     * @param view
+     */
     public void inventoryDetailsButton(View view) {
         Intent intent = new Intent(this, InvDetailsActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);
     }
 
+    /**browseClick
+     * switch to the browsing activity
+     * @param v
+     */
     public void browseClick(MenuItem v) {
         Intent intent = new Intent(this, BrowseActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
         startActivityForResult(intent, 2);
     }
 
+    /**settingsClick
+     *Switch to the settings activity
+     * @param v
+     */
     public void settingsClick(MenuItem v){
         Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
         intent1.putExtra(EXTRA_USERNAME, username);
