@@ -1,3 +1,18 @@
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
+
 package ca.ualberta.smaccr.giftcarder;
 
 import android.content.Context;
@@ -18,7 +33,9 @@ import java.util.ArrayList;
 
 /**
  * Created by Richard on 2015-10-29.  Edited by Carin.
- * // GiftCard(String merchant, int quantity, int quality, int category, String comments, Boolean shared)
+ *
+ * Item controller controls the item for setting the states and viewing mode for giftcard
+ *
  */
 public class ItemController {
 
@@ -185,7 +202,7 @@ public class ItemController {
                                      CheckBox checkbox,
                                      ArrayList<ItemImage> itemImagesList) {
         GiftCard tempcard = inv.getInvList().get(position);
-        tempcard.setOwner(owner);
+        tempcard.setOwner(tempcard.getBelongsTo());
 
         // If invalid dollar, cent amount then set to zero for now!
         try {
