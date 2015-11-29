@@ -13,8 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 and limitations under the License.
 */
 
-/* UserProfileController handles different states for UserProfileActivity */
-
 package ca.ualberta.smaccr.giftcarder;
 
 import android.view.View;
@@ -30,6 +28,8 @@ import java.text.DecimalFormat;
 /**
  * Created by cbli on 11/16/15.
  */
+
+/* UserProfileController handles different states for UserProfileActivity */
 public class UserProfileController {
     // Constants
     public static final int OWNER_STATE = 0; // view own profile (has edit button)

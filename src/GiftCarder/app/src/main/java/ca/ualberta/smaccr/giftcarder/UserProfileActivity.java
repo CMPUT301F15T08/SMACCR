@@ -13,10 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 and limitations under the License.
 */
 
-/* UserProfileActivity displays user profile based on retrieved profileState from other activities
- * Allows editing of own user profile
- */
-
 /* References:
  * Hussain Akhtar Wahid 'Ghouri',
  * http://stackoverflow.com/questions/19452269/android-set-text-to-textview, retrieved 11/02/15
@@ -42,6 +38,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+/* UserProfileActivity displays user profile based on retrieved profileState from other activities
+ * Allows editing of own user profile
+ */
 public class UserProfileActivity extends Activity {
 
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
@@ -67,6 +67,8 @@ public class UserProfileActivity extends Activity {
     public static final int OWNER_STATE = 0; // view own profile (has edit button)
     public static final int EDIT_STATE = 1; // edit own profile (has save button)
     public static final int FRIEND_STATE = 3; // view friend's profile (no button)
+
+    private UserListController ulc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,11 +136,52 @@ public class UserProfileActivity extends Activity {
             urc.editUser(username, etCity, etPhone, etEmail);
             Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
             upc.setViewMode(OWNER_STATE, etCity, etPhone, etEmail, editButton, saveButton);
+            updateUserOnServer();
         }
 
         // invalid input
         else
             Toast.makeText(this, "Form contains error", Toast.LENGTH_LONG).show();
+    }
+
+    /**updateUserOnServer
+     *This function updates the entire user on server
+     */
+    public void updateUserOnServer (){
+        ulc = new UserListController(urc.getUserList());
+        Thread thread = new updateThread2(urc.getUser(username));
+        thread.start();
+
+    }
+
+    // Deletes user on server, and write back new modified user
+    class updateThread2 extends Thread {
+        private User userthread;
+        // UserRegistrationController uc= new UserRegistrationController();
+
+        public updateThread2(User user) {
+            this.userthread = user;
+        }
+
+        @Override
+        public void run() {
+            // delete from server
+            ulc.deleteUser(userthread.getUsername());
+            // delete from userlist
+            // uc.getUserList().deleteUser(user);
+
+            // Add the new one back
+            ulc.addUser(userthread);
+            // uc.getUserList().addUser(user);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class UserTest extends android.test.ActivityInstrumentationTestCase2{
 
     public UserTest(){
-        super(ca.ualberta.smaccr.giftcarder.UserTest.class);
+        super(ca.ualberta.smaccr.giftcarder.User.class);
     }
 
     public void testSetUsername() throws Exception {

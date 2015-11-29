@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/* ItemDetailsActivity allows for zooming in of selected image from ItemPictureActivity */
 public class ItemDetailsActivity extends Activity {
     public final static String EXTRA_BITMAP_STRING = "ca.ualberta.smaccr.giftcarder.BITMAPSTRING";
 

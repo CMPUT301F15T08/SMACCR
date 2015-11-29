@@ -21,6 +21,8 @@ import android.widget.EditText;
 /**
  * Created by Carin on 10/26/2015.
  */
+
+/* UserRegistrationController handles adding and editing users to the server and to the cache */
 public class UserRegistrationController {
 
     private UserListController ulc;
