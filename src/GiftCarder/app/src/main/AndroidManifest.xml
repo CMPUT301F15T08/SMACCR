@@ -40,10 +40,6 @@
             android:label="Item" >
         </activity>
         <activity
-            android:name=".FriendsActivity"
-            android:label="@string/title_activity_friends" >
-        </activity>
-        <activity
             android:name=".SettingsActivity"
             android:label="Settings" >
         </activity>

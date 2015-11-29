@@ -27,6 +27,8 @@ import java.util.ArrayList;
 /**
  * Created by cbli on 11/23/15.
  */
+
+/* Modified adapter that only displays public items */
 public class FriendInvListAdapter extends InvListAdapter {
 
     public FriendInvListAdapter(Context context, int resource, ArrayList<GiftCard> items) {
