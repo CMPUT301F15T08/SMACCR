@@ -24,3 +24,22 @@ MSI, http://stackoverflow.com/questions/4127725/how-can-i-remove-a-button-or-mak
 
 # Disable edittext
 Sean Android, http://stackoverflow.com/questions/4297763/disabling-of-edittext-in-android, retrieved 11/02/15
+
+# Email regular expression:
+Adam Duvander, http://www.webmonkey.com/2008/08/four_regular_expressions_to_check_email_addresses/, retrieved 11/02/15
+
+# Phone regular expression:
+Steven Smith, http://regexlib.com/Search.aspx?k=phone+number, retrieved 26/10/15
+
+# Modified code from on validation:
+Shahab, https://tausiq.wordpress.com/2013/01/19/android-input-field-validation/, retrieved 26/10/15
+
+# Building Image Gallery
+Nilanchala, http://javatechig.com/android/android-gridview-example-building-image-gallery-in-android, retrieved 11/18/15
+
+# Photos from Camera and Gallery
+Tejas Jasani, http://www.theappguruz.com/blog/android-take-photo-camera-gallery-code-sample, retrieved 11/18/15
+
+# Get Serializable code
+MCeley, http://stackoverflow.com/questions/12493818/how-to-pass-arraylistcustomobject-to-an-activity-in-another-application, retrieved 11/20/15
+

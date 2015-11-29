@@ -64,45 +64,47 @@ public class InventoryActivity extends Activity {
         Intent intent = getIntent();
         UserRegistrationController urc = new UserRegistrationController();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
-        ownerInv = urc.getUser(username).getInv();
-
         // User user = urc.getUser(username);
         friendUsername = intent.getStringExtra("FRIENDUSERNAME");
         //Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
-        Cache cache = new Cache(this, username);
 
-        try {
-            User friendUser = cache.getUser(friendUsername);
-            inv = friendUser.getInv();
+        if (username != null) {
+            ownerInv = urc.getUser(username).getInv();
+            Cache cache = new Cache(this, username);
 
-            urc = new UserRegistrationController();
-            User user = urc.getUser(username);
-            setOwnerInv(user.getInv());
+            try {
+                User friendUser = cache.getUser(friendUsername);
+                inv = friendUser.getInv();
 
-        } catch (NullPointerException e) {
-            Log.e("1", "nulllllllllll");
-        }
-        updateInvList(inv);
-        tvUsername.setText(friendUsername);
+                urc = new UserRegistrationController();
+                User user = urc.getUser(username);
+                setOwnerInv(user.getInv());
 
-        inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // Switch to item activity and send inventory and position of gift card to change
-                Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
-                // intent.putExtra("GiftCard", inv.getInvList().get(position));
-                intent.putExtra("position", position);
-                intent.putExtra("inventory", inv);
-                intent.putExtra("ownerInventory", ownerInv);
-                intent.putExtra(EXTRA_USERNAME, username);
-                intent.putExtra(EXTRA_STATE, BROWSER_ITEM_STATE); // view item
-                // startActivity(intent);
-                startActivityForResult(intent, 1);
+            } catch (NullPointerException e) {
+                Log.e("1", "nulllllllllll");
             }
-        });
+            updateInvList(inv);
+            tvUsername.setText(friendUsername);
 
-        updateInvList(inv);
+            inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    // Switch to item activity and send inventory and position of gift card to change
+                    Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
+                    // intent.putExtra("GiftCard", inv.getInvList().get(position));
+                    intent.putExtra("position", position);
+                    intent.putExtra("inventory", inv);
+                    intent.putExtra("ownerInventory", ownerInv);
+                    intent.putExtra(EXTRA_USERNAME, username);
+                    intent.putExtra(EXTRA_STATE, BROWSER_ITEM_STATE); // view item
+                    // startActivity(intent);
+                    startActivityForResult(intent, 1);
+                }
+            });
+
+            updateInvList(inv);
+        }
     }
 
     @Override

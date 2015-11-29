@@ -132,7 +132,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                etUsername.setText("Link");
+                etUsername.setText("Zelda");
             }
         });
         getInstrumentation().waitForIdleSync();
@@ -152,7 +152,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2 {
 
         // Validate that ReceiverActivity did not start
         AllActivity receiverActivity = (AllActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(10);
+                receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNull("ReceiverActivity is not null", receiverActivity);
 
         // Remove the ActivityMonitor
