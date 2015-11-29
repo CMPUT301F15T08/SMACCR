@@ -131,8 +131,10 @@ public class AcceptTradeActivity extends ActionBarActivity {
             User owner = esUserManager.getUser(ownerUsername);
             User borrower = esUserManager.getUser(borrowerUsername);
 
+            trade.getBorrowerItem().setBelongsTo(owner.getUsername());
             owner.getInv().addGiftCard(trade.getBorrowerItem());
             owner.getInv().removeGiftCard(trade.getOwnerItem());
+            trade.getOwnerItem().setBelongsTo(borrower.getUsername());
             borrower.getInv().addGiftCard(trade.getOwnerItem());
             borrower.getInv().removeGiftCard(trade.getBorrowerItem());
 
