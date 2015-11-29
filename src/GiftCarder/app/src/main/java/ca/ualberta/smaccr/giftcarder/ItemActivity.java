@@ -393,8 +393,6 @@ public class ItemActivity extends Activity {
         startActivity(intent);
 
 
-
-
         Toast.makeText(this, "Make Offer clicked", Toast.LENGTH_SHORT).show();
     }
 
@@ -414,7 +412,7 @@ public class ItemActivity extends Activity {
                 // to Browse Activity
                 if (gc != null) {
                     ownerInv = ic.cloneItem(gc, ownerInv, ownerUsername);
-                    intent.putExtra("BrowseInventory", ownerInv);
+                    intent.putExtra("ClonedInventory", ownerInv);
 
                 // to Inventory Activity
                 } else {
