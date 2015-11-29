@@ -52,6 +52,7 @@ public class AllActivity extends AppCompatActivity {
     private UserListController ulc;
 
     private ListView tradesListView;
+    private ListView inventorylistID;
 
     String username;
     Inventory inv;
@@ -101,7 +102,7 @@ public class AllActivity extends AppCompatActivity {
         tabHost.addTab(tabSpec);
         // END OF Manage the tabs between inventory, friends, and trades pages.
 
-        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+        inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
         tradesListView = (ListView) findViewById(R.id.tradesListView);
         final ListView friendsListView = (ListView) findViewById(R.id.friendListView);
 
@@ -448,7 +449,7 @@ public class AllActivity extends AppCompatActivity {
         }
 
         // Display list of names of giftcards
-        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+        inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
         InvListAdapter customAdapter = new InvListAdapter(this, R.layout.adapter_inv_list, tempArray);
         // displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
         inventorylistID.setAdapter(customAdapter);

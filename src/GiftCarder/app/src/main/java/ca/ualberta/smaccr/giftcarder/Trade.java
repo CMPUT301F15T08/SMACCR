@@ -24,12 +24,14 @@ public class Trade {
     private String borrower;
     private GiftCard ownerItem;
     private GiftCard borrowerItem;
+    private Boolean isCompleted;
 
     public Trade(String owner, String borrower, GiftCard ownerItem, GiftCard borrowerItem) {
         this.owner = owner;
         this.borrower = borrower;
         this.ownerItem = ownerItem;
         this.borrowerItem = borrowerItem;
+        this.isCompleted = false;
     }
 
     public String getOwner() {
@@ -62,5 +64,13 @@ public class Trade {
 
     public void setBorrowerItem(GiftCard borrowerItem) {
         this.borrowerItem = borrowerItem;
+    }
+
+    public Boolean getIsCompleted() {
+        return isCompleted;
+    }
+
+    public void setIsCompleted(Boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }
