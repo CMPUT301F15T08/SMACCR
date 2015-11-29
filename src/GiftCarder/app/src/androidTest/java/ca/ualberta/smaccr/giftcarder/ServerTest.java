@@ -59,7 +59,7 @@ public class ServerTest extends ActivityInstrumentationTestCase2 {
     public void testWriteRetrieveUserFromServer()throws Exception {
 
         User user = new User();
-        user.setUsername("bob");
+        user.setUsername("baoba");
 
         //http://stackoverflow.com/questions/9148899/returning-value-from-thread retrived Nov 29 2015
 
