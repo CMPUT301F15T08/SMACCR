@@ -44,6 +44,7 @@ public class ItemController {
     public static final int OWNER_STATE = 1; // view own item
     public static final int BROWSER_STATE = 2; // view other's item
     public static final int EDIT_STATE = 3; // add item
+    public static final int FRIEND_STATE = 4; // view other's item from Friend
     private File imageFile;
 
     public void takeAPicture() {
@@ -290,11 +291,14 @@ public class ItemController {
                 makeOfferButton.setVisibility(View.GONE);
                 cloneItemButton.setVisibility(View.GONE);
 
-            // in Browser State
+            } else if (itemState == FRIEND_STATE){
+                editButton.setVisibility(View.GONE);
+                makeOfferButton.setVisibility(View.GONE);
+                cloneItemButton.setVisibility(View.VISIBLE);
             } else {
                 editButton.setVisibility(View.GONE);
                 makeOfferButton.setVisibility(View.VISIBLE);
-                cloneItemButton.setVisibility(View.VISIBLE);
+                cloneItemButton.setVisibility(View.GONE);
             }
 
         }

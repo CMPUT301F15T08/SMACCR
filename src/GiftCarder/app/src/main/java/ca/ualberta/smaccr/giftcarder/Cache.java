@@ -342,6 +342,13 @@ public class Cache {
                 e.printStackTrace();
             }
 
+            if (!urc.getUser(username).isDownloadsEnabled()) {
+                ArrayList<GiftCard> inv = urc.getUser(username).getInv().getInvList();
+                for (GiftCard giftCard: inv) {
+                    giftCard.setItemImagesList(null);
+                }
+            }
+
             getFriends().add(temp);
         }
 

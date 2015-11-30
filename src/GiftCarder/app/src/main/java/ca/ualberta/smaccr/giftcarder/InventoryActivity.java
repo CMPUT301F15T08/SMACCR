@@ -38,7 +38,7 @@ public class InventoryActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
 
-    public static final int BROWSER_ITEM_STATE = 2; // view other's item
+    public static final int FRIEND_ITEM_STATE = 4; // view other's item
     public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
 
     protected String username;
@@ -67,6 +67,7 @@ public class InventoryActivity extends Activity {
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
         // User user = urc.getUser(username);
         friendUsername = intent.getStringExtra("FRIENDUSERNAME");
+        Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
         //Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
 
         if (username != null) {
@@ -97,8 +98,9 @@ public class InventoryActivity extends Activity {
                     intent.putExtra("position", position);
                     intent.putExtra("inventory", inv);
                     intent.putExtra("ownerInventory", ownerInv);
+                    intent.putExtra("gc", inv.getGiftCard(position));
                     intent.putExtra(EXTRA_USERNAME, username);
-                    intent.putExtra(EXTRA_STATE, BROWSER_ITEM_STATE); // view item
+                    intent.putExtra(EXTRA_STATE, FRIEND_ITEM_STATE); // view item
                     // startActivity(intent);
                     startActivityForResult(intent, 1);
                 }
@@ -106,6 +108,12 @@ public class InventoryActivity extends Activity {
 
             updateInvList(inv);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //setResult(RESULT_OK);
+        finish();
     }
 
     @Override
@@ -165,10 +173,10 @@ public class InventoryActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                ownerInv = (Inventory) data.getSerializableExtra("ModifiedInventory");
-                Intent intent = new Intent();
-                intent.putExtra("ModifiedInventory", ownerInv);
-                setResult(RESULT_OK, intent);
+                ownerInv = (Inventory) data.getSerializableExtra("ClonedInventory");
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("ClonedInventory", ownerInv);
+                setResult(RESULT_OK, returnIntent);
 
             }
         }

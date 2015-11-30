@@ -117,7 +117,7 @@ public class AllActivity extends AppCompatActivity {
                 Intent intent = new Intent(AllActivity.this, TradeRequestActivity.class);
                 intent.putExtra("TRADE_ID", Long.toHexString(id));
                 intent.putExtra("CURRENT_USERNAME", getIntent().getStringExtra(MainActivity.EXTRA_USERNAME));
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, 4);
             }
         });
         // Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
@@ -151,14 +151,15 @@ public class AllActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String selectedFriend = (String) friendsListView.getItemAtPosition(position);
+                //String selectedFriend = (String) friendsListView.getItemAtPosition(position);
+                String selectedFriend = (String)fl.getFriendList().get(position);
 
                 Intent intent = new Intent(AllActivity.this, InventoryActivity.class);
                 intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
                 intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra("FRIENDUSERNAME", selectedFriend);
 
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -276,11 +277,9 @@ public class AllActivity extends AppCompatActivity {
 
         // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
-            // Pass the  inventory to settings, so settings activity will send it back to main to update the inventory in singleton
-            Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
-            intent1.putExtra(EXTRA_USERNAME, username);
-            startActivity(intent1);
+            Intent intent = new Intent(AllActivity.this, SettingsActivity.class);
+            intent.putExtra(EXTRA_USERNAME, username);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -479,11 +478,46 @@ public class AllActivity extends AppCompatActivity {
      *
      */
     public void updateFriendsList(FriendList fl) {
+
+
+        myCache.updateFriends();
+        int topTrades = 0;
+        int topTraderIndex = -1;
+
+
+        ArrayList<String> fl2 = new ArrayList<String>(fl.getFriendList());
+
+        //Find out who as top trades
+        for (int i=0; i<fl.getFriendList().size();i++){
+            if (topTrades < (myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount())){
+                topTrades = myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount();
+                topTraderIndex = i;
+            }
+
+
+        }
+        //Show top trader with *Top trader* marker
+        if (topTraderIndex>-1){
+            fl2.set(topTraderIndex, fl2.get(topTraderIndex) + " *TOP TRADER*");
+            //fl.getFriendList().set(topTraderIndex, fl.getFriendList().get(topTraderIndex) + " *TOP TRADER*");
+        }
+
+
+        ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl2);
+
+        ListView friendsListView = (ListView) findViewById(R.id.friendListView);
+        friendsListView.setAdapter(displayAdapter1);
+        urc.editUserFriendList(username, fl);
+
+
+        /*
+        Old one with no top trader
         ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl.getFriendList());
         ListView friendsListView = (ListView) findViewById(R.id.friendListView);
         friendsListView.setAdapter(displayAdapter1);
-
         urc.editUserFriendList(username, fl);
+        */
+
     }
 
     // END OF updating user here
@@ -548,24 +582,29 @@ public class AllActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // This is for when you return from an activity, passing back data
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
+        if (requestCode == 1) { // from user's inventory items
             if (resultCode == RESULT_OK) {
                 inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
                 updateInvList(inv);
                 updateUserOnServer();
             }
-        }if (requestCode == 2) {
+        }else if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
-                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
-
+                inv = (Inventory) data.getSerializableExtra("ClonedInventory");
+                updateInvList(inv);
+                updateUserOnServer();
             }
         }
-
-        if (requestCode == 3) {
+        else if (requestCode == 4) {
+            if (resultCode == RESULT_CANCELED){
+               //
+            }
             if (resultCode == RESULT_OK) {
-                finish();
+                inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
+                updateInvList(inv);
             }
         }
+        tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
     }
 
     // send of server stuff
@@ -616,7 +655,8 @@ public class AllActivity extends AppCompatActivity {
     public void browseClick(MenuItem v) {
         Intent intent = new Intent(this, BrowseActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
-        startActivityForResult(intent, 2);
+        startActivity(intent);
+        //startActivityForResult(intent, 2);
     }
 
     /**settingsClick
@@ -624,12 +664,15 @@ public class AllActivity extends AppCompatActivity {
      * @param v
      */
     public void settingsClick(MenuItem v){
-        Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
-        intent1.putExtra(EXTRA_USERNAME, username);
-        startActivityForResult(intent1, 3);
+        Intent intent = new Intent(AllActivity.this, SettingsActivity.class);
+        intent.putExtra(EXTRA_USERNAME, username);
+        startActivity(intent);
+        //startActivityForResult(intent, 1);
     }
 
+
     // END OF SWITCHING TO OTHER ACTIVITIES
+
     //###############################################################################################################
 
 }

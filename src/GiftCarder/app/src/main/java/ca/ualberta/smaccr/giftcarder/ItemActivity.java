@@ -129,13 +129,15 @@ public class ItemActivity extends Activity {
     public final static String EXTRA_PICTURES = "ca.ualberta.smaccr.giftcarder.PICTURES";
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
-    public static final int BROWSER_STATE = 2; // view other's item
+    public static final int BROWSER_STATE = 2; // view other's item from Browse
     public static final int EDIT_STATE = 3; // edit item
+    public static final int FRIEND_STATE = 4; // view other's item from Friend
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
+        UserRegistrationController urc = new UserRegistrationController();
 
 
         // receive inventory, position, and state of gift card
@@ -147,9 +149,9 @@ public class ItemActivity extends Activity {
         featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
 
         // receive owner's inventory for cloning friend's items into it
-        if (getItemState() == BROWSER_STATE) {
-            ownerInv = (Inventory) getIntent().getSerializableExtra("ownerInventory");
+        if ((getItemState() == BROWSER_STATE) || (getItemState() == FRIEND_STATE)) {
             ownerUsername = intent.getStringExtra(EXTRA_USERNAME);
+            ownerInv = urc.getUser(ownerUsername).getInv(); // owner's inventory
         }
 
         // Get references to UI
@@ -328,7 +330,7 @@ public class ItemActivity extends Activity {
             inv.getInvList().remove(position);
         }
         */
-        if (itemState != BROWSER_STATE) {
+        if ((itemState != BROWSER_STATE) && (itemState != FRIEND_STATE)) {
             Intent intent = new Intent();
 
             if (itemState == ADD_STATE) {
@@ -423,8 +425,7 @@ public class ItemActivity extends Activity {
         }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent();
-
+                /*
                 // to Browse Activity
                 if (gc != null) {
                     ownerInv = ic.cloneItem(gc, ownerInv, ownerUsername);
@@ -435,8 +436,12 @@ public class ItemActivity extends Activity {
                     ownerInv = ic.cloneItem(inv, position, ownerInv, ownerUsername);
                     intent.putExtra("ModifiedInventory", ownerInv);
                 }
+                */
+                ownerInv = ic.cloneItem(gc, ownerInv, ownerUsername);
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("ClonedInventory", ownerInv);
+                setResult(RESULT_OK, returnIntent);
 
-                setResult(RESULT_OK, intent);
                 Toast.makeText(getApplicationContext(), "Check inventory to view clone",
                         Toast.LENGTH_LONG).show();
                 dialog.dismiss();

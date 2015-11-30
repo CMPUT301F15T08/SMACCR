@@ -13,16 +13,18 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 and limitations under the License.
 */
 
-
-/* User model class holds user personal information, inventory of gift cards, list of friends, and
- * list of trades
- */
 package ca.ualberta.smaccr.giftcarder;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 /**
  * Created by Carin on 10/25/2015.
+ */
+
+/* User model class holds user personal information, inventory of gift cards, list of friends, and
+ * list of trades
  */
 public class User {
     private String username;
@@ -36,7 +38,7 @@ public class User {
     private boolean downloadsEnabled;
 
     /**
-     * Constructor: on creation of User, creates new inventory and new FriendList
+     * Constructor: on creation of User, creates new inventory
      */
     public User() {
         this.inv = new Inventory();
@@ -48,10 +50,11 @@ public class User {
 
     /**
      * Checks to see if user owns gift card
+     *
      * @param giftCard GiftCard
      * @return boolean
      */
-    public boolean isOwner(GiftCard giftCard){
+    public boolean isOwner(GiftCard giftCard) {
         ArrayList<GiftCard> giftCards = getInv().getInvList();
         return giftCards.contains(giftCard);
     }
@@ -69,6 +72,7 @@ public class User {
 
     /**
      * Gets username
+     *
      * @return String
      */
     public String getUsername() {
@@ -77,6 +81,7 @@ public class User {
 
     /**
      * Gets city
+     *
      * @return String
      */
     public String getCity() {
@@ -85,6 +90,7 @@ public class User {
 
     /**
      * Gets phone
+     *
      * @return String
      */
     public String getPhone() {
@@ -93,6 +99,7 @@ public class User {
 
     /**
      * Gets email
+     *
      * @return String
      */
     public String getEmail() {
@@ -101,18 +108,25 @@ public class User {
 
     /**
      * Gets inventory
+     *
      * @return String
      */
-    public Inventory getInv() {return this.inv;}
+    public Inventory getInv() {
+        return this.inv;
+    }
 
     /**
      * Gets FriendList
+     *
      * @return FriendList
      */
-    public FriendList getFl() {return fl;}
+    public FriendList getFl() {
+        return fl;
+    }
 
     /**
      * Gets TradesList
+     *
      * @return TradesList
      */
     public TradesList getTradesList() {
@@ -125,7 +139,8 @@ public class User {
 
     /**
      * Sets username
-     * @param  username String
+     *
+     * @param username String
      */
     public void setUsername(String username) {
 
@@ -134,7 +149,8 @@ public class User {
 
     /**
      * Sets city
-     * @param  city String
+     *
+     * @param city String
      */
     public void setCity(String city) {
         this.city = city;
@@ -142,7 +158,8 @@ public class User {
 
     /**
      * Sets phone
-     * @param  phone String
+     *
+     * @param phone String
      */
     public void setPhone(String phone) {
         this.phone = phone;
@@ -150,7 +167,8 @@ public class User {
 
     /**
      * Sets email
-     * @param  email String
+     *
+     * @param email String
      */
     public void setEmail(String email) {
         this.email = email;
@@ -158,23 +176,49 @@ public class User {
 
     /**
      * Sets inventory
+     *
      * @param inventory Inventory of user's items
      */
-    public void setInv(Inventory inventory) {this.inv = inventory;}
+    public void setInv(Inventory inventory) {
+        this.inv = inventory;
+    }
 
     /**
      * Sets FriendList
+     *
      * @param fl FriendList
      */
-
-    public void setFl(FriendList fl) {this.fl = fl;}
+    public void setFl(FriendList fl) {
+        this.fl = fl;
+    }
 
     /**
      * Sets FriendList
+     *
      * @param tradesList TradesList
      */
     public void setTradesList(TradesList tradesList) {
         this.tradesList = tradesList;
+    }
+
+    /**
+     * gets trade list size
+     *
+     * @return
+     */
+    public int getSuccessfulTradesCount() {
+        int successfulTradesCount = 0;
+
+
+        Iterator entries = tradesList.entrySet().iterator();
+        while (entries.hasNext()) {
+            Entry thisEntry = (Entry) entries.next();
+            Trade tradeObj = (Trade) thisEntry.getValue();
+            if (!(tradeObj.getStatus().equals("DECLINED"))){
+                successfulTradesCount++;
+            }
+        }
+        return successfulTradesCount;
     }
 
     /**

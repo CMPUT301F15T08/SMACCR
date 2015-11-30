@@ -24,20 +24,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Owner"
+            android:id="@+id/textView"
+            android:layout_column="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Username"
             android:id="@+id/activity_create_trade_offer_username1"
-            android:layout_column="0" />
+            android:layout_column="1" />
     </TableRow>
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_create_trade_offer_itemImage1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Select item you want to trade"
+            android:id="@+id/textView2"
             android:layout_column="0" />
 
         <Spinner
@@ -57,19 +66,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Borrower"
+            android:id="@+id/textView3"
+            android:layout_column="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Username"
             android:id="@+id/activity_create_trade_offer_username2"
-            android:layout_column="0" />
+            android:layout_column="1" />
     </TableRow>
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/activity_create_trade_offer_itemImage2"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Borrower&apos;s Item"
+            android:id="@+id/textView4"
             android:layout_column="0" />
 
         <TextView

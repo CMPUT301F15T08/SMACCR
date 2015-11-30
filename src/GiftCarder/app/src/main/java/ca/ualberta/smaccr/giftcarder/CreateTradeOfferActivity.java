@@ -162,8 +162,8 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
             User owner = tradeOwner;
             User borrower = esUserManager.getUser(borrowerUsername);
 
-            owner.getTradesList().put("a", new Trade(owner.getUsername(), borrower.getUsername(), ownerItem, borrowerItem));
-            borrower.getTradesList().put("a", new Trade(owner.getUsername(), borrower.getUsername(), ownerItem, borrowerItem));
+            owner.getTradesList().put("a", new Trade(owner.getUsername(), borrower.getUsername(),owner.getEmail(), borrower.getEmail(), ownerItem, borrowerItem));
+            borrower.getTradesList().put("a", new Trade(owner.getUsername(), borrower.getUsername(),owner.getEmail(), borrower.getEmail(), ownerItem, borrowerItem));
 
             userRegistrationController.editUserTradeList(owner.getUsername(), owner.getTradesList());
             userRegistrationController.editUserTradeList(borrower.getUsername(), borrower.getTradesList());
@@ -175,6 +175,7 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
             // Give some time to get updated info
             try {
                 Thread.sleep(500);
+                setResult(RESULT_OK);
                 finish();
             } catch (InterruptedException e) {
                 e.printStackTrace();
