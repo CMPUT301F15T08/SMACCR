@@ -34,10 +34,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/itemImage1"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="What I am losing:"
+                android:id="@+id/textView2"
                 android:layout_column="0" />
 
             <TextView
@@ -67,10 +69,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/itemImage2"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="What I get:"
+                android:id="@+id/textView5"
                 android:layout_column="0" />
 
             <TextView
