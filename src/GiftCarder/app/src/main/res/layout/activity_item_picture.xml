@@ -16,15 +16,6 @@
         android:onClick="addPhoto"
         style="@style/ButtonText"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/downloadImages"
-        android:id="@+id/downloadPhotoButton"
-        android:background="@drawable/button_green"
-        android:onClick="addPhoto"
-        style="@style/ButtonText"/>
-
     <GridView
         android:id="@+id/pictureGridView"
         android:layout_width="fill_parent"
