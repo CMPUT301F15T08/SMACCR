@@ -33,6 +33,7 @@ public class TradeRequestActivity extends ActionBarActivity {
     private Button counterTradeButton;
 
     private String tradeId;
+    private String tradeStatus;
     private UserRegistrationController userRegistrationController;
     private UserListController userListController;
     private Trade trade;
@@ -75,7 +76,12 @@ public class TradeRequestActivity extends ActionBarActivity {
             trade = owner.getTradesList().get(tradeId);
 
             ownerTextView.setText(trade.getOwner());
-            ownerItemTextView.setText(trade.getOwnerItem().getMerchant());
+            String ownerItemsString = "";
+            for (GiftCard card : trade.getOwnerItems().getInvList()) {
+                ownerItemsString = ownerItemsString + " " + card.getMerchant();
+            }
+
+            ownerItemTextView.setText(ownerItemsString);
             borrowerTextView.setText(trade.getBorrower());
             borrowerItemTextView.setText(trade.getBorrowerItem().getMerchant());
 
@@ -83,7 +89,7 @@ public class TradeRequestActivity extends ActionBarActivity {
 
 
 
-        if (trade.getStatus().equals(Trade.COMPLETED) || trade.getStatus().equals(Trade.COMPLETED)){
+        if (trade.getStatus().equals(Trade.COMPLETED) || trade.getStatus().equals(Trade.DECLINED)){
             acceptTradeButton.setVisibility(View.INVISIBLE);
             declineTradeButton.setVisibility(View.INVISIBLE);
             counterTradeButton.setVisibility(View.INVISIBLE);
@@ -95,10 +101,19 @@ public class TradeRequestActivity extends ActionBarActivity {
 
         }
 
+
         if (owner.getUsername().equals(trade.getOwner())) {
             acceptTradeButton.setVisibility(View.INVISIBLE);
             counterTradeButton.setVisibility(View.INVISIBLE);
         }
+        if (owner.getUsername().equals(trade.getOwner()) && trade.getStatus().equals(Trade.IN_PROGRESS)) {
+            declineTradeButton.setText("Cancel Trade");
+            tradeStatus = Trade.DECLINED;
+        }if (owner.getUsername().equals(trade.getOwner()) && trade.getStatus().equals(Trade.ACCEPTED)) {
+            declineTradeButton.setText("Mark As Complete");
+            tradeStatus = Trade.COMPLETED;
+        }
+
 
         acceptTradeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +128,7 @@ public class TradeRequestActivity extends ActionBarActivity {
         declineTradeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Thread thread = new updateThread(tradeId);
+                Thread thread = new updateThread(tradeId, tradeStatus);
                 thread.start();
 
             }
@@ -124,7 +139,7 @@ public class TradeRequestActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TradeRequestActivity.this, CreateTradeOfferActivity.class);
                 intent.putExtra("TRADE_OWNER", trade.getBorrower());
-                intent.putExtra("TRADE_BORROWER_ITEM", trade.getOwnerItem());
+                intent.putExtra("TRADE_BORROWER_ITEM", trade.getBorrowerItem());
                 startActivityForResult(intent, 2);
 
             }
@@ -183,10 +198,12 @@ public class TradeRequestActivity extends ActionBarActivity {
 
     class updateThread extends Thread {
         private String tradeId;
+        private String tradeStatus;
 
 
-        public updateThread(String tradeId) {
+        public updateThread(String tradeId, String tradeStatus) {
             this.tradeId = tradeId;
+            this.tradeStatus = tradeStatus;
         }
 
         @Override
@@ -194,8 +211,8 @@ public class TradeRequestActivity extends ActionBarActivity {
             User owner = esUserManager.getUser(trade.getOwner());
             User borrower = esUserManager.getUser(trade.getBorrower());
 
-            owner.getTradesList().get(tradeId).setStatus(Trade.DECLINED);
-            borrower.getTradesList().get(tradeId).setStatus(Trade.DECLINED);
+            owner.getTradesList().get(tradeId).setStatus(tradeStatus);
+            borrower.getTradesList().get(tradeId).setStatus(tradeStatus);
 
             userRegistrationController.editUserTradeList(owner.getUsername(), owner.getTradesList());
             userRegistrationController.editUserTradeList(borrower.getUsername(), borrower.getTradesList());

@@ -151,6 +151,7 @@ public class ItemActivity extends Activity {
         // receive owner's inventory for cloning friend's items into it
         if ((getItemState() == BROWSER_STATE) || (getItemState() == FRIEND_STATE)) {
             ownerUsername = intent.getStringExtra(EXTRA_USERNAME);
+            System.out.println(ownerUsername);
             ownerInv = urc.getUser(ownerUsername).getInv(); // owner's inventory
         }
 

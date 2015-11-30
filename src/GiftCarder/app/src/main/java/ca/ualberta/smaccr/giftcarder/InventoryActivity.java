@@ -17,6 +17,7 @@ package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -46,6 +47,8 @@ public class InventoryActivity extends Activity {
     private Inventory ownerInv;
     protected Inventory inv;
 
+    private Inventory selectedItems;
+
     public Inventory getOwnerInv() {
         return ownerInv;
     }
@@ -62,13 +65,15 @@ public class InventoryActivity extends Activity {
         ListView inventorylistID = (ListView) findViewById(R.id.friendInventoryListViewID);
         TextView tvUsername = (TextView) findViewById(R.id.tvUsernameInventory);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         UserRegistrationController urc = new UserRegistrationController();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
         // User user = urc.getUser(username);
         friendUsername = intent.getStringExtra("FRIENDUSERNAME");
         Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
         //Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
+
+        selectedItems = new Inventory();
 
         if (username != null) {
             ownerInv = urc.getUser(username).getInv();
@@ -83,6 +88,7 @@ public class InventoryActivity extends Activity {
                 setOwnerInv(user.getInv());
 
             } catch (NullPointerException e) {
+                inv = ownerInv;
                 Log.e("1", "nulllllllllll");
             }
             updateInvList(inv);
@@ -91,18 +97,33 @@ public class InventoryActivity extends Activity {
             inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (getIntent().getBooleanExtra("PICKING_ITEMS", false)) {
+                        System.out.println("PICKING ITEMS");
+                        TextView textView = (TextView) view.findViewById(R.id.invListTitleTextView);
+                        if (selectedItems.getInvList().contains(inv.getGiftCard(position))) {
+                            selectedItems.removeGiftCard(inv.getGiftCard(position));
+                            textView.setTextColor(Color.BLACK);
+                        }else {
+                            selectedItems.addGiftCard(inv.getGiftCard(position));
+                            textView.setTextColor(Color.GREEN);
+                        }
+                        Intent intent = new Intent();
+                        intent.putExtra("SELECTED_ITEMS", selectedItems);
+                        setResult(RESULT_OK, intent);
+                    }else {
 
-                    // Switch to item activity and send inventory and position of gift card to change
-                    Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
-                    // intent.putExtra("GiftCard", inv.getInvList().get(position));
-                    intent.putExtra("position", position);
-                    intent.putExtra("inventory", inv);
-                    intent.putExtra("ownerInventory", ownerInv);
-                    intent.putExtra("gc", inv.getGiftCard(position));
-                    intent.putExtra(EXTRA_USERNAME, username);
-                    intent.putExtra(EXTRA_STATE, FRIEND_ITEM_STATE); // view item
-                    // startActivity(intent);
-                    startActivityForResult(intent, 1);
+                        // Switch to item activity and send inventory and position of gift card to change
+                        Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
+                        // intent.putExtra("GiftCard", inv.getInvList().get(position));
+                        intent.putExtra("position", position);
+                        intent.putExtra("inventory", inv);
+                        intent.putExtra("ownerInventory", ownerInv);
+                        intent.putExtra("gc", inv.getGiftCard(position));
+                        intent.putExtra(EXTRA_USERNAME, username);
+                        intent.putExtra(EXTRA_STATE, FRIEND_ITEM_STATE); // view item
+                        // startActivity(intent);
+                        startActivityForResult(intent, 1);
+                    }
                 }
             });
 

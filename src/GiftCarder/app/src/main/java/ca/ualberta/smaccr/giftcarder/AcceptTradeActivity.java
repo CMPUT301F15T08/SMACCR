@@ -91,7 +91,7 @@ public class AcceptTradeActivity extends ActionBarActivity {
                 email.setType("message/rfc822");
 
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));
-                Thread thread = new updateThread(trade.getOwner(), trade.getBorrower(), trade.getOwnerItem(), trade.getBorrowerItem());
+                Thread thread = new updateThread(trade.getOwner(), trade.getBorrower(), trade.getOwnerItems(), trade.getBorrowerItem());
                 thread.start();
             }
         });
@@ -125,14 +125,14 @@ public class AcceptTradeActivity extends ActionBarActivity {
     class updateThread extends Thread {
         private String ownerUsername;
         private String borrowerUsername;
-        private GiftCard ownerItem;
+        private Inventory ownerItems;
         private GiftCard borrowerItem;
 
 
-        public updateThread(String ownerUsername, String borrowerUsername, GiftCard ownerItem, GiftCard borrowerItem) {
+        public updateThread(String ownerUsername, String borrowerUsername, Inventory ownerItems, GiftCard borrowerItem) {
             this.ownerUsername = ownerUsername;
             this.borrowerUsername = borrowerUsername;
-            this.ownerItem = ownerItem;
+            this.ownerItems = ownerItems;
             this.borrowerItem = borrowerItem;
         }
 
@@ -143,13 +143,15 @@ public class AcceptTradeActivity extends ActionBarActivity {
 
             trade.getBorrowerItem().setBelongsTo(owner.getUsername());
             owner.getInv().addGiftCard(trade.getBorrowerItem());
-            owner.getInv().removeGiftCard(trade.getOwnerItem());
-            trade.getOwnerItem().setBelongsTo(borrower.getUsername());
-            borrower.getInv().addGiftCard(trade.getOwnerItem());
+            for (GiftCard card: ownerItems.getInvList()){
+                owner.getInv().removeGiftCard(card);
+                card.setBelongsTo(borrower.getUsername());
+                borrower.getInv().addGiftCard(card);
+            }
             borrower.getInv().removeGiftCard(trade.getBorrowerItem());
 
-            owner.getTradesList().get(tradeId).setStatus(Trade.COMPLETED);
-            borrower.getTradesList().get(tradeId).setStatus(Trade.COMPLETED);
+            owner.getTradesList().get(tradeId).setStatus(Trade.ACCEPTED);
+            borrower.getTradesList().get(tradeId).setStatus(Trade.ACCEPTED);
 
             userRegistrationController.editUserInventory(owner.getUsername(), owner.getInv());
             userRegistrationController.editUserInventory(borrower.getUsername(), borrower.getInv());

@@ -41,19 +41,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Select item you want to trade"
-            android:id="@+id/textView2"
-            android:layout_column="0" />
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/activity_create_trade_offer_spinner"
-            android:layout_column="1" />
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="Select your items"
+            android:id="@+id/activity_create_trade_offer_selectItemsButton"
+            android:layout_column="0"
+            android:layout_weight="1" />
 
     </TableRow>
 

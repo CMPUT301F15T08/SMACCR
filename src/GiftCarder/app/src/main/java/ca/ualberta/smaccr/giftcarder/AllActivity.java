@@ -604,6 +604,9 @@ public class AllActivity extends AppCompatActivity {
                 updateInvList(inv);
             }
         }
+        else if (requestCode == 5) {
+
+        }
         tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
     }
 
@@ -655,8 +658,8 @@ public class AllActivity extends AppCompatActivity {
     public void browseClick(MenuItem v) {
         Intent intent = new Intent(this, BrowseActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
-        startActivity(intent);
-        //startActivityForResult(intent, 2);
+        //startActivity(intent);
+        startActivityForResult(intent, 5);
     }
 
     /**settingsClick

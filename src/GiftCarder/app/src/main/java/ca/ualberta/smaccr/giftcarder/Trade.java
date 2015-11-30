@@ -23,21 +23,22 @@ public class Trade {
     public static String DECLINED = "Trade Declined";
     public static String IN_PROGRESS = "Trade In Progress";
     public static String COMPLETED = "Trade Completed";
+    public static String ACCEPTED = "Trade Accepted";
 
     private String owner;
     private String borrower;
     private String ownerEmail;
     private String borrowerEmail;
-    private GiftCard ownerItem;
+    private Inventory ownerItems;
     private GiftCard borrowerItem;
     private String status;
 
-    public Trade(String owner, String borrower, String ownerEmail, String borrowerEmail, GiftCard ownerItem, GiftCard borrowerItem) {
+    public Trade(String owner, String borrower, String ownerEmail, String borrowerEmail, Inventory ownerItems, GiftCard borrowerItem) {
         this.owner = owner;
         this.borrower = borrower;
         this.ownerEmail = ownerEmail;
         this.borrowerEmail = borrowerEmail;
-        this.ownerItem = ownerItem;
+        this.ownerItems = ownerItems;
         this.borrowerItem = borrowerItem;
         this.status = Trade.IN_PROGRESS;
     }
@@ -58,12 +59,12 @@ public class Trade {
         this.borrower = borrower;
     }
 
-    public GiftCard getOwnerItem() {
-        return ownerItem;
+    public Inventory getOwnerItems() {
+        return ownerItems;
     }
 
-    public void setOwnerItem(GiftCard ownerItem) {
-        this.ownerItem = ownerItem;
+    public void setOwnerItems(Inventory ownerItem) {
+        this.ownerItems = ownerItems;
     }
 
     public GiftCard getBorrowerItem() {
