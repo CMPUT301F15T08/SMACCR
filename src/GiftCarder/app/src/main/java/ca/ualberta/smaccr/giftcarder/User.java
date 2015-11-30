@@ -1,3 +1,5 @@
+/* User model class */
+
 package ca.ualberta.smaccr.giftcarder;
 
 import java.util.ArrayList;
@@ -13,55 +15,30 @@ public class User {
     private String email;
     private Inventory inv;
     private FriendList fl;
-    private List<FriendRequest> friendRequests;
     private TradesList tradesList;
 
 
-
     /**
-     * Constructor: on creation of User, creates new inventory
+     * Constructor: on creation of User, creates new inventory and new FriendList
      */
-
     public User() {
         this.inv = new Inventory();
         this.fl = new FriendList();
-        this.friendRequests = new ArrayList<FriendRequest>();
         this.tradesList = new TradesList();
     }
 
-
     /**
-     * Sets username
-     * @param  username String
+     * Checks to see if user owns gift card
+     * @param giftCard GiftCard
+     * @return boolean
      */
-    public void setUsername(String username) {
-
-        this.username = username;
+    public boolean isOwner(GiftCard giftCard){
+        ArrayList<GiftCard> giftCards = getInv().getInvList();
+        return giftCards.contains(giftCard);
     }
 
-    /**
-     * Sets city
-     * @param  city String
-     */
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    /**
-     * Sets phone
-     * @param  phone String
-     */
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    /**
-     * Sets email
-     * @param  email String
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    // Getters
+    /********************************************************************************************/
 
     /**
      * Gets username
@@ -102,34 +79,70 @@ public class User {
     public Inventory getInv() {return this.inv;}
 
     /**
+     * Gets FriendList
+     * @return FriendList
+     */
+    public FriendList getFl() {return fl;}
+
+    /**
+     * Gets TradesList
+     * @return TradesList
+     */
+    public TradesList getTradesList() {
+        return tradesList;
+    }
+
+
+    // Setters
+    /********************************************************************************************/
+
+    /**
+     * Sets username
+     * @param  username String
+     */
+    public void setUsername(String username) {
+
+        this.username = username;
+    }
+
+    /**
+     * Sets city
+     * @param  city String
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    /**
+     * Sets phone
+     * @param  phone String
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    /**
+     * Sets email
+     * @param  email String
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
      * Sets inventory
      * @param inventory Inventory of user's items
      */
     public void setInv(Inventory inventory) {this.inv = inventory;}
 
-    public FriendList getFl() {return fl;}
-
-    public void setFl(FriendList fl) {this.fl = fl;}
-
     /**
-     * Add friend request
-     * @param  sender String, reciever String
+     * Sets FriendList
+     * @param fl FriendList
      */
-    public void addFriendRequest(String sender, String reciever) {
-        FriendRequest request = new FriendRequest(sender, reciever);
-        this.friendRequests.add(request);
-    }
-
-    public boolean isOwner(GiftCard giftCard){
-        ArrayList<GiftCard> giftCards = getInv().getInvList();
-        return giftCards.contains(giftCard);
-    }
-
-    public TradesList getTradesList() {
-        return tradesList;
-    }
+    public void setFl(FriendList fl) {this.fl = fl;}
 
     public void setTradesList(TradesList tradesList) {
         this.tradesList = tradesList;
     }
+
 }

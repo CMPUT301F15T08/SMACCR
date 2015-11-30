@@ -15,3 +15,12 @@ https://www.iconfinder.com/icons/290142/business_card_cash_credit_money_payment_
 
 # Creative Commons (Attribution 3.0 Unported)
 W3 Creative Lab, http://creativecommons.org/licenses/by/3.0/legalcode
+
+# Set text to textview
+Hussain Akhtar Wahid 'Ghouri',http://stackoverflow.com/questions/19452269/android-set-text-to-textview, retrieved 11/02/15
+
+# Make button invisible
+MSI, http://stackoverflow.com/questions/4127725/how-can-i-remove-a-button-or-make-it-invisible-in-android, retrieved 11/02/15
+
+# Disable edittext
+Sean Android, http://stackoverflow.com/questions/4297763/disabling-of-edittext-in-android, retrieved 11/02/15
