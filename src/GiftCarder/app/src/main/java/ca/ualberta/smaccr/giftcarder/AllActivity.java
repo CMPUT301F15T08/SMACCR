@@ -605,6 +605,7 @@ public class AllActivity extends AppCompatActivity {
                 tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
             }
             if (resultCode == RESULT_OK) {
+                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
                 inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
                 updateInvList(inv);
             }
