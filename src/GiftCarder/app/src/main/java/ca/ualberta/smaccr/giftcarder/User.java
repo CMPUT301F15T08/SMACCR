@@ -13,10 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 and limitations under the License.
 */
 
-
-/* User model class holds user personal information, inventory of gift cards, list of friends, and
- * list of trades
- */
 package ca.ualberta.smaccr.giftcarder;
 
 import java.util.ArrayList;
@@ -25,6 +21,10 @@ import java.util.Map.Entry;
 
 /**
  * Created by Carin on 10/25/2015.
+ */
+
+/* User model class holds user personal information, inventory of gift cards, list of friends, and
+ * list of trades
  */
 public class User {
     private String username;
