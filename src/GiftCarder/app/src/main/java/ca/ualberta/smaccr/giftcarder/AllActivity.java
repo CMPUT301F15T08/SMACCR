@@ -106,7 +106,6 @@ public class AllActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
         //###########################################################################################################################
         // Only modify part of user
@@ -129,7 +128,6 @@ public class AllActivity extends AppCompatActivity {
         // FriendList class type
         fl = user.getFl();
 
-        //Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
 
         //###########################################################################################################################
 
@@ -161,8 +159,6 @@ public class AllActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 final int pos = position;
-
-                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder deletedialog = new AlertDialog.Builder(AllActivity.this);
                 deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -248,6 +244,13 @@ public class AllActivity extends AppCompatActivity {
         updateUserOnServer();
 
         //##########################################################################################
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+
+        MainActivity.saveCacheInFile(this);
     }
 
     @Override
@@ -394,7 +397,6 @@ public class AllActivity extends AppCompatActivity {
             // add user to friend list and update server
             fl.addNewFriend(potentialFriendUser.getUsername());
             updateFriendsList(fl);
-            Toast.makeText(getApplicationContext(),  "Friend Request sent to , [added to friendlist for now]", Toast.LENGTH_SHORT).show();
 
             //!!!!!!!!!!!!!
             // add friend to userList singleton
@@ -583,22 +585,6 @@ public class AllActivity extends AppCompatActivity {
 
     // END OF SWITCHING TO OTHER ACTIVITIES
     //###############################################################################################################
-    public void saveCacheInFile() {
 
-        myCache.updateUser(user);
-        String FILENAME = "GiftCarderCache.sav";
 
-        try {
-            FileOutputStream fos = openFileOutput(FILENAME, 0);
-            OutputStreamWriter osw = new OutputStreamWriter(fos);
-            Gson gson = new Gson();
-            gson.toJson(myCache, osw);
-            osw.flush();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

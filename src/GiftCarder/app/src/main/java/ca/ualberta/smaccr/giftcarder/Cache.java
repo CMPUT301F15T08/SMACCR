@@ -5,10 +5,8 @@ display order based on date
  */
 
 import android.app.Activity;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -53,6 +51,10 @@ public class Cache {
             userList = new UserList();
         }
         return userList;
+    }
+
+    public void setFriends(ArrayList<User> friends) {
+        Cache.friends = friends;
     }
 
     public User getOwner() {
@@ -241,10 +243,9 @@ public class Cache {
             throw new IndexOutOfBoundsException();
         }
 
-        if (results == null) browseAll();
+        browseAll();
 
         if (cat == 0) {
-            browseAll();
             return;
         }
 
@@ -325,13 +326,19 @@ public class Cache {
             getFriends().add(temp);
         }
 
+
     }
 
-    public void updateUser(User me){
-        owner = me;
+    public void updateUser(){
+        UserList userList = UserRegistrationController.getUserList();
+        owner = userList.getUser(getOwner().getUsername());
     }
 
-    /*public User getOwner(GiftCard giftCard){
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+/*public User getOwner(GiftCard giftCard){
         User potOwner;
         Iterator<User> iterator = getFriends().iterator();
         while (iterator.hasNext()){
@@ -348,6 +355,8 @@ public class Cache {
     //Richards evil code below
 
     private Activity parentActivity;
+
+
 
     private Runnable doFinishAdd = new Runnable() {
         public void run() {

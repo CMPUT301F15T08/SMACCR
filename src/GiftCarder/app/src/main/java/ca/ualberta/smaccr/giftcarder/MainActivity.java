@@ -12,7 +12,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 
 public class MainActivity extends Activity {
 
@@ -21,7 +31,7 @@ public class MainActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
 
     Inventory inv;
-    String username;
+    //String username;
 
     private ESUserManager userManager;
 
@@ -86,14 +96,7 @@ public class MainActivity extends Activity {
             myCache = new Cache(this, username);
             myCache.updateFriends();
         }else {
-            try {
-                myCache = GsonCache.loadCacheFromFile(this);//if not connected load old.
-                if(myCache == null){
-
-                }
-            } catch (FileNotFoundException e) {
-                myCache = new Cache(this, username);// if no old make new
-            }
+            loadCacheFromFile(this);//if not connected load old.
         }
 
     }
@@ -129,32 +132,20 @@ public class MainActivity extends Activity {
 
             initCache(username);
             if (myCache == null){
-                Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Cache save error", Toast.LENGTH_LONG).show();
             }else {
 
                 User owner = myCache.getOwner();
                 if (owner.getUsername().equalsIgnoreCase(username)) {
                     urc.addUser(owner);
-                    Intent intent = new Intent(this, InventoryActivity.class);
+                    Intent intent = new Intent(this, AllActivity.class);
                     intent.putExtra(EXTRA_USERNAME, username);
                     startActivity(intent);
                 } else {
                     Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
                 }
             }
- /*           try {
-                Cache myCache = GsonCache.loadCacheFromFile(this);//if not connected load old
-                if(myCache==null){
-                    Log.e("login Error", "myCache==null");
-                }
 
-            } catch (FileNotFoundException e) {
-                Toast.makeText(this, "No Internet and No File found", Toast.LENGTH_SHORT).show();
-            }
-    catch (NullPointerException e){
-        Log.e("Login error", "NullPointerException");
-        Toast.makeText(this, "NullPointerException", Toast.LENGTH_SHORT).show();
-    }*/
 
         } else {
             if (Validation.hasText(etUsername)) {
@@ -192,6 +183,14 @@ public class MainActivity extends Activity {
 
         //If the user exist then we start "all activity", and he gets added to singleton, he is only user in the singleton right now
         if (user != null) {
+            try{
+                getCache().setOwner(user);
+            }catch (ExceptionInInitializerError e){
+                myCache = new Cache(this, user.getUsername());
+                myCache.setOwner(user);
+            }
+            saveCacheInFile(this);
+
             Toast.makeText(this, user.getUsername(), Toast.LENGTH_LONG).show();
             urc.addUser(user);
             String usernameFromServer = user.getUsername();
@@ -203,4 +202,44 @@ public class MainActivity extends Activity {
         }
 
     }
+
+    public void loadCacheFromFile(Activity activity){
+        String FILENAME = "GiftCarderCache.sav";
+
+        try {
+            FileInputStream fis = openFileInput(FILENAME);
+            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+            Gson gsom = new Gson();
+            // following line based on https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html
+            Type cacheType = new TypeToken<CacheStore>() {}.getType();
+            CacheStore cacheStore = gsom.fromJson(in, cacheType);
+            this.myCache = cacheStore.getCache(this);
+
+        } catch (FileNotFoundException e) {
+            myCache = new Cache(this, user.getUsername());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void saveCacheInFile(Context context) {
+        String FILENAME = "GiftCarderCache.sav";
+
+        try {
+            CacheStore cacheStore = new CacheStore(myCache);
+            FileOutputStream fos = context.openFileOutput(FILENAME, 0);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            Gson gson = new Gson();
+            gson.toJson(cacheStore, osw);
+            osw.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
