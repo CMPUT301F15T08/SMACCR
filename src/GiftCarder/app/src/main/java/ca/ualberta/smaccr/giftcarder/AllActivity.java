@@ -277,11 +277,9 @@ public class AllActivity extends AppCompatActivity {
 
         // noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
-            // Pass the  inventory to settings, so settings activity will send it back to main to update the inventory in singleton
-            Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
-            intent1.putExtra(EXTRA_USERNAME, username);
-            startActivity(intent1);
+            Intent intent = new Intent(AllActivity.this, SettingsActivity.class);
+            intent.putExtra(EXTRA_USERNAME, username);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -584,7 +582,7 @@ public class AllActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // This is for when you return from an activity, passing back data
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
+        if (requestCode == 1) { // from user's inventory items
             if (resultCode == RESULT_OK) {
                 inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
                 updateInvList(inv);
@@ -593,6 +591,9 @@ public class AllActivity extends AppCompatActivity {
             }
         }if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
+                inv = (Inventory) data.getSerializableExtra("ClonedInventory");
+                updateInvList(inv);
+                updateUserOnServer();
                 tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
             }
         }
@@ -661,7 +662,7 @@ public class AllActivity extends AppCompatActivity {
     public void browseClick(MenuItem v) {
         Intent intent = new Intent(this, BrowseActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
-        startActivityForResult(intent, 2);
+        startActivityForResult(intent, 3);
     }
 
     /**settingsClick
@@ -669,12 +670,14 @@ public class AllActivity extends AppCompatActivity {
      * @param v
      */
     public void settingsClick(MenuItem v){
-        Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
-        intent1.putExtra(EXTRA_USERNAME, username);
-        startActivityForResult(intent1, 3);
+        Intent intent = new Intent(AllActivity.this, SettingsActivity.class);
+        intent.putExtra(EXTRA_USERNAME, username);
+        startActivityForResult(intent, 1);
     }
 
+
     // END OF SWITCHING TO OTHER ACTIVITIES
+
     //###############################################################################################################
 
 }

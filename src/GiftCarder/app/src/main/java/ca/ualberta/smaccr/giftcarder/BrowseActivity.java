@@ -121,6 +121,7 @@ public class BrowseActivity extends AllActivity {
             }
         });
 
+        /*
         // Long click to delete listener
         browseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -146,6 +147,7 @@ public class BrowseActivity extends AllActivity {
                 return true;
             }
         });
+        */
     }
 
 

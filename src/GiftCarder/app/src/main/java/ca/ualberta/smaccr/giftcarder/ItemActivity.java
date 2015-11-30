@@ -329,7 +329,7 @@ public class ItemActivity extends Activity {
             inv.getInvList().remove(position);
         }
         */
-        if (itemState != BROWSER_STATE) {
+        if ((itemState != BROWSER_STATE) && (itemState != FRIEND_STATE)) {
             Intent intent = new Intent();
 
             if (itemState == ADD_STATE) {
@@ -437,10 +437,11 @@ public class ItemActivity extends Activity {
                 }
                 */
 
-                Intent intent = new Intent();
                 ownerInv = ic.cloneItem(gc, ownerInv, ownerUsername);
-                intent.putExtra("ModifiedInventory", ownerInv);
-                setResult(RESULT_OK, intent);
+                Intent returnIntent = new Intent();
+
+                returnIntent.putExtra("ClonedInventory", ownerInv);
+                setResult(RESULT_OK, returnIntent);
 
                 Toast.makeText(getApplicationContext(), "Check inventory to view clone",
                         Toast.LENGTH_LONG).show();

@@ -112,7 +112,7 @@ public class InventoryActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        setResult(RESULT_OK);
+        //setResult(RESULT_OK);
         finish();
     }
 
@@ -173,10 +173,10 @@ public class InventoryActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                ownerInv = (Inventory) data.getSerializableExtra("ModifiedInventory");
-                Intent intent = new Intent();
-                intent.putExtra("ModifiedInventory", ownerInv);
-                setResult(RESULT_OK, intent);
+                ownerInv = (Inventory) data.getSerializableExtra("ClonedInventory");
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("ClonedInventory", ownerInv);
+                setResult(RESULT_OK, returnIntent);
 
             }
         }
