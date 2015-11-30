@@ -151,7 +151,8 @@ public class AllActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String selectedFriend = (String) friendsListView.getItemAtPosition(position);
+                //String selectedFriend = (String) friendsListView.getItemAtPosition(position);
+                String selectedFriend = (String)fl.getFriendList().get(position);
 
                 Intent intent = new Intent(AllActivity.this, InventoryActivity.class);
                 intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
@@ -480,30 +481,44 @@ public class AllActivity extends AppCompatActivity {
      */
     public void updateFriendsList(FriendList fl) {
 
-        urc.editUserFriendList(username, fl);
 
-        myCache.updateFriends();
+        //myCache.updateFriends();
         int topTrades = 0;
         int topTraderIndex = -1;
 
 
+        ArrayList<String> fl2 = new ArrayList<String>(fl.getFriendList());
 
+        //Find out who as top trades
         for (int i=0; i<fl.getFriendList().size();i++){
             if (topTrades < (myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount())){
                 topTrades = myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount();
                 topTraderIndex = i;
             }
-        }
 
+
+        }
+        //Show top trader with *Top trader* marker
         if (topTraderIndex>-1){
-
-            fl.getFriendList().set(topTraderIndex, fl.getFriendList().get(topTraderIndex) + " *TOP TRADER*");
+            fl2.set(topTraderIndex, fl2.get(topTraderIndex) + " *TOP TRADER*");
+            //fl.getFriendList().set(topTraderIndex, fl.getFriendList().get(topTraderIndex) + " *TOP TRADER*");
         }
-        ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl.getFriendList());
 
+
+        ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl2);
 
         ListView friendsListView = (ListView) findViewById(R.id.friendListView);
         friendsListView.setAdapter(displayAdapter1);
+        urc.editUserFriendList(username, fl);
+
+
+        /*
+        Old one with no top trader
+        ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl.getFriendList());
+        ListView friendsListView = (ListView) findViewById(R.id.friendListView);
+        friendsListView.setAdapter(displayAdapter1);
+        urc.editUserFriendList(username, fl);
+        */
 
     }
 

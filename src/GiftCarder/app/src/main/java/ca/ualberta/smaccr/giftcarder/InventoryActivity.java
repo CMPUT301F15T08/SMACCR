@@ -67,6 +67,7 @@ public class InventoryActivity extends Activity {
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
         // User user = urc.getUser(username);
         friendUsername = intent.getStringExtra("FRIENDUSERNAME");
+        Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
         //Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
 
         if (username != null) {
