@@ -204,7 +204,59 @@ public class UserRegistrationController {
             user.setEmail(email);
 
             getUserList().editUser(userIndex, user);
+
+            ulc = new UserListController(userList);
+            Thread thread = new UpdateThread(user);
+            thread.start();
         }
+    }
+
+    // Deletes user on server, and write back new modified user
+    class UpdateThread extends Thread {
+        private User userthread;
+        // UserRegistrationController uc= new UserRegistrationController();
+
+        public UpdateThread(User user) {
+            this.userthread = user;
+        }
+
+        @Override
+        public void run() {
+            // delete from server
+            ulc.deleteUser(userthread.getUsername());
+            // delete from userlist
+            // uc.getUserList().deleteUser(user);
+
+            // Add the new one back
+            ulc.addUser(userthread);
+            // uc.getUserList().addUser(user);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Edits user in UserList taking User as parameter
+     *
+     * @param       username String
+     */
+    public void editUser(String username, User editedUser) {
+        int userIndex = returnUserPosition(username);
+
+        // if user index is valid
+        if (userIndex != -1) {
+            getUserList().editUser(userIndex, editedUser);
+        }
+
+        ulc = new UserListController(userList);
+        Thread thread = new UpdateThread(editedUser);
+        thread.start();
     }
 
     /**

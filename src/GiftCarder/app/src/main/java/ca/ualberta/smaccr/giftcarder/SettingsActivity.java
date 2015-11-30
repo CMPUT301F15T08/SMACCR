@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,15 +40,24 @@ public class SettingsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        final UserRegistrationController urc = new UserRegistrationController();
         Intent intent = getIntent();
         username = intent.getStringExtra(AllActivity.EXTRA_USERNAME);
 
         TextView tvLoggedInAs = (TextView) findViewById(R.id.loggedInAsTextView);
+        CheckBox checkBox = ( CheckBox ) findViewById( R.id.downloadCheckBox );
+
         tvLoggedInAs.setText("Logged in as: " + username);
 
-        // Disable no-downloads option
-        CheckBox checkbox = (CheckBox) findViewById(R.id.downloadCheckBox);
-        checkbox.setEnabled(false);
+        // Update user when checkbox is changed
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                User editedUser = urc.getUser(username);
+                editedUser.setDownloadsEnabled(isChecked);
+                urc.editUser(username, editedUser);
+            }
+        });
+
     }
 
     @Override

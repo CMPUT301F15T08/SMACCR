@@ -33,6 +33,7 @@ public class User {
     private FriendList fl;
     private TradesList tradesList;
     private int tradeCount;
+    private boolean downloadsEnabled;
 
     /**
      * Constructor: on creation of User, creates new inventory and new FriendList
@@ -42,6 +43,7 @@ public class User {
         this.fl = new FriendList();
         this.tradesList = new TradesList();
         this.tradeCount = 0;
+        this.downloadsEnabled = true;
     }
 
     /**
@@ -52,6 +54,14 @@ public class User {
     public boolean isOwner(GiftCard giftCard){
         ArrayList<GiftCard> giftCards = getInv().getInvList();
         return giftCards.contains(giftCard);
+    }
+
+    /**
+     * Checks to see if user has enabled downloads
+     * @return boolean
+     */
+    public boolean isDownloadsEnabled() {
+        return this.downloadsEnabled;
     }
 
     // Getters
@@ -165,5 +175,13 @@ public class User {
      */
     public void setTradesList(TradesList tradesList) {
         this.tradesList = tradesList;
+    }
+
+    /**
+     * Sets downloadsEnabled boolean
+     * @param  downloadsEnabled Boolean
+     */
+    public void setDownloadsEnabled(Boolean downloadsEnabled) {
+        this.downloadsEnabled = downloadsEnabled;
     }
 }
