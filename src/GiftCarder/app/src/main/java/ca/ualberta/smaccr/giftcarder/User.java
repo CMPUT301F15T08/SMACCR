@@ -34,6 +34,8 @@ public class User {
     private Inventory inv;
     private FriendList fl;
     private TradesList tradesList;
+    private int tradeCount;
+    private boolean downloadsEnabled;
 
     /**
      * Constructor: on creation of User, creates new inventory
