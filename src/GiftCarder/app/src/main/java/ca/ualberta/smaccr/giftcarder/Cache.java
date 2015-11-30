@@ -257,10 +257,9 @@ public class Cache {
             throw new IndexOutOfBoundsException();
         }
 
-        if (results == null) browseAll();
+        browseAll();
 
         if (cat == 0) {
-            browseAll();
             return;
         }
 
