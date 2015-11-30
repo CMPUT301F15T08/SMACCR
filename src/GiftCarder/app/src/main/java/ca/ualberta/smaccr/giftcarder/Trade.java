@@ -26,13 +26,17 @@ public class Trade {
 
     private String owner;
     private String borrower;
+    private String ownerEmail;
+    private String borrowerEmail;
     private GiftCard ownerItem;
     private GiftCard borrowerItem;
     private String status;
 
-    public Trade(String owner, String borrower, GiftCard ownerItem, GiftCard borrowerItem) {
+    public Trade(String owner, String borrower, String ownerEmail, String borrowerEmail, GiftCard ownerItem, GiftCard borrowerItem) {
         this.owner = owner;
         this.borrower = borrower;
+        this.ownerEmail = ownerEmail;
+        this.borrowerEmail = borrowerEmail;
         this.ownerItem = ownerItem;
         this.borrowerItem = borrowerItem;
         this.status = Trade.IN_PROGRESS;
@@ -78,6 +82,21 @@ public class Trade {
         this.status = status;
     }
 
+    public String getBorrowerEmail() {
+        return borrowerEmail;
+    }
+
+    public void setBorrowerEmail(String borrowerEmail) {
+        this.borrowerEmail = borrowerEmail;
+    }
+
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    public void setOwnerEmail(String borrowerEmail) {
+        this.ownerEmail = borrowerEmail;
+    }
 
 
 }
