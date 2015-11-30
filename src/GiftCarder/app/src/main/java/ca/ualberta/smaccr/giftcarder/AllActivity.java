@@ -159,7 +159,7 @@ public class AllActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra("FRIENDUSERNAME", selectedFriend);
 
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -589,6 +589,7 @@ public class AllActivity extends AppCompatActivity {
                 inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
                 updateInvList(inv);
                 updateUserOnServer();
+                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
             }
         }if (requestCode == 2) {
             if (resultCode == RESULT_OK) {

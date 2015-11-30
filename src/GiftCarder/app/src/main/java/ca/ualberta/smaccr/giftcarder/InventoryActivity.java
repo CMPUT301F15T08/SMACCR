@@ -98,6 +98,7 @@ public class InventoryActivity extends Activity {
                     intent.putExtra("position", position);
                     intent.putExtra("inventory", inv);
                     intent.putExtra("ownerInventory", ownerInv);
+                    intent.putExtra("gc", inv.getGiftCard(position));
                     intent.putExtra(EXTRA_USERNAME, username);
                     intent.putExtra(EXTRA_STATE, BROWSER_ITEM_STATE); // view item
                     // startActivity(intent);
@@ -107,6 +108,12 @@ public class InventoryActivity extends Activity {
 
             updateInvList(inv);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override
