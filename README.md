@@ -1,5 +1,7 @@
 # SMACCR!
 
+[GiftCarder Promotional Video](https://youtu.be/83bPgUdViIE)
+
 License
 =======
    GiftCarder: Android App for trading gift cards

@@ -20,6 +20,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -484,23 +485,76 @@ public class AllActivity extends AppCompatActivity {
         int topTrades = 0;
         int topTraderIndex = -1;
 
+        int pasttopTrades = -1;
+
 
         ArrayList<String> fl2 = new ArrayList<String>(fl.getFriendList());
 
+        ArrayList<Integer> tietradesindex = new ArrayList<Integer>();
+
         //Find out who as top trades
         for (int i=0; i<fl.getFriendList().size();i++){
-            if (topTrades < (myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount())){
-                topTrades = myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount();
+
+            int currentCount = myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount();
+
+            if (topTrades <= currentCount) {
+                topTrades = currentCount;
+
+                tietradesindex.add(i);
+
+                if (pasttopTrades < topTrades) {
+                    //There is new record so now reset it
+                    tietradesindex.clear();
+                    tietradesindex.add(i);
+
+                    pasttopTrades = topTrades;
+                }
+
+                //pasttopTrades = topTrades;
+
                 topTraderIndex = i;
             }
 
 
         }
+
+        Log.d("String", tietradesindex.toString());
+
+
+        for (int i = 0; i<tietradesindex.size(); i++){
+            fl2.set(tietradesindex.get(i), fl2.get(tietradesindex.get(i)) + " *TOP TRADER*");
+        }
+
+
+
+        /*
+        for (int i=0; i<fl.getFriendList().size();i++){
+
+            Integer currentCount =
+
+            if (topTrades <= (myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount())){
+                topTrades = myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount();
+
+                topTraderIndex = i;
+
+                //tietradesindex.add(i);
+            }
         //Show top trader with *Top trader* marker
         if (topTraderIndex>-1){
             fl2.set(topTraderIndex, fl2.get(topTraderIndex) + " *TOP TRADER*");
             //fl.getFriendList().set(topTraderIndex, fl.getFriendList().get(topTraderIndex) + " *TOP TRADER*");
         }
+        */
+
+
+        //Once if there is one greater than the rest then set it to Top trader!
+        /*
+        if (tietradesindex.size() == 1) {
+            topTraderIndex = tietradesindex.get(0);
+            fl2.set(topTraderIndex, fl2.get(topTraderIndex) + " *TOP TRADER*");
+        }
+        */
+
 
 
         ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl2);
