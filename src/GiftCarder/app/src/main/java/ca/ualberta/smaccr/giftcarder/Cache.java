@@ -20,7 +20,9 @@ display order based on date
  */
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -343,9 +345,9 @@ public class Cache {
             }
 
             if (!urc.getUser(username).isDownloadsEnabled()) {
-                ArrayList<GiftCard> inv = urc.getUser(username).getInv().getInvList();
+                ArrayList<GiftCard> inv = temp.getInv().getInvList();
                 for (GiftCard giftCard: inv) {
-                    giftCard.setItemImagesList(null);
+                    giftCard.setItemImagesList(new ArrayList<ItemImage>());
                 }
             }
 

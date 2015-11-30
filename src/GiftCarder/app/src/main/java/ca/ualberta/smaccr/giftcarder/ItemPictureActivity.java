@@ -68,6 +68,7 @@ public class ItemPictureActivity extends ActionBarActivity {
     private ItemGridViewAdapter gridAdapter;
     int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     int itemState;
+    String username;
 
     ItemPictureController ipc = new ItemPictureController();
     protected ArrayList<ItemImage> itemImagesList = null;
@@ -77,6 +78,7 @@ public class ItemPictureActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_picture);
         Button addPhotoButton = (Button) findViewById(R.id.addPhotoButton);
+        Button downloadPhotosButton = (Button) findViewById(R.id.downloadPhotoButton);
 
         // receive itemImagesList
         Intent intent = getIntent();
@@ -111,6 +113,7 @@ public class ItemPictureActivity extends ActionBarActivity {
         // if in Add or Edit state
         if ((itemState == ADD_STATE) || (itemState == EDIT_STATE)) {
             addPhotoButton.setVisibility(View.VISIBLE);
+            downloadPhotosButton.setVisibility(View.GONE);
 
             Toast.makeText(getApplicationContext(), "Tip: Long click to delete image", Toast.LENGTH_LONG).show();
 
@@ -141,8 +144,23 @@ public class ItemPictureActivity extends ActionBarActivity {
             });
 
         // If in Owner state
+        } else if (itemState == OWNER_STATE){
+            addPhotoButton.setVisibility(View.GONE);
+            downloadPhotosButton.setVisibility(View.GONE);
         } else {
-            addPhotoButton.setVisibility(View.GONE);;
+            UserRegistrationController urc = new UserRegistrationController();
+            username = intent.getStringExtra(ItemActivity.EXTRA_USERNAME);
+
+            addPhotoButton.setVisibility(View.GONE);
+            downloadPhotosButton.setVisibility(View.VISIBLE);
+
+            if (imagesAttached)
+
+            if (urc.getUser(username).isDownloadsEnabled()) {
+
+            }
+
+
         }
     }
     /*

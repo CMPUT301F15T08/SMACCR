@@ -34,18 +34,24 @@ public class SettingsActivity extends ActionBarActivity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     private String username;
     private Inventory inv;
+    private Boolean downloadsEnabled;
+    private UserRegistrationController urc;
+    private Cache cache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        final UserRegistrationController urc = new UserRegistrationController();
+        urc = new UserRegistrationController();
         Intent intent = getIntent();
         username = intent.getStringExtra(AllActivity.EXTRA_USERNAME);
+        downloadsEnabled = urc.getUser(username).isDownloadsEnabled();
+        cache = new Cache(this, username);
 
         TextView tvLoggedInAs = (TextView) findViewById(R.id.loggedInAsTextView);
-        CheckBox checkBox = ( CheckBox ) findViewById( R.id.downloadCheckBox );
+        final CheckBox checkBox = ( CheckBox ) findViewById( R.id.downloadCheckBox );
+        checkBox.setChecked(downloadsEnabled);
 
         tvLoggedInAs.setText("Logged in as: " + username);
 
@@ -56,6 +62,16 @@ public class SettingsActivity extends ActionBarActivity {
                 User editedUser = urc.getUser(username);
                 editedUser.setDownloadsEnabled(isChecked);
                 urc.editUser(username, editedUser);
+
+                // only update if checking the box
+                if (isChecked) {
+                    if (!NetworkChecker.isNetworkAvailable(SettingsActivity.this)) {
+                        Toast.makeText(SettingsActivity.this, "Warning: no internet connection currently.", Toast.LENGTH_LONG).show();
+                    } else {
+                        cache.updateFriends();
+                    }
+
+                }
             }
         });
 
@@ -99,7 +115,7 @@ public class SettingsActivity extends ActionBarActivity {
     /**
      * Called when user presses Edit Profile button.
      * <p>
-     * Brings up UserProfileActivity
+     * Syncs everything with server
      *
      * @param  view  view that is clicked
      */
@@ -109,8 +125,24 @@ public class SettingsActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    /**
+     * Called when user presses Sync All button
+     * <p>
+     * Brings up UserProfileActivity
+     *
+     * @param  view  view that is clicked
+     */
     public void onSyncAllButtonClick(View view) {
-        Toast.makeText(this, "Sync All Button clicked", Toast.LENGTH_LONG).show();
+        if (!NetworkChecker.isNetworkAvailable(SettingsActivity.this)) {
+            Toast.makeText(SettingsActivity.this, "No internet connection.  Please check your internet connection and try again.", Toast.LENGTH_LONG).show();
+        } else {
+            cache.updateFriends();
+
+            // update user's inventory
+            User editedUser = urc.getUser(username);
+            urc.editUser(username, editedUser);
+            Toast.makeText(SettingsActivity.this, "Sync complete.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

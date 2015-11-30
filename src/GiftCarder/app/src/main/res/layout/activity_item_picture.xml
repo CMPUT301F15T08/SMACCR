@@ -19,7 +19,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_photo"
+        android:text="@string/downloadImages"
         android:id="@+id/downloadPhotoButton"
         android:background="@drawable/button_green"
         android:onClick="addPhoto"
