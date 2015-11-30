@@ -482,7 +482,7 @@ public class AllActivity extends AppCompatActivity {
     public void updateFriendsList(FriendList fl) {
 
 
-        //myCache.updateFriends();
+        myCache.updateFriends();
         int topTrades = 0;
         int topTraderIndex = -1;
 

@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -68,9 +69,10 @@ public class AcceptTradeActivity extends ActionBarActivity {
             tradeId = extras.getString("TRADE_ID");
             currentUsername = extras.getString("CURRENT_USERNAME");
             currentUser = userRegistrationController.getUser(currentUsername);
-            myCache = new Cache(this, currentUsername);
-            myCache.updateFriends();
+            //myCache = new Cache(this, currentUsername);
+            //myCache.updateFriends();
             trade = currentUser.getTradesList().get(tradeId);
+            //Toast.makeText(AcceptTradeActivity.this, myCache.getUser(trade.getBorrower()).getEmail(), Toast.LENGTH_SHORT).show();
 
 
         }
@@ -78,7 +80,7 @@ public class AcceptTradeActivity extends ActionBarActivity {
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String to = userRegistrationController.getUser(currentUsername).getEmail() + ";" + myCache.getUser(trade.getBorrower()).getEmail();
+                /*String to = userRegistrationController.getUser(currentUsername).getEmail() + ";" + myCache.getUser(currentUsername).getEmail();
                 String subject = "New Trade Offer";
                 String message = emailText.getText().toString();
 
@@ -90,7 +92,7 @@ public class AcceptTradeActivity extends ActionBarActivity {
                 //need this to prompts email client only
                 email.setType("message/rfc822");
 
-                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));*/
                 Thread thread = new updateThread(trade.getOwner(), trade.getBorrower(), trade.getOwnerItem(), trade.getBorrowerItem());
                 thread.start();
             }
