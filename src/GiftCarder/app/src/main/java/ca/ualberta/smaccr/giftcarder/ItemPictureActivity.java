@@ -68,6 +68,7 @@ public class ItemPictureActivity extends ActionBarActivity {
     private ItemGridViewAdapter gridAdapter;
     int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     int itemState;
+    String username;
 
     ItemPictureController ipc = new ItemPictureController();
     protected ArrayList<ItemImage> itemImagesList = null;
@@ -141,8 +142,12 @@ public class ItemPictureActivity extends ActionBarActivity {
             });
 
         // If in Owner state
+        } else if (itemState == OWNER_STATE){
+            addPhotoButton.setVisibility(View.GONE);
         } else {
-            addPhotoButton.setVisibility(View.GONE);;
+            UserRegistrationController urc = new UserRegistrationController();
+            username = intent.getStringExtra(ItemActivity.EXTRA_USERNAME);
+            addPhotoButton.setVisibility(View.GONE);
         }
     }
     /*

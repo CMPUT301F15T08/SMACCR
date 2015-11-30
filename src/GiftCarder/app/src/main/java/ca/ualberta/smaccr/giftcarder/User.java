@@ -13,10 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 and limitations under the License.
 */
 
-
-/* User model class holds user personal information, inventory of gift cards, list of friends, and
- * list of trades
- */
 package ca.ualberta.smaccr.giftcarder;
 
 import java.util.ArrayList;
@@ -26,6 +22,10 @@ import java.util.Map.Entry;
 /**
  * Created by Carin on 10/25/2015.
  */
+
+/* User model class holds user personal information, inventory of gift cards, list of friends, and
+ * list of trades
+ */
 public class User {
     private String username;
     private String city;
@@ -34,14 +34,18 @@ public class User {
     private Inventory inv;
     private FriendList fl;
     private TradesList tradesList;
+    private int tradeCount;
+    private boolean downloadsEnabled;
 
     /**
-     * Constructor: on creation of User, creates new inventory and new FriendList
+     * Constructor: on creation of User, creates new inventory
      */
     public User() {
         this.inv = new Inventory();
         this.fl = new FriendList();
         this.tradesList = new TradesList();
+        this.tradeCount = 0;
+        this.downloadsEnabled = true;
     }
 
     /**
@@ -53,6 +57,14 @@ public class User {
     public boolean isOwner(GiftCard giftCard) {
         ArrayList<GiftCard> giftCards = getInv().getInvList();
         return giftCards.contains(giftCard);
+    }
+
+    /**
+     * Checks to see if user has enabled downloads
+     * @return boolean
+     */
+    public boolean isDownloadsEnabled() {
+        return this.downloadsEnabled;
     }
 
     // Getters
@@ -207,5 +219,13 @@ public class User {
             }
         }
         return successfulTradesCount;
+    }
+
+    /**
+     * Sets downloadsEnabled boolean
+     * @param  downloadsEnabled Boolean
+     */
+    public void setDownloadsEnabled(Boolean downloadsEnabled) {
+        this.downloadsEnabled = downloadsEnabled;
     }
 }

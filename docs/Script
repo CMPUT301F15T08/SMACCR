@@ -1,4 +1,9 @@
 *Don't make trade from Friends
+<<<<<<< HEAD
+
+*Create thecon21, Edmonton, 555-555-5555, sheremet@ualberta.ca
+*Create GeorgeClooney, Los Angeles, 555-555-5555, theCloon@gmail.com
+=======
 *Make sure computer phone has emulated settings up
 *Internet?
 *Log spencer on phone
@@ -11,11 +16,20 @@
 *adding spencer friends and sow top trader moves
 
 
+>>>>>>> ffbe0606af81b8405b44010667433d39b35692f3
 
 #Hi Welcome to our presentation of GiftCarder, the android app where you can trade GiftCards
 
 #Here we have brand new giftcarder user who is now referenced to as a giftcarder
 
+<<<<<<< HEAD
+#Lets register him!
+
+Login: splant (FAILS)
+
+Register:
+blank fields (FAILS)
+=======
 #Lets try to log in, Oh wait we haven't registered yet
 
 Login: splant (FAILS)
@@ -27,17 +41,28 @@ blank fields (FAILS)
 
 #Oh giftcarder makes sure you enter correct information.
 
+>>>>>>> ffbe0606af81b8405b44010667433d39b35692f3
 Username: splant
 City: Edmonton
 Phone: 555-555-5555 
 Email: splant@gmail.com
 
 
+<<<<<<< HEAD
+#Oh giftcarder makes sure you enter correct information.
+#Oh wait his information has changed so now lets edit his profile.
+#Oh oops we enter the wrong phone number, correct that
+=======
 #Oh wait his information has changed suddenly so now lets edit his profile. we go to settings, edit profile
+>>>>>>> ffbe0606af81b8405b44010667433d39b35692f3
 
 Edit Profile:
 Edit (invalid phone) (FAILS)
 
+<<<<<<< HEAD
+#Now lets go add some giftcards
+#Oh Awesome!
+=======
 #Oh oops we enter the wrong phone number, let's correct that
 
 Correct phone number and continue
@@ -45,6 +70,7 @@ Correct phone number and continue
 #Now lets go add some giftcards
 #Oh Awesome!
 #Note say stuff
+>>>>>>> ffbe0606af81b8405b44010667433d39b35692f3
 
 Add Item:
 Value: $50
@@ -55,9 +81,12 @@ Quality: Good
 Comments: Awesome!!!
 Make Public
 
+<<<<<<< HEAD
+=======
 #Now lets make a second one with 
 #Cool lets now add some photos of our giftcard 
 
+>>>>>>> ffbe0606af81b8405b44010667433d39b35692f3
 Add Item 2:
 Value: $100
 Merchant: LaSenza
@@ -70,6 +99,15 @@ Add 2 photos
 
 #Now lets checkout our Inventory details! 
 
+<<<<<<< HEAD
+Inventory Details - scroll down, then back
+
+#Now lets go to Borrows, oh wait we don't have any friends yet to trade with!
+
+Go to Borrow - show that no friend yet so no giftcards
+
+#Nows lets to friends tab and add some friends
+=======
 Inventory Details - Slowly scroll down, then back
 
 #Now lets go to Browse!
@@ -125,5 +163,6 @@ Go to friends tab
 #Oh look Connor is the new top trader in spencer's friendlist now, clony was the previous top trader
 
 Offine activity?
+>>>>>>> ffbe0606af81b8405b44010667433d39b35692f3
 
 

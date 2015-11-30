@@ -354,6 +354,7 @@ public class ItemActivity extends Activity {
         Intent intent = new Intent(ItemActivity.this, ItemPictureActivity.class);
         intent.putExtra(EXTRA_PICTURES, itemImagesList);
         intent.putExtra(EXTRA_STATE, itemState);
+        intent.putExtra(EXTRA_USERNAME, ownerUsername);
         startActivityForResult(intent, 1);
 
         //Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

@@ -42,7 +42,10 @@ public class GiftCard implements Serializable {
     private Boolean shared = Boolean.TRUE;  // 1 = shared, 0 = not shared
     private Date lastModified = new Date(); // For sorting the order in which items display
 
-    private ArrayList<ItemImage> itemImagesList;
+    // Image Handling
+    private ArrayList<ItemImage> itemImagesList;  // list of images
+    private Boolean imagesAttached;
+
 
     public String getBelongsTo() {
         return belongsTo;
@@ -56,6 +59,7 @@ public class GiftCard implements Serializable {
 
     public GiftCard() {
         itemImagesList = new ArrayList<ItemImage>();
+        imagesAttached = false;
     }
 
     public GiftCard(String owner, double value, String merchant, int quantity, int quality, int category, String comments, Boolean shared) {
@@ -233,7 +237,20 @@ public class GiftCard implements Serializable {
         return itemImagesList;
     }
 
+
+    /**
+     * Sets ItemImagesList
+     * @param  itemImagesList ArrayList<ItemImage>
+     */
     public void setItemImagesList(ArrayList<ItemImage> itemImagesList) {
         this.itemImagesList = itemImagesList;
+    }
+
+    /**
+     * Returns if images are attached
+     * @return  imagesAttached Boolean
+     */
+    public Boolean hasImages() {
+        return this.imagesAttached;
     }
 }

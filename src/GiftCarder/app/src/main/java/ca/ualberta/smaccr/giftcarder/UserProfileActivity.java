@@ -136,52 +136,10 @@ public class UserProfileActivity extends Activity {
             urc.editUser(username, etCity, etPhone, etEmail);
             Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
             upc.setViewMode(OWNER_STATE, etCity, etPhone, etEmail, editButton, saveButton);
-            updateUserOnServer();
         }
 
         // invalid input
         else
             Toast.makeText(this, "Form contains error", Toast.LENGTH_LONG).show();
     }
-
-    /**updateUserOnServer
-     *This function updates the entire user on server
-     */
-    public void updateUserOnServer (){
-        ulc = new UserListController(urc.getUserList());
-        Thread thread = new updateThread2(urc.getUser(username));
-        thread.start();
-
-    }
-
-    // Deletes user on server, and write back new modified user
-    class updateThread2 extends Thread {
-        private User userthread;
-        // UserRegistrationController uc= new UserRegistrationController();
-
-        public updateThread2(User user) {
-            this.userthread = user;
-        }
-
-        @Override
-        public void run() {
-            // delete from server
-            ulc.deleteUser(userthread.getUsername());
-            // delete from userlist
-            // uc.getUserList().deleteUser(user);
-
-            // Add the new one back
-            ulc.addUser(userthread);
-            // uc.getUserList().addUser(user);
-
-
-            // Give some time to get updated info
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
 }
