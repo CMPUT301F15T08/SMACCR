@@ -315,10 +315,10 @@ public class Cache {
     }
 
     public void updateFriends() {
-        if (urc==null)Log.e("1------------", "urc is null");
-        if (urc.getUser(username)==null)Log.e("2------------", "urc.getUser(username) is null");
-        if (urc.getUser(username).getFl()==null)Log.e("3------------", "urc.getUser(username).getFl() is null");
-        if (urc.getUser(username).getFl().getFriendList()==null)Log.e("4------------", "urc.getUser(username).getFl().getFriendList() is null");
+
+        if(!NetworkChecker.isNetworkAvailable(parentActivity)){// If internet is not available do not update users from the internet
+            return;
+        }
 
         ArrayList<String> friendsNames = urc.getUser(username).getFl().getFriendList();
         ArrayBlockingQueue<User> queue = new ArrayBlockingQueue<User>(Math.max(friendsNames.size(), 1));
@@ -346,19 +346,6 @@ public class Cache {
 
     }
 
-    /*public User getOwner(GiftCard giftCard){
-        User potOwner;
-        Iterator<User> iterator = getFriends().iterator();
-        while (iterator.hasNext()){
-            potOwner = iterator.next();
-            if (potOwner.isOwner(giftCard)){
-                return potOwner;
-            }
-        }
-
-        Log.e("Cache.getOner error: ", "Could not Find owner");
-        return null;
-    }*/
 
     //Richards evil code below
 
