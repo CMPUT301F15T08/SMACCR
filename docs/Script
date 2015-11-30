@@ -1,0 +1,61 @@
+*Don't make trade from Friends
+
+*Create thecon21, Edmonton, 555-555-5555, sheremet@ualberta.ca
+*Create GeorgeClooney, Los Angeles, 555-555-5555, theCloon@gmail.com
+
+#Hi Welcome to our presentation of GiftCarder, the android app where you can trade GiftCards
+
+#Here we have brand new giftcarder user who is now referenced to as a giftcarder
+
+#Lets register him!
+
+Login: splant (FAILS)
+
+Register:
+blank fields (FAILS)
+Username: splant
+City: Edmonton
+Phone: 555-555-5555 
+Email: splant@gmail.com
+
+
+#Oh giftcarder makes sure you enter correct information.
+#Oh wait his information has changed so now lets edit his profile.
+#Oh oops we enter the wrong phone number, correct that
+
+Edit Profile:
+Edit (invalid phone) (FAILS)
+
+#Now lets go add some giftcards
+#Oh Awesome!
+
+Add Item:
+Value: $50
+Merchant: Steam
+Category: All (ERROR)
+Quantity: 2
+Quality: Good
+Comments: Awesome!!!
+Make Public
+
+Add Item 2:
+Value: $100
+Merchant: LaSenza
+Category: Clothing
+Quantity: 1
+Quality: Excellent
+Comments: 
+Make Private
+Add 2 photos
+
+#Now lets checkout our Inventory details! 
+
+Inventory Details - scroll down, then back
+
+#Now lets go to Borrows, oh wait we don't have any friends yet to trade with!
+
+Go to Borrow - show that no friend yet so no giftcards
+
+#Nows lets to friends tab and add some friends
+
+
