@@ -479,34 +479,32 @@ public class AllActivity extends AppCompatActivity {
      *
      */
     public void updateFriendsList(FriendList fl) {
-/*
+
+        urc.editUserFriendList(username, fl);
+
+        myCache.updateFriends();
         int topTrades = 0;
         int topTraderIndex = -1;
 
-        ArrayList<String> fl2 = fl.getFriendList();
-        String oldUserString;
 
-        for (int i=0; i<fl2.size();i++){
-            if (topTrades < myCache.getUser(fl2.get(i)).getSuccessfulTradesCount()){
-                topTrades = myCache.getUser(fl2.get(i)).getSuccessfulTradesCount();
+
+        for (int i=0; i<fl.getFriendList().size();i++){
+            if (topTrades < (myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount())){
+                topTrades = myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount();
                 topTraderIndex = i;
             }
         }
-        oldUserString = fl2.get(topTraderIndex);
+
         if (topTraderIndex>-1){
-            fl2.set(topTraderIndex, fl2.get(topTraderIndex) + " *TOP TRADER*");
-        }*/
+
+            fl.getFriendList().set(topTraderIndex, fl.getFriendList().get(topTraderIndex) + " *TOP TRADER*");
+        }
         ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl.getFriendList());
 
 
         ListView friendsListView = (ListView) findViewById(R.id.friendListView);
         friendsListView.setAdapter(displayAdapter1);
-/*
-        if (topTraderIndex>-1){
-            fl.getFriendList().set(topTraderIndex, oldUserString);
-        }*/
 
-        urc.editUserFriendList(username, fl);
     }
 
     // END OF updating user here
