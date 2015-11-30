@@ -587,31 +587,24 @@ public class AllActivity extends AppCompatActivity {
                 inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
                 updateInvList(inv);
                 updateUserOnServer();
-                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
             }
-        }if (requestCode == 2) {
+        }else if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
                 inv = (Inventory) data.getSerializableExtra("ClonedInventory");
                 updateInvList(inv);
                 updateUserOnServer();
-                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
             }
         }
-
-        if (requestCode == 3) {
-            if (resultCode == RESULT_OK) {
-                finish();
-            }
-        }if (requestCode == 4) {
+        else if (requestCode == 4) {
             if (resultCode == RESULT_CANCELED){
-                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
+               //
             }
             if (resultCode == RESULT_OK) {
-                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
                 inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
                 updateInvList(inv);
             }
         }
+        tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
     }
 
     // send of server stuff
@@ -662,7 +655,8 @@ public class AllActivity extends AppCompatActivity {
     public void browseClick(MenuItem v) {
         Intent intent = new Intent(this, BrowseActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
-        startActivityForResult(intent, 3);
+        startActivity(intent);
+        //startActivityForResult(intent, 2);
     }
 
     /**settingsClick
@@ -672,7 +666,8 @@ public class AllActivity extends AppCompatActivity {
     public void settingsClick(MenuItem v){
         Intent intent = new Intent(AllActivity.this, SettingsActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
-        startActivityForResult(intent, 1);
+        startActivity(intent);
+        //startActivityForResult(intent, 1);
     }
 
 

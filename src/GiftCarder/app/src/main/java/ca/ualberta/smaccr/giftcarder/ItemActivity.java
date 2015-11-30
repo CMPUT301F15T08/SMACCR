@@ -137,6 +137,7 @@ public class ItemActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
+        UserRegistrationController urc = new UserRegistrationController();
 
 
         // receive inventory, position, and state of gift card
@@ -149,8 +150,8 @@ public class ItemActivity extends Activity {
 
         // receive owner's inventory for cloning friend's items into it
         if ((getItemState() == BROWSER_STATE) || (getItemState() == FRIEND_STATE)) {
-            ownerInv = (Inventory) getIntent().getSerializableExtra("ownerInventory");
             ownerUsername = intent.getStringExtra(EXTRA_USERNAME);
+            ownerInv = urc.getUser(ownerUsername).getInv(); // owner's inventory
         }
 
         // Get references to UI
@@ -436,10 +437,8 @@ public class ItemActivity extends Activity {
                     intent.putExtra("ModifiedInventory", ownerInv);
                 }
                 */
-
                 ownerInv = ic.cloneItem(gc, ownerInv, ownerUsername);
                 Intent returnIntent = new Intent();
-
                 returnIntent.putExtra("ClonedInventory", ownerInv);
                 setResult(RESULT_OK, returnIntent);
 

@@ -117,7 +117,8 @@ public class BrowseActivity extends AllActivity {
                 //intent.putExtra("ownerInventory", inv);
                 intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra(EXTRA_STATE, BROWSER_STATE); // browse item
-                startActivityForResult(intent, 1);
+                startActivity(intent);
+                //startActivityForResult(intent, 1);
             }
         });
 
@@ -257,6 +258,7 @@ public class BrowseActivity extends AllActivity {
 
     }
 
+    /*
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // This is for when you return from an activity, passing back data
         super.onActivityResult(requestCode, resultCode, data);
@@ -264,9 +266,10 @@ public class BrowseActivity extends AllActivity {
             if (resultCode == RESULT_OK) {
                 inv = (Inventory) data.getSerializableExtra("ClonedInventory");
                 Intent intent = new Intent();
-                intent.putExtra("ModifiedInventory", inv);
+                intent.putExtra("ClonedInventory", inv);
                 setResult(RESULT_OK, intent);
             }
         }
     }
+    */
 }

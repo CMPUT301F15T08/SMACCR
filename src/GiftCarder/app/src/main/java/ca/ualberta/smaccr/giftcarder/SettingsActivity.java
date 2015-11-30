@@ -80,8 +80,9 @@ public class SettingsActivity extends ActionBarActivity {
      * @param  view  view that is clicked
      */
     public void onLogoutButtonClick(View view) {
-        setResult(RESULT_OK);
-        finish();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     /**
