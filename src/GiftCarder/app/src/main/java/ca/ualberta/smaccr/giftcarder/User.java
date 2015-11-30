@@ -36,12 +36,14 @@ public class User {
     private TradesList tradesList;
 
     /**
-     * Constructor: on creation of User, creates new inventory and new FriendList
+     * Constructor: on creation of User, creates new inventory
      */
     public User() {
         this.inv = new Inventory();
         this.fl = new FriendList();
         this.tradesList = new TradesList();
+        this.tradeCount = 0;
+        this.downloadsEnabled = true;
     }
 
     /**
@@ -119,6 +121,14 @@ public class User {
      */
     public TradesList getTradesList() {
         return tradesList;
+    }
+
+    /**
+     * Checks to see if user has enabled downloads
+     * @return boolean
+     */
+    public boolean isDownloadsEnabled() {
+        return this.downloadsEnabled;
     }
 
 
@@ -207,5 +217,13 @@ public class User {
             }
         }
         return successfulTradesCount;
+    }
+
+    /**
+     * Sets downloadsEnabled boolean
+     * @param  downloadsEnabled Boolean
+     */
+    public void setDownloadsEnabled(Boolean downloadsEnabled) {
+        this.downloadsEnabled = downloadsEnabled;
     }
 }
