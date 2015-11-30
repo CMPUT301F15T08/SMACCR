@@ -117,7 +117,7 @@ public class AllActivity extends AppCompatActivity {
                 Intent intent = new Intent(AllActivity.this, TradeRequestActivity.class);
                 intent.putExtra("TRADE_ID", Long.toHexString(id));
                 intent.putExtra("CURRENT_USERNAME", getIntent().getStringExtra(MainActivity.EXTRA_USERNAME));
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, 4);
             }
         });
         // Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
@@ -151,7 +151,8 @@ public class AllActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String selectedFriend = (String) friendsListView.getItemAtPosition(position);
+                //String selectedFriend = (String) friendsListView.getItemAtPosition(position);
+                String selectedFriend = (String)fl.getFriendList().get(position);
 
                 Intent intent = new Intent(AllActivity.this, InventoryActivity.class);
                 intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
@@ -479,11 +480,46 @@ public class AllActivity extends AppCompatActivity {
      *
      */
     public void updateFriendsList(FriendList fl) {
+
+
+        myCache.updateFriends();
+        int topTrades = 0;
+        int topTraderIndex = -1;
+
+
+        ArrayList<String> fl2 = new ArrayList<String>(fl.getFriendList());
+
+        //Find out who as top trades
+        for (int i=0; i<fl.getFriendList().size();i++){
+            if (topTrades < (myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount())){
+                topTrades = myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount();
+                topTraderIndex = i;
+            }
+
+
+        }
+        //Show top trader with *Top trader* marker
+        if (topTraderIndex>-1){
+            fl2.set(topTraderIndex, fl2.get(topTraderIndex) + " *TOP TRADER*");
+            //fl.getFriendList().set(topTraderIndex, fl.getFriendList().get(topTraderIndex) + " *TOP TRADER*");
+        }
+
+
+        ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl2);
+
+        ListView friendsListView = (ListView) findViewById(R.id.friendListView);
+        friendsListView.setAdapter(displayAdapter1);
+        urc.editUserFriendList(username, fl);
+
+
+        /*
+        Old one with no top trader
         ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl.getFriendList());
         ListView friendsListView = (ListView) findViewById(R.id.friendListView);
         friendsListView.setAdapter(displayAdapter1);
-
         urc.editUserFriendList(username, fl);
+        */
+
     }
 
     // END OF updating user here
@@ -557,13 +593,21 @@ public class AllActivity extends AppCompatActivity {
         }if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
                 tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
-
             }
         }
 
         if (requestCode == 3) {
             if (resultCode == RESULT_OK) {
                 finish();
+            }
+        }if (requestCode == 4) {
+            if (resultCode == RESULT_CANCELED){
+                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
+            }
+            if (resultCode == RESULT_OK) {
+                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
+                inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
+                updateInvList(inv);
             }
         }
     }
