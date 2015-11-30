@@ -37,5 +37,4 @@ proguard/
 *.iws
 
 # CUSTOM #
-*.svg
 src/GiftCarder/app/src/main/res/layout/list_gc.xml

@@ -1,3 +1,18 @@
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
+
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.AlertDialog;
@@ -99,10 +114,10 @@ public class BrowseActivity extends AllActivity {
                 ///intent.putExtra("USERNAME", username);
                 ///startActivity(intent);
 
-                intent.putExtra("ownerInventory", inv);
+                //intent.putExtra("ownerInventory", inv);
                 intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra(EXTRA_STATE, BROWSER_STATE); // browse item
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -243,9 +258,9 @@ public class BrowseActivity extends AllActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // This is for when you return from an activity, passing back data
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 2) {
+        if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                inv = (Inventory) data.getSerializableExtra("BrowseInventory");
+                inv = (Inventory) data.getSerializableExtra("ClonedInventory");
                 Intent intent = new Intent();
                 intent.putExtra("ModifiedInventory", inv);
                 setResult(RESULT_OK, intent);

@@ -1,4 +1,20 @@
-/* Modified from Nilanchala, retrieved 11/18/15,
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
+
+/* REFERENCES
+ * Modified from Nilanchala, retrieved 11/18/15,
  * http://javatechig.com/android/android-gridview-example-building-image-gallery-in-android
  *
  * Modified from Tejas Jasani, retrieved 11/18/15,
@@ -37,6 +53,7 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/* ItemPictureActivity displays images attached to item and allows owner to add, delete, and view images */
 public class ItemPictureActivity extends ActionBarActivity {
     public final static String EXTRA_STATE = "ca.ualberta.smaccr.giftcarder.STATE";
     public final static String EXTRA_BITMAP_STRING = "ca.ualberta.smaccr.giftcarder.BITMAPSTRING";
@@ -53,7 +70,7 @@ public class ItemPictureActivity extends ActionBarActivity {
     int itemState;
 
     ItemPictureController ipc = new ItemPictureController();
-    protected ArrayList<ItemImage> itemImagesList;
+    protected ArrayList<ItemImage> itemImagesList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,25 +83,30 @@ public class ItemPictureActivity extends ActionBarActivity {
         itemState = (int) getIntent().getIntExtra(EXTRA_STATE, OWNER_STATE);
         itemImagesList = (ArrayList<ItemImage>)intent.getSerializableExtra(EXTRA_PICTURES);
 
-        if (itemImagesList.isEmpty()) {
-            itemImagesList = new ArrayList<ItemImage>();
+        if (itemImagesList != null) {
+
+            // No images in list
+            if (itemImagesList.isEmpty()) {
+                itemImagesList = new ArrayList<ItemImage>();
+            }
+
+            gridView = (GridView) findViewById(R.id.pictureGridView);
+            updateImagesList();
+
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                    ItemImage item = (ItemImage) parent.getItemAtPosition(position);
+                    //Create intent
+                    Intent intent = new Intent(ItemPictureActivity.this, ItemDetailsActivity.class);
+                    intent.putExtra(EXTRA_FEATURED_STRING, item.isFeatured());
+                    intent.putExtra(EXTRA_BITMAP_STRING, item.getBitmapString());
+
+                    //Start details activity
+                    startActivity(intent);
+                }
+            });
         }
 
-        gridView = (GridView) findViewById(R.id.pictureGridView);
-        updateImagesList();
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                ItemImage item = (ItemImage) parent.getItemAtPosition(position);
-                //Create intent
-                Intent intent = new Intent(ItemPictureActivity.this, ItemDetailsActivity.class);
-                intent.putExtra(EXTRA_FEATURED_STRING, item.isFeatured());
-                intent.putExtra(EXTRA_BITMAP_STRING, item.getBitmapString());
-
-                //Start details activity
-                startActivity(intent);
-            }
-        });
 
         // if in Add or Edit state
         if ((itemState == ADD_STATE) || (itemState == EDIT_STATE)) {
@@ -148,6 +170,10 @@ public class ItemPictureActivity extends ActionBarActivity {
     }
     */
 
+    /**
+     * Allows user to access the camera or gallery to retrieve images
+     * @param view View
+     */
     public void addPhoto(View view) {
         final CharSequence[] items = { "Camera", "Choose from Gallery", "Cancel" };
         AlertDialog.Builder builder = new AlertDialog.Builder(ItemPictureActivity.this);
@@ -174,6 +200,13 @@ public class ItemPictureActivity extends ActionBarActivity {
         builder.show();
     }
 
+    /**
+     * Retrieves data from camera or gallery and processes the image
+     * Image is resized until less than 65536 bytes and converted into a string for storage
+     * @param requestCode int
+     * @param resultCode int
+     * @param data Intent (retrieved from camera or gallery)
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -183,6 +216,8 @@ public class ItemPictureActivity extends ActionBarActivity {
 
         if (resultCode == Activity.RESULT_OK) {
             if (data != null) {
+
+                // retrieved from gallery
                 if (requestCode == SELECT_FILE) {
                     Uri uri = data.getData();
 
@@ -193,22 +228,28 @@ public class ItemPictureActivity extends ActionBarActivity {
                     }
 
                 }
+                // retrieved from camera
                 else if (requestCode == REQUEST_CAMERA) {
                     bitmap = (Bitmap) data.getExtras().get("data");
                 }
 
+                // create new itemImage object
                 if (bitmap != null) {
                     itemImage = new ItemImage(ipc.processImageResult(bitmap));
                 }
             }
         }
 
+        // add itemImage to itemImagesList
         if (itemImage != null) {
             itemImagesList.add(itemImage);
             updateImagesList();
         }
     }
 
+    /**
+     * Returns itemImagesList to ItemActivity for saving
+     */
     @Override
     public void onBackPressed() {
         Intent returnIntent = new Intent();
@@ -217,6 +258,9 @@ public class ItemPictureActivity extends ActionBarActivity {
         finish();
     }
 
+    /**
+     * Updates gridAdapter and sets the first image in the list to FEATURED for display
+     */
     public void updateImagesList() {
         // first image gets "FEATURED" caption (first image is the one displayed for the image thumbnail)
         if (!itemImagesList.isEmpty()) {

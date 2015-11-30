@@ -1,3 +1,18 @@
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
+
 package ca.ualberta.smaccr.giftcarder;
 
 import android.content.Intent;
@@ -8,6 +23,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.List;
 
 public class AcceptTradeActivity extends ActionBarActivity {
 
@@ -22,6 +41,7 @@ public class AcceptTradeActivity extends ActionBarActivity {
 
     private Button sendEmailButton;
     private EditText emailText;
+    private ListView inventorylistID;
 
     /**
      +     * onCreate
@@ -36,6 +56,8 @@ public class AcceptTradeActivity extends ActionBarActivity {
 
         sendEmailButton = (Button) findViewById(R.id.activity_accept_trade_sendEmailButton);
         emailText = (EditText) findViewById(R.id.activity_accept_trade_emailText);
+        inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+
 
         userRegistrationController = new UserRegistrationController();
         userListController = new UserListController(userRegistrationController.getUserList());
@@ -46,8 +68,8 @@ public class AcceptTradeActivity extends ActionBarActivity {
             tradeId = extras.getString("TRADE_ID");
             currentUsername = extras.getString("CURRENT_USERNAME");
             currentUser = userRegistrationController.getUser(currentUsername);
-
             trade = currentUser.getTradesList().get(tradeId);
+            Toast.makeText(AcceptTradeActivity.this, trade.getBorrowerEmail() + " " + trade.getOwnerEmail(), Toast.LENGTH_SHORT).show();
 
 
         }
@@ -55,27 +77,27 @@ public class AcceptTradeActivity extends ActionBarActivity {
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Thread thread = new updateThread(trade.getOwner(), trade.getBorrower(), trade.getOwnerItem(), trade.getBorrowerItem());
-                thread.start();
-
-
-                /*String to = "dummy@email.com";
+                String to = trade.getOwnerEmail() + "," + trade.getBorrowerEmail();
+                String [] emailList = to.split(",");
                 String subject = "New Trade Offer";
                 String message = emailText.getText().toString();
 
-                Intent email = new Intent(Intent.ACTION_SEND);
-                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
+                Intent email = new Intent(Intent.ACTION_SEND_MULTIPLE);
+                email.putExtra(Intent.EXTRA_EMAIL, emailList);
                 email.putExtra(Intent.EXTRA_SUBJECT, subject);
                 email.putExtra(Intent.EXTRA_TEXT, message);
 
                 //need this to prompts email client only
                 email.setType("message/rfc822");
 
-                startActivity(Intent.createChooser(email, "Choose an Email client :"));*/
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                Thread thread = new updateThread(trade.getOwner(), trade.getBorrower(), trade.getOwnerItem(), trade.getBorrowerItem());
+                thread.start();
             }
         });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,13 +141,15 @@ public class AcceptTradeActivity extends ActionBarActivity {
             User owner = esUserManager.getUser(ownerUsername);
             User borrower = esUserManager.getUser(borrowerUsername);
 
+            trade.getBorrowerItem().setBelongsTo(owner.getUsername());
             owner.getInv().addGiftCard(trade.getBorrowerItem());
             owner.getInv().removeGiftCard(trade.getOwnerItem());
+            trade.getOwnerItem().setBelongsTo(borrower.getUsername());
             borrower.getInv().addGiftCard(trade.getOwnerItem());
             borrower.getInv().removeGiftCard(trade.getBorrowerItem());
 
-            owner.getTradesList().remove(tradeId);
-            borrower.getTradesList().remove(tradeId);
+            owner.getTradesList().get(tradeId).setStatus(Trade.COMPLETED);
+            borrower.getTradesList().get(tradeId).setStatus(Trade.COMPLETED);
 
             userRegistrationController.editUserInventory(owner.getUsername(), owner.getInv());
             userRegistrationController.editUserInventory(borrower.getUsername(), borrower.getInv());
@@ -138,9 +162,16 @@ public class AcceptTradeActivity extends ActionBarActivity {
             userListController.addUser(owner);
             userListController.addUser(borrower);
 
+
+
+
             // Give some time to get updated info
             try {
                 Thread.sleep(500);
+                Intent intent = new Intent();
+                intent.putExtra("ModifiedInventory", currentUser.getInv());
+                setResult(RESULT_OK, intent);
+                finish();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

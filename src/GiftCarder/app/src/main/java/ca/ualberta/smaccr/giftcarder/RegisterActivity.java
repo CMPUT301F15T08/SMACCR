@@ -1,3 +1,18 @@
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
+
 /* References:
  *
  * Email regular expression:
@@ -19,6 +34,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/* RegisterActivity is responsible for adding the user to the server and to the singleton */
 public class RegisterActivity extends Activity {
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
 
@@ -57,21 +73,27 @@ public class RegisterActivity extends Activity {
 
         UserRegistrationController urc = new UserRegistrationController(this);
 
-        if (urc.validateFields(etUsername, etCity, etPhone, etEmail)) {
-            Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
+        // Try to register user. If no internet, toast message
+        if (!NetworkChecker.isNetworkAvailable(this)) {
+            Toast.makeText(this, "No internet connection.  Please check your internet connection and try again.", Toast.LENGTH_LONG).show();
+        } else {
+            if (urc.validateFields(etUsername, etCity, etPhone, etEmail)) {
+                Toast.makeText(RegisterActivity.this, "Registration successful.", Toast.LENGTH_LONG).show();
 
-            //Add the new user to singleton
-            urc.addUser(etUsername,etCity, etPhone, etEmail);
+                //Add the new user to singleton
+                urc.addUser(etUsername,etCity, etPhone, etEmail);
 
-            //Start "all activity"
-            Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(this, AllActivity.class);
-            String username = etUsername.getText().toString();
-            intent.putExtra(EXTRA_USERNAME, username);
-            startActivity(intent);
+                //Start "all activity"
+                Toast.makeText(getApplicationContext(), "Tip: Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, AllActivity.class);
+                String username = etUsername.getText().toString();
+                intent.putExtra(EXTRA_USERNAME, username);
+                startActivity(intent);
+            } else {
+                Toast.makeText(RegisterActivity.this, "Form contains error", Toast.LENGTH_LONG).show();
+            }
         }
-        else
-            Toast.makeText(RegisterActivity.this, "Form contains error", Toast.LENGTH_LONG).show();
+
     }
 
 }

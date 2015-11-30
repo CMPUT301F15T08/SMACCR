@@ -1,3 +1,18 @@
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
+
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
@@ -16,13 +31,14 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/* InventoryActivity handles viewing of friend's inventories (public items only) */
 public class InventoryActivity extends Activity {
 
     // Constants
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     public final static String EXTRA_STATE= "ca.ualberta.smaccr.giftcarder.STATE";
 
-    public static final int BROWSER_ITEM_STATE = 2; // view other's item
+    public static final int FRIEND_ITEM_STATE = 4; // view other's item
     public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
 
     protected String username;
@@ -49,45 +65,55 @@ public class InventoryActivity extends Activity {
         Intent intent = getIntent();
         UserRegistrationController urc = new UserRegistrationController();
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
-        ownerInv = urc.getUser(username).getInv();
-
         // User user = urc.getUser(username);
         friendUsername = intent.getStringExtra("FRIENDUSERNAME");
         Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
-        Cache cache = new Cache(this, username);
+        //Toast.makeText(getApplicationContext(), friendUsername, Toast.LENGTH_SHORT).show();
 
-        try {
-            User friendUser = cache.getUser(friendUsername);
-            inv = friendUser.getInv();
+        if (username != null) {
+            ownerInv = urc.getUser(username).getInv();
+            Cache cache = new Cache(this, username);
 
-            urc = new UserRegistrationController();
-            User user = urc.getUser(username);
-            setOwnerInv(user.getInv());
+            try {
+                User friendUser = cache.getUser(friendUsername);
+                inv = friendUser.getInv();
 
-        } catch (NullPointerException e) {
-            Log.e("1", "nulllllllllll");
-        }
-        updateInvList(inv);
-        tvUsername.setText(friendUsername);
+                urc = new UserRegistrationController();
+                User user = urc.getUser(username);
+                setOwnerInv(user.getInv());
 
-        inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // Switch to item activity and send inventory and position of gift card to change
-                Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
-                // intent.putExtra("GiftCard", inv.getInvList().get(position));
-                intent.putExtra("position", position);
-                intent.putExtra("inventory", inv);
-                intent.putExtra("ownerInventory", ownerInv);
-                intent.putExtra(EXTRA_USERNAME, username);
-                intent.putExtra(EXTRA_STATE, BROWSER_ITEM_STATE); // view item
-                // startActivity(intent);
-                startActivityForResult(intent, 1);
+            } catch (NullPointerException e) {
+                Log.e("1", "nulllllllllll");
             }
-        });
+            updateInvList(inv);
+            tvUsername.setText(friendUsername);
 
-        updateInvList(inv);
+            inventorylistID.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    // Switch to item activity and send inventory and position of gift card to change
+                    Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
+                    // intent.putExtra("GiftCard", inv.getInvList().get(position));
+                    intent.putExtra("position", position);
+                    intent.putExtra("inventory", inv);
+                    intent.putExtra("ownerInventory", ownerInv);
+                    intent.putExtra("gc", inv.getGiftCard(position));
+                    intent.putExtra(EXTRA_USERNAME, username);
+                    intent.putExtra(EXTRA_STATE, FRIEND_ITEM_STATE); // view item
+                    // startActivity(intent);
+                    startActivityForResult(intent, 1);
+                }
+            });
+
+            updateInvList(inv);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override

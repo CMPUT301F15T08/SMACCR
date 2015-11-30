@@ -1,6 +1,17 @@
-/* UserProfileActivity displays user profile based on retrieved profileState from other activities
- * Allows editing of own user profile
- */
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
 
 /* References:
  * Hussain Akhtar Wahid 'Ghouri',
@@ -27,6 +38,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+/* UserProfileActivity displays user profile based on retrieved profileState from other activities
+ * Allows editing of own user profile
+ */
 public class UserProfileActivity extends Activity {
 
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
@@ -52,6 +67,8 @@ public class UserProfileActivity extends Activity {
     public static final int OWNER_STATE = 0; // view own profile (has edit button)
     public static final int EDIT_STATE = 1; // edit own profile (has save button)
     public static final int FRIEND_STATE = 3; // view friend's profile (no button)
+
+    private UserListController ulc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +110,6 @@ public class UserProfileActivity extends Activity {
             etEmail.setText(user.getEmail());
 
         }
-
         upc.setViewMode(profileState, etCity, etPhone, etEmail, editButton, saveButton);
 
     }
@@ -120,11 +136,52 @@ public class UserProfileActivity extends Activity {
             urc.editUser(username, etCity, etPhone, etEmail);
             Toast.makeText(this, "Changes saved", Toast.LENGTH_LONG).show();
             upc.setViewMode(OWNER_STATE, etCity, etPhone, etEmail, editButton, saveButton);
+            updateUserOnServer();
         }
 
         // invalid input
         else
             Toast.makeText(this, "Form contains error", Toast.LENGTH_LONG).show();
+    }
+
+    /**updateUserOnServer
+     *This function updates the entire user on server
+     */
+    public void updateUserOnServer (){
+        ulc = new UserListController(urc.getUserList());
+        Thread thread = new updateThread2(urc.getUser(username));
+        thread.start();
+
+    }
+
+    // Deletes user on server, and write back new modified user
+    class updateThread2 extends Thread {
+        private User userthread;
+        // UserRegistrationController uc= new UserRegistrationController();
+
+        public updateThread2(User user) {
+            this.userthread = user;
+        }
+
+        @Override
+        public void run() {
+            // delete from server
+            ulc.deleteUser(userthread.getUsername());
+            // delete from userlist
+            // uc.getUserList().deleteUser(user);
+
+            // Add the new one back
+            ulc.addUser(userthread);
+            // uc.getUserList().addUser(user);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

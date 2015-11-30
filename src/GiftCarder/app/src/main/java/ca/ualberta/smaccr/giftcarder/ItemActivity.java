@@ -1,3 +1,18 @@
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
+
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
@@ -20,6 +35,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/* ItemActivity handles viewing and actions regarding the selected item */
 public class ItemActivity extends Activity {
 
 
@@ -113,8 +129,9 @@ public class ItemActivity extends Activity {
     public final static String EXTRA_PICTURES = "ca.ualberta.smaccr.giftcarder.PICTURES";
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
-    public static final int BROWSER_STATE = 2; // view other's item
+    public static final int BROWSER_STATE = 2; // view other's item from Browse
     public static final int EDIT_STATE = 3; // edit item
+    public static final int FRIEND_STATE = 4; // view other's item from Friend
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +148,7 @@ public class ItemActivity extends Activity {
         featuredImage = (ImageView) findViewById(R.id.ID_pictureOfGiftCard);
 
         // receive owner's inventory for cloning friend's items into it
-        if (getItemState() == BROWSER_STATE) {
+        if ((getItemState() == BROWSER_STATE) || (getItemState() == FRIEND_STATE)) {
             ownerInv = (Inventory) getIntent().getSerializableExtra("ownerInventory");
             ownerUsername = intent.getStringExtra(EXTRA_USERNAME);
         }
@@ -393,8 +410,6 @@ public class ItemActivity extends Activity {
         startActivity(intent);
 
 
-
-
         Toast.makeText(this, "Make Offer clicked", Toast.LENGTH_SHORT).show();
     }
 
@@ -409,20 +424,24 @@ public class ItemActivity extends Activity {
         }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent();
-
+                /*
                 // to Browse Activity
                 if (gc != null) {
                     ownerInv = ic.cloneItem(gc, ownerInv, ownerUsername);
-                    intent.putExtra("BrowseInventory", ownerInv);
+                    intent.putExtra("ClonedInventory", ownerInv);
 
                 // to Inventory Activity
                 } else {
                     ownerInv = ic.cloneItem(inv, position, ownerInv, ownerUsername);
                     intent.putExtra("ModifiedInventory", ownerInv);
                 }
+                */
 
+                Intent intent = new Intent();
+                ownerInv = ic.cloneItem(gc, ownerInv, ownerUsername);
+                intent.putExtra("ModifiedInventory", ownerInv);
                 setResult(RESULT_OK, intent);
+
                 Toast.makeText(getApplicationContext(), "Check inventory to view clone",
                         Toast.LENGTH_LONG).show();
                 dialog.dismiss();

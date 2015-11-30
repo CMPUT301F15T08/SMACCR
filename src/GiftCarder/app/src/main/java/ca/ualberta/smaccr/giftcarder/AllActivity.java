@@ -1,3 +1,18 @@
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
+
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.AlertDialog;
@@ -18,6 +33,10 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/*
+All Activity contains all tab for the user's inventory, trade, friend list and all associated functions for that
+ */
+
 public class AllActivity extends AppCompatActivity {
 
     // Constants
@@ -33,6 +52,7 @@ public class AllActivity extends AppCompatActivity {
     private UserListController ulc;
 
     private ListView tradesListView;
+    private ListView inventorylistID;
 
     String username;
     Inventory inv;
@@ -82,7 +102,7 @@ public class AllActivity extends AppCompatActivity {
         tabHost.addTab(tabSpec);
         // END OF Manage the tabs between inventory, friends, and trades pages.
 
-        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+        inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
         tradesListView = (ListView) findViewById(R.id.tradesListView);
         final ListView friendsListView = (ListView) findViewById(R.id.friendListView);
 
@@ -97,7 +117,7 @@ public class AllActivity extends AppCompatActivity {
                 Intent intent = new Intent(AllActivity.this, TradeRequestActivity.class);
                 intent.putExtra("TRADE_ID", Long.toHexString(id));
                 intent.putExtra("CURRENT_USERNAME", getIntent().getStringExtra(MainActivity.EXTRA_USERNAME));
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, 4);
             }
         });
         // Toast.makeText(getApplicationContext(), "Long click to delete gift card or friend", Toast.LENGTH_LONG).show();
@@ -131,14 +151,15 @@ public class AllActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String selectedFriend = (String) friendsListView.getItemAtPosition(position);
+                //String selectedFriend = (String) friendsListView.getItemAtPosition(position);
+                String selectedFriend = (String)fl.getFriendList().get(position);
 
                 Intent intent = new Intent(AllActivity.this, InventoryActivity.class);
                 intent.putExtra(EXTRA_STATE, FRIEND_PROFILE_STATE);
                 intent.putExtra(EXTRA_USERNAME, username);
                 intent.putExtra("FRIENDUSERNAME", selectedFriend);
 
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, 2);
             }
         });
 
@@ -149,7 +170,7 @@ public class AllActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 final int pos = position;
 
-                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder deletedialog = new AlertDialog.Builder(AllActivity.this);
                 deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -203,7 +224,7 @@ public class AllActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 final int pos = position;
 
-                Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Delete " + Integer.toString(position), Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder deletedialog = new AlertDialog.Builder(AllActivity.this);
                 deletedialog.setMessage("Are you sure?").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -308,6 +329,12 @@ public class AllActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
+    //Adding the friend to the current user's friend list and update server
+
+    /**addFriend
+     * tries to add friend from user to friend list
+     * @param view
+     */
     public void addFriend(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -321,10 +348,13 @@ public class AllActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String friendUserName = input.getText().toString();
 
-                // Start thread to search server for friend
-                Thread thread = new GetFriendThread(friendUserName);
-                thread.start();
-
+                if (!NetworkChecker.isNetworkAvailable(AllActivity.this)) {
+                    Toast.makeText(AllActivity.this, "No internet connection.  Please check your internet connection and try again.", Toast.LENGTH_LONG).show();
+                } else {
+                    // Start thread to search server for friend
+                    Thread thread = new GetFriendThread(friendUserName);
+                    thread.start();
+                }
             }
         });
 
@@ -364,6 +394,10 @@ public class AllActivity extends AppCompatActivity {
         }
     };
 
+    /**checkForUserOnServerFriendList
+     *Gives a toast response for whether the user exist on friendlist or not, then add if does exist
+     * @param user
+     */
     public void checkForUserOnServerFriendList(User user){
         UserRegistrationController urc = new UserRegistrationController(this);
 
@@ -429,7 +463,7 @@ public class AllActivity extends AppCompatActivity {
         }
 
         // Display list of names of giftcards
-        ListView inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
+        inventorylistID = (ListView) findViewById(R.id.inventoryListViewID);
         InvListAdapter customAdapter = new InvListAdapter(this, R.layout.adapter_inv_list, tempArray);
         // displayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, GiftCardNames);
         inventorylistID.setAdapter(customAdapter);
@@ -440,12 +474,52 @@ public class AllActivity extends AppCompatActivity {
 
     }
 
+    /**updateFriendsList
+     * Updates the user's friend list on server
+     * @param fl
+     *
+     */
     public void updateFriendsList(FriendList fl) {
+
+
+        myCache.updateFriends();
+        int topTrades = 0;
+        int topTraderIndex = -1;
+
+
+        ArrayList<String> fl2 = new ArrayList<String>(fl.getFriendList());
+
+        //Find out who as top trades
+        for (int i=0; i<fl.getFriendList().size();i++){
+            if (topTrades < (myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount())){
+                topTrades = myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount();
+                topTraderIndex = i;
+            }
+
+
+        }
+        //Show top trader with *Top trader* marker
+        if (topTraderIndex>-1){
+            fl2.set(topTraderIndex, fl2.get(topTraderIndex) + " *TOP TRADER*");
+            //fl.getFriendList().set(topTraderIndex, fl.getFriendList().get(topTraderIndex) + " *TOP TRADER*");
+        }
+
+
+        ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl2);
+
+        ListView friendsListView = (ListView) findViewById(R.id.friendListView);
+        friendsListView.setAdapter(displayAdapter1);
+        urc.editUserFriendList(username, fl);
+
+
+        /*
+        Old one with no top trader
         ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl.getFriendList());
         ListView friendsListView = (ListView) findViewById(R.id.friendListView);
         friendsListView.setAdapter(displayAdapter1);
-
         urc.editUserFriendList(username, fl);
+        */
+
     }
 
     // END OF updating user here
@@ -455,6 +529,10 @@ public class AllActivity extends AppCompatActivity {
 
     //##############################################################################################
     // DANGER THIS SERVER STUFF
+
+    /**updateUserOnServer
+     *This function updates the entire user on server
+     */
     public void updateUserOnServer (){
         ulc = new UserListController(urc.getUserList());
         Thread thread = new updateThread(urc.getUser(username));
@@ -511,11 +589,11 @@ public class AllActivity extends AppCompatActivity {
                 inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
                 updateInvList(inv);
                 updateUserOnServer();
+                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
             }
         }if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
                 tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
-
             }
         }
 
@@ -523,13 +601,20 @@ public class AllActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 finish();
             }
+        }if (requestCode == 4) {
+            if (resultCode == RESULT_CANCELED){
+                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
+            }
+            if (resultCode == RESULT_OK) {
+                tradesListView.setAdapter(new TradesTabAdapter(this, urc.getUser(getIntent().getStringExtra(MainActivity.EXTRA_USERNAME))));
+                inv = (Inventory) data.getSerializableExtra("ModifiedInventory");
+                updateInvList(inv);
+            }
         }
     }
 
     // send of server stuff
     //###############################################################################################################
-
-
 
     @Override
     public void onBackPressed() {
@@ -540,7 +625,7 @@ public class AllActivity extends AppCompatActivity {
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 // http://stackoverflow.com/questions/11643224/how-to-exit-android-application-from-exit-button
-                finish();
+                //finish();
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -559,19 +644,30 @@ public class AllActivity extends AppCompatActivity {
     //###############################################################################################################
     // SWITCHING TO OTHER ACTIVITIES
 
-
+    /**inventoryDetailsButton
+     * Switch to the inv details activity
+     * @param view
+     */
     public void inventoryDetailsButton(View view) {
         Intent intent = new Intent(this, InvDetailsActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
         startActivity(intent);
     }
 
+    /**browseClick
+     * switch to the browsing activity
+     * @param v
+     */
     public void browseClick(MenuItem v) {
         Intent intent = new Intent(this, BrowseActivity.class);
         intent.putExtra(EXTRA_USERNAME, username);
         startActivityForResult(intent, 2);
     }
 
+    /**settingsClick
+     *Switch to the settings activity
+     * @param v
+     */
     public void settingsClick(MenuItem v){
         Intent intent1 = new Intent(AllActivity.this, SettingsActivity.class);
         intent1.putExtra(EXTRA_USERNAME, username);

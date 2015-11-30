@@ -1,3 +1,18 @@
+/*
+GiftCarder: Android App for trading gift cards
+
+Copyright 2015 Carin Li, Ali Mirza, Spencer Plant, Michael Rijlaarsdam, Richard He, Connor Sheremeta
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+and limitations under the License.
+*/
+
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Activity;
@@ -6,11 +21,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/* InvDetailsActivity displays the details of the inventory */
 public class InvDetailsActivity extends Activity {
 
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
     private InvDetailsController idc;
-    private String username;
+    private String username = null;
     private String friendUsername;
     private User user;
 
@@ -38,7 +54,7 @@ public class InvDetailsActivity extends Activity {
             Cache cache = new Cache(this, username);
             User cacheFriend = cache.getUser(friendUsername);
             this.idc = new InvDetailsController(cacheFriend, cacheFriend.getInv(), this);
-        } else {
+        } else if (username != null){
             UserRegistrationController urc = new UserRegistrationController();
             this.user = urc.getUser(username);
             // Create Controller with the user and this activity
@@ -49,7 +65,10 @@ public class InvDetailsActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        idc.updateDetails();
+
+        if ((username != null) || (friendUsername != null)){
+            idc.updateDetails();
+        }
     }
 
     @Override
