@@ -83,7 +83,7 @@ public class TradeRequestActivity extends ActionBarActivity {
 
 
 
-        if (trade.getStatus().equals(Trade.COMPLETED)){
+        if (trade.getStatus().equals(Trade.COMPLETED) || trade.getStatus().equals(Trade.COMPLETED)){
             acceptTradeButton.setVisibility(View.INVISIBLE);
             declineTradeButton.setVisibility(View.INVISIBLE);
             counterTradeButton.setVisibility(View.INVISIBLE);
@@ -123,9 +123,9 @@ public class TradeRequestActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TradeRequestActivity.this, CreateTradeOfferActivity.class);
-                intent.putExtra("TRADE_OWNER", owner.getUsername());
-                intent.putExtra("TRADE_BORROWER_ITEM", trade.getBorrowerItem());
-                startActivity(intent);
+                intent.putExtra("TRADE_OWNER", trade.getBorrower());
+                intent.putExtra("TRADE_BORROWER_ITEM", trade.getOwnerItem());
+                startActivityForResult(intent, 2);
 
             }
         });
@@ -151,6 +151,11 @@ public class TradeRequestActivity extends ActionBarActivity {
                 setResult(RESULT_OK, intent);
                 finish();
 
+            }
+        }
+        if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                finish();
             }
         }
     }
@@ -200,8 +205,8 @@ public class TradeRequestActivity extends ActionBarActivity {
 
             // Give some time to get updated info
             try {
-                Thread.sleep(500);
-                setResult(RESULT_OK);
+                Thread.sleep(200);
+                setResult(RESULT_CANCELED);
                 finish();
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -76,7 +76,7 @@ public class AcceptTradeActivity extends ActionBarActivity {
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*String to = userRegistrationController.getUser(currentUsername).getEmail();
+                String to = userRegistrationController.getUser(currentUsername).getEmail();
                 String subject = "New Trade Offer";
                 String message = emailText.getText().toString();
 
@@ -88,12 +88,14 @@ public class AcceptTradeActivity extends ActionBarActivity {
                 //need this to prompts email client only
                 email.setType("message/rfc822");
 
-                startActivity(Intent.createChooser(email, "Choose an Email client :"));*/
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
                 Thread thread = new updateThread(trade.getOwner(), trade.getBorrower(), trade.getOwnerItem(), trade.getBorrowerItem());
                 thread.start();
             }
         });
     }
+
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
