@@ -21,9 +21,9 @@ import java.util.List;
  */
 public class InvListAdapter extends ArrayAdapter<GiftCard> {
 
-    ArrayList inv;
-    ItemPictureController ipc = new ItemPictureController();
-    LayoutInflater vi;
+    protected ArrayList inv;
+    protected ItemPictureController ipc = new ItemPictureController();
+    protected LayoutInflater vi;
 
     public InvListAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);

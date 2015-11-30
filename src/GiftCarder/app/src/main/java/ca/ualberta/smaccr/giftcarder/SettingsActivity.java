@@ -64,6 +64,9 @@ public class SettingsActivity extends ActionBarActivity {
     public void onLogoutButtonClick(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        UserRegistrationController urc = new UserRegistrationController();
+        User user = urc.getUser(username);
         startActivity(intent);
     }
 

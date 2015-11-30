@@ -1,5 +1,6 @@
 package ca.ualberta.smaccr.giftcarder;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,7 +21,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class BrowseActivity extends AllActivity {
+public class BrowseActivity extends Activity {
 
     public static final int BROWSER_STATE = 2; // view other's item
 
@@ -42,9 +43,6 @@ public class BrowseActivity extends AllActivity {
 
     public ListView getbrowseListID() {
         return browseListID;
-    }
-    public Cache getMyCache() {
-        return myCache;
     }
     public Button getGoButton() {
         return goButton;
@@ -76,9 +74,9 @@ public class BrowseActivity extends AllActivity {
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
         inv = urc.getUser(username).getInv(); // owner's inventory
 
-        if (super.myCache!=null) {
-            myCache = super.myCache;
-        } else {
+        try {
+            myCache = MainActivity.getCache();
+        }catch (ExceptionInInitializerError e){
             myCache = new Cache(BrowseActivity.this, username);
         }
 

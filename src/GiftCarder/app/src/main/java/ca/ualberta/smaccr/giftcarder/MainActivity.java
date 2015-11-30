@@ -6,13 +6,20 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+
 public class MainActivity extends Activity {
+
+    public static Cache myCache = null;
+
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
+
     Inventory inv;
     String username;
 
@@ -67,6 +74,40 @@ public class MainActivity extends Activity {
     }
 
     /**
+     * IF internet Download a new cache
+     * else load a saved one
+     * else make a new one
+     * @param username
+     * @return
+     */
+    public void initCache(String username){
+
+        if(NetworkChecker.isNetworkAvailable(this)) {// if connected downlioad new
+            myCache = new Cache(this, username);
+            myCache.updateFriends();
+        }else {
+            try {
+                myCache = GsonCache.loadCacheFromFile(this);//if not connected load old.
+                if(myCache == null){
+
+                }
+            } catch (FileNotFoundException e) {
+                myCache = new Cache(this, username);// if no old make new
+            }
+        }
+
+    }
+
+    //lazysingleton
+    public static Cache getCache(){
+        if (myCache == null){
+            throw new ExceptionInInitializerError();
+        }
+
+        return myCache;
+    }
+
+    /**
      * Called when user presses Login button.
      * <p>
      * Checks to see if user-entered username is an already registered user.  If not, it prompts
@@ -81,10 +122,40 @@ public class MainActivity extends Activity {
         UserRegistrationController urc = new UserRegistrationController(this);
         userManager = new ESUserManager("");
 
-        // Try to retrieve the data. If no internet, pop up some toast to say so.
 
+
+        // Try to retrieve the data. If no internet, pop up some toast to say so.
         if (!NetworkChecker.isNetworkAvailable(this)) {
-            Toast.makeText(this, "Error retrieving data", Toast.LENGTH_SHORT).show();
+
+            initCache(username);
+            if (myCache == null){
+                Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
+            }else {
+
+                User owner = myCache.getOwner();
+                if (owner.getUsername().equalsIgnoreCase(username)) {
+                    urc.addUser(owner);
+                    Intent intent = new Intent(this, InventoryActivity.class);
+                    intent.putExtra(EXTRA_USERNAME, username);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "User not found. Register a new account.", Toast.LENGTH_LONG).show();
+                }
+            }
+ /*           try {
+                Cache myCache = GsonCache.loadCacheFromFile(this);//if not connected load old
+                if(myCache==null){
+                    Log.e("login Error", "myCache==null");
+                }
+
+            } catch (FileNotFoundException e) {
+                Toast.makeText(this, "No Internet and No File found", Toast.LENGTH_SHORT).show();
+            }
+    catch (NullPointerException e){
+        Log.e("Login error", "NullPointerException");
+        Toast.makeText(this, "NullPointerException", Toast.LENGTH_SHORT).show();
+    }*/
+
         } else {
             if (Validation.hasText(etUsername)) {
                 // Calls GetThreat to check if user is on server

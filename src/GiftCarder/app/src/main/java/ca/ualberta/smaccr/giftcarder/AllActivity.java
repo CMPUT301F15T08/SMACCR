@@ -1,10 +1,12 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +19,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -28,7 +34,7 @@ public class AllActivity extends AppCompatActivity {
 
     public static final int ADD_STATE = 0; // add item
     public static final int OWNER_STATE = 1; // view own item
-    public static final int FRIEND_STATE = 3; // view own item
+    public static final int FRIEND_STATE = 3; // view other item
     //////
     public static final int FRIEND_PROFILE_STATE = 3; // view friend's profile (no button)
 
@@ -41,6 +47,7 @@ public class AllActivity extends AppCompatActivity {
     // friendlist contains an arraylist of strings
     FriendList fl;
     public Cache myCache;
+    private User user;
 
     UserRegistrationController urc;
 
@@ -110,12 +117,15 @@ public class AllActivity extends AppCompatActivity {
         // UserRegistrationController urc = new UserRegistrationController();
 
         Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
-        User user = urc.getUser(username);
+        user = urc.getUser(username);
         inv = user.getInv();
 
-        myCache = new Cache(this, username);
-        myCache.updateFriends();
-
+        try {
+            myCache = MainActivity.getCache();
+        }catch (ExceptionInInitializerError e){
+            myCache = new Cache(this, username);
+            myCache.updateFriends();
+        }
         // FriendList class type
         fl = user.getFl();
 
@@ -573,5 +583,22 @@ public class AllActivity extends AppCompatActivity {
 
     // END OF SWITCHING TO OTHER ACTIVITIES
     //###############################################################################################################
+    public void saveCacheInFile() {
 
+        myCache.updateUser(user);
+        String FILENAME = "GiftCarderCache.sav";
+
+        try {
+            FileOutputStream fos = openFileOutput(FILENAME, 0);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            Gson gson = new Gson();
+            gson.toJson(myCache, osw);
+            osw.flush();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -25,7 +25,7 @@ public class Cache {
     private static ArrayList<User> friends = null;
     private ArrayList<GiftCard> items;// all the items owned by all friends, in order by most recent date
     private ArrayList<GiftCard> results;// results of searches
-    private Date lastUpdated;
+    private User owner;
 
     UserRegistrationController urc;
     String username;
@@ -36,8 +36,6 @@ public class Cache {
         this.username = username;
 
         getFriends();
-        //this.friends = new ArrayList<User>();
-        this.lastUpdated = new Date();
     }
 
     //lazy singleton
@@ -55,6 +53,10 @@ public class Cache {
             userList = new UserList();
         }
         return userList;
+    }
+
+    public User getOwner() {
+        return owner;
     }
 
     public User getUser(String username) {
@@ -199,9 +201,6 @@ public class Cache {
         this.items = giftCards;
     }
 
-    private void updateDate() {
-        this.lastUpdated = new Date();
-    }
 
     /*
     * size
@@ -301,10 +300,6 @@ public class Cache {
     }
 
     public void updateFriends() {
-        if (urc==null)Log.e("1------------", "urc is null");
-        if (urc.getUser(username)==null)Log.e("2------------", "urc.getUser(username) is null");
-        if (urc.getUser(username).getFl()==null)Log.e("3------------", "urc.getUser(username).getFl() is null");
-        if (urc.getUser(username).getFl().getFriendList()==null)Log.e("4------------", "urc.getUser(username).getFl().getFriendList() is null");
 
         ArrayList<String> friendsNames = urc.getUser(username).getFl().getFriendList();
         ArrayBlockingQueue<User> queue = new ArrayBlockingQueue<User>(Math.max(friendsNames.size(), 1));
@@ -332,6 +327,10 @@ public class Cache {
 
     }
 
+    public void updateUser(User me){
+        owner = me;
+    }
+
     /*public User getOwner(GiftCard giftCard){
         User potOwner;
         Iterator<User> iterator = getFriends().iterator();
@@ -348,7 +347,6 @@ public class Cache {
 
     //Richards evil code below
 
-    private UserListController ulc;
     private Activity parentActivity;
 
     private Runnable doFinishAdd = new Runnable() {
