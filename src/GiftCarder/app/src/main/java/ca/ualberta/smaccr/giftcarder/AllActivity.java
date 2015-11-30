@@ -479,11 +479,32 @@ public class AllActivity extends AppCompatActivity {
      *
      */
     public void updateFriendsList(FriendList fl) {
+
+        urc.editUserFriendList(username, fl);
+
+        myCache.updateFriends();
+        int topTrades = 0;
+        int topTraderIndex = -1;
+
+
+
+        for (int i=0; i<fl.getFriendList().size();i++){
+            if (topTrades < (myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount())){
+                topTrades = myCache.getUser(fl.getFriendList().get(i)).getSuccessfulTradesCount();
+                topTraderIndex = i;
+            }
+        }
+
+        if (topTraderIndex>-1){
+
+            fl.getFriendList().set(topTraderIndex, fl.getFriendList().get(topTraderIndex) + " *TOP TRADER*");
+        }
         ArrayAdapter<String> displayAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fl.getFriendList());
+
+
         ListView friendsListView = (ListView) findViewById(R.id.friendListView);
         friendsListView.setAdapter(displayAdapter1);
 
-        urc.editUserFriendList(username, fl);
     }
 
     // END OF updating user here
