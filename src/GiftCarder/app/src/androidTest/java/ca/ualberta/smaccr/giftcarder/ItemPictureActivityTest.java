@@ -13,9 +13,6 @@ import java.util.ArrayList;
  * Created by cbli on 11/29/15.
  */
 public class ItemPictureActivityTest extends ActivityInstrumentationTestCase2 {
-    User user;
-    ESUserManager userManager;
-
 
     public ItemPictureActivityTest() {
         super(ca.ualberta.smaccr.giftcarder.ItemPictureActivity.class);
@@ -157,7 +154,6 @@ public class ItemPictureActivityTest extends ActivityInstrumentationTestCase2 {
 
     /**
      * Tests that friend's images are downloaded if downloads enabled (UC 6.4)
-     * Needs "friend" to exist on server (with a giftcard with images)
      */
     public void testPhotosDownloaded() throws Exception {
         ItemPictureActivity activity = (ItemPictureActivity) getActivity();
@@ -174,7 +170,7 @@ public class ItemPictureActivityTest extends ActivityInstrumentationTestCase2 {
 
         assertTrue(user.isDownloadsEnabled()); // downloads enabled
 
-        // Need users for tests: "user" and "friend"
+        // Need "friend" user on server
         Cache cache = new Cache(activity, "user");
         cache.updateFriends();
         User friendUser = cache.getUser("friend");
@@ -203,7 +199,7 @@ public class ItemPictureActivityTest extends ActivityInstrumentationTestCase2 {
 
         assertFalse(user.isDownloadsEnabled()); // downloads disabled
 
-        // Need users for tests: "user" and "friend"
+        // Need "friend" user on server
         Cache cache = new Cache(activity, "user");
         cache.updateFriends();
         User friendUser = cache.getUser("friend");

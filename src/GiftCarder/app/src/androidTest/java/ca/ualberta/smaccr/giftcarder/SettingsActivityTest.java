@@ -1,8 +1,10 @@
 package ca.ualberta.smaccr.giftcarder;
 
 import android.app.Instrumentation;
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 /**
  * Created by ConnorSheremeta on 2015-11-06.
@@ -56,14 +58,13 @@ public class SettingsActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     /**
-     * Tests disabling downloads checkbox
-     * Needs "friend" to exist on server (with a giftcard with images)
+     * Tests disabling downloads checkbox (UC 6.4)
      */
     public void testPhotosNotDownloaded() throws Exception {
-        SettingsActivity activity = (SettingsActivity) getActivity();
-        ItemPictureController ipc = new ItemPictureController();
+        final SettingsActivity activity = (SettingsActivity) getActivity();
+        final CheckBox checkBox = ( CheckBox ) activity.findViewById(R.id.downloadCheckBox);
 
-        UserRegistrationController urc = new UserRegistrationController();
+        final UserRegistrationController urc = new UserRegistrationController();
         User user = new User();
         user.setUsername("user");
         FriendList fl = new FriendList();
@@ -73,9 +74,19 @@ public class SettingsActivityTest extends ActivityInstrumentationTestCase2 {
         user.setDownloadsEnabled(true); // default: enable downloads
         urc.editUser("user", user);
 
-        assertTrue(user.isDownloadsEnabled()); // downloads enabled
+        // Click checkbox
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                User editedUser = urc.getUser("user");
+                editedUser.setDownloadsEnabled(false);
+                urc.editUser("user", editedUser);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
 
-        // Need users for tests: "user" and "friend"
+        assertFalse(user.isDownloadsEnabled()); // downloads disabled
+
+        // Need "friend" user on server
         Cache cache = new Cache(activity, "user");
         cache.updateFriends();
         User friendUser = cache.getUser("friend");

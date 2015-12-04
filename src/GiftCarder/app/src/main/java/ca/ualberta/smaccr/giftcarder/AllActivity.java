@@ -129,6 +129,7 @@ public class AllActivity extends AppCompatActivity {
         username = intent.getStringExtra(MainActivity.EXTRA_USERNAME);
         // Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT).show();
         // UserRegistrationController urc = new UserRegistrationController();
+
         User user = urc.getUser(username);
         inv = user.getInv();
 
@@ -137,6 +138,7 @@ public class AllActivity extends AppCompatActivity {
 
         // FriendList class type
         fl = user.getFl();
+
 
 
         //###########################################################################################################################

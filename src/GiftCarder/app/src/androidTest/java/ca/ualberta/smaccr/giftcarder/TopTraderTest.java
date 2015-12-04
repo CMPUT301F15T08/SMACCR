@@ -1,13 +1,26 @@
 package ca.ualberta.smaccr.giftcarder;
 
 
+import android.test.ActivityInstrumentationTestCase2;
+
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
 
-public class TopTraderTest extends TestCase {
+public class TopTraderTest extends ActivityInstrumentationTestCase2 {
 
+    public TopTraderTest() {
+        super(ca.ualberta.smaccr.giftcarder.InventoryActivity.class);
+    }
 
+    /**
+     * Tests that InventoryActivity starts
+     */
+    public void testStart() throws Exception {
+        InventoryActivity activity = (InventoryActivity) getActivity();
+    }
+
+    // UC 12.1
     public void testOneTopTrader() throws Exception {
 
         //test users
@@ -58,7 +71,7 @@ public class TopTraderTest extends TestCase {
     }
 
 
-    //test when we have two top traders
+    //test when we have two top traders (UC 12.1)
     public void testTwoTopTrader() throws Exception {
 
         //test users
@@ -109,7 +122,7 @@ public class TopTraderTest extends TestCase {
     }
 
 
-    //All friends have same number of trades, so they are all top trader
+    //All friends have same number of trades, so they are all top trader (UC 12.1)
     public void testNoTopTrader() throws Exception {
 
         //test users
