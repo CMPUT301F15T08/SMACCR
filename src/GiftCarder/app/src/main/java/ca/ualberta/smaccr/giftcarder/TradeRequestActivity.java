@@ -128,6 +128,7 @@ public class TradeRequestActivity extends ActionBarActivity {
         declineTradeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tradeStatus = Trade.DECLINED;
                 Thread thread = new updateThread(tradeId, tradeStatus);
                 thread.start();
 
@@ -137,10 +138,10 @@ public class TradeRequestActivity extends ActionBarActivity {
         counterTradeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(TradeRequestActivity.this, CreateTradeOfferActivity.class);
-                //intent.putExtra("TRADE_OWNER", trade.getBorrower());
-                //intent.putExtra("TRADE_BORROWER_ITEM", trade.getBorrowerItem());
-                //startActivityForResult(intent, 2);
+                Intent intent = new Intent(TradeRequestActivity.this, CreateTradeOfferActivity.class);
+                intent.putExtra("TRADE_OWNER", trade.getOwner());
+                intent.putExtra("TRADE_BORROWER_ITEM", trade.getBorrowerItem());
+                startActivityForResult(intent, 2);
 
             }
         });
