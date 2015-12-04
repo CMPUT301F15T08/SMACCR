@@ -32,7 +32,7 @@ Settings Activity contains the option to log out, and see logged in user's profi
 public class SettingsActivity extends ActionBarActivity {
 
     public final static String EXTRA_USERNAME= "ca.ualberta.smaccr.giftcarder.USERNAME";
-    private String username;
+    private String username = null;
     private Inventory inv;
     private Boolean downloadsEnabled;
     private UserRegistrationController urc;
@@ -46,35 +46,37 @@ public class SettingsActivity extends ActionBarActivity {
         urc = new UserRegistrationController();
         Intent intent = getIntent();
         username = intent.getStringExtra(AllActivity.EXTRA_USERNAME);
-        downloadsEnabled = urc.getUser(username).isDownloadsEnabled();
-        cache = new Cache(this, username);
 
-        TextView tvLoggedInAs = (TextView) findViewById(R.id.loggedInAsTextView);
-        final CheckBox checkBox = ( CheckBox ) findViewById( R.id.downloadCheckBox );
-        checkBox.setChecked(downloadsEnabled);
+        if (username != null) {
+            downloadsEnabled = urc.getUser(username).isDownloadsEnabled();
+            cache = new Cache(this, username);
 
-        tvLoggedInAs.setText("Logged in as: " + username);
+            TextView tvLoggedInAs = (TextView) findViewById(R.id.loggedInAsTextView);
+            final CheckBox checkBox = ( CheckBox ) findViewById( R.id.downloadCheckBox );
+            checkBox.setChecked(downloadsEnabled);
 
-        // Update user when checkbox is changed
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            tvLoggedInAs.setText("Logged in as: " + username);
 
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                User editedUser = urc.getUser(username);
-                editedUser.setDownloadsEnabled(isChecked);
-                urc.editUser(username, editedUser);
+            // Update user when checkbox is changed
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
-                // only update if checking the box
-                if (isChecked) {
-                    if (!NetworkChecker.isNetworkAvailable(SettingsActivity.this)) {
-                        Toast.makeText(SettingsActivity.this, "Warning: no internet connection currently.", Toast.LENGTH_LONG).show();
-                    } else {
-                        cache.updateFriends();
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    User editedUser = urc.getUser(username);
+                    editedUser.setDownloadsEnabled(isChecked);
+                    urc.editUser(username, editedUser);
+
+                    // only update if checking the box
+                    if (isChecked) {
+                        if (!NetworkChecker.isNetworkAvailable(SettingsActivity.this)) {
+                            Toast.makeText(SettingsActivity.this, "Warning: no internet connection currently.", Toast.LENGTH_LONG).show();
+                        } else {
+                            cache.updateFriends();
+                        }
+
                     }
-
                 }
-            }
-        });
-
+            });
+        }
     }
 
     @Override

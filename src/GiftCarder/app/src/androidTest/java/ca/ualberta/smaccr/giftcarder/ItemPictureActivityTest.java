@@ -13,15 +13,17 @@ import java.util.ArrayList;
  * Created by cbli on 11/29/15.
  */
 public class ItemPictureActivityTest extends ActivityInstrumentationTestCase2 {
+    User user;
+    ESUserManager userManager;
+
 
     public ItemPictureActivityTest() {
         super(ca.ualberta.smaccr.giftcarder.ItemPictureActivity.class);
     }
 
     /**
-     * Tests that ItemPictureActivity and ItemDetailsActiviy starts
+     * Tests that ItemPictureActivity starts
      */
-
     public void testStart() throws Exception {
         ItemPictureActivity activity = (ItemPictureActivity) getActivity();
     }
@@ -39,6 +41,7 @@ public class ItemPictureActivityTest extends ActivityInstrumentationTestCase2 {
         String bitmapString = ipc.processImageResult(bitmap);
         assertTrue(ipc.decodeBase64(bitmapString).getByteCount() < 65536);
     }
+
 
     /**
      * Tests that images can be added (UC 6.1)
@@ -61,8 +64,10 @@ public class ItemPictureActivityTest extends ActivityInstrumentationTestCase2 {
 
         ItemImage itemImage = new ItemImage(bitmapString);
         itemImagesList.add(itemImage);
-        assertFalse(itemImagesList.size() == 0);
+        gcard.setItemImagesList(itemImagesList);
+        assertFalse(gcard.getItemImagesList().size() == 0);
     }
+
 
     /**
      * Tests that images can be viewed (UC 6.2)
@@ -72,21 +77,22 @@ public class ItemPictureActivityTest extends ActivityInstrumentationTestCase2 {
         final ItemPictureActivity pictureActivity = (ItemPictureActivity) getActivity();
         ItemPictureController ipc = new ItemPictureController();
 
-        GiftCard gcard  = new GiftCard();
+        final GiftCard gcard  = new GiftCard();
         assertTrue(gcard.getSize() == 0);
 
-        ArrayList<ItemImage> itemImagesList = new ArrayList<ItemImage>();
+        final ArrayList<ItemImage> itemImagesList = new ArrayList<ItemImage>();
         assertTrue(itemImagesList.size() == 0);
 
         // Get image
         Bitmap bitmap = BitmapFactory.decodeResource(pictureActivity.getResources(), R.drawable.itunescard);
         assertTrue(bitmap.getByteCount() > 65536);
-        String bitmapString = ipc.processImageResult(bitmap);
+        final String bitmapString = ipc.processImageResult(bitmap);
         assertTrue(ipc.decodeBase64(bitmapString).getByteCount() < 65536);
 
         final ItemImage itemImage = new ItemImage(bitmapString);
         itemImagesList.add(itemImage);
-        assertFalse(itemImagesList.size() == 0);
+        gcard.setItemImagesList(itemImagesList);
+        assertFalse(gcard.getItemImagesList().size() == 0);
 
 
         // Set up an ActivityMonitor
@@ -97,7 +103,7 @@ public class ItemPictureActivityTest extends ActivityInstrumentationTestCase2 {
         pictureActivity.runOnUiThread(new Runnable() {
             public void run() {
                 Intent intent = new Intent(pictureActivity, ItemDetailsActivity.class);
-                intent.putExtra(EXTRA_BITMAP_STRING, itemImage.getBitmapString());
+                intent.putExtra(EXTRA_BITMAP_STRING, gcard.getItemImagesList().get(0).getBitmapString());
 
                 //Start details activity
                 pictureActivity.startActivity(intent);
@@ -141,11 +147,69 @@ public class ItemPictureActivityTest extends ActivityInstrumentationTestCase2 {
 
         ItemImage itemImage = new ItemImage(bitmapString);
         itemImagesList.add(itemImage);
-        assertFalse(itemImagesList.size() == 0);
+        gcard.setItemImagesList(itemImagesList);
+        assertFalse(gcard.getItemImagesList().size() == 0);
 
         // Remove image
-        itemImagesList.remove(0);
-        assertTrue(itemImagesList.size() == 0);
+        gcard.getItemImagesList().remove(0);
+        assertTrue(gcard.getItemImagesList().size() == 0);
+    }
+
+    /**
+     * Tests that friend's images are downloaded if downloads enabled (UC 6.4)
+     * Needs "friend" to exist on server (with a giftcard with images)
+     */
+    public void testPhotosDownloaded() throws Exception {
+        ItemPictureActivity activity = (ItemPictureActivity) getActivity();
+        ItemPictureController ipc = new ItemPictureController();
+
+        UserRegistrationController urc = new UserRegistrationController();
+        User user = new User();
+        user.setUsername("user");
+        FriendList fl = new FriendList();
+        fl.addNewFriend("friend");
+        user.setFl(fl);
+        user.setDownloadsEnabled(true); // downloads enabled
+        urc.addUser(user);
+
+        assertTrue(user.isDownloadsEnabled()); // downloads enabled
+
+        // Need users for tests: "user" and "friend"
+        Cache cache = new Cache(activity, "user");
+        cache.updateFriends();
+        User friendUser = cache.getUser("friend");
+        Inventory friendInv = friendUser.getInv();
+
+        assertFalse(friendInv.getGiftCard(0).getItemImagesList().size() == 0); // images downloaded
+    }
+
+    /**
+     * Tests that friend's images are not downloaded if downloads disabled (UC 6.4)
+     * Needs "friend" to exist on server (with a giftcard with images)
+     */
+    public void testPhotosNotDownloaded() throws Exception {
+        ItemPictureActivity activity = (ItemPictureActivity) getActivity();
+        ItemPictureController ipc = new ItemPictureController();
+
+        UserRegistrationController urc = new UserRegistrationController();
+        User user = new User();
+        user.setUsername("user");
+        FriendList fl = new FriendList();
+        fl.addNewFriend("friend");
+        user.setFl(fl);
+        urc.addUser(user);
+        user.setDownloadsEnabled(false); // disable downloads
+        urc.editUser("user", user);
+
+        assertFalse(user.isDownloadsEnabled()); // downloads disabled
+
+        // Need users for tests: "user" and "friend"
+        Cache cache = new Cache(activity, "user");
+        cache.updateFriends();
+        User friendUser = cache.getUser("friend");
+        Inventory friendInv = friendUser.getInv();
+
+        assertTrue(friendInv.getGiftCard(0).getItemImagesList().size() == 0); // no images downloaded
     }
 
 }
