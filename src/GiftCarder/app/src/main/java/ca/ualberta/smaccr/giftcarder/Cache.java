@@ -47,6 +47,10 @@ public class Cache {
     UserRegistrationController urc;
     String username;
 
+    public Cache(){
+
+    }
+
     public Cache(Activity parentActivity, String username) {
         this.parentActivity = parentActivity;
         this.urc = new UserRegistrationController();
@@ -65,6 +69,10 @@ public class Cache {
         return friends;
     }
 
+    public static void setFriends(ArrayList<User> friends) {
+        Cache.friends = friends;
+    }
+
     // Lazy singleton
     private static UserList userList = null;
     static public UserList getUserList() {
@@ -73,6 +81,8 @@ public class Cache {
         }
         return userList;
     }
+
+
 
     public User getUser(String username) {
         for (User user : getFriends() ) {
