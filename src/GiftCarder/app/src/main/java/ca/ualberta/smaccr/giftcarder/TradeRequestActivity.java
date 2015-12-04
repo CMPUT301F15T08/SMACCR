@@ -128,6 +128,7 @@ public class TradeRequestActivity extends ActionBarActivity {
         declineTradeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tradeStatus = Trade.DECLINED;
                 Thread thread = new updateThread(tradeId, tradeStatus);
                 thread.start();
 
