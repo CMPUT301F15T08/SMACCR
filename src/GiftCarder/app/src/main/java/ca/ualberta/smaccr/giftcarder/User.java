@@ -48,6 +48,14 @@ public class User {
         this.downloadsEnabled = true;
     }
 
+    public int getTradeCount() {
+        return tradeCount;
+    }
+
+    public void setTradeCount(int tradeCount) {
+        this.tradeCount = tradeCount;
+    }
+
     /**
      * Checks to see if user owns gift card
      *
@@ -220,6 +228,7 @@ public class User {
         }
         return successfulTradesCount;
     }
+
 
     /**
      * Sets downloadsEnabled boolean

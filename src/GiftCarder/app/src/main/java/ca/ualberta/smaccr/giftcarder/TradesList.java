@@ -30,4 +30,6 @@ public class TradesList extends HashMap<String, Trade> {
 
     }
 
+
+
 }

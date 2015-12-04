@@ -43,6 +43,10 @@ public class Trade {
         this.status = Trade.IN_PROGRESS;
     }
 
+    public Trade(){
+        this.status = Trade.IN_PROGRESS;
+    }
+
     public String getOwner() {
         return owner;
     }
