@@ -99,7 +99,6 @@ public class ItemPictureActivity extends ActionBarActivity {
                     ItemImage item = (ItemImage) parent.getItemAtPosition(position);
                     //Create intent
                     Intent intent = new Intent(ItemPictureActivity.this, ItemDetailsActivity.class);
-                    intent.putExtra(EXTRA_FEATURED_STRING, item.isFeatured());
                     intent.putExtra(EXTRA_BITMAP_STRING, item.getBitmapString());
 
                     //Start details activity

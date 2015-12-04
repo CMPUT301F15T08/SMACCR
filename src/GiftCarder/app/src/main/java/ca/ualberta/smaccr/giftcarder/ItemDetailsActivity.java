@@ -40,11 +40,13 @@ public class ItemDetailsActivity extends Activity {
 
         ItemPictureController ipc = new ItemPictureController();
         String bitmapString = getIntent().getStringExtra(EXTRA_BITMAP_STRING);
-        Bitmap bitmap = ipc.decodeBase64(bitmapString);
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageDetails);
-        imageView.setImageBitmap(bitmap);
+        if (!bitmapString.equals("")); {
+            Bitmap bitmap = ipc.decodeBase64(bitmapString);
 
+            ImageView imageView = (ImageView) findViewById(R.id.imageDetails);
+            imageView.setImageBitmap(bitmap);
+        }
     }
 
     @Override
