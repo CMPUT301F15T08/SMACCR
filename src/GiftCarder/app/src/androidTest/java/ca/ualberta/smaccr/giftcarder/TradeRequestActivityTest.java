@@ -12,6 +12,7 @@ public class TradeRequestActivityTest extends ActivityInstrumentationTestCase2 {
         super(TradeRequestActivity.class);
     }
 
+    // Test UC 4.3
     public void testAcceptTrade() {
         User owner = new User();
         Inventory ownerInv = new Inventory();
@@ -38,6 +39,7 @@ public class TradeRequestActivityTest extends ActivityInstrumentationTestCase2 {
         assertEquals(owner.getTradesList().toString(), borrower.getTradesList().toString());
     }
 
+    // Test UC 4.3
     public void testDeclineTrade() {
         User owner = new User();
         Inventory ownerInv = new Inventory();
@@ -64,6 +66,7 @@ public class TradeRequestActivityTest extends ActivityInstrumentationTestCase2 {
         assertEquals(owner.getTradesList().toString(), borrower.getTradesList().toString());
     }
 
+    // Test UC 4.3
     public void testCounterTrade() {
         User owner = new User();
         Inventory ownerInv = new Inventory();
@@ -91,6 +94,7 @@ public class TradeRequestActivityTest extends ActivityInstrumentationTestCase2 {
         assertEquals(owner.getTradesList().toString(), borrower.getTradesList().toString());
     }
 
+    // Test UC 4.4
     public void testEditTrade() {
         User owner = new User();
         Inventory ownerInv = new Inventory();
@@ -124,6 +128,7 @@ public class TradeRequestActivityTest extends ActivityInstrumentationTestCase2 {
 
     }
 
+    // Test UC 4.4
     public void testDeleteTrade() {
         User owner = new User();
         Inventory ownerInv = new Inventory();
@@ -151,6 +156,7 @@ public class TradeRequestActivityTest extends ActivityInstrumentationTestCase2 {
         assertEquals(owner.getTradesList().toString(), borrower.getTradesList().toString());
     }
 
+    // Test UC 4.1
     public void testTradesHistory() {
         User owner = new User();
         Inventory ownerInv = new Inventory();
@@ -176,6 +182,7 @@ public class TradeRequestActivityTest extends ActivityInstrumentationTestCase2 {
 
     }
 
+    // Test UC 4.1 and 4.5
     public void testTradeCompleted() {
         User owner = new User();
         Inventory ownerInv = new Inventory();

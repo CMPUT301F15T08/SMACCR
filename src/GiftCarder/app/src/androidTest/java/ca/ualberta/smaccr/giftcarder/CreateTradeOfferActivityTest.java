@@ -13,6 +13,7 @@ public class CreateTradeOfferActivityTest extends ActivityInstrumentationTestCas
         super(ItemActivity.class);
     }
 
+    // Test UC 4.2 and 4.4
     public void testCreateTrade() {
         User owner = new User();
         Inventory ownerInv = new Inventory();
