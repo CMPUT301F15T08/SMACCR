@@ -206,5 +206,5 @@ public class TradeRequestActivityTest extends ActivityInstrumentationTestCase2 {
         assertEquals(owner.getTradesList().toString(), borrower.getTradesList().toString());
     }
 
-    
+
 }
