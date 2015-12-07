@@ -67,7 +67,8 @@ public class TradesTabAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         // TODO Auto-generated method stub
-        return Long.parseLong(keys.get(position), 16);
+
+        return Long.parseLong(keys.get(position).replaceAll("'", ""), 16);
     }
 
     @Override

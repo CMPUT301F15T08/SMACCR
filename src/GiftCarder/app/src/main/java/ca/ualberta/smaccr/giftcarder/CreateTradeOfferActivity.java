@@ -106,13 +106,14 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
         makeOfferButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Random rand = new Random();
-                long  tradeId = rand.nextInt(128);
+
                 if (selectedItems.getInvList().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please select item(s) from your inventory", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Thread thread = new updateThread(tradeOwner.getUsername(), tradeBorrowerItem.getBelongsTo(), selectedItems, tradeBorrowerItem);
+                    Random random = new Random();
+                    String tradeId = "'" + random.nextInt(1024) + "'";
+                    Thread thread = new updateThread(tradeOwner.getUsername(), tradeBorrowerItem.getBelongsTo(), selectedItems, tradeBorrowerItem, tradeId);
                     thread.start();
                 }
             }
@@ -158,13 +159,15 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
         private String borrowerUsername;
         private Inventory ownerItems;
         private GiftCard borrowerItem;
+        private String tradeId;
 
 
-        public updateThread(String ownerUsername, String borrowerUsername, Inventory ownerItems, GiftCard borrowerItem) {
+        public updateThread(String ownerUsername, String borrowerUsername, Inventory ownerItems, GiftCard borrowerItem, String tradeId) {
             this.ownerUsername = ownerUsername;
             this.borrowerUsername = borrowerUsername;
             this.ownerItems = ownerItems;
             this.borrowerItem = borrowerItem;
+            this.tradeId = tradeId;
         }
 
         @Override
@@ -172,8 +175,8 @@ public class CreateTradeOfferActivity extends ActionBarActivity {
             User owner = tradeOwner;
             User borrower = esUserManager.getUser(borrowerUsername);
 
-            owner.getTradesList().put("a", new Trade(owner.getUsername(), borrower.getUsername(),owner.getEmail(), borrower.getEmail(), ownerItems, borrowerItem));
-            borrower.getTradesList().put("a", new Trade(owner.getUsername(), borrower.getUsername(),owner.getEmail(), borrower.getEmail(), ownerItems, borrowerItem));
+            owner.getTradesList().put(tradeId, new Trade(owner.getUsername(), borrower.getUsername(),owner.getEmail(), borrower.getEmail(), ownerItems, borrowerItem));
+            borrower.getTradesList().put(tradeId, new Trade(owner.getUsername(), borrower.getUsername(),owner.getEmail(), borrower.getEmail(), ownerItems, borrowerItem));
 
             userRegistrationController.editUserTradeList(owner.getUsername(), owner.getTradesList());
             userRegistrationController.editUserTradeList(borrower.getUsername(), borrower.getTradesList());

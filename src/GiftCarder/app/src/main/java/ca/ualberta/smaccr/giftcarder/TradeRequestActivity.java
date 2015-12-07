@@ -72,8 +72,12 @@ public class TradeRequestActivity extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             tradeId = extras.getString("TRADE_ID");
+            System.out.println(tradeId.equals(" 1 "));
+            System.out.println(tradeId.equals("1"));
             owner = userRegistrationController.getUser(extras.getString("CURRENT_USERNAME"));
-            trade = owner.getTradesList().get(tradeId);
+            trade = owner.getTradesList().get("'" + tradeId + "'");
+            System.out.println(owner.getTradesList().toString());
+            System.out.println(owner.getTradesList().get("'1'"));
 
             ownerTextView.setText(trade.getOwner());
             String ownerItemsString = "";
